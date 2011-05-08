@@ -6,10 +6,9 @@
 using namespace std;
 
 class Pekomin : Mobile {
-	public:
-		unsigned int state;
-		vector<Behavior *> behaviors;
-
+        public:
+                unsigned int state;
+                vector<Behavior *> behaviors;
 };
 
 #endif
