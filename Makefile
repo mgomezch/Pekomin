@@ -3,7 +3,7 @@ LDLIBS = -lm
 all: pekomin
 
 clean:
-	rm -f *.gch *.o prueba
+	rm -f *.gch *.o pekomin
 
 pekomin: pekomin.o Triple.o
 	g++ $(CXXOPTS) -o pekomin *.o $(LDLIBS)
