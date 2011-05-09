@@ -3,7 +3,7 @@ LDLIBS = -lm
 all: pekomin
 
 clean:
-	rm -f *.gch *.o pekomin
+	rm -f *.gch *.o *.*~ *~ pekomin 
 
 pekomin: pekomin.o Ent.o Triple.o Behavior.o Static.o Kinematic.o KinematicSeek.o KinematicFlee.o KinematicArrive.o KinematicWander.o
 	g++ $(CXXOPTS) -o pekomin *.o $(LDLIBS)
