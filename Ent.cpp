@@ -1,10 +1,10 @@
 #include "Ent.hpp"
 
-Triple Ent::asVector() {
-        Triple myVec;
-        myVec.x = sin(ang);
-        myVec.y = 0;
-        myVec.z = cos(ang);
+Triple Ent::orientation() {
+        Triple v;
+        v.x = cos(ang);
+        v.y = sin(ang);
+        v.z = 0;
 
-        return myVec;
+        return v;
 }

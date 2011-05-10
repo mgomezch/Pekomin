@@ -12,27 +12,27 @@ class Triple {
 
                 Triple() : x(0), y(0), z(0) {}
                 Triple(double X, double Y, double Z) : x(X), y(Y), z(Z) {}
-                Triple& operator+(const Triple &t);
-                Triple& operator+(double f);
-                Triple& operator-();
-                Triple& operator-(const Triple &t);
-                Triple& operator-(double f);
-                Triple& operator*(const Triple &t);
-                Triple& operator*(const double f);
-                Triple& operator/(double f);
+                Triple  operator+(Triple t);
+                Triple  operator+(double f);
+                Triple  operator-();
+                Triple  operator-(Triple t);
+                Triple  operator-(double f);
+                Triple  operator*(Triple t);
+                Triple  operator*(double f);
+                Triple  operator/(double f);
                 Triple& operator+=(const Triple &t);
                 Triple& operator+=(double f);
                 Triple& operator-=(const Triple &t);
                 Triple& operator-=(double f);
                 Triple& operator*=(const double f);
                 Triple& operator/=(const double f);
-                double dot(const Triple &t);
-                Triple& cross(const Triple &t);
+                Triple& normalize();
+                double dot(Triple t);
+                Triple cross(Triple t);
                 double length();
                 double length_2();
-                Triple& normalized();
-                void normalize();
-                void printInfo();
+                Triple normalized();
+                void print();
 };
 
 typedef Triple Vector;

@@ -8,12 +8,12 @@ using namespace std;
 
 class KinematicFlee: Kinematic {
         public:
-                Ent character;
-                Ent target;
+                Ent *character;
+                Ent *target;
                 double maxSpeed;
 
-                KinematicFlee(Ent character, Ent target, double maxSpeed);
-                pair<Triple,double> getSteering();
+                KinematicFlee(Ent *character, Ent *target, double maxSpeed);
+                pair<Triple, double> getSteering();
 };
 
 #endif

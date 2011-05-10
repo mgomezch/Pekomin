@@ -7,6 +7,7 @@ using namespace std;
 
 class Kinematic : Static {
         public:
+                // wtf?
                 Triple velocity;
                 double rotation;
 

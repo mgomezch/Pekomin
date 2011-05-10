@@ -1,60 +1,67 @@
 #include "Triple.hpp"
 
-Triple& Triple::operator+(const Triple &t) {
-        this->x += t.x;
-        this->y += t.y;
-        this->z += t.z;
-        return *this;
+Triple Triple::operator+(Triple t) {
+        Triple r = *this;
+        r.x += t.x;
+        r.y += t.y;
+        r.z += t.z;
+        return r;
 }
 
-Triple& Triple::operator+(double f) {
-        this->x+f;
-        this->y+f;
-        this->z+f;
-        return *this;
+Triple Triple::operator+(double f) {
+        Triple r = *this;
+        r.x += f;
+        r.y += f;
+        r.z += f;
+        return r;
 }
 
-Triple& Triple::operator-() {
-        -this->x;
-        -this->y;
-        -this->z;
-        return *this;
+Triple Triple::operator-() {
+        Triple r = *this;
+        r.x = -r.x;
+        r.y = -r.y;
+        r.z = -r.z;
+        return r;
 }
 
-Triple& Triple::operator-(const Triple &t) {
-        this->x-t.x;
-        this->y-t.y;
-        this->z-t.z;
-        return *this;
+Triple Triple::operator-(Triple t) {
+        Triple r = *this;
+        r.x -= t.x;
+        r.y -= t.y;
+        r.z -= t.z;
+        return r;
 }
 
-Triple& Triple::operator-(double f) {
-        this->x-f;
-        this->y-f;
-        this->z-f;
-        return *this;
+Triple Triple::operator-(double f) {
+        Triple r = *this;
+        r.x -= f;
+        r.y -= f;
+        r.z -= f;
+        return r;
 }
 
-Triple& Triple::operator*(const Triple &t) {
-        this->x*t.x;
-        this->y*t.y;
-        this->z*t.z;
-        return *this;
+Triple Triple::operator*(Triple t) {
+        Triple r = *this;
+        r.x *= t.x;
+        r.y *= t.y;
+        r.z *= t.z;
+        return r;
 }
 
-Triple& Triple::operator*(double f) {
-        this->x*f;
-        this->y*f;
-        this->z*f;
-        return *this;
+Triple Triple::operator*(double f) {
+        Triple r = *this;
+        r.x *= f;
+        r.y *= f;
+        r.z *= f;
+        return r;
 }
 
-Triple& Triple::operator/(double f) {
-        double invf = 1.0/f;
-        this->x*invf;
-        this->y*invf;
-        this->z*invf;
-        return *this;
+Triple Triple::operator/(double f) {
+        Triple r = *this;
+        r.x /= f;
+        r.y /= f;
+        r.z /= f;
+        return r;
 }
 
 Triple& Triple::operator+=(const Triple &t) {
@@ -93,22 +100,22 @@ Triple& Triple::operator*=(const double f) {
 }
 
 Triple& Triple::operator/=(const double f) {
-        double invf = 1.0/f;
-        this->x *= invf;
-        this->y *= invf;
-        this->z *= invf;
+        this->x /= f;
+        this->y /= f;
+        this->z /= f;
         return *this;
 }
 
-double Triple::dot(const Triple &t) {
+double Triple::dot(Triple t) {
         return this->x*t.x + this->y*t.y + this->z*t.z;
 }
 
-Triple& Triple::cross(const Triple &t) {
-        this->y*t.z - this->z*t.y;
-        this->z*t.x - this->x*t.z;
-        this->x*t.y - this->y*t.x;
-        return *this;
+Triple Triple::cross(Triple t) {
+        Triple r = *this;
+        r.x = this->y*t.z - this->z*t.y;
+        r.y = this->z*t.x - this->x*t.z;
+        r.z = this->x*t.y - this->y*t.x;
+        return r;
 }
 
 double Triple::length() {
@@ -119,18 +126,18 @@ double Triple::length_2() {
         return this->x*this->x + this->y*this->y + this->z*this->z;
 }
 
-Triple& Triple::normalized() {
+Triple Triple::normalized() {
         return (*this) / length();
 }
 
-void Triple::normalize() {
+Triple& Triple::normalize() {
         double l = length();
-        double invl = 1/l;
-        this->x *= invl;
-        this->y *= invl;
-        this->z *= invl;
+        this->x /= l;
+        this->y /= l;
+        this->z /= l;
+        return *this;
 }
 
-void Triple::printInfo() {
-        printf("x = %f, y = %f, z = %f\n", x, y, z);
+void Triple::print() {
+        printf("x = %f, y = %f, z = %f", x, y, z);
 }

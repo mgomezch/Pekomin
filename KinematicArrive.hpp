@@ -8,14 +8,14 @@ using namespace std;
 
 class KinematicArrive: Kinematic {
         public:
-                Ent character;
-                Ent target;
+                Ent *character;
+                Ent *target;
                 double maxSpeed;
                 double radius;
                 static const double timeToTarget = 0.25;
 
-                KinematicArrive(Ent character, Ent target, double maxSpeed, double radius);
-                pair<Triple,double> getSteering();
+                KinematicArrive(Ent *character, Ent *target, double maxSpeed, double radius);
+                pair<Triple, double> getSteering();
 };
 
 #endif

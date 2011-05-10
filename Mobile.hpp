@@ -7,7 +7,6 @@ class Mobile : Ent {
         public:
                 Triple vel;
                 double vrot;
-
 };
 
 #endif

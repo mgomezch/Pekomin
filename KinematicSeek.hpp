@@ -8,11 +8,11 @@ using namespace std;
 
 class KinematicSeek: Kinematic {
         public:
-                Ent character;
-                Ent target;
+                Ent *character;
+                Ent *target;
                 double maxSpeed;
 
-                KinematicSeek(Ent character, Ent target, double maxSpeed);
+                KinematicSeek(Ent *character, Ent *target, double maxSpeed);
                 pair<Triple,double> getSteering();
 };
 

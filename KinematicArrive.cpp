@@ -1,15 +1,15 @@
 #include "KinematicArrive.hpp"
 
-KinematicArrive::KinematicArrive(Ent character, Ent target, double maxSpeed, double radius) {
-        character = character;
-        target = target;
-        maxSpeed = maxSpeed;
-        radius = radius;
+KinematicArrive::KinematicArrive(Ent *character_, Ent *target_, double maxSpeed_, double radius_) {
+        character = character_;
+        target    = target_;
+        maxSpeed  = maxSpeed_;
+        radius    = radius_;
 }
 
 pair<Triple,double> KinematicArrive::getSteering() {
-        pair<Triple,double> steering;
-        steering.first = target.pos - character.pos;
+        pair<Triple, double> steering;
+        steering.first = target->pos - character->pos;
 
         //cuando no se cumple esto que se retorna? o que tiene el steering?
         if (steering.first.length() >= radius) {
@@ -20,7 +20,7 @@ pair<Triple,double> KinematicArrive::getSteering() {
                         steering.first *= maxSpeed;
                 }
 
-                character.ang = getNewOrientation(character.ang, steering.first);
+                character->ang = getNewOrientation(character->ang, steering.first);
 
                 steering.second = 0;
         }
