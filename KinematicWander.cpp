@@ -1,6 +1,6 @@
 #include "KinematicWander.hpp"
 
-KinematicWander::KinematicWander(Ent character, double maxSpeed, double maxRotation) {
+KinematicWander::KinematicWander(Static character, double maxSpeed, double maxRotation) {
 
 	character = character;
 	maxSpeed = maxSpeed;
@@ -15,5 +15,11 @@ pair<Triple,double> KinematicWander::getSteering() {
 	steering.second = randomBinomial() * maxRotation;
 
 	return steering;
+
+}
+
+string KinematicWander::name() {
+
+	return "KinematicWander";
 
 }

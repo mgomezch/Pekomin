@@ -1,20 +1,22 @@
 #ifndef _KINEMATICSEEK_HPP
 #define _KINEMATICSEEK_HPP
 
-#include "Kinematic.hpp"
-#include "Ent.hpp"
+#include "Behavior.hpp"
+#include "Static.hpp"
 
 using namespace std;
 
-class KinematicSeek: Kinematic {
+class KinematicSeek: Behavior {
 	public:
-		Ent character;
-		Ent target;
+		Static character;
+		Static target;
 		double maxSpeed;
 	
-	KinematicSeek(Ent character, Ent target, double maxSpeed);
+	KinematicSeek(Static character, Static target, double maxSpeed);
 
 	pair<Triple,double> getSteering();
+
+	string name();
 
 };
 

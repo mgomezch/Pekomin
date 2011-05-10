@@ -1,15 +1,21 @@
 #ifndef _STATIC_HPP
 #define _STATIC_HPP
 
-#include "Behavior.hpp"
+#include "Ent.hpp"
 
 using namespace std;
 
-class Static: Behavior {
+class Static: public Ent {
 	public:
-		Triple position;
-		double orientation;
-		
+
+	Static() {}
+	
+	Static(Triple p, double o) : Ent(p,o) {}
+	
+	string type();
+	
+	Triple asVector();
+
 };
 
 #endif

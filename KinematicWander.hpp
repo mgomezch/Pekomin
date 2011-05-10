@@ -1,19 +1,21 @@
 #ifndef _KINEMATICWANDER_HPP
 #define _KINEMATICWANDER_HPP
 
-#include "Kinematic.hpp"
-#include "Ent.hpp"
+#include "Behavior.hpp"
+#include "Static.hpp"
 #include "util.hpp"
 
-class KinematicWander: Kinematic {
+class KinematicWander: Behavior {
 	public:
-		Ent character;
+		Static character;
 		double maxSpeed;
 		double maxRotation;
 
-	KinematicWander(Ent character, double maxSpeed, double maxRotation);
+	KinematicWander(Static character, double maxSpeed, double maxRotation);
 	
 	pair<Triple,double> getSteering();
+
+	string name();
 
 };
 

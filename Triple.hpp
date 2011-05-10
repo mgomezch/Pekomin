@@ -20,6 +20,7 @@ class Triple {
 	Triple& operator*(const Triple &t);
 	Triple& operator*(const double f);
 	Triple& operator/(double f);
+	Triple& operator=(double f);
 	Triple& operator+=(const Triple &t);
 	Triple& operator+=(double f);
 	Triple& operator-=(const Triple &t);

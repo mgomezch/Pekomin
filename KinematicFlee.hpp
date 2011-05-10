@@ -1,20 +1,22 @@
 #ifndef _KINEMATICFLEE_HPP
 #define _KINEMATICFLEE_HPP
 
-#include "Kinematic.hpp"
-#include "Ent.hpp"
+#include "Behavior.hpp"
+#include "Static.hpp"
 
 using namespace std;
 
-class KinematicFlee: Kinematic {
+class KinematicFlee: Behavior {
 	public:
-		Ent character;
-		Ent target;
+		Static character;
+		Static target;
 		double maxSpeed;
 	
-	KinematicFlee(Ent character, Ent target, double maxSpeed);
+	KinematicFlee(Static character, Static target, double maxSpeed);
 
 	pair<Triple,double> getSteering();
+	
+	string name();
 
 };
 

@@ -57,6 +57,13 @@ Triple& Triple::operator/(double f) {
 	return *this;
 }
 
+Triple& Triple::operator=(double f) {
+	this->x = f;
+	this->y = f;
+	this->z = f;
+	return *this;
+}
+
 Triple& Triple::operator+=(const Triple &t) {
 	this->x += t.x;
 	this->y += t.y;
