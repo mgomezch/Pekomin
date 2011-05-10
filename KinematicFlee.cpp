@@ -1,4 +1,5 @@
 #include "KinematicFlee.hpp"
+#include "Ent.hpp"
 
 KinematicFlee::KinematicFlee(Ent *character_, Ent *target_, double maxSpeed_) {
         character = character_;

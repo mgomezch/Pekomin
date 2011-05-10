@@ -1,4 +1,5 @@
 #include "KinematicSeek.hpp"
+#include "Ent.hpp"
 
 KinematicSeek::KinematicSeek(Ent *character_, Ent *target_, double maxSpeed_) {
         character = character_;
@@ -12,8 +13,7 @@ pair<Triple,double> KinematicSeek::getSteering() {
         steering.first = target->pos - character->pos;
         steering.first.normalize();
         steering.first *= maxSpeed;
-        character->ang = getNewOrientation(character->ang, steering.first);
-        steering.second = 0;
+        //steering.second = getNewOrientation(character->ang, steering.first);
 
         return steering;
 }

@@ -1,4 +1,5 @@
 #include "KinematicArrive.hpp"
+#include "Ent.hpp"
 
 KinematicArrive::KinematicArrive(Ent *character_, Ent *target_, double maxSpeed_, double radius_) {
         character = character_;

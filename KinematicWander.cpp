@@ -1,4 +1,5 @@
 #include "KinematicWander.hpp"
+#include "Ent.hpp"
 #include "util.hpp"
 
 KinematicWander::KinematicWander(Ent *character_, double maxSpeed_, double maxRotation_) {

@@ -1,9 +1,11 @@
 #ifndef _KINEMATICFLEE_HPP
 #define _KINEMATICFLEE_HPP
 
-#include "Behavior.hpp"
+#include "Kinematic.hpp"
 
 using namespace std;
+
+class Ent;
 
 class KinematicFlee: Kinematic {
         public:

@@ -1,9 +1,11 @@
 #ifndef _KINEMATICSEEK_HPP
 #define _KINEMATICSEEK_HPP
 
-#include "Behavior.hpp"
+#include "Kinematic.hpp"
 
 using namespace std;
+
+class Ent;
 
 class KinematicSeek: Kinematic {
         public:

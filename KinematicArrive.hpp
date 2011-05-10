@@ -1,9 +1,11 @@
 #ifndef _KINEMATICARRIVE_HPP
 #define _KINEMATICARRIVE_HPP
 
-#include "Behavior.hpp"
+#include "Kinematic.hpp"
 
 using namespace std;
+
+class Ent;
 
 class KinematicArrive: Kinematic {
         public:
