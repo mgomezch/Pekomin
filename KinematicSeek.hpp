@@ -1,8 +1,7 @@
 #ifndef _KINEMATICSEEK_HPP
 #define _KINEMATICSEEK_HPP
 
-#include "Kinematic.hpp"
-#include "Ent.hpp"
+#include "Behavior.hpp"
 
 using namespace std;
 
@@ -14,6 +13,7 @@ class KinematicSeek: Kinematic {
 
                 KinematicSeek(Ent *character, Ent *target, double maxSpeed);
                 pair<Triple,double> getSteering();
+                string name();
 };
 
 #endif

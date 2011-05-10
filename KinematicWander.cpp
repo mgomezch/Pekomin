@@ -14,3 +14,7 @@ pair<Triple,double> KinematicWander::getSteering() {
 
         return steering;
 }
+
+string KinematicWander::name() {
+	return "KinematicWander";
+}

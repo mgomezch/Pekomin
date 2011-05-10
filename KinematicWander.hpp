@@ -2,7 +2,8 @@
 #define _KINEMATICWANDER_HPP
 
 #include "Kinematic.hpp"
-#include "Ent.hpp"
+
+class Ent;
 
 class KinematicWander: Kinematic {
         public:
@@ -12,6 +13,7 @@ class KinematicWander: Kinematic {
 
                 KinematicWander(Ent *character, double maxSpeed, double maxRotation);
                 pair<Triple,double> getSteering();
+                string name();
 };
 
 #endif

@@ -11,35 +11,47 @@ all: pekomin
 clean:
 	rm -f *.gch *.o *~ pekomin 
 
-pekomin: pekomin.o Ent.o Triple.o Behavior.o Static.o Kinematic.o KinematicSeek.o KinematicFlee.o KinematicArrive.o KinematicWander.o util.o
+pekomin: pekomin.o Triple.o KinematicSeek.o KinematicFlee.o KinematicArrive.o KinematicWander.o Seek.o Flee.o Arrive.o Align.o VelocityMatch.o Pursue.o Evade.o Face.o
 	$(CXX) $(CXXFLAGS) -o pekomin *.o $(LDLIBS) 
 
-KinematicWander.o: KinematicWander.cpp KinematicWander.hpp Kinematic.hpp util.hpp
-	$(CXX) $(CXXFLAGS) -c KinematicWander.cpp
+Face.o: Face.cpp Face.hpp Align.hpp Behavior.hpp
+	$(CXX) $(CXXOPTS) -c Align.cpp $(LDLIBS)
 
-KinematicArrive.o: KinematicArrive.cpp KinematicArrive.hpp Kinematic.hpp
-	$(CXX) $(CXXFLAGS) -c KinematicArrive.cpp
+Evade.o: Evade.cpp Evade.hpp Flee.hpp Behavior.hpp
+	$(CXX) $(CXXOPTS) -c Evade.cpp $(LDLIBS)
 
-KinematicFlee.o: KinematicFlee.cpp KinematicFlee.hpp Kinematic.hpp
-	$(CXX) $(CXXFLAGS) -c KinematicFlee.cpp
+Pursue.o: Pursue.cpp Pursue.hpp Seek.hpp Behavior.hpp
+	$(CXX) $(CXXOPTS) -c Pursue.cpp $(LDLIBS)
 
-KinematicSeek.o: KinematicSeek.cpp KinematicSeek.hpp Kinematic.hpp
-	$(CXX) $(CXXFLAGS) -c KinematicSeek.cpp
+VelocityMatch.o: VelocityMatch.cpp VelocityMatch.hpp Behavior.hpp
+	$(CXX) $(CXXOPTS) -c VelocityMatch.cpp $(LDLIBS)
 
-Kinematic.o: Kinematic.cpp Kinematic.hpp Static.hpp
-	$(CXX) $(CXXFLAGS) -c Kinematic.cpp
+Align.o: Align.cpp Align.hpp Behavior.hpp
+	$(CXX) $(CXXOPTS) -c Align.cpp $(LDLIBS)
 
-Static.o: Static.cpp Static.hpp Behavior.hpp
-	$(CXX) $(CXXFLAGS) -c Static.cpp
+Arrive.o: Arrive.cpp Arrive.hpp Behavior.hpp
+	$(CXX) $(CXXOPTS) -c Arrive.cpp $(LDLIBS)
 
-Behavior.o: Behavior.cpp Behavior.hpp Triple.hpp
-	$(CXX) $(CXXFLAGS) -c Behavior.cpp
+Flee.o: Flee.cpp Flee.hpp Behavior.hpp
+	$(CXX) $(CXXOPTS) -c Flee.cpp $(LDLIBS)
+
+Seek.o: Seek.cpp Seek.hpp Behavior.hpp
+	$(CXX) $(CXXOPTS) -c Seek.cpp $(LDLIBS)
+
+KinematicWander.o: KinematicWander.cpp KinematicWander.hpp Kinematic.hpp Behavior.hpp util.hpp
+	$(CXX) $(CXXOPTS) -c KinematicWander.cpp $(LDLIBS)
+
+KinematicArrive.o: KinematicArrive.cpp KinematicArrive.hpp Kinematic.hpp Behavior.hpp
+	$(CXX) $(CXXOPTS) -c KinematicArrive.cpp $(LDLIBS)
+
+KinematicFlee.o: KinematicFlee.cpp KinematicFlee.hpp Kinematic.hpp Behavior.hpp
+	$(CXX) $(CXXOPTS) -c KinematicFlee.cpp $(LDLIBS)
+
+KinematicSeek.o: KinematicSeek.cpp KinematicSeek.hpp Kinematic.hpp Behavior.hpp
+	$(CXX) $(CXXOPTS) -c KinematicSeek.cpp $(LDLIBS)
 
 pekomin.o: pekomin.cpp Triple.hpp
 	$(CXX) $(CXXFLAGS) -c pekomin.cpp
-
-Ent.o: Ent.cpp Ent.hpp Triple.hpp
-	$(CXX) $(CXXFLAGS) -c Ent.cpp
 
 Triple.o: Triple.cpp Triple.hpp
 	$(CXX) $(CXXFLAGS) -c Triple.cpp

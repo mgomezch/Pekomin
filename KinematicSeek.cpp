@@ -6,7 +6,7 @@ KinematicSeek::KinematicSeek(Ent *character_, Ent *target_, double maxSpeed_) {
         maxSpeed  = maxSpeed_;
 }
 
-//esto devuelve velocidad y rotacion
+// Retorna incrementos de velocidad y rotacion
 pair<Triple,double> KinematicSeek::getSteering() {
         pair<Triple, double> steering;
         steering.first = target->pos - character->pos;
@@ -16,4 +16,8 @@ pair<Triple,double> KinematicSeek::getSteering() {
         steering.second = 0;
 
         return steering;
+}
+
+string KinematicSeek::name() {
+	return "KinematicSeek";
 }

@@ -8,3 +8,4 @@ Triple Ent::orientation() {
 
         return v;
 }
+#include "Ent.hpp"

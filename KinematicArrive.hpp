@@ -1,8 +1,7 @@
 #ifndef _KINEMATICARRIVE_HPP
 #define _KINEMATICARRIVE_HPP
 
-#include "Kinematic.hpp"
-#include "Ent.hpp"
+#include "Behavior.hpp"
 
 using namespace std;
 
@@ -16,6 +15,7 @@ class KinematicArrive: Kinematic {
 
                 KinematicArrive(Ent *character, Ent *target, double maxSpeed, double radius);
                 pair<Triple, double> getSteering();
+                string name();
 };
 
 #endif
