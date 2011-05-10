@@ -4,9 +4,9 @@
 #include "Ent.hpp"
 
 class Mobile : Ent {
-	public:
-		Triple vel;
-		double vrot;
+        public:
+                Triple vel;
+                double vrot;
 
 };
 

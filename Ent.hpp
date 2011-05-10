@@ -4,15 +4,12 @@
 #include "Triple.hpp"
 
 class Ent {
-	public:
-		Triple pos;
-		double ang;
+        public:
+                Triple pos;
+                double ang;
 
-	Triple asVector();
-	
-	//virtual void draw()   = 0;
-	//virtual void update() = 0;
-
+                virtual void draw()   = 0;
+                virtual void update() = 0;
 };
 
 #endif

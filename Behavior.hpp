@@ -9,8 +9,6 @@
 using namespace std;
 
 class Behavior {
-	public:
-
 };
 
 #endif

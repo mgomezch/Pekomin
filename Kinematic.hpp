@@ -6,14 +6,12 @@
 using namespace std;
 
 class Kinematic : Static {
-	public:
-		Triple velocity;
-		double rotation;
+        public:
+                Triple velocity;
+                double rotation;
 
-	void update(pair<Triple,double> steering, double time);
-	
-	double getNewOrientation(double currentOrientation, Triple velocity);
-
+                void update(pair<Triple,double> steering, double time);
+                double getNewOrientation(double currentOrientation, Triple velocity);
 };
 
 #endif

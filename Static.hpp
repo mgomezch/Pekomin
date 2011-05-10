@@ -6,10 +6,9 @@
 using namespace std;
 
 class Static: Behavior {
-	public:
-		Triple position;
-		double orientation;
-		
+        public:
+                Triple position;
+                double orientation;
 };
 
 #endif
