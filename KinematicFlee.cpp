@@ -13,12 +13,8 @@ pair<Triple, double> KinematicFlee::getSteering() {
         steering.first = character->pos - target->pos;
         steering.first.normalize();
         steering.first *= maxSpeed;
-        character->ang = getNewOrientation(character->ang, steering.first);
+//      character->ang = getNewOrientation(character->ang, steering.first);
         steering.second = 0;
 
         return steering;
-}
-
-string KinematicFlee::name() {
-	return "KinematicFlee";
 }

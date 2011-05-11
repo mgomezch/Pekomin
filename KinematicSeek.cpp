@@ -17,7 +17,3 @@ pair<Triple,double> KinematicSeek::getSteering() {
 
         return steering;
 }
-
-string KinematicSeek::name() {
-	return "KinematicSeek";
-}

@@ -1,21 +1,16 @@
 #include "Face.hpp"
+#include "Mobile.hpp"
 
-pair<Triple,double> Face::getSteering() {
+pair<Triple, double> Face::getSteering() {
+        Triple direction;
 
-	Triple direction;
+        direction = target->pos - character->pos;
 
-	direction = target.position - character.position;
+        if (direction.length() > 0) {
+                Align::target = target;
+                // WTF?
+                //Align::target->orientation = atan2(-direction.x, direction.z);
+        }
 
-	if (direction.length() > 0) {
-		Align::target = target;
-		Align::target.orientation = atan2(-direction.x, direction.z);
-	}
-
-	return Align::getSteering();
-}
-
-string Face::name() {
-
-	return "Face";
-
+        return Align::getSteering();
 }

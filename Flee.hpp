@@ -2,22 +2,21 @@
 #define _FLEE_HPP
 
 #include "Behavior.hpp"
-#include "Mobile.hpp"
 
 using namespace std;
 
-class Flee: Behavior {
+class Mobile;
+
+class Flee : Behavior {
 	public:
-		Mobile character;
-		Mobile target;
+                static const unsigned int type = BEHAVIOR_FLEE;
+		Mobile *character;
+		Mobile *target;
 		double maxAcceleration;
 
-	Flee(Mobile character, Mobile target, double maxAcceleration);
+                Flee(Mobile *character, Mobile *target, double maxAcceleration);
 
-	pair<Triple,double> getSteering();
-
-	string name();
-
+                pair<Triple, double> getSteering();
 };
 
 #endif

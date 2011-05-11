@@ -1,28 +1,22 @@
 #include "Evade.hpp"
+#include "Mobile.hpp"
 
-pair<Triple,double> Evade::getSteering() {
+pair<Triple, double> Evade::getSteering() {
+        Triple direction;
+        double distance, speed, prediction;
 
-	Triple direction;
-	double distance, speed, prediction;
+        direction = character->pos - target->pos;
+        distance = direction.length();
+        speed = character->vel.length();
 
-	direction = character.position - target.position;
-	distance = direction.length();
-	speed = character.velocity.length();
+        if (speed <= distance / maxPrediction) {
+                prediction = maxPrediction;
+        } else {
+                prediction = distance / speed;
+        }
 
-	if (speed <= distance / maxPrediction)
-		prediction = maxPrediction;
-	else
-		prediction = distance / speed;
+        Flee::target = target;
+        Flee::target->pos += target->vel* prediction;
 
-	Flee::target = target;
-	Flee::target.position += target.velocity * prediction;
-
-	return Flee::getSteering();
-
-}
-
-string Evade::name() {
-
-	return "Evade";
-
+        return Flee::getSteering();
 }

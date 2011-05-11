@@ -5,15 +5,14 @@
 
 using namespace std;
 
+class Mobile;
+
 class Evade : public Flee {
-	public:
-		double maxPrediction;
-		Mobile target;
+        public:
+                double maxPrediction;
+                Mobile *target;
 
-	pair<Triple,double> getSteering();
-
-	string name();
-
+                pair<Triple, double> getSteering();
 };
 
 #endif

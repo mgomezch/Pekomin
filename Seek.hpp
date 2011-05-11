@@ -2,24 +2,22 @@
 #define _SEEK_HPP
 
 #include "Behavior.hpp"
-#include "Mobile.hpp"
 
 using namespace std;
 
-class Seek: Behavior {
-	public:
-		Mobile character;
-		Mobile target;
-		double maxAcceleration;
+class Mobile;
 
-	Seek() {}
+class Seek : Behavior {
+        public:
+                static const unsigned int type = BEHAVIOR_SEEK;
+                Mobile *character;
+                Mobile *target;
+                double maxAcceleration;
 
-	Seek(Mobile character, Mobile target, double maxAcceleration);
+                Seek() {}
+                Seek(Mobile *character, Mobile *target, double maxAcceleration);
 
-	pair<Triple,double> getSteering();
-
-	string name();
-
+                pair<Triple, double> getSteering();
 };
 
 #endif

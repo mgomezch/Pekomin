@@ -7,8 +7,9 @@ using namespace std;
 
 class Ent;
 
-class KinematicArrive: Kinematic {
+class KinematicArrive : Kinematic {
         public:
+                static const unsigned int type = BEHAVIOR_KINEMATICARRIVE;
                 Ent *character;
                 Ent *target;
                 double maxSpeed;
@@ -17,7 +18,6 @@ class KinematicArrive: Kinematic {
 
                 KinematicArrive(Ent *character, Ent *target, double maxSpeed, double radius);
                 pair<Triple, double> getSteering();
-                string name();
 };
 
 #endif

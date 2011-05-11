@@ -5,15 +5,14 @@
 
 using namespace std;
 
+class Mobile;
+
 class Pursue : public Seek {
 	public:
 		double maxPrediction;
-		Mobile target;
+		Mobile *target;
 
-	pair<Triple,double> getSteering();
-
-	string name();
-
+                pair<Triple, double> getSteering();
 };
 
 #endif

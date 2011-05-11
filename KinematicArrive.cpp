@@ -15,12 +15,8 @@ pair<Triple, double> KinematicArrive::getSteering() {
 	//cuando no se cumple esto que se retorna? o que tiene el steering? o usar una referencia e instanciar a NULL y echarnos agua :D
 	if (steering.first.length() >= radius) {
 		steering.first /= timeToTarget;
-                steering.second = getNewOrientation(character->ang, steering.first);
+//              steering.second = getNewOrientation(character->ang, steering.first);
         }
 
         return steering;
-}
-
-string KinematicArrive::name() {
-	return "KinematicArrive";
 }

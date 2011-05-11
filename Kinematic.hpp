@@ -1,18 +1,13 @@
 #ifndef _KINEMATIC_HPP
 #define _KINEMATIC_HPP
 
-#include "Static.hpp"
+#include "Behavior.hpp"
 
 using namespace std;
 
-class Kinematic : Static {
+class Kinematic : Behavior {
         public:
-                // wtf?
-                Triple velocity;
-                double rotation;
-
-                void update(pair<Triple,double> steering, double time);
-                double getNewOrientation(double currentOrientation, Triple velocity);
+                static const unsigned int family = BEHAVIOR_FAMILY_KINEMATIC;
 };
 
 #endif

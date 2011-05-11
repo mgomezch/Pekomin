@@ -3,12 +3,10 @@
 
 #include "Ent.hpp"
 
-class Mobile : Ent {
+class Mobile : public Ent {
         public:
                 Triple vel;
                 double vrot;
-
-                string type();
 };
 
 #endif

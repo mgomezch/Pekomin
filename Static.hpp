@@ -5,7 +5,9 @@
 
 using namespace std;
 
-class Static: Behavior {
+class Static : Behavior {
+        public:
+                static const unsigned int family = BEHAVIOR_FAMILY_STATIC;
 };
 
 #endif
