@@ -15,6 +15,8 @@ class KinematicFlee : public Kinematic {
                 double maxSpeed;
 
                 KinematicFlee(Ent *character, Ent *target, double maxSpeed);
+
+                virtual tuple<bool, Triple, double> getVelIncr();
 };
 
 #endif

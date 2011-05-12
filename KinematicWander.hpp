@@ -13,6 +13,8 @@ class KinematicWander : public Kinematic {
                 double maxRotation;
 
                 KinematicWander(Ent *character, double maxSpeed, double maxRotation);
+
+                virtual tuple<bool, Triple, double> getVelIncr();
 };
 
 #endif

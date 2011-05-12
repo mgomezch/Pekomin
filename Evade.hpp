@@ -16,6 +16,8 @@ class Evade : public Kinematic {
                 double maxPrediction;
 
                 Evade(Mobile *character, Mobile *target, double maxAcceleration);
+
+                virtual tuple<bool, Triple, double> getVelIncr();
 };
 
 #endif

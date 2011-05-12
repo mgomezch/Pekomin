@@ -17,7 +17,7 @@ tuple<bool, Triple, double> Face::getVelIncr() {
 
         direction = target->pos - character->pos;
 
-        rotation = atan2(-direction.x, direction.y); - character->ang;
+        rotation = atan2(-direction.x, direction.y) - character->ang;
         mapToRange(&rotation);
         rotationSize = abs(rotation);
 

@@ -17,6 +17,8 @@ class KinematicArrive : public Kinematic {
                 static const double timeToTarget = 0.25;
 
                 KinematicArrive(Ent *character, Ent *target, double maxSpeed, double radius);
+
+                virtual tuple<bool, Triple, double> getVelIncr();
 };
 
 #endif

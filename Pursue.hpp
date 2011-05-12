@@ -16,6 +16,8 @@ class Pursue : public Kinematic {
                 double maxPrediction;
 
                 Pursue(Mobile *character, Mobile *target, double maxAcceleration);
+
+                virtual tuple<bool, Triple, double> getVelIncr();
 };
 
 #endif

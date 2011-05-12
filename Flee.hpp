@@ -1,7 +1,7 @@
 #ifndef _FLEE_HPP
 #define _FLEE_HPP
 
-#include "Behavior.hpp"
+#include "Kinematic.hpp"
 
 using namespace std;
 
@@ -15,6 +15,8 @@ class Flee : public Kinematic {
                 double maxAcceleration;
 
                 Flee(Mobile *character, Mobile *target, double maxAcceleration);
+
+                virtual tuple<bool, Triple, double> getVelIncr();
 };
 
 #endif

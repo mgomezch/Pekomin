@@ -15,6 +15,8 @@ class Seek : public Kinematic {
                 double maxAcceleration;
 
                 Seek(Mobile *character, Mobile *target, double maxAcceleration);
+
+                virtual tuple<bool, Triple, double> getVelIncr();
 };
 
 #endif

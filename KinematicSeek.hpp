@@ -15,6 +15,8 @@ class KinematicSeek : public Kinematic {
                 double maxSpeed;
 
                 KinematicSeek(Ent *character, Ent *target, double maxSpeed);
+
+                virtual tuple<bool, Triple, double> getVelIncr();
 };
 
 #endif
