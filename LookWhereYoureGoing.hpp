@@ -1,16 +1,27 @@
 #ifndef _LOOKWHEREYOUREGOING_HPP
 #define _LOOKWHEREYOUREGOING_HPP
 
-#include "Align.hpp"
+#include "Kinematic.hpp"
 
-class LookWhereYoureGoing : public Align {
-	public:
-		static const unsigned int type = BEHAVIOR_LOOKWHEREYOUREGOING;
+using namespace std;
 
-		LookWhereYoureGoing(Mobile *character, Mobile *target, double maxAngularAcceleration, double maxRotation, double targetRadius, double slowRadius);		
+class Mobile;
 
-		tuple<bool, Triple, double> getVelInc();
+class LookWhereYoureGoing : public Kinematic {
+        public:
+                static const unsigned int type = BEHAVIOR_LOOKWHEREYOUREGOING;
+                Mobile *character;
+                Mobile *target;
+                double maxAngularAcceleration;
+                double maxRotation;
+                double targetRadius;
+                double slowRadius;
+                static const double timeToTarget = 0.1;
 
+                LookWhereYoureGoing(Mobile *character, Mobile *target, double maxAngularAcceleration, double maxRotation, double targetRadius, double slowRadius);
+
+                virtual tuple<bool, Triple, double> getVelIncr();
+                void mapToRange(double *value);
 };
 
 #endif
