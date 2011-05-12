@@ -1,0 +1,7 @@
+CC=gcc
+CFLAGS=-Wall
+CXX=g++
+CXXFLAGS=-Wall -std=gnu++0x
+LD=ld
+LDLIBS=-lm
+LDFLAGS=

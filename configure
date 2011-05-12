@@ -1,0 +1,40 @@
+#!/usr/bin/env ruby
+
+MAIN_NAME = "pekomin"
+
+out = File::read("Makefile.header")
+
+compilables = Dir::open(".").grep /\.c(pp)?$/
+directdeps = Hash::new
+open = compilables.clone
+closed = []
+until open.empty? do
+        cur = open.pop()
+        curdeps = File::read(cur).lines.inject([]) do |acc, l|
+                if l.match /#include "([^"]*)"\n/ then acc.push($1) end
+                acc
+        end
+        directdeps[cur] = curdeps
+        open += curdeps.uniq - open - closed
+        closed.push(cur)
+end
+
+ostr = compilables.map { |c| c.sub(/\.c(pp)?/, ".o") }.join(" ")
+
+out += "\n\nall: " + MAIN_NAME + "\n\ndistclean:\n\trm -f *.gch *.o *~ Makefile " + MAIN_NAME + "\n\nclean:\n\trm -f *.gch " + ostr + " " + MAIN_NAME + "\n\n" + MAIN_NAME + ": " + ostr + "\n\t$(CXX) $(CXXFLAGS) -o " + MAIN_NAME + " " + ostr + " $(LDLIBS)\n\n"
+
+deps = Hash::new
+compilables.each do |c|
+        deps[c] = directdeps[c]
+        while true do
+                newdeps = deps[c].map { |d| directdeps[d] }.flatten.uniq
+                if newdeps.all? { |d| deps[c].member? d } then break end
+                deps[c] = (deps[c] + newdeps).uniq
+        end
+
+        out += c.sub(/\.c(pp)?/, ".o") + ": " + c + " " + deps[c].join(" ") + "\n\t$(CXX) $(CXXFLAGS) -c " + c + "\n\n"
+end
+
+f = File::new("Makefile", "w")
+f.write(out)
+f.close

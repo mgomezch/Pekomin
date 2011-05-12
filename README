@@ -1,0 +1,6 @@
+Para compilar:
+./configure.rb
+make
+
+Para jugar:
+./pekomin
