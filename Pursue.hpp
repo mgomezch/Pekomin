@@ -1,18 +1,21 @@
 #ifndef _PURSUE_HPP
 #define _PURSUE_HPP
 
-#include "Seek.hpp"
+#include "Kinematic.hpp"
 
 using namespace std;
 
 class Mobile;
 
-class Pursue : public Seek {
-	public:
-		double maxPrediction;
-		Mobile *target;
+class Pursue : public Kinematic {
+        public:
+                static const unsigned int type = BEHAVIOR_PURSUE;
+                Mobile *character;
+                Mobile *target;
+                double maxAcceleration;
+                double maxPrediction;
 
-                pair<Triple, double> getSteering();
+                Pursue(Mobile *character, Mobile *target, double maxAcceleration);
 };
 
 #endif

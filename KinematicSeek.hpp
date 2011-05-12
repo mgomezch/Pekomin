@@ -7,7 +7,7 @@ using namespace std;
 
 class Ent;
 
-class KinematicSeek : Kinematic {
+class KinematicSeek : public Kinematic {
         public:
                 static const unsigned int type = BEHAVIOR_KINEMATICSEEK;
                 Ent *character;
@@ -15,7 +15,6 @@ class KinematicSeek : Kinematic {
                 double maxSpeed;
 
                 KinematicSeek(Ent *character, Ent *target, double maxSpeed);
-                pair<Triple, double> getSteering();
 };
 
 #endif

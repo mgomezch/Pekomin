@@ -7,16 +7,14 @@ using namespace std;
 
 class Mobile;
 
-class Flee : Behavior {
-	public:
+class Flee : public Kinematic {
+        public:
                 static const unsigned int type = BEHAVIOR_FLEE;
-		Mobile *character;
-		Mobile *target;
-		double maxAcceleration;
+                Mobile *character;
+                Mobile *target;
+                double maxAcceleration;
 
                 Flee(Mobile *character, Mobile *target, double maxAcceleration);
-
-                pair<Triple, double> getSteering();
 };
 
 #endif

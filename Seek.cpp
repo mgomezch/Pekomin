@@ -2,18 +2,18 @@
 #include "Mobile.hpp"
 
 Seek::Seek(Mobile *character, Mobile *target, double maxAcceleration) {
-	this->character       = character;
-	this->target          = target;
-	this->maxAcceleration = maxAcceleration;
+        this->character       = character;
+        this->target          = target;
+        this->maxAcceleration = maxAcceleration;
 }
 
-pair<Triple, double> Seek::getSteering() {
-	pair<Triple, double> steering;
+tuple<bool, Triple, double> Seek::getVelIncr() {
+        tuple<bool, Triple, double> steering;
 
-	steering.first = target->pos - character->pos;
-	steering.first.normalize();
-	steering.first *= maxAcceleration;
-	steering.second = 0;
+        get<1>(steering) = target->pos - character->pos;
+        get<1>(steering).normalize();
+        get<1>(steering) *= maxAcceleration;
+        get<2>(steering) = 0;
 
-	return steering;
+        return steering;
 }

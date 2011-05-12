@@ -1,16 +1,26 @@
 #ifndef _FACE_HPP
 #define _FACE_HPP
 
-#include "Align.hpp"
+#include "Kinematic.hpp"
+
+using namespace std;
 
 class Mobile;
 
-class Face : public Align {
+class Face : public Kinematic {
         public:
                 static const unsigned int type = BEHAVIOR_FACE;
+                Mobile *character;
                 Mobile *target;
+                double maxAngularAcceleration;
+                double maxRotation;
+                double targetRadius;
+                double slowRadius;
+                static const double timeToTarget = 0.1;
 
-                pair<Triple, double> getSteering();
+                Face(Mobile *character, Mobile *target, double maxAngularAcceleration, double maxRotation, double targetRadius, double slowRadius);
+
+                void mapToRange(double *value);
 };
 
 #endif

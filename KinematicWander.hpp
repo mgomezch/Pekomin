@@ -5,7 +5,7 @@
 
 class Ent;
 
-class KinematicWander : Kinematic {
+class KinematicWander : public Kinematic {
         public:
                 static const unsigned int type = BEHAVIOR_KINEMATICWANDER;
                 Ent *character;
@@ -13,7 +13,6 @@ class KinematicWander : Kinematic {
                 double maxRotation;
 
                 KinematicWander(Ent *character, double maxSpeed, double maxRotation);
-                pair<Triple, double> getSteering();
 };
 
 #endif

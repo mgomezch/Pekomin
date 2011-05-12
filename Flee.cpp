@@ -2,18 +2,18 @@
 #include "Mobile.hpp"
 
 Flee::Flee(Mobile *character, Mobile *target, double maxAcceleration) {
-	this->character       = character;
-	this->target          = target;
-	this->maxAcceleration = maxAcceleration;
+        this->character       = character;
+        this->target          = target;
+        this->maxAcceleration = maxAcceleration;
 }
 
-pair<Triple,double> Flee::getSteering() {
-	pair<Triple,double> steering;
+tuple<bool, Triple,double> Flee::getVelIncr() {
+        tuple<bool, Triple,double> steering;
 
-	steering.first = character->pos - target->pos;
-	steering.first.normalize();
-	steering.first *= maxAcceleration;
-	steering.second = 0;
+        get<1>(steering) = character->pos - target->pos;
+        get<1>(steering).normalize();
+        get<1>(steering) *= maxAcceleration;
+        get<2>(steering) = 0;
 
-	return steering;
+        return steering;
 }

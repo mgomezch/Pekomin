@@ -1,13 +1,13 @@
 #ifndef _ALIGN_HPP
 #define _ALIGN_HPP
 
-#include "Behavior.hpp"
+#include "Kinematic.hpp"
 
 using namespace std;
 
 class Mobile;
 
-class Align : Behavior {
+class Align : public Kinematic {
         public:
                 static const unsigned int type = BEHAVIOR_ALIGN;
                 Mobile *character;
@@ -21,7 +21,6 @@ class Align : Behavior {
                 Align(Mobile *character, Mobile *target, double maxAngularAcceleration, double maxRotation, double targetRadius, double slowRadius);
 
                 void mapToRange(double *value);
-                pair<Triple, double> getSteering();
 };
 
 #endif

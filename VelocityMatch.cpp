@@ -2,23 +2,23 @@
 #include "Mobile.hpp"
 
 VelocityMatch::VelocityMatch(Mobile *character, Mobile *target, double maxAcceleration) {
-	this->character       = character;
-	this->target          = target;
-	this->maxAcceleration = maxAcceleration;
+        this->character       = character;
+        this->target          = target;
+        this->maxAcceleration = maxAcceleration;
 }
 
-pair<Triple,double> VelocityMatch::getSteering() {
-	pair<Triple,double> steering;
-	
-	steering.first = target->vel- character->vel;
-	steering.first /= timeToTarget;
+tuple<bool, Triple,double> VelocityMatch::getVelIncr() {
+        tuple<bool, Triple,double> steering;
+        
+        get<1>(steering) = target->vel- character->vel;
+        get<1>(steering) /= timeToTarget;
 
-	if (steering.first.length() > maxAcceleration) {
-		steering.first.normalize();
-		steering.first *= maxAcceleration;
-	}
+        if (get<1>(steering).length() > maxAcceleration) {
+                get<1>(steering).normalize();
+                get<1>(steering) *= maxAcceleration;
+        }
 
-	steering.second = 0;
+        get<2>(steering) = 0;
 
-	return steering;
+        return steering;
 }

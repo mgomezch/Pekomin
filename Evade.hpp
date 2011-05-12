@@ -1,18 +1,21 @@
 #ifndef _EVADE_HPP
 #define _EVADE_HPP
 
-#include "Flee.hpp"
+#include "Kinematic.hpp"
 
 using namespace std;
 
 class Mobile;
 
-class Evade : public Flee {
+class Evade : public Kinematic {
         public:
-                double maxPrediction;
+                static const unsigned int type = BEHAVIOR_EVADE;
+                Mobile *character;
                 Mobile *target;
+                double maxAcceleration;
+                double maxPrediction;
 
-                pair<Triple, double> getSteering();
+                Evade(Mobile *character, Mobile *target, double maxAcceleration);
 };
 
 #endif

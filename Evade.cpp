@@ -1,7 +1,14 @@
 #include "Evade.hpp"
 #include "Mobile.hpp"
 
-pair<Triple, double> Evade::getSteering() {
+Evade::Evade(Mobile *character, Mobile *target, double maxAcceleration) {
+        this->character       = character;
+        this->target          = target;
+        this->maxAcceleration = maxAcceleration;
+}
+
+tuple<bool, Triple, double> Evade::getVelIncr() {
+        tuple<bool, Triple, double> steering;
         Triple direction;
         double distance, speed, prediction;
 
@@ -15,8 +22,10 @@ pair<Triple, double> Evade::getSteering() {
                 prediction = distance / speed;
         }
 
-        Flee::target = target;
-        Flee::target->pos += target->vel* prediction;
+        get<1>(steering) = character->pos - target->vel * prediction;
+        get<1>(steering).normalize();
+        get<1>(steering) *= maxAcceleration;
+        get<2>(steering) = 0;
 
-        return Flee::getSteering();
+        return steering;
 }
