@@ -21,7 +21,7 @@ end
 
 ostr = compilables.map { |c| c.sub(/\.c(pp)?/, ".o") }.join(" ")
 
-out += "\n\nall: " + MAIN_NAME + "\n\ndistclean:\n\trm -f *.gch *.o *~ Makefile " + MAIN_NAME + "\n\nclean:\n\trm -f *.gch " + ostr + " " + MAIN_NAME + "\n\n" + MAIN_NAME + ": " + ostr + "\n\t$(CXX) $(CXXFLAGS) -o " + MAIN_NAME + " " + ostr + " $(LDLIBS)\n\n"
+out += "\n\nall: " + MAIN_NAME + "\n\ndistclean:\n\trm -f *.gch *.o *~ Makefile " + MAIN_NAME + "\n\nclean:\n\trm -f *.gch " + ostr + " " + MAIN_NAME + "\n\n" + MAIN_NAME + ": " + ostr + "\n\t$(CXX) $(CXXOPTS) -o " + MAIN_NAME + " " + ostr + " $(LDLIBS)\n\n"
 
 deps = Hash::new
 compilables.each do |c|
@@ -32,7 +32,7 @@ compilables.each do |c|
                 deps[c] = (deps[c] + newdeps).uniq
         end
 
-        out += c.sub(/\.c(pp)?/, ".o") + ": " + c + " " + deps[c].join(" ") + "\n\t$(CXX) $(CXXFLAGS) -c " + c + "\n\n"
+        out += c.sub(/\.c(pp)?/, ".o") + ": " + c + " " + deps[c].join(" ") + "\n\t$(CXX) $(CXXOPTS) -c " + c + "\n\n"
 end
 
 f = File::new("Makefile", "w")
