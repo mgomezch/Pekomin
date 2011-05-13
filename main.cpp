@@ -73,8 +73,8 @@ enum cam_enum {
 };
 #define N_CAMS 4
 
-int ww = 800;
-int wh = 600;
+int ww = 512;
+int wh = 384;
 int pass;
 
 enum passes {
@@ -344,8 +344,6 @@ void initJuego() {
 }
 
 void buildLists() {
-        int p;
-
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
         glGenTextures(1, &tblur);
@@ -527,23 +525,25 @@ void buildLists() {
                 glPopMatrix();
         glEndList();
 
-        glNewList(checker, GL_COMPILE);
-                glBegin(GL_QUADS);
-                        glNormal3f(0, 1, 0);
-                        p = 0;
-                        for (i = -100; i < 100; i += 1) {
-                                for (j = -100; j < 100; j++) {
+        {
+                int p = 0;
+                glNewList(checker, GL_COMPILE);
+                        glBegin(GL_QUADS);
+                                glNormal3f(0, 0, 1);
+                                for (i = -100; i < 100; i += 1) {
+                                        for (j = -100; j < 100; j++) {
+                                                p ^= 1;
+                                                if (p) continue;
+                                                glVertex3f(i    , j    , 0);
+                                                glVertex3f(i + 1, j    , 0);
+                                                glVertex3f(i + 1, j + 1, 0);
+                                                glVertex3f(i    , j + 1, 0);
+                                        }
                                         p ^= 1;
-                                        if (p) continue;
-                                        glVertex3f(i    , 0, j    );
-                                        glVertex3f(i + 1, 0, j    );
-                                        glVertex3f(i + 1, 0, j + 1);
-                                        glVertex3f(i    , 0, j + 1);
                                 }
-                                p ^= 1;
-                        }
-                glEnd();
-        glEndList();
+                        glEnd();
+                glEndList();
+        }
 
         glNewList(borde, GL_COMPILE);
                 glPushMatrix();
@@ -741,13 +741,6 @@ void display() {
         glLoadIdentity();
 
 /*
-        glColor4ub(255, 255, 255, 255);
-        glCallList(checker);
-        glColor4ub(0, 0, 0, 255);
-        glTranslatef(1, 0, 0);
-        glCallList(checker);
-*/
-/*
         glPushMatrix();
                 //glLoadIdentity();
                 glRasterPos3f(0, 0, 10);
@@ -800,6 +793,18 @@ void display() {
                 glTranslatef(-cam_x, -cam_y, -cam_z);
                 glRotatef(-90, 0, 1, 0);
                 glRotatef(-90, 1, 0, 0);
+
+                if (pass == PASS_LAST) {
+                        glPushMatrix();
+                                glDisable(GL_LIGHTING);
+                                glColor4ub(255, 255, 255, 255);
+                                glCallList(checker);
+                                glTranslatef(1, 0, 0);
+                                glColor4ub(0, 0, 255, 255);
+                                glCallList(checker);
+                                glEnable(GL_LIGHTING);
+                        glPopMatrix();
+                }
 
                 /* Balas del jugador */
                 for (i = 0; i < N_PBALAS; i++) if (pb[i] && pbl[i] == level) {
@@ -1131,6 +1136,20 @@ void keydown(unsigned char key, int mx, int my) {
         else if (key == key_shoot)        keystate_shoot        = 1;
         else if (key == key_cam_switch) {
                 if ((cam += 1) >= N_CAMS) cam = 0;
+                switch (cam) {
+                        case CAM_OVERHEAD:
+                                printf("cam is now overhead\n"); // DEBUG
+                                break;
+                        case CAM_FPS:
+                                printf("cam is now fps\n"); // DEBUG
+                                break;
+                        case CAM_TPS:
+                                printf("cam is now tps\n"); // DEBUG
+                                break;
+                        case CAM_MANUAL:
+                                printf("cam is now manual\n"); // DEBUG
+                                break;
+                }
                 cam_old_x    = cam_x;
                 cam_old_y    = cam_y;
                 cam_old_z    = cam_z;
@@ -1476,7 +1495,6 @@ void initGL() {
         glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER , 0);
         glLightModeli(GL_LIGHT_MODEL_TWO_SIDE     , 1);
 
-/*
         glLightfv(GL_LIGHT0, GL_AMBIENT , black4f);
         glLightfv(GL_LIGHT0, GL_DIFFUSE , white4f);
         glLightfv(GL_LIGHT0, GL_SPECULAR, black4f);
@@ -1487,6 +1505,7 @@ void initGL() {
         glLightf(GL_LIGHT0, GL_QUADRATIC_ATTENUATION,   0);
         glEnable(GL_LIGHT0);
 
+/*
         glLightfv(GL_LIGHT1, GL_AMBIENT , black4f      );
         glLightfv(GL_LIGHT1, GL_SPECULAR, black4f      );
         glLightfv(GL_LIGHT1, GL_DIFFUSE , light_diffuse);
