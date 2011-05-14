@@ -1,5 +1,9 @@
 #include "Actor.hpp"
 
+#ifdef DEBUG_ACTOR
+#include <stdio.h>
+#endif
+
 using namespace std;
 
 void Actor::update(unsigned int ticks) {
@@ -32,32 +36,64 @@ void Actor::update(unsigned int ticks) {
         for (i = 0; i < behaviors.size(); i++) {
                 family = behaviors[i]->family();
                 if (family & BEHAVIOR_FAMILY_DIRECT) {
+#ifdef DEBUG_ACTOR
+                        printf("actor %p: behavior %d is direct\n", this, i);
+#endif
                         steering = static_cast<Direct*>(behaviors[i])->getPos();
                         if (get<0>(steering)) {
                                 n_direct++;
                                 v_direct.push_back(steering);
                         }
+#ifdef DEBUG_ACTOR
+                        printf("actor %p: behavior %d: steering: <%s, ", this, i, get<0>(steering) ? "true" : "false");
+                        get<1>(steering).print();
+                        printf(", %f>\n", get<2>(steering));
+#endif
                 }
                 if (family & BEHAVIOR_FAMILY_STATIC) {
+#ifdef DEBUG_ACTOR
+                        printf("actor %p: behavior %d is static\n", this, i); // DEBUG_ACTOR
+#endif
                         steering = static_cast<Static*>(behaviors[i])->getPosIncr();
                         if (get<0>(steering)) {
                                 n_static++;
                                 v_static.push_back(steering);
                         }
+#ifdef DEBUG_ACTOR
+                        printf("actor %p: behavior %d: steering: <%s, ", this, i, get<0>(steering) ? "true" : "false");
+                        get<1>(steering).print();
+                        printf(", %f>\n", get<2>(steering));
+#endif
                 }
                 if (family & BEHAVIOR_FAMILY_KINEMATIC) {
+#ifdef DEBUG_ACTOR
+                        printf("actor %p: behavior %d is kinematic\n", this, i); // DEBUG_ACTOR
+#endif
                         steering = static_cast<Kinematic*>(behaviors[i])->getVelIncr();
                         if (get<0>(steering)) {
                                 n_kinematic++;
                                 v_kinematic.push_back(steering);
                         }
+#ifdef DEBUG_ACTOR
+                        printf("actor %p: behavior %d: steering: <%s, ", this, i, get<0>(steering) ? "true" : "false");
+                        get<1>(steering).print();
+                        printf(", %f>\n", get<2>(steering));
+#endif
                 }
                 if (family & BEHAVIOR_FAMILY_DYNAMIC) {
+#ifdef DEBUG_ACTOR
+                        printf("actor %p: behavior %d: dynamic\n", this, i); // DEBUG_ACTOR
+#endif
                         steering = static_cast<Dynamic*>(behaviors[i])->getForceIncr();
                         if (get<0>(steering)) {
                                 n_dynamic++;
                                 v_dynamic.push_back(steering);
                         }
+#ifdef DEBUG_ACTOR
+                        printf("actor %p: behavior %d: steering: <%s, ", this, i, get<0>(steering) ? "true" : "false");
+                        get<1>(steering).print();
+                        printf(", %f>\n", get<2>(steering));
+#endif
                 }
         }
 
@@ -96,7 +132,10 @@ void Actor::update(unsigned int ticks) {
                         sum_static_t += get<1>(v_static[i]);
                         sum_static_d += get<2>(v_static[i]);
                 }
-                this->pos += this->vel  * (double)ticks + sum_static_t;
-                this->ang += this->vrot *         ticks + sum_static_d;
+                this->pos += sum_static_t;
+                this->ang += sum_static_d;
         }
+
+        this->pos += this->vel ;
+        this->ang += this->vrot;
 }

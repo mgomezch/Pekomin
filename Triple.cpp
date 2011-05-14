@@ -146,5 +146,5 @@ Triple& Triple::normalize() {
 }
 
 void Triple::print() {
-        printf("x = %f, y = %f, z = %f", x, y, z);
+        printf("(%f, %f, %f)", x, y, z);
 }

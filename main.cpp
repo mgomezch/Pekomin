@@ -292,12 +292,14 @@ void display() {
                         glPopMatrix();
                 }
 
-                for (i = 0; (unsigned int)i < ents.size(); i++) {
-                        glPushMatrix();
+                if (pass == PASS_LAST) {
+                        for (i = 0; (unsigned int)i < ents.size(); i++) {
+                                glPushMatrix();
                                 glTranslatef(ents[i]->pos.x, ents[i]->pos.y, ents[i]->pos.z);
                                 glRotatef(ents[i]->ang, 0, 0, 1);
                                 ents[i]->draw();
-                        glPopMatrix();
+                                glPopMatrix();
+                        }
                 }
 
                 /* Balas del jugador */
@@ -630,20 +632,22 @@ void keydown(unsigned char key, int mx, int my) {
         else if (key == key_shoot)        keystate_shoot        = 1;
         else if (key == key_cam_switch) {
                 if ((cam += 1) >= N_CAMS) cam = 0;
+#ifdef DEBUG_MAIN
                 switch (cam) {
                         case CAM_OVERHEAD:
-                                printf("cam is now overhead\n"); // DEBUG
+                                printf("cam is now overhead\n");
                                 break;
                         case CAM_FPS:
-                                printf("cam is now fps\n"); // DEBUG
+                                printf("cam is now fps\n");
                                 break;
                         case CAM_TPS:
-                                printf("cam is now tps\n"); // DEBUG
+                                printf("cam is now tps\n");
                                 break;
                         case CAM_MANUAL:
-                                printf("cam is now manual\n"); // DEBUG
+                                printf("cam is now manual\n");
                                 break;
                 }
+#endif
                 cam_old_x    = cam_x;
                 cam_old_y    = cam_y;
                 cam_old_z    = cam_z;
