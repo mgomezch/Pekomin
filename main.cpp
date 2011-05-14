@@ -28,6 +28,8 @@
 #include "VelocityMatch.hpp"
 #include "Wander.hpp"
 
+#include "RuntimePekomin.hpp"
+
 using namespace std;
 
 #define N_DELTAS           50
@@ -210,7 +212,7 @@ void initJuego() {
         {
                 RuntimePekomin *p1 = new RuntimePekomin();
                 RuntimePekomin *p2 = new RuntimePekomin(Triple(10, 10, 0), 45);
-                p1->addBehavior(new Seek(&p1, &p2, 1));
+                p1->addBehavior(new Seek(p1, p2, 1.0));
                 ents.push_back(p1);
                 ents.push_back(p2);
         }

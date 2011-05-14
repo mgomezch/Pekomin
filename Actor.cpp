@@ -1,7 +1,5 @@
 #include "Actor.hpp"
 
-#include <vector>
-
 using namespace std;
 
 void Actor::update(unsigned int ticks) {
@@ -32,30 +30,30 @@ void Actor::update(unsigned int ticks) {
         unsigned int family;
 
         for (i = 0; i < behaviors.size(); i++) {
-                family = behaviors[i].family();
+                family = behaviors[i]->family();
                 if (family == BEHAVIOR_FAMILY_DIRECT) {
-                        steering = behaviors[i]->getPos();
+                        steering = static_cast<Direct*>(behaviors[i])->getPos();
                         if (get<0>(steering)) {
                                 n_direct++;
                                 v_direct.push_back(steering);
                         }
                 }
                 if (family == BEHAVIOR_FAMILY_STATIC) {
-                        steering = behaviors[i]->getPosIncr();
+                        steering = static_cast<Static*>(behaviors[i])->getPosIncr();
                         if (get<0>(steering)) {
                                 n_static++;
                                 v_static.push_back(steering);
                         }
                 }
                 if (family == BEHAVIOR_FAMILY_KINEMATIC) {
-                        steering = behaviors[i]->getVelIncr();
+                        steering = static_cast<Kinematic*>(behaviors[i])->getVelIncr();
                         if (get<0>(steering)) {
                                 n_kinematic++;
                                 v_kinematic.push_back(steering);
                         }
                 }
                 if (family == BEHAVIOR_FAMILY_DYNAMIC) {
-                        steering = behaviors[i]->getForceIncr();
+                        steering = static_cast<Dynamic*>(behaviors[i])->getForceIncr();
                         if (get<0>(steering)) {
                                 n_dynamic++;
                                 v_dynamic.push_back(steering);
@@ -64,39 +62,40 @@ void Actor::update(unsigned int ticks) {
         }
 
         for (i = 0; i < n_direct; i++) {
-                avg_direct_t += get<1>(v_direct);
-                avg_direct_d += get<2>(v_direct);
+                avg_direct_t += get<1>(v_direct[i]);
+                avg_direct_d += get<2>(v_direct[i]);
         }
         avg_direct_t /= n_direct;
         avg_direct_d /= n_direct;
 
         for (i = 0; i < n_static; i++) {
-                avg_static_t += get<1>(v_static);
-                avg_static_d += get<2>(v_static);
+                avg_static_t += get<1>(v_static[i]);
+                avg_static_d += get<2>(v_static[i]);
         }
         avg_static_t /= n_static;
         avg_static_d /= n_static;
 
         for (i = 0; i < n_kinematic; i++) {
-                avg_kinematic_t += get<1>(v_kinematic);
-                avg_kinematic_d += get<2>(v_kinematic);
+                avg_kinematic_t += get<1>(v_kinematic[i]);
+                avg_kinematic_d += get<2>(v_kinematic[i]);
         }
         avg_kinematic_t /= n_kinematic;
         avg_kinematic_d /= n_kinematic;
 
         for (i = 0; i < n_dynamic; i++) {
-                avg_dynamic_t += get<1>(v_dynamic);
-                avg_dynamic_d += get<2>(v_dynamic);
+                avg_dynamic_t += get<1>(v_dynamic[i]);
+                avg_dynamic_d += get<2>(v_dynamic[i]);
         }
         avg_dynamic_t /= n_dynamic;
         avg_dynamic_d /= n_dynamic;
-
+	
+	/*
         pos += vel * time;
         ang += vrot * time;
         vel += behaviors[i].get<2>(steering) * time;
         ang += behaviors[i].get<3>(steering) * time;
 
-        /*
+       
         int i;
         vector<>;
 
