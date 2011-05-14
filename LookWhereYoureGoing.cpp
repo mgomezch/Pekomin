@@ -19,25 +19,25 @@ tuple<bool, Triple, double> LookWhereYoureGoing::getVelIncr() {
         double rotation, rotationSize, targetRotation, angularAcceleration;
 
         if (character->vel.length() == 0) {
-		get<0>(steering) = false;
-		return steering;
-	}
+                get<0>(steering) = false;
+                return steering;
+        }
 
-	rotation = atan2(-character->vel.y, character->vel.x) - character->ang;
+        rotation = atan2(-character->vel.y, character->vel.x) - character->ang;
         mapToRange(&rotation);
         rotationSize = abs(rotation);
 
         if (rotationSize < targetRadius) {
-		get<0>(steering) = true;
-		return steering;
-	}
+                get<0>(steering) = true;
+                return steering;
+        }
 
-	if (rotationSize > slowRadius) {
-		targetRotation = maxRotation;
-	}
-	else {
-		targetRotation = maxRotation * rotationSize / slowRadius;
-	}
+        if (rotationSize > slowRadius) {
+                targetRotation = maxRotation;
+        }
+        else {
+                targetRotation = maxRotation * rotationSize / slowRadius;
+        }
 
         targetRotation *= rotation / rotationSize;
         get<2>(steering) = targetRotation - character->ang;
@@ -45,11 +45,11 @@ tuple<bool, Triple, double> LookWhereYoureGoing::getVelIncr() {
         angularAcceleration = abs(get<2>(steering));
 
         if (angularAcceleration > maxAngularAcceleration) {
-        	get<2>(steering) /= angularAcceleration;
+                get<2>(steering) /= angularAcceleration;
                 get<2>(steering) *= maxAngularAcceleration;
-	}
+        }
 
-	get<0>(steering) = true;
+        get<0>(steering) = true;
         get<1>(steering) = 0;
 
         return steering;

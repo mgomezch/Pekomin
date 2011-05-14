@@ -17,7 +17,7 @@ RuntimePekomin::RuntimePekomin(Triple pos, double ang) {
         this->vrot = 0;
 }
 
-RuntimePekomin::RuntimePekomin(Triple pos, double ang, Triple vel, Triple vang) {
+RuntimePekomin::RuntimePekomin(Triple pos, double ang, Triple vel, double vang) {
         this->pos  = pos;
         this->ang  = ang;
         this->vel  = vel;
@@ -29,6 +29,7 @@ void RuntimePekomin::addBehavior(Behavior *b) {
 }
 
 void RuntimePekomin::draw() {
+        glColor4ub(255, 0, 0, 255);
         glCallList(cubo);
 }
 

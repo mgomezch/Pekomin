@@ -26,7 +26,7 @@ tuple<bool, Triple, double> Evade::getVelIncr() {
                 prediction = distance / speed;
         }
 
-	get<0>(steering) = true;
+        get<0>(steering) = true;
         get<1>(steering) = character->pos - target->vel * prediction;
         get<1>(steering).normalize();
         get<1>(steering) *= maxAcceleration;

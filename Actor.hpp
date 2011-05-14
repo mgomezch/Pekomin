@@ -3,10 +3,7 @@
 
 #include "Mobile.hpp"
 #include "Behavior.hpp"
-#include "Direct.hpp"
-#include "Static.hpp"
-#include "Kinematic.hpp"
-#include "Dynamic.hpp"
+#include "Families.hpp"
 
 #include <vector>
 #include <tuple>

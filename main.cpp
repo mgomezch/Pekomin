@@ -10,25 +10,10 @@
 #include "game.hpp"
 #include "gl.hpp"
 
-#include "Align.hpp"
-#include "Arrive.hpp"
-#include "Evade.hpp"
-#include "Face.hpp"
-#include "Flee.hpp"
-#include "Kinematic.hpp"
-#include "KinematicArrive.hpp"
-#include "KinematicFlee.hpp"
-#include "KinematicSeek.hpp"
-#include "KinematicWander.hpp"
-#include "LookWhereYoureGoing.hpp"
-#include "Pursue.hpp"
-#include "Seek.hpp"
-#include "Separation.hpp"
-#include "Triple.hpp"
-#include "VelocityMatch.hpp"
-#include "Wander.hpp"
+#include "Behaviors.hpp"
 
 #include "RuntimePekomin.hpp"
+#include "Player.hpp"
 
 using namespace std;
 
@@ -169,6 +154,7 @@ int i, j, k;
 int lives;
 int balas;
 
+Player *player;
 vector<Ent *> ents;
 
 int power(int b, unsigned int e) {
@@ -210,11 +196,12 @@ void initJuego() {
         balas = BALAS;
 
         {
-                RuntimePekomin *p1 = new RuntimePekomin();
-                RuntimePekomin *p2 = new RuntimePekomin(Triple(10, 10, 0), 45);
-                p1->addBehavior(new Seek(p1, p2, 1.0));
+                player = new Player();
+                ents.push_back(player);
+
+                RuntimePekomin *p1 = new RuntimePekomin(Triple(10, 10, 0), 45);
+                p1->addBehavior(new Seek(p1, player, 1.0));
                 ents.push_back(p1);
-                ents.push_back(p2);
         }
 }
 
@@ -294,13 +281,22 @@ void display() {
 
                 if (pass == PASS_LAST) {
                         glPushMatrix();
+                                glScalef(5, 5, 5);
                                 glDisable(GL_LIGHTING);
                                 glColor4ub(255, 255, 255, 255);
                                 glCallList(checker);
                                 glTranslatef(1, 0, 0);
-                                glColor4ub(0, 0, 255, 255);
+                                glColor4ub(0, 0, 0, 255);
                                 glCallList(checker);
                                 glEnable(GL_LIGHTING);
+                        glPopMatrix();
+                }
+
+                for (i = 0; (unsigned int)i < ents.size(); i++) {
+                        glPushMatrix();
+                                glTranslatef(ents[i]->pos.x, ents[i]->pos.y, ents[i]->pos.z);
+                                glRotatef(ents[i]->ang, 0, 0, 1);
+                                ents[i]->draw();
                         glPopMatrix();
                 }
 
@@ -684,7 +680,7 @@ void juego(int v) {
                 if (keystate_back)  pv   -= delta / 20000.0;
                 if (keystate_left)  pvrz += delta / 5000.0;
                 if (keystate_right) pvrz -= delta / 5000.0;
-                pv   += -0.005 * pv   * delta;
+                pv += -0.005 * pv * delta;
                 if (!keystate_fwd && !keystate_back && fabs(pv) < 0.001) pv = 0;
                 pvrz += -0.005 * pvrz * delta;
                 prz += (pv < 0 ? -1 : 1) * pvrz * delta;
@@ -699,6 +695,12 @@ void juego(int v) {
                 px += pvx * delta;
                 py += pvy * delta;
                 pz += pvz * delta;
+
+                player->pos  = Triple(px , py , pz );
+                player->vel  = Triple(pvx, pvy, pvz);
+                player->ang  = prz;
+                player->vrot = pvrz;
+
 /*
                 if (px < -(W_TABLERO - mesh[MESH_TANK].size_x)/2) {
                         px  = -(W_TABLERO - mesh[MESH_TANK].size_x)/2;
@@ -808,6 +810,10 @@ void juego(int v) {
                         cam_rotx = cam_rotx * t + cam_old_rotx * (1 - t);
                         cam_roty = cam_roty * t + cam_old_roty * (1 - t);
                 }
+        }
+
+        for (i = 0; (unsigned int)i < ents.size(); i++) {
+                ents[i]->update(delta);
         }
 
         if (pbn < N_PBALAS) {

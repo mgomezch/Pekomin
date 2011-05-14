@@ -14,7 +14,7 @@ Flee::Flee(Mobile *character, Mobile *target, double maxAcceleration) {
 tuple<bool, Triple,double> Flee::getVelIncr() {
         tuple<bool, Triple,double> steering;
 
-	get<0>(steering) = true;
+        get<0>(steering) = true;
         get<1>(steering) = character->pos - target->pos;
         get<1>(steering).normalize();
         get<1>(steering) *= maxAcceleration;

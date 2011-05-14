@@ -9,7 +9,7 @@ class RuntimePekomin : public Actor {
         public:
                 virtual void draw();
 
-                RuntimePekomin(Triple pos, double ang, Triple vel, Triple vang);
+                RuntimePekomin(Triple pos, double ang, Triple vel, double vang);
                 RuntimePekomin(Triple pos, double ang);
                 RuntimePekomin();
                 ~RuntimePekomin();
