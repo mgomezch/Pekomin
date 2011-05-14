@@ -28,7 +28,7 @@ void RuntimePekomin::addBehavior(Behavior *b) {
         behaviors.push_back(b);
 }
 
-void display() {
+void RuntimePekomin::draw() {
         glCallList(cubo);
 }
 

@@ -3,6 +3,63 @@
 #include <png.h>
 #include <sysexits.h>
 
+int cuadrado        = -1,
+    cuadrado_hd     = -1,
+    cuadrado_simple = -1,
+    cubo            = -1,
+    cubo_simple     = -1,
+    checker         = -1,
+    borde           = -1,
+    light_cone      = -1,
+    bala            = -1,
+    segmento        = -1,
+    barra           = -1,
+    cielo           = -1;
+
+GLfloat black4f[4]       = {0, 0, 0, 1};
+GLfloat white4f[4]       = {1, 1, 1, 1};
+
+GLubyte color_ss_on[4]   = {255,   0,   0, 160};
+GLubyte color_ss_off[4]  = { 50,   0,   0, 160};
+GLubyte color_borde[4]   = { 90,  60,  30, 255};
+GLubyte color_inicial[4] = {124, 252,   0, 255};
+GLubyte color_medio[4]   = {255, 235,   0, 255};
+GLubyte color_lleno[4]   = {255,   0,   0, 255};
+GLubyte color_empty[4]   = {139, 136, 120, 255};
+GLubyte color_wall[4]    = { 90,  40,   0, 255};
+/* GLfloat light_diffuse[4]      = {1, 1, 1, 1}; */
+
+int ss[12][7] = {
+        {1, 1, 1, 1, 1, 1, 0}, /* 0 */
+        {0, 1, 1, 0, 0, 0, 0}, /* 1 */
+        {1, 1, 0, 1, 1, 0, 1}, /* 2 */
+        {1, 1, 1, 1, 0, 0, 1}, /* 3 */
+        {0, 1, 1, 0, 0, 1, 1}, /* 4 */
+        {1, 0, 1, 1, 0, 1, 1}, /* 5 */
+        {1, 0, 1, 1, 1, 1, 1}, /* 6 */
+        {1, 1, 1, 0, 0, 0, 0}, /* 7 */
+        {1, 1, 1, 1, 1, 1, 1}, /* 8 */
+        {1, 1, 1, 1, 0, 1, 1}, /* 9 */
+        {0, 0, 0, 0, 0, 0, 1}, /* - */
+        {0, 0, 0, 0, 0, 0, 0}  /*   */
+};
+
+int segs[12];
+
+GLubyte *tstars_img  = NULL,
+        *tdesert_img = NULL,
+        *tcielo_img  = NULL;
+
+GLuint   tstars  = -1,
+         tdesert = -1,
+         tcielo  = -1;
+
+GLuint   tblur = -1;
+
+int tw = 0,
+    th = 0,
+    ta = 0;
+
 int loadPNG(char *name, int *outWidth, int *outHeight, int *outHasAlpha, GLubyte **outData) {
         int i;
         png_structp png_ptr;

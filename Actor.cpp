@@ -4,7 +4,7 @@
 
 using namespace std;
 
-void update(unsigned int ticks) {
+void Actor::update(unsigned int ticks) {
         /*
         int i;
         vector<>;
