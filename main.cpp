@@ -167,6 +167,8 @@ int i, j, k;
 int lives;
 int balas;
 
+vector<Ent *> ents;
+
 int power(int b, unsigned int e) {
         int r = 1;
         for (; e > 0; e--) {
@@ -204,6 +206,14 @@ void initJuego() {
         }
         pts   = 0;
         balas = BALAS;
+
+        {
+                RuntimePekomin *p1 = new RuntimePekomin();
+                RuntimePekomin *p2 = new RuntimePekomin(Triple(10, 10, 0), 45);
+                p1->addBehavior(new Seek(&p1, &p2, 1));
+                ents.push_back(p1);
+                ents.push_back(p2);
+        }
 }
 
 void display() {
