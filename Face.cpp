@@ -25,23 +25,31 @@ tuple<bool, Triple, double> Face::getVelIncr() {
         mapToRange(&rotation);
         rotationSize = abs(rotation);
 
-        if (rotationSize >= targetRadius) {
-                if (rotationSize > slowRadius) targetRotation = maxRotation;
-                else                           targetRotation = maxRotation * rotationSize / slowRadius;
+        if (rotationSize < targetRadius) {
+		get<0>(steering) = false;
+		return steering;
+	}
 
-                targetRotation *= rotation / rotationSize;
-                get<2>(steering) = targetRotation - character->ang;
-                get<2>(steering) /= timeToTarget;
-                angularAcceleration = abs(get<2>(steering));
+	if (rotationSize > slowRadius) {
+		targetRotation = maxRotation;
+	}
+        else {
+	        targetRotation = maxRotation * rotationSize / slowRadius;
+	}
 
-                if (angularAcceleration > maxAngularAcceleration) {
-                        get<2>(steering) /= angularAcceleration;
-                        get<2>(steering) *= maxAngularAcceleration;
-                }
+        targetRotation *= rotation / rotationSize;
+        get<2>(steering) = targetRotation - character->ang;
+        get<2>(steering) /= timeToTarget;
+        angularAcceleration = abs(get<2>(steering));
 
-                get<1>(steering) = 0;
+	if (angularAcceleration > maxAngularAcceleration) {
+        	get<2>(steering) /= angularAcceleration;
+                get<2>(steering) *= maxAngularAcceleration;
         }
 
+	get<0>(steering) = true;
+        get<1>(steering) = 0;
+        
         return steering;
 }
 

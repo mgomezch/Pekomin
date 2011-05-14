@@ -26,6 +26,7 @@ tuple<bool, Triple, double> Pursue::getVelIncr() {
                 prediction = distance / speed;
         }
 
+	get<0>(steering) = true;
         get<1>(steering) = target->pos + target->vel * prediction - character->pos;
         get<1>(steering).normalize();
         get<1>(steering) *= maxAcceleration;
