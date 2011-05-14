@@ -18,28 +18,39 @@ tuple<bool, Triple, double> LookWhereYoureGoing::getVelIncr() {
         tuple<bool, Triple, double> steering;
         double rotation, rotationSize, targetRotation, angularAcceleration;
 
-        if (character->vel.length() > 0) {
-                rotation = atan2(-character->vel.y, character->vel.x) - character->ang;
-                mapToRange(&rotation);
-                rotationSize = abs(rotation);
+        if (character->vel.length() == 0) {
+		get<0>(steering) = false;
+		return steering;
+	}
 
-                if (rotationSize >= targetRadius) {
-                        if (rotationSize > slowRadius) targetRotation = maxRotation;
-                        else                           targetRotation = maxRotation * rotationSize / slowRadius;
+	rotation = atan2(-character->vel.y, character->vel.x) - character->ang;
+        mapToRange(&rotation);
+        rotationSize = abs(rotation);
 
-                        targetRotation *= rotation / rotationSize;
-                        get<2>(steering) = targetRotation - character->ang;
-                        get<2>(steering) /= timeToTarget;
-                        angularAcceleration = abs(get<2>(steering));
+        if (rotationSize < targetRadius) {
+		get<0>(steering) = true;
+		return steering;
+	}
 
-                        if (angularAcceleration > maxAngularAcceleration) {
-                                get<2>(steering) /= angularAcceleration;
-                                get<2>(steering) *= maxAngularAcceleration;
-                        }
+	if (rotationSize > slowRadius) {
+		targetRotation = maxRotation;
+	}
+	else {
+		targetRotation = maxRotation * rotationSize / slowRadius;
+	}
 
-                        get<1>(steering) = 0;
-                }
-        }
+        targetRotation *= rotation / rotationSize;
+        get<2>(steering) = targetRotation - character->ang;
+        get<2>(steering) /= timeToTarget;
+        angularAcceleration = abs(get<2>(steering));
+
+        if (angularAcceleration > maxAngularAcceleration) {
+        	get<2>(steering) /= angularAcceleration;
+                get<2>(steering) *= maxAngularAcceleration;
+	}
+
+	get<0>(steering) = true;
+        get<1>(steering) = 0;
 
         return steering;
 }

@@ -24,6 +24,7 @@ tuple<bool, Triple, double> Wander::getVelIncr() {
         center = character->pos + character->orientation() * wanderOffset;
         center += target->orientation() * wanderRadius;
         steering = Face::getVelIncr();
+	get<0>(steering) = true;
         get<1>(steering) += character->orientation() * maxAcceleration;
 
         return steering;
