@@ -9,7 +9,6 @@ class Mobile;
 
 class Align : public Kinematic {
         public:
-                static const unsigned int type = BEHAVIOR_ALIGN;
                 Mobile *character;
                 Mobile *target;
                 double maxAngularAcceleration;
@@ -19,6 +18,7 @@ class Align : public Kinematic {
                 static const double timeToTarget = 0.1;
 
                 Align(Mobile *character, Mobile *target, double maxAngularAcceleration, double maxRotation, double targetRadius, double slowRadius);
+                virtual unsigned int type();
 
                 virtual tuple<bool, Triple, double> getVelIncr();
                 void mapToRange(double *value);

@@ -9,13 +9,13 @@ class Mobile;
 
 class Evade : public Kinematic {
         public:
-                static const unsigned int type = BEHAVIOR_EVADE;
                 Mobile *character;
                 Mobile *target;
                 double maxAcceleration;
                 double maxPrediction;
 
                 Evade(Mobile *character, Mobile *target, double maxAcceleration);
+                virtual unsigned int type();
 
                 virtual tuple<bool, Triple, double> getVelIncr();
 };

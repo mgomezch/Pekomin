@@ -9,13 +9,13 @@ class Mobile;
 
 class VelocityMatch : public Kinematic {
         public:
-                static const unsigned int type = BEHAVIOR_VELOCITYMATCH;
                 Mobile *character;
                 Mobile *target;
                 double maxAcceleration;
                 static const double timeToTarget = 0.1;
 
                 VelocityMatch(Mobile *character, Mobile *target, double maxAcceleration);
+                virtual unsigned int type();
 
                 virtual tuple<bool, Triple, double> getVelIncr();
 };

@@ -1,6 +1,10 @@
 #include "Arrive.hpp"
 #include "Mobile.hpp"
 
+unsigned int Arrive::type() {
+        return BEHAVIOR_ARRIVE;
+}
+
 Arrive::Arrive(Mobile *character, Mobile *target, double maxAcceleration, double maxSpeed, double targetRadius, double slowRadius) {
         this->character       = character;
         this->target          = target;

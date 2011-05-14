@@ -2,6 +2,10 @@
 #include "Mobile.hpp"
 #include "util.hpp"
 
+unsigned int Wander::type() {
+        return BEHAVIOR_WANDER;
+}
+
 Wander::Wander(Mobile *character, Mobile *target, double maxAngularAcceleration, double maxRotation, double targetRadius, double slowRadius, double wanderOffset, double wanderRadius, double wanderRate, double wanderOrientation, double maxAcceleration) : Face(character, target, maxAngularAcceleration, maxRotation, targetRadius, slowRadius) {
         //Face::Face(character, target, maxAngularAcceleration, maxRotation, targetRadius, slowRadius);
         this->wanderOffset      = wanderOffset;

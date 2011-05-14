@@ -9,8 +9,7 @@ using namespace std;
 
 class Kinematic : public Behavior {
         public:
-                static const unsigned int family = BEHAVIOR_FAMILY_KINEMATIC;
-
+                virtual unsigned int family();
                 virtual tuple<bool, Triple, double> getVelIncr() = 0;
 };
 

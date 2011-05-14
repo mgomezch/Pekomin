@@ -9,7 +9,6 @@ class Ent;
 
 class KinematicArrive : public Kinematic {
         public:
-                static const unsigned int type = BEHAVIOR_KINEMATICARRIVE;
                 Ent *character;
                 Ent *target;
                 double maxSpeed;
@@ -17,6 +16,7 @@ class KinematicArrive : public Kinematic {
                 static const double timeToTarget = 0.25;
 
                 KinematicArrive(Ent *character, Ent *target, double maxSpeed, double radius);
+                virtual unsigned int type();
 
                 virtual tuple<bool, Triple, double> getVelIncr();
 };

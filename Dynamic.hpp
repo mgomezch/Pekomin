@@ -9,8 +9,7 @@ using namespace std;
 
 class Dynamic : public Behavior {
         public:
-                static const unsigned int family = BEHAVIOR_FAMILY_DYNAMIC;
-
+                virtual unsigned int family();
                 virtual tuple<bool, Triple, double> getForceIncr() = 0;
 };
 

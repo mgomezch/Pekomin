@@ -40,9 +40,8 @@ enum behaviors {
 
 class Behavior {
         public:
-                static const unsigned int family = BEHAVIOR_FAMILY_INVALID;
-                static const unsigned int type   = BEHAVIOR_INVALID;
-                //double getNewOrientation(Triple position, double currentOrientation, Triple velocity);
+                virtual unsigned int family() = 0;
+                virtual unsigned int type() = 0;
 };
 
 #endif

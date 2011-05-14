@@ -9,8 +9,7 @@ using namespace std;
 
 class Direct : public Behavior {
         public:
-                static const unsigned int family = BEHAVIOR_FAMILY_DIRECT;
-
+                virtual unsigned int family();
                 virtual tuple<bool, Triple, double> getPos() = 0;
 };
 

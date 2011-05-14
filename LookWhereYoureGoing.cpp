@@ -1,6 +1,10 @@
 #include "LookWhereYoureGoing.hpp"
 #include "Mobile.hpp"
 
+unsigned int LookWhereYoureGoing::type() {
+        return BEHAVIOR_LOOKWHEREYOUREGOING;
+}
+
 LookWhereYoureGoing::LookWhereYoureGoing(Mobile *character, Mobile *target, double maxAngularAcceleration, double maxRotation, double targetRadius, double slowRadius) {
         this->character              = character;
         this->target                 = target;

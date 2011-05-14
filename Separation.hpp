@@ -9,7 +9,6 @@ class Mobile;
 
 class Separation : public Kinematic {
         public:
-                static const unsigned int type = BEHAVIOR_SEPARATION;
                 Mobile *character;
                 Mobile *target;
                 double threshold;
@@ -17,6 +16,7 @@ class Separation : public Kinematic {
                 double maxAcceleration;
 
                 Separation(Mobile *character, Mobile *target, double threshold, double decayCoefficient, double maxAcceleration);
+                virtual unsigned int type();
 
                 tuple<bool, Triple, double> getVelIncr();
 };

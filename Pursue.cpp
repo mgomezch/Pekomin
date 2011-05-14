@@ -1,6 +1,10 @@
 #include "Pursue.hpp"
 #include "Mobile.hpp"
 
+unsigned int Pursue::type() {
+        return BEHAVIOR_PURSUE;
+}
+
 Pursue::Pursue(Mobile *character, Mobile *target, double maxAcceleration) {
         this->character       = character;
         this->target          = target;

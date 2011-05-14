@@ -9,13 +9,13 @@ class Mobile;
 
 class Pursue : public Kinematic {
         public:
-                static const unsigned int type = BEHAVIOR_PURSUE;
                 Mobile *character;
                 Mobile *target;
                 double maxAcceleration;
                 double maxPrediction;
 
                 Pursue(Mobile *character, Mobile *target, double maxAcceleration);
+                virtual unsigned int type();
 
                 virtual tuple<bool, Triple, double> getVelIncr();
 };

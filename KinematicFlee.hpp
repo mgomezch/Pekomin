@@ -9,12 +9,12 @@ class Ent;
 
 class KinematicFlee : public Kinematic {
         public:
-                static const unsigned int type = BEHAVIOR_KINEMATICFLEE;
                 Ent *character;
                 Ent *target;
                 double maxSpeed;
 
                 KinematicFlee(Ent *character, Ent *target, double maxSpeed);
+                virtual unsigned int type();
 
                 virtual tuple<bool, Triple, double> getVelIncr();
 };

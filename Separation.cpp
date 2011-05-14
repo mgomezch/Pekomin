@@ -3,6 +3,10 @@
 
 #define MIN(X, Y)  ((X) < (Y) ? (X) : (Y))
 
+unsigned int Separation::type() {
+        return BEHAVIOR_SEPARATION;
+}
+
 Separation::Separation(Mobile *character, Mobile *target, double threshold, double decayCoefficient, double maxAcceleration) {
         this->character        = character;
         this->target           = target;

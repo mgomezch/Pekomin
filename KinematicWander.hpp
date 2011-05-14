@@ -7,12 +7,12 @@ class Ent;
 
 class KinematicWander : public Kinematic {
         public:
-                static const unsigned int type = BEHAVIOR_KINEMATICWANDER;
                 Ent *character;
                 double maxSpeed;
                 double maxRotation;
 
                 KinematicWander(Ent *character, double maxSpeed, double maxRotation);
+                virtual unsigned int type();
 
                 virtual tuple<bool, Triple, double> getVelIncr();
 };

@@ -8,8 +8,8 @@ class Ent {
                 Triple pos;
                 double ang;
 
-                virtual void draw()   = 0;
-                virtual void update() = 0;
+                virtual void draw()                     = 0;
+                virtual void update(unsigned int ticks) = 0;
                 Triple orientation();
 };
 

@@ -1,6 +1,10 @@
 #include "Align.hpp"
 #include "Mobile.hpp"
 
+unsigned int Align::type() {
+        return BEHAVIOR_ALIGN;
+}
+
 Align::Align(Mobile *character, Mobile *target, double maxAngularAcceleration, double maxRotation, double targetRadius, double slowRadius) {
         this->character              = character;
         this->target                 = target;

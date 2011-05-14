@@ -9,12 +9,12 @@ class Mobile;
 
 class Flee : public Kinematic {
         public:
-                static const unsigned int type = BEHAVIOR_FLEE;
                 Mobile *character;
                 Mobile *target;
                 double maxAcceleration;
 
                 Flee(Mobile *character, Mobile *target, double maxAcceleration);
+                virtual unsigned int type();
 
                 virtual tuple<bool, Triple, double> getVelIncr();
 };

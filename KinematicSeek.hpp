@@ -9,12 +9,12 @@ class Ent;
 
 class KinematicSeek : public Kinematic {
         public:
-                static const unsigned int type = BEHAVIOR_KINEMATICSEEK;
                 Ent *character;
                 Ent *target;
                 double maxSpeed;
 
                 KinematicSeek(Ent *character, Ent *target, double maxSpeed);
+                virtual unsigned int type();
 
                 virtual tuple<bool, Triple, double> getVelIncr();
 };

@@ -1,6 +1,10 @@
 #include "KinematicFlee.hpp"
 #include "Ent.hpp"
 
+unsigned int KinematicFlee::type() {
+        return BEHAVIOR_KINEMATICFLEE;
+}
+
 KinematicFlee::KinematicFlee(Ent *character_, Ent *target_, double maxSpeed_) {
         character = character_;
         target    = target_;

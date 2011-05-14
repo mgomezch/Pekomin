@@ -1,6 +1,10 @@
 #include "KinematicArrive.hpp"
 #include "Ent.hpp"
 
+unsigned int KinematicArrive::type() {
+        return BEHAVIOR_KINEMATICARRIVE;
+}
+
 KinematicArrive::KinematicArrive(Ent *character_, Ent *target_, double maxSpeed_, double radius_) {
         character = character_;
         target    = target_;
