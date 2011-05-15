@@ -1,9 +1,11 @@
 #include "Seek.hpp"
 #include "Mobile.hpp"
 
+/*
 unsigned int Seek::type() {
         return BEHAVIOR_SEEK;
 }
+*/
 
 Seek::Seek(Mobile *character, Mobile *target, double maxAcceleration) {
         this->character       = character;

@@ -12,7 +12,7 @@ class KinematicWander : public Kinematic {
                 double maxRotation;
 
                 KinematicWander(Ent *character, double maxSpeed, double maxRotation);
-                virtual unsigned int type();
+//              virtual unsigned int type();
 
                 virtual tuple<bool, Triple, double> getVelIncr();
 };

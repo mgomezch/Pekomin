@@ -12,7 +12,7 @@ class Wander : public Face {
                 double maxAcceleration;
 
                 Wander(Mobile *character, Mobile *target, double maxAngularAcceleration, double maxRotation, double targetRadius, double slowRadius, double wanderOffset, double wanderRadius, double wanderRate, double wanderOrientation, double maxAcceleration);
-                virtual unsigned int type();
+//              virtual unsigned int type();
 
                 tuple<bool, Triple, double> getVelIncr();
 };

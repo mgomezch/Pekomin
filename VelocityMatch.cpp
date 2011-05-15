@@ -1,9 +1,11 @@
 #include "VelocityMatch.hpp"
 #include "Mobile.hpp"
 
+/*
 unsigned int VelocityMatch::type() {
         return BEHAVIOR_VELOCITYMATCH;
 }
+*/
 
 VelocityMatch::VelocityMatch(Mobile *character, Mobile *target, double maxAcceleration) {
         this->character       = character;

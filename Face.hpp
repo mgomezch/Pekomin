@@ -18,7 +18,7 @@ class Face : public Kinematic {
                 static const double timeToTarget = 0.1;
 
                 Face(Mobile *character, Mobile *target, double maxAngularAcceleration, double maxRotation, double targetRadius, double slowRadius);
-                virtual unsigned int type();
+//              virtual unsigned int type();
 
                 virtual tuple<bool, Triple, double> getVelIncr();
                 void mapToRange(double *value);

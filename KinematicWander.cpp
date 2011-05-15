@@ -2,9 +2,11 @@
 #include "Ent.hpp"
 #include "util.hpp"
 
+/*
 unsigned int KinematicWander::type() {
         return BEHAVIOR_KINEMATICWANDER;
 }
+*/
 
 KinematicWander::KinematicWander(Ent *character, double maxSpeed, double maxRotation) {
         this->character   = character;

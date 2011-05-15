@@ -4,13 +4,13 @@
 #include <tuple>
 
 #include "Behavior.hpp"
+#include "Triple.hpp"
 
 using namespace std;
 
 class Dynamic : public Behavior {
         public:
-                virtual unsigned int family();
-                virtual tuple<bool, Triple, double> getForceIncr() = 0;
+                virtual tuple<bool, Triple, double> getForce() = 0;
 };
 
 #endif

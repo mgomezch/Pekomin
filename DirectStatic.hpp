@@ -4,12 +4,12 @@
 #include <tuple>
 
 #include "Behavior.hpp"
+#include "Triple.hpp"
 
 using namespace std;
 
 class DirectStatic : public Behavior {
         public:
-                virtual unsigned int family();
                 virtual tuple<bool, Triple, double> getPos() = 0;
 };
 
