@@ -200,7 +200,7 @@ void initJuego() {
                 ents.push_back(player);
 
                 RuntimePekomin *p1 = new RuntimePekomin(Triple(10, 10, 0), 45);
-                p1->addBehavior(new Seek(p1, player, 1.0));
+                p1->addBehavior(new Seek(p1, player, 0.01));
                 ents.push_back(p1);
         }
 }
