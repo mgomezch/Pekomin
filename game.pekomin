@@ -1,0 +1,19 @@
+player {
+        x: 0;
+        y: 0;
+        z: 0;
+}
+
+pekomin {
+        x: 10;
+        y: 10;
+        z:  0;
+        behavior {
+                class          : Arrive;
+                target         : player:
+                maxAcceleration: 1;
+                maxSpeed       : 0.1;
+                targetRadius   : 5;
+                slowRadius     : 10;
+        }
+}

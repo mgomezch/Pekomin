@@ -168,7 +168,7 @@ int power(int b, unsigned int e) {
 }
 
 void initJuego() {
-        nboom      = 0;
+        nboom = 0;
         for (i = 0; i < N_BOOM_SETS; i++) {
                 boom[i].on = 0;
         }
@@ -198,15 +198,32 @@ void initJuego() {
         balas = BALAS;
 
         {
+                Ent            *e;
+                Behavior       *b;
+                RuntimePekomin *p;
+
+                while (!ents.empty()) {
+                        e = ents.back();
+                        ents.pop_back();
+                        if ((p = dynamic_cast<RuntimePekomin *>(e)) != NULL) {
+                                while (!p->behaviors.empty()) {
+                                        b = p->behaviors.back();
+                                        p->behaviors.pop_back();
+                                        delete b;
+                                }
+                        }
+                        delete e;
+                }
+
                 player = new Player();
                 ents.push_back(player);
 
-                RuntimePekomin *p1 = new RuntimePekomin(Triple(10, 10, 0), 0);
-                //p1->addBehavior(new Seek(p1, player, 0.01));
-                //p1->addBehavior(new Seek(p1, player, 0.05));
-		p1->addBehavior(new Arrive(p1, player, 0.01, 0.01, 5, 10));
+                p = new RuntimePekomin(Triple(10, 10, 0), 0);
+//              p->addBehavior(new Seek(p, player, 0.01));
+//              p->addBehavior(new Seek(p, player, 0.05));
+                p->addBehavior(new Arrive(p, player, 0.01, 0.01, 5, 10));
 
-                ents.push_back(p1);
+                ents.push_back(p);
         }
 }
 
@@ -595,6 +612,7 @@ void skeydown(int key, int mx, int my) {
         else if (key == GLUT_KEY_RIGHT) keystate_r = 1;
         else if (key == GLUT_KEY_UP)    keystate_u = 1;
         else if (key == GLUT_KEY_DOWN)  keystate_d = 1;
+        else if (key == GLUT_KEY_F2)    initJuego();
 }
 
 void skeyup(int key, int mx, int my) {

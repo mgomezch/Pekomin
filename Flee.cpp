@@ -1,9 +1,11 @@
 #include "Flee.hpp"
 #include "Mobile.hpp"
 
+/*
 unsigned int Flee::type() {
         return BEHAVIOR_FLEE;
 }
+*/
 
 Flee::Flee(Mobile *character, Mobile *target, double maxAcceleration) {
         this->character       = character;

@@ -1,9 +1,13 @@
+#include <cmath>
+
 #include "Face.hpp"
 #include "Mobile.hpp"
 
+/*
 unsigned int Face::type() {
         return BEHAVIOR_FACE;
 }
+*/
 
 Face::Face(Mobile *character, Mobile *target, double maxAngularAcceleration, double maxRotation, double targetRadius, double slowRadius) {
         this->character              = character;

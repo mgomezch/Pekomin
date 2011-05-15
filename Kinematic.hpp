@@ -4,12 +4,12 @@
 #include <tuple>
 
 #include "Behavior.hpp"
+#include "Triple.hpp"
 
 using namespace std;
 
 class Kinematic : public Behavior {
         public:
-                virtual unsigned int family();
                 virtual tuple<bool, Triple, double> getVelIncr() = 0;
 };
 

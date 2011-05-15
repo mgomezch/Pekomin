@@ -14,7 +14,7 @@ class KinematicSeek : public Kinematic {
                 double maxSpeed;
 
                 KinematicSeek(Ent *character, Ent *target, double maxSpeed);
-                virtual unsigned int type();
+//              virtual unsigned int type();
 
                 virtual tuple<bool, Triple, double> getVelIncr();
 };

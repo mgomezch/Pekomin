@@ -1,9 +1,11 @@
 #include "KinematicSeek.hpp"
 #include "Ent.hpp"
 
+/*
 unsigned int KinematicSeek::type() {
         return BEHAVIOR_KINEMATICSEEK;
 }
+*/
 
 KinematicSeek::KinematicSeek(Ent *character, Ent *target, double maxSpeed) {
         this->character = character;

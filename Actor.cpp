@@ -11,6 +11,12 @@ using namespace std;
 void Actor::update(unsigned int ticks) {
         unsigned int i;
 
+        DirectStatic    *b_directstatic   ;
+        Static          *b_static         ;
+        DirectKinematic *b_directkinematic;
+        Kinematic       *b_kinematic      ;
+        Dynamic         *b_dynamic        ;
+
         vector<tuple<bool, Triple, double>> v_directstatic,
                                             v_static,
                                             v_directkinematic,
@@ -37,15 +43,12 @@ void Actor::update(unsigned int ticks) {
                      n_kinematic       = 0,
                      n_dynamic         = 0;
 
-        unsigned int family;
-
         for (i = 0; i < behaviors.size(); i++) {
-                family = behaviors[i]->family();
-                if (family & BEHAVIOR_FAMILY_DIRECTSTATIC) {
+                if ((b_directstatic = dynamic_cast<DirectStatic *>(behaviors[i])) != NULL) {
 #ifdef DEBUG_ACTOR
                         printf("actor %p: behavior %d is direct static\n", this, i);
 #endif
-                        steering = static_cast<DirectStatic*>(behaviors[i])->getPos();
+                        steering = b_directstatic->getPos();
                         if (get<0>(steering)) {
                                 n_directstatic++;
                                 v_directstatic.push_back(steering);
@@ -56,11 +59,11 @@ void Actor::update(unsigned int ticks) {
                         printf(", %f>\n", get<2>(steering));
 #endif
                 }
-                if (family & BEHAVIOR_FAMILY_STATIC) {
+                if ((b_static = dynamic_cast<Static *>(behaviors[i])) != NULL) {
 #ifdef DEBUG_ACTOR
                         printf("actor %p: behavior %d is static\n", this, i); // DEBUG_ACTOR
 #endif
-                        steering = static_cast<Static*>(behaviors[i])->getPosIncr();
+                        steering = b_static->getPosIncr();
                         if (get<0>(steering)) {
                                 n_static++;
                                 v_static.push_back(steering);
@@ -71,11 +74,11 @@ void Actor::update(unsigned int ticks) {
                         printf(", %f>\n", get<2>(steering));
 #endif
                 }
-                if (family & BEHAVIOR_FAMILY_DIRECTKINEMATIC) {
+                if ((b_directkinematic = dynamic_cast<DirectKinematic *>(behaviors[i])) != NULL) {
 #ifdef DEBUG_ACTOR
                         printf("actor %p: behavior %d is direct kinematic\n", this, i); // DEBUG_ACTOR
 #endif
-                        steering = static_cast<DirectKinematic*>(behaviors[i])->getVel();
+                        steering = b_directkinematic->getVel();
                         if (get<0>(steering)) {
                                 n_directkinematic++;
                                 v_directkinematic.push_back(steering);
@@ -86,11 +89,11 @@ void Actor::update(unsigned int ticks) {
                         printf(", %f>\n", get<2>(steering));
 #endif
                 }
-                if (family & BEHAVIOR_FAMILY_KINEMATIC) {
+                if ((b_kinematic = dynamic_cast<Kinematic *>(behaviors[i])) != NULL) {
 #ifdef DEBUG_ACTOR
                         printf("actor %p: behavior %d is kinematic\n", this, i); // DEBUG_ACTOR
 #endif
-                        steering = static_cast<Kinematic*>(behaviors[i])->getVelIncr();
+                        steering = b_kinematic->getVelIncr();
                         if (get<0>(steering)) {
                                 n_kinematic++;
                                 v_kinematic.push_back(steering);
@@ -101,11 +104,11 @@ void Actor::update(unsigned int ticks) {
                         printf(", %f>\n", get<2>(steering));
 #endif
                 }
-                if (family & BEHAVIOR_FAMILY_DYNAMIC) {
+                if ((b_dynamic = dynamic_cast<Dynamic *>(behaviors[i])) != NULL) {
 #ifdef DEBUG_ACTOR
                         printf("actor %p: behavior %d: dynamic\n", this, i); // DEBUG_ACTOR
 #endif
-                        steering = static_cast<Dynamic*>(behaviors[i])->getForceIncr();
+                        steering = b_dynamic->getForce();
                         if (get<0>(steering)) {
                                 n_dynamic++;
                                 v_dynamic.push_back(steering);

@@ -1,6 +1,5 @@
 Leer imagenes y hacer displays
 Cambiar a puro SDL y quitar GLUT
-Usar dynamic_cast<> en Actor::update() y eliminar family
 Usar typeid() en vez de métodos type() con constantes
 Meter todas las actualizaciones en if (!frozen) en main.cpp
 Hacer tecla que modifique a frozen (pausa)
