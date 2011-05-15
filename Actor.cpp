@@ -123,8 +123,9 @@ void Actor::update(unsigned int ticks) {
                         sum_kinematic_t += get<1>(v_kinematic[i]);
                         sum_kinematic_d += get<2>(v_kinematic[i]);
                 }
-                this->vel  += sum_kinematic_t;
-                this->vrot += sum_kinematic_d;
+                // NOTA: deberían ser += en vez de =, pero pa que lo del libro sirva tiene que ser así :(
+                this->vel  = sum_kinematic_t;
+                this->vrot = sum_kinematic_d;
         }
 
         if (n_static) {

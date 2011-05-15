@@ -1,7 +1,7 @@
 CC=gcc
-CCOPTS=-Wall -DDEBUG_MAIN
+CCOPTS=-Wall
 CXX=g++
-CXXOPTS=-Wall -DDEBUG_MAIN -std=gnu++0x
+CXXOPTS=-Wall -std=gnu++0x
 LD=ld
 LDLIBS=-lm
 LDLIBS=-lpng -lglut -lGLU -lGL -lX11 -lm `sdl-config --cflags --libs` -lSDL_mixer -lSDL_image

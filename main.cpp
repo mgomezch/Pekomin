@@ -15,6 +15,8 @@
 #include "RuntimePekomin.hpp"
 #include "Player.hpp"
 
+#define DEBUG_MAIN
+
 using namespace std;
 
 #define N_DELTAS           50
@@ -200,7 +202,7 @@ void initJuego() {
                 ents.push_back(player);
 
                 RuntimePekomin *p1 = new RuntimePekomin(Triple(10, 10, 0), 45);
-                p1->addBehavior(new Seek(p1, player, 1.0));
+                p1->addBehavior(new Seek(p1, player, 0.05));
                 ents.push_back(p1);
         }
 }
@@ -295,9 +297,9 @@ void display() {
                 if (pass == PASS_LAST) {
                         for (i = 0; (unsigned int)i < ents.size(); i++) {
                                 glPushMatrix();
-                                glTranslatef(ents[i]->pos.x, ents[i]->pos.y, ents[i]->pos.z);
-                                glRotatef(ents[i]->ang, 0, 0, 1);
-                                ents[i]->draw();
+                                        glTranslatef(ents[i]->pos.x, ents[i]->pos.y, ents[i]->pos.z);
+                                        glRotatef(ents[i]->ang, 0, 0, 1);
+                                        ents[i]->draw();
                                 glPopMatrix();
                         }
                 }
