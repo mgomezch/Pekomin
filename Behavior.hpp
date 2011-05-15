@@ -13,10 +13,11 @@ using namespace std;
 
 enum behavior_families {
         BEHAVIOR_FAMILY_INVALID = 0,
-        BEHAVIOR_FAMILY_DIRECT = 1,
+        BEHAVIOR_FAMILY_DIRECTSTATIC = 1,
         BEHAVIOR_FAMILY_STATIC = 2,
-        BEHAVIOR_FAMILY_KINEMATIC = 4,
-        BEHAVIOR_FAMILY_DYNAMIC = 8
+        BEHAVIOR_FAMILY_DIRECTKINEMATIC = 4,
+        BEHAVIOR_FAMILY_KINEMATIC = 8,
+        BEHAVIOR_FAMILY_DYNAMIC = 16
 };
 
 enum behaviors {

@@ -1,5 +1,5 @@
-#ifndef _DIRECT_HPP
-#define _DIRECT_HPP
+#ifndef _DIRECTSTATIC_HPP
+#define _DIRECTSTATIC_HPP
 
 #include <tuple>
 
@@ -7,7 +7,7 @@
 
 using namespace std;
 
-class Direct : public Behavior {
+class DirectStatic : public Behavior {
         public:
                 virtual unsigned int family();
                 virtual tuple<bool, Triple, double> getPos() = 0;

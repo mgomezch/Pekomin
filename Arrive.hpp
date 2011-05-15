@@ -1,13 +1,13 @@
 #ifndef _ARRIVE_HPP
 #define _ARRIVE_HPP
 
-#include "Kinematic.hpp"
+#include "DirectKinematic.hpp"
 
 using namespace std;
 
 class Mobile;
 
-class Arrive : public Kinematic {
+class Arrive : public DirectKinematic {
         public:
                 Mobile *character;
                 Mobile *target;
@@ -20,7 +20,7 @@ class Arrive : public Kinematic {
                 Arrive(Mobile *character, Mobile *target, double maxAcceleration, double maxSpeed, double targetRadius, double slowRadius);
                 virtual unsigned int type();
 
-                virtual tuple<bool, Triple, double> getVelIncr();
+                virtual tuple<bool, Triple, double> getVel();
 };
 
 #endif

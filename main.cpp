@@ -204,7 +204,7 @@ void initJuego() {
                 RuntimePekomin *p1 = new RuntimePekomin(Triple(10, 10, 0), 0);
                 //p1->addBehavior(new Seek(p1, player, 0.01));
                 //p1->addBehavior(new Seek(p1, player, 0.05));
-		p1->addBehavior(new Arrive(p1, player, 0.1, 2, 1, 2));
+		p1->addBehavior(new Arrive(p1, player, 0.01, 0.01, 5, 10));
 
                 ents.push_back(p1);
         }
@@ -695,7 +695,7 @@ void juego(int v) {
                 if (keystate_left)  pvrz += delta / 5000.0;
                 if (keystate_right) pvrz -= delta / 5000.0;
                 pv += -0.005 * pv * delta;
-                if (!keystate_fwd && !keystate_back && fabs(pv) < 0.001) pv = 0;
+                if (!keystate_fwd && !keystate_back && fabs(pv) < 0.01) pv = 0;
                 pvrz += -0.005 * pvrz * delta;
                 prz += (pv < 0 ? -1 : 1) * pvrz * delta;
                 prz -= (((int)prz)/360)*360;
@@ -704,8 +704,8 @@ void juego(int v) {
 /*
                 pvx  += -0.005 * pvx  * delta;
                 pvy  += -0.005 * pvy  * delta;
- */
                 pvz  += -0.005 * pvz  * delta; // Roce vertical; cambiar?
+ */
                 px += pvx * delta;
                 py += pvy * delta;
                 pz += pvz * delta;
