@@ -40,7 +40,7 @@ tuple<bool, Triple,double> Arrive::getVelIncr() {
                 get<1>(steering).normalize();
                 get<1>(steering) *= maxAcceleration;
         }
-
+ 
         get<0>(steering) = true;
         get<2>(steering) = 0;
                 
