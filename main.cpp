@@ -202,11 +202,11 @@ void initJuego() {
                 ents.push_back(player);
 
                 RuntimePekomin *p1 = new RuntimePekomin(Triple(10, 10, 0), 45);
-<<<<<<< HEAD
+
                 p1->addBehavior(new Seek(p1, player, 0.01));
-=======
+
                 p1->addBehavior(new Seek(p1, player, 0.05));
->>>>>>> 1602638d5ebe2a5cb8f8201dce4fe31d24ac2915
+
                 ents.push_back(p1);
         }
 }
