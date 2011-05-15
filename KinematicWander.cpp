@@ -16,7 +16,9 @@ KinematicWander::KinematicWander(Ent *character, double maxSpeed, double maxRota
 
 tuple<bool, Triple, double> KinematicWander::getVelIncr() {
         tuple<bool, Triple, double> steering;
-        get<1>(steering)  = character->orientation() * maxSpeed;
+
+        get<0>(steering) = true;
+        get<1>(steering) = character->orientation() * maxSpeed;
         get<2>(steering) = randomBinomial()         * maxRotation;
 
         return steering;

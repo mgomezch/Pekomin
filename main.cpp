@@ -7,12 +7,11 @@
 
 #include <vector>
 
+#include "Behaviors.hpp"
 #include "game.hpp"
 #include "gl.hpp"
-
-#include "Behaviors.hpp"
-
 #include "RuntimePekomin.hpp"
+#include "parse.hpp"
 #include "Player.hpp"
 
 #define DEBUG_MAIN
