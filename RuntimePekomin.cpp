@@ -31,5 +31,9 @@ void RuntimePekomin::addBehavior(Behavior *b) {
 void RuntimePekomin::draw() {
         glColor4ub(255, 0, 0, 255);
         glCallList(cubo);
+        glBegin(GL_LINES);
+                glVertex3f(0, 0, 0);
+                glVertex3f(2, 0, 0);
+        glEnd();
 }
 

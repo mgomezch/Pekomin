@@ -299,6 +299,7 @@ void display() {
                 }
 
                 if (pass == PASS_LAST) {
+                        glDisable(GL_LIGHTING);
                         for (i = 0; (unsigned int)i < ents.size(); i++) {
                                 glPushMatrix();
                                         glTranslatef(ents[i]->pos.x, ents[i]->pos.y, ents[i]->pos.z);
@@ -306,6 +307,7 @@ void display() {
                                         ents[i]->draw();
                                 glPopMatrix();
                         }
+                        glEnable(GL_LIGHTING);
                 }
 
                 /* Balas del jugador */
@@ -477,35 +479,38 @@ void display() {
                 /* HUD */
                 glDisable(GL_LIGHTING);
 
-                glMatrixMode(GL_PROJECTION);
-                glLoadIdentity();
-                glOrtho(0, 1, 0, 1, -1, 1);
+                if (blur) {
+                        glMatrixMode(GL_PROJECTION);
+                        glLoadIdentity();
+                        glOrtho(0, 1, 0, 1, -1, 1);
 
-                glDisable(GL_DEPTH_TEST);
-                glMatrixMode(GL_MODELVIEW);
-                glLoadIdentity();
-                glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-                glBindTexture(GL_TEXTURE_2D, tblur);
-                glEnable(GL_TEXTURE_2D);
-                glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-                glPushMatrix();
-                        glTranslatef(0.5 - D_BLUR/2, 0.5 - D_BLUR/2, -1);
-                        for (i = 0; i < N_BLURS; i++) {
-                                glTranslatef(D_BLUR/N_BLURS, 0, 0);
-                                for (j = 0; j < N_BLURS; j++) {
-                                        glTranslatef(0, D_BLUR/N_BLURS, 0);
-                                        glPushMatrix();
-                                                glScalef(1.0 + D_BLUR, 1.0 + D_BLUR, 1);
-                                                glColor4f(1, 1, 1, (12.0/(N_BLURS*N_BLURS))*(sqrtf(0.5) - sqrtf((((float)i)/N_BLURS - 0.5)*(((float)i)/N_BLURS - 0.5) + (((float)j)/N_BLURS - 0.5)*(((float)j)/N_BLURS - 0.5))));
-                                                glCallList(cuadrado_simple);
-                                        glPopMatrix();
+                        glDisable(GL_DEPTH_TEST);
+                        glMatrixMode(GL_MODELVIEW);
+                        glLoadIdentity();
+                        glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+                        glBindTexture(GL_TEXTURE_2D, tblur);
+                        glEnable(GL_TEXTURE_2D);
+                        glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+                        glPushMatrix();
+                                glTranslatef(0.5 - D_BLUR/2, 0.5 - D_BLUR/2, -1);
+                                for (i = 0; i < N_BLURS; i++) {
+                                        glTranslatef(D_BLUR/N_BLURS, 0, 0);
+                                        for (j = 0; j < N_BLURS; j++) {
+                                                glTranslatef(0, D_BLUR/N_BLURS, 0);
+                                                glPushMatrix();
+                                                        glScalef(1.0 + D_BLUR, 1.0 + D_BLUR, 1);
+                                                        glColor4f(1, 1, 1, (12.0/(N_BLURS*N_BLURS))*(sqrtf(0.5) - sqrtf((((float)i)/N_BLURS - 0.5)*(((float)i)/N_BLURS - 0.5) + (((float)j)/N_BLURS - 0.5)*(((float)j)/N_BLURS - 0.5))));
+                                                        glCallList(cuadrado_simple);
+                                                glPopMatrix();
+                                        }
+                                        glTranslatef(0, -D_BLUR, 0);
                                 }
-                                glTranslatef(0, -D_BLUR, 0);
-                        }
-                glPopMatrix();
-                glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-                glDisable(GL_TEXTURE_2D);
-                glEnable(GL_DEPTH_TEST);
+                        glPopMatrix();
+                        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+                        glDisable(GL_TEXTURE_2D);
+                        glEnable(GL_DEPTH_TEST);
+                }
+
                 glClear(GL_DEPTH_BUFFER_BIT);
 
                 glMatrixMode(GL_PROJECTION);
@@ -991,7 +996,7 @@ void initGL() {
         glFrontFace(GL_CCW);
         glEnable(GL_NORMALIZE);
         glEnable(GL_DEPTH_TEST);
-//      glShadeModel(GL_SMOOTH);
+        glShadeModel(GL_SMOOTH);
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glDepthFunc(GL_LEQUAL);
