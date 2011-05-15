@@ -202,13 +202,9 @@ void initJuego() {
                 ents.push_back(player);
 
                 RuntimePekomin *p1 = new RuntimePekomin(Triple(10, 10, 0), 0);
-
                 //p1->addBehavior(new Seek(p1, player, 0.01));
-
                 //p1->addBehavior(new Seek(p1, player, 0.05));
-
-		p1->addBehavior(new Arrive(p1, player, 0.1, 2, 1, 2));
-
+		p1->addBehavior(new Arrive(p1, player, 0.01, 0.01, 5, 10));
 
                 ents.push_back(p1);
         }
@@ -302,6 +298,7 @@ void display() {
                 }
 
                 if (pass == PASS_LAST) {
+                        glDisable(GL_LIGHTING);
                         for (i = 0; (unsigned int)i < ents.size(); i++) {
                                 glPushMatrix();
                                         glTranslatef(ents[i]->pos.x, ents[i]->pos.y, ents[i]->pos.z);
@@ -309,6 +306,7 @@ void display() {
                                         ents[i]->draw();
                                 glPopMatrix();
                         }
+                        glEnable(GL_LIGHTING);
                 }
 
                 /* Balas del jugador */
@@ -480,35 +478,38 @@ void display() {
                 /* HUD */
                 glDisable(GL_LIGHTING);
 
-                glMatrixMode(GL_PROJECTION);
-                glLoadIdentity();
-                glOrtho(0, 1, 0, 1, -1, 1);
+                if (blur) {
+                        glMatrixMode(GL_PROJECTION);
+                        glLoadIdentity();
+                        glOrtho(0, 1, 0, 1, -1, 1);
 
-                glDisable(GL_DEPTH_TEST);
-                glMatrixMode(GL_MODELVIEW);
-                glLoadIdentity();
-                glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-                glBindTexture(GL_TEXTURE_2D, tblur);
-                glEnable(GL_TEXTURE_2D);
-                glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-                glPushMatrix();
-                        glTranslatef(0.5 - D_BLUR/2, 0.5 - D_BLUR/2, -1);
-                        for (i = 0; i < N_BLURS; i++) {
-                                glTranslatef(D_BLUR/N_BLURS, 0, 0);
-                                for (j = 0; j < N_BLURS; j++) {
-                                        glTranslatef(0, D_BLUR/N_BLURS, 0);
-                                        glPushMatrix();
-                                                glScalef(1.0 + D_BLUR, 1.0 + D_BLUR, 1);
-                                                glColor4f(1, 1, 1, (12.0/(N_BLURS*N_BLURS))*(sqrtf(0.5) - sqrtf((((float)i)/N_BLURS - 0.5)*(((float)i)/N_BLURS - 0.5) + (((float)j)/N_BLURS - 0.5)*(((float)j)/N_BLURS - 0.5))));
-                                                glCallList(cuadrado_simple);
-                                        glPopMatrix();
+                        glDisable(GL_DEPTH_TEST);
+                        glMatrixMode(GL_MODELVIEW);
+                        glLoadIdentity();
+                        glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+                        glBindTexture(GL_TEXTURE_2D, tblur);
+                        glEnable(GL_TEXTURE_2D);
+                        glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+                        glPushMatrix();
+                                glTranslatef(0.5 - D_BLUR/2, 0.5 - D_BLUR/2, -1);
+                                for (i = 0; i < N_BLURS; i++) {
+                                        glTranslatef(D_BLUR/N_BLURS, 0, 0);
+                                        for (j = 0; j < N_BLURS; j++) {
+                                                glTranslatef(0, D_BLUR/N_BLURS, 0);
+                                                glPushMatrix();
+                                                        glScalef(1.0 + D_BLUR, 1.0 + D_BLUR, 1);
+                                                        glColor4f(1, 1, 1, (12.0/(N_BLURS*N_BLURS))*(sqrtf(0.5) - sqrtf((((float)i)/N_BLURS - 0.5)*(((float)i)/N_BLURS - 0.5) + (((float)j)/N_BLURS - 0.5)*(((float)j)/N_BLURS - 0.5))));
+                                                        glCallList(cuadrado_simple);
+                                                glPopMatrix();
+                                        }
+                                        glTranslatef(0, -D_BLUR, 0);
                                 }
-                                glTranslatef(0, -D_BLUR, 0);
-                        }
-                glPopMatrix();
-                glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-                glDisable(GL_TEXTURE_2D);
-                glEnable(GL_DEPTH_TEST);
+                        glPopMatrix();
+                        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+                        glDisable(GL_TEXTURE_2D);
+                        glEnable(GL_DEPTH_TEST);
+                }
+
                 glClear(GL_DEPTH_BUFFER_BIT);
 
                 glMatrixMode(GL_PROJECTION);
@@ -694,7 +695,7 @@ void juego(int v) {
                 if (keystate_left)  pvrz += delta / 5000.0;
                 if (keystate_right) pvrz -= delta / 5000.0;
                 pv += -0.005 * pv * delta;
-                if (!keystate_fwd && !keystate_back && fabs(pv) < 0.001) pv = 0;
+                if (!keystate_fwd && !keystate_back && fabs(pv) < 0.01) pv = 0;
                 pvrz += -0.005 * pvrz * delta;
                 prz += (pv < 0 ? -1 : 1) * pvrz * delta;
                 prz -= (((int)prz)/360)*360;
@@ -703,8 +704,8 @@ void juego(int v) {
 /*
                 pvx  += -0.005 * pvx  * delta;
                 pvy  += -0.005 * pvy  * delta;
- */
                 pvz  += -0.005 * pvz  * delta; // Roce vertical; cambiar?
+ */
                 px += pvx * delta;
                 py += pvy * delta;
                 pz += pvz * delta;
@@ -994,7 +995,7 @@ void initGL() {
         glFrontFace(GL_CCW);
         glEnable(GL_NORMALIZE);
         glEnable(GL_DEPTH_TEST);
-//      glShadeModel(GL_SMOOTH);
+        glShadeModel(GL_SMOOTH);
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glDepthFunc(GL_LEQUAL);

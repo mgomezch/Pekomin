@@ -1,8 +1,9 @@
 #ifndef _FAMILIES_HPP
 #define _FAMILIES_HPP
 
-#include "Direct.hpp"
+#include "DirectStatic.hpp"
 #include "Static.hpp"
+#include "DirectKinematic.hpp"
 #include "Kinematic.hpp"
 #include "Dynamic.hpp"
 

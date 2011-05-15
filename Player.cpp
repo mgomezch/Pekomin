@@ -54,4 +54,8 @@ void Player::update(unsigned int ticks) {
 void Player::draw() {
         glColor4ub(0, 255, 0, 255);
         glCallList(cubo);
+        glBegin(GL_LINES);
+                glVertex3f(0, 0, 0);
+                glVertex3f(0, 2, 0);
+        glEnd();
 }
