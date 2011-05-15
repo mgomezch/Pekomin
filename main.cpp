@@ -289,7 +289,7 @@ void display() {
                         glPushMatrix();
                                 glScalef(5, 5, 5);
                                 glDisable(GL_LIGHTING);
-                                glColor4ub(255, 255, 255, 255);
+                                glColor4ub(200, 200, 200, 255);
                                 glCallList(checker);
                                 glTranslatef(1, 0, 0);
                                 glColor4ub(0, 0, 0, 255);
