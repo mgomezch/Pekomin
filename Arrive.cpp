@@ -27,7 +27,7 @@ tuple<bool, Triple,double> Arrive::getVelIncr() {
                 return steering;
         } 
 
-        if (distance > slowRadius) {
+        if (distance < slowRadius) {
                 targetSpeed = maxSpeed;
         }
         else {
