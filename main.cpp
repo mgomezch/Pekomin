@@ -201,11 +201,14 @@ void initJuego() {
                 player = new Player();
                 ents.push_back(player);
 
-                RuntimePekomin *p1 = new RuntimePekomin(Triple(10, 10, 0), 45);
+                RuntimePekomin *p1 = new RuntimePekomin(Triple(10, 10, 0), 0);
 
-                p1->addBehavior(new Seek(p1, player, 0.01));
+                //p1->addBehavior(new Seek(p1, player, 0.01));
 
-                p1->addBehavior(new Seek(p1, player, 0.05));
+                //p1->addBehavior(new Seek(p1, player, 0.05));
+
+		p1->addBehavior(new Arrive(p1, player, 0.1, 1, 2, 1));
+
 
                 ents.push_back(p1);
         }
