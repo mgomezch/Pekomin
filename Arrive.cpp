@@ -27,18 +27,14 @@ tuple<bool, Triple,double> Arrive::getVelIncr() {
                 return steering;
         } 
 
-        if (distance < slowRadius) {
+        if (distance >= slowRadius) {
                 targetSpeed = maxSpeed;
-        }
-        else {
+        } else {
                 targetSpeed = maxSpeed * distance / slowRadius;
         }
         
-        targetVelocity = direction;
-        targetVelocity.normalize();
-        targetVelocity *= targetSpeed;
-        get<1>(steering) = targetVelocity - character->vel;
-        get<1>(steering) /= timeToTarget;
+        targetVelocity = direction.normalized() * targetSpeed;
+        get<1>(steering) = (targetVelocity - character->vel) / timeToTarget;
 
         if (get<1>(steering).length() > maxAcceleration) {
                 get<1>(steering).normalize();
