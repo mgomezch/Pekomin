@@ -5,15 +5,15 @@ unsigned int KinematicSeek::type() {
         return BEHAVIOR_KINEMATICSEEK;
 }
 
-KinematicSeek::KinematicSeek(Ent *character_, Ent *target_, double maxSpeed_) {
-        character = character_;
-        target    = target_;
-        maxSpeed  = maxSpeed_;
+KinematicSeek::KinematicSeek(Ent *character, Ent *target, double maxSpeed) {
+        this->character = character;
+        this->target    = target   ;
+        this->maxSpeed  = maxSpeed ;
 }
 
-// Retorna incrementos de velocidad y rotacion
 tuple<bool, Triple,double> KinematicSeek::getVelIncr() {
         tuple<bool, Triple, double> steering;
+        get<0>(steering) = true;
         get<1>(steering) = target->pos - character->pos;
         get<1>(steering).normalize();
         get<1>(steering) *= maxSpeed;
