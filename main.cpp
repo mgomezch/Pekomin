@@ -207,7 +207,7 @@ void initJuego() {
 
                 //p1->addBehavior(new Seek(p1, player, 0.05));
 
-		p1->addBehavior(new Arrive(p1, player, 0.1, 1, 2, 1));
+		p1->addBehavior(new Arrive(p1, player, 0.1, 2, 1, 2));
 
 
                 ents.push_back(p1);

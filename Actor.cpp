@@ -8,6 +8,7 @@ using namespace std;
 
 void Actor::update(unsigned int ticks) {
         unsigned int i;
+	int flag = 0;
 
         vector<tuple<bool, Triple, double>> v_direct,
                                             v_static,
@@ -74,6 +75,7 @@ void Actor::update(unsigned int ticks) {
                                 n_kinematic++;
                                 v_kinematic.push_back(steering);
                         }
+			if (behaviors[i]->type() == BEHAVIOR_ARRIVE) flag = 1;
 #ifdef DEBUG_ACTOR
                         printf("actor %p: behavior %d: steering: <%s, ", this, i, get<0>(steering) ? "true" : "false");
                         get<1>(steering).print();
@@ -126,6 +128,11 @@ void Actor::update(unsigned int ticks) {
                 // NOTA: deberían ser += en vez de =, pero pa que lo del libro sirva tiene que ser así :(
                 this->vel  = sum_kinematic_t;
                 this->vrot = sum_kinematic_d;
+
+		if (flag == 1) {
+        		this->pos += this->vel ;
+        		this->ang += this->vrot;
+		}
         }
 
         if (n_static) {
@@ -137,6 +144,9 @@ void Actor::update(unsigned int ticks) {
                 this->ang += sum_static_d;
         }
 
-        this->pos += this->vel ;
-        this->ang += this->vrot;
+	if (flag == 0) {
+		this->pos += this->vel ;
+		this->ang += this->vrot; 
+	}
+
 }
