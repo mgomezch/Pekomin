@@ -34,7 +34,7 @@ extern GLubyte color_medio[4]  ;
 extern GLubyte color_lleno[4]  ;
 extern GLubyte color_empty[4]  ;
 extern GLubyte color_wall[4]   ;
-/* extern GLfloat light_diffuse[4]; */
+extern GLfloat light_pos[4]    ;
 
 extern int ss[12][7];
 

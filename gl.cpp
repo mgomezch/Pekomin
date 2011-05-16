@@ -2,6 +2,7 @@
 #include "game.hpp"
 #include <png.h>
 #include <sysexits.h>
+#include <stdlib.h>
 
 int cuadrado        = -1,
     cuadrado_hd     = -1,
@@ -27,7 +28,8 @@ GLubyte color_medio[4]   = {255, 235,   0, 255};
 GLubyte color_lleno[4]   = {255,   0,   0, 255};
 GLubyte color_empty[4]   = {139, 136, 120, 255};
 GLubyte color_wall[4]    = { 90,  40,   0, 255};
-/* GLfloat light_diffuse[4]      = {1, 1, 1, 1}; */
+
+GLfloat light_pos[4]     = {0, 0, H_LIGHT_TABLERO, 1};
 
 int ss[12][7] = {
         {1, 1, 1, 1, 1, 1, 0}, /* 0 */
