@@ -5,4 +5,8 @@ Meter todas las actualizaciones en if (!frozen) en main.cpp
 Hacer tecla que modifique a frozen (pausa)
 Decidir cómo va a ser el jugador y su modelo
 Agregar draws opcionales a cada Ent, Mobile y Actor mostrando vectores varios
+Hacer el parser con cosas serias de hacer parsers
+Hacer que el parser agarre comentarios
+Hacer que el parser lea cosas de apariencia de un Pekomin
+Hacer que el parser lea cosas del estado general del mundo
 Hacer todo lo que diga el archivo TODO

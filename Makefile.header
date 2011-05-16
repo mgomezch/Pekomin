@@ -4,5 +4,5 @@ CXX=g++
 CXXOPTS=-Wall -std=gnu++0x
 LD=ld
 LDLIBS=-lm
-LDLIBS=-lpng -lglut -lGLU -lGL -lX11 -lm `sdl-config --cflags --libs` -lSDL_mixer -lSDL_image
+LDLIBS=-lpng -lglut -lGLU -lGL -lX11 -lm # `sdl-config --cflags --libs` -lSDL_mixer -lSDL_image
 LDFLAGS=

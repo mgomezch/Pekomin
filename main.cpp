@@ -7,12 +7,11 @@
 
 #include <vector>
 
+#include "Behaviors.hpp"
 #include "game.hpp"
 #include "gl.hpp"
-
-#include "Behaviors.hpp"
-
 #include "RuntimePekomin.hpp"
+#include "parse.hpp"
 #include "Player.hpp"
 #include "Phantom.hpp"
 
@@ -276,7 +275,6 @@ void display() {
                         for (i = 0; i < 8; i++) {
                                 glDisable(GL_LIGHT0 + i);
                         }
-                        glEnable(GL_LIGHT0);
                         break;
         }
 
@@ -310,21 +308,24 @@ void display() {
                 glRotatef(-90, 0, 1, 0);
                 glRotatef(-90, 1, 0, 0);
 
+                glLightfv(GL_LIGHT0, GL_POSITION, light_pos);
+                glEnable(GL_LIGHT0);
+
                 if (pass == PASS_LAST) {
                         glPushMatrix();
                                 glScalef(5, 5, 5);
-                                glDisable(GL_LIGHTING);
+//                              glDisable(GL_LIGHTING);
                                 glColor4ub(200, 200, 200, 255);
                                 glCallList(checker);
                                 glTranslatef(1, 0, 0);
                                 glColor4ub(0, 0, 0, 255);
                                 glCallList(checker);
-                                glEnable(GL_LIGHTING);
+//                              glEnable(GL_LIGHTING);
                         glPopMatrix();
                 }
 
                 if (pass == PASS_LAST) {
-                        glDisable(GL_LIGHTING);
+//                      glDisable(GL_LIGHTING);
                         for (i = 0; (unsigned int)i < ents.size(); i++) {
                                 glPushMatrix();
                                         glTranslatef(ents[i]->pos.x, ents[i]->pos.y, ents[i]->pos.z);
@@ -332,7 +333,7 @@ void display() {
                                         ents[i]->draw();
                                 glPopMatrix();
                         }
-                        glEnable(GL_LIGHTING);
+//                      glEnable(GL_LIGHTING);
                 }
 
                 /* Balas del jugador */
