@@ -16,12 +16,12 @@ VelocityMatch::VelocityMatch(Mobile *character, Mobile *target, double maxAccele
 tuple<bool, Triple,double> VelocityMatch::getVel() {
         tuple<bool, Triple,double> steering;
 
-	if (target->vel.length() == 0) {
-		get<0>(steering) = false;
-		return steering;
-	}
+        if (target->vel.length() == 0) {
+                get<0>(steering) = false;
+                return steering;
+        }
 
-        get<0>(steering) = true;        
+        get<0>(steering) = true;
         get<1>(steering) = target->vel - character->vel;
         get<1>(steering) /= timeToTarget;
 

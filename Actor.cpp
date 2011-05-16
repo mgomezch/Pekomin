@@ -17,11 +17,11 @@ void Actor::update(unsigned int ticks) {
         Kinematic       *b_kinematic      ;
         Dynamic         *b_dynamic        ;
 
-        vector<tuple<bool, Triple, double>> v_directstatic,
-                                            v_static,
-                                            v_directkinematic,
-                                            v_kinematic,
-                                            v_dynamic;
+        vector<tuple<bool, Triple, double> > v_directstatic,
+                                             v_static,
+                                             v_directkinematic,
+                                             v_kinematic,
+                                             v_dynamic;
 
         Triple sum_directstatic_t    = Triple(0, 0, 0),
                sum_static_t          = Triple(0, 0, 0),

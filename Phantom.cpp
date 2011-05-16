@@ -3,10 +3,10 @@
 #include <GL/glut.h>
 
 Phantom::Phantom() {
-	this->pos  = Triple(0, 0, 0);
-	this->ang  = 0;
-	this->vel  = Triple(0, 0, 0);
-	this->vrot = 0;
+        this->pos  = Triple(0, 0, 0);
+        this->ang  = 0;
+        this->vel  = Triple(0, 0, 0);
+        this->vrot = 0;
 }
 
 Phantom::Phantom(Triple pos, double ang) {
@@ -24,8 +24,8 @@ Phantom::Phantom(Triple pos, double ang, Triple vel, double vang) {
 }
 
 void Phantom::draw() {
-	glPushMatrix();
-		glColor3ub(0, 255, 0);
-		glutSolidCube(1);
-	glPopMatrix();
+        glPushMatrix();
+                glColor3ub(0, 255, 0);
+                glutSolidCube(1);
+        glPopMatrix();
 }

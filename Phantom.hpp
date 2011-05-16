@@ -6,14 +6,13 @@
 using namespace std;
 
 class Phantom : public Actor {
-	public:
-		
+        public:
                 Phantom(Triple pos, double ang, Triple vel, double vang);
                 Phantom(Triple pos, double ang);
                 Phantom();
                 ~Phantom();
-		
-		virtual void draw();
+
+                virtual void draw();
 };
 
 #endif

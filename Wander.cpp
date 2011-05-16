@@ -26,8 +26,8 @@ tuple<bool, Triple, double> Wander::getVelIncr() {
         target->pos += target->orientation() * wanderRadius;
         //steering = Face::getVelIncr();
         get<0>(steering) = true;
-	get<1>(steering) = target->pos - character->pos;
-	get<1>(steering).normalize();
+        get<1>(steering) = target->pos - character->pos;
+        get<1>(steering).normalize();
         get<1>(steering) *= maxAcceleration;
 
         return steering;

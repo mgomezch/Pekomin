@@ -12,11 +12,10 @@ double randomBinomial() {
 }
 
 double RandBin(double fMin, double fMax) {
-	struct timeval t;
-	gettimeofday(&t, NULL);
-	srand(t.tv_usec);
+        struct timeval t;
+        gettimeofday(&t, NULL);
+        srand(t.tv_usec);
 
-	double f = (double)rand() / RAND_MAX;
-	return fMin + f * (fMax - fMin);
+        double f = (double)rand() / RAND_MAX;
+        return fMin + f * (fMax - fMin);
 }
-

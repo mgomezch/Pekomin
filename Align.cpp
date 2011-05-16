@@ -50,7 +50,7 @@ tuple<bool, Triple, double> Align::getVelIncr() {
 
         get<0>(steering) = true;
         get<1>(steering) = 0;
-        
+
         return steering;
 }
 
