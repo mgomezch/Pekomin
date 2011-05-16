@@ -19,15 +19,16 @@ Wander::Wander(Mobile *character, Mobile *target, double maxAngularAcceleration,
 
 tuple<bool, Triple, double> Wander::getVelIncr() {
         tuple<bool, Triple, double> steering;
-        Triple center;
 
-        wanderOrientation += randomBinomial() * wanderRate;
+        wanderOrientation += RandBin(-1,1) * wanderRate;
         target->ang = wanderOrientation + character->ang;
-        center = character->pos + character->orientation() * wanderOffset;
-        center += target->orientation() * wanderRadius;
-        steering = Face::getVelIncr();
+        target->pos = character->pos; //+ character->orientation() * wanderOffset;
+        target->pos += target->orientation() * wanderRadius;
+        //steering = Face::getVelIncr();
         get<0>(steering) = true;
-        get<1>(steering) += character->orientation() * maxAcceleration;
+	get<1>(steering) = target->pos - character->pos;
+	get<1>(steering).normalize();
+        get<1>(steering) *= maxAcceleration;
 
         return steering;
 }

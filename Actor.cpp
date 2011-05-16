@@ -157,23 +157,8 @@ void Actor::update(unsigned int ticks) {
                         sum_kinematic_t += get<1>(v_kinematic[i]);
                         sum_kinematic_d += get<2>(v_kinematic[i]);
                 }
-<<<<<<< HEAD
-                // NOTA: deberían ser += en vez de =, pero pa que lo del libro sirva tiene que ser así :(
-
-		if (flag == 1) {
-                	this->vel  = sum_kinematic_t;
-                	this->vrot = sum_kinematic_d;
-        		this->pos += this->vel ;
-        		this->ang += this->vrot;
-		}
-		else {
-			this->vel  += sum_kinematic_t;
-                	this->vrot += sum_kinematic_d;
-		}
-=======
                 this->vel  += sum_kinematic_t;
                 this->vrot += sum_kinematic_d;
->>>>>>> c1ca338249e3a8b339346a80c8cc34b52cfde22b
         }
 
         if (n_static) {
@@ -190,6 +175,6 @@ void Actor::update(unsigned int ticks) {
         this->vel.print();
         printf(", vrot = %f>\n", this->vrot);
 #endif
-        this->pos += this->vel  * (double)ticks;
-        this->ang += this->vrot *         ticks;
+        this->pos += this->vel ; //* (double)ticks;
+        this->ang += this->vrot; //*         ticks;
 }

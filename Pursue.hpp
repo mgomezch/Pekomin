@@ -12,7 +12,7 @@ class Pursue : public Kinematic {
                 Mobile *character;
                 Mobile *target;
                 double maxAcceleration;
-                double maxPrediction;
+                static const double maxPrediction = 0.01;
 
                 Pursue(Mobile *character, Mobile *target, double maxAcceleration);
 //              virtual unsigned int type();
