@@ -175,6 +175,6 @@ void Actor::update(unsigned int ticks) {
         this->vel.print();
         printf(", vrot = %f>\n", this->vrot);
 #endif
-        this->pos += this->vel  * (double)ticks;
-        this->ang += this->vrot *         ticks;
+        this->pos += this->vel ; //* (double)ticks;
+        this->ang += this->vrot; //*         ticks;
 }

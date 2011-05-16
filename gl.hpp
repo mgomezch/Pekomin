@@ -2,6 +2,7 @@
 #define _GL_HPP
 
 #include <GL/glut.h>
+#include <stdlib.h>
 
 #define N_SLICES_RINGBASE   6
 #define N_SLICES           12

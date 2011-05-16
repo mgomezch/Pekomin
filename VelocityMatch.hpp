@@ -1,13 +1,13 @@
 #ifndef _VELOCITYMATCH_HPP
 #define _VELOCITYMATCH_HPP
 
-#include "Kinematic.hpp"
+#include "DirectKinematic.hpp"
 
 using namespace std;
 
 class Mobile;
 
-class VelocityMatch : public Kinematic {
+class VelocityMatch : public DirectKinematic {
         public:
                 Mobile *character;
                 Mobile *target;
@@ -17,7 +17,7 @@ class VelocityMatch : public Kinematic {
                 VelocityMatch(Mobile *character, Mobile *target, double maxAcceleration);
 //              virtual unsigned int type();
 
-                virtual tuple<bool, Triple, double> getVelIncr();
+                virtual tuple<bool, Triple, double> getVel();
 };
 
 #endif
