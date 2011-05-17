@@ -10,5 +10,5 @@ int main(int argc, char **argv) {
 
         while (!feof(stdin)) pos += fread(&buf + pos, sizeof(char), BUFSIZE, stdin);
         buf[pos] = '\0';
-        parse(buf, 0);
+        parse(buf);
 }

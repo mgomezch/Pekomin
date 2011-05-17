@@ -17,6 +17,127 @@
 
 #define DEBUG_PARSE
 
+#ifdef DEBUG_PARSE
+        #define SET_ENT_FIELD_DOUBLE(FIELD)                              \
+                it = fields.find(string( #FIELD ));                      \
+                if (it != fields.end()) {                                \
+                        cout << "parse: ent "                            \
+                             << name_s                                   \
+                             << " processing field "                     \
+                             << it->first                                \
+                             << " with value "                           \
+                             << it->second                               \
+                             << endl;                                    \
+                        if (sscanf(it->second.c_str(), "%i", &n) != 1) { \
+                                cerr << "parse error reading ent field " \
+                                     << it->first                        \
+                                     << " == "                           \
+                                     << it->second                       \
+                                     << endl;                            \
+                                exit(EX_DATAERR);                        \
+                        }                                                \
+                        ent-> FIELD = n;                                 \
+                }
+#else
+        #define SET_ENT_FIELD_DOUBLE(FIELD)                              \
+                it = fields.find(string( #FIELD ));                      \
+                if (it != fields.end()) {                                \
+                        if (sscanf(it->second.c_str(), "%i", &n) != 1) { \
+                                cerr << "parse error reading ent field " \
+                                     << it->first                        \
+                                     << " == "                           \
+                                     << it->second                       \
+                                     << endl;                            \
+                                exit(EX_DATAERR);                        \
+                        }                                                \
+                        ent-> FIELD = n;                                 \
+                }
+#endif
+
+#define SET_CHARACTER()                            \
+        Mobile *character;                         \
+        it_entses = entses.find(it_e->first);      \
+        if (it_entses != entses.end()) {           \
+                character = it_entses->second;     \
+        } else {                                   \
+                cerr << "parse error making ent '" \
+                     << it_e->first                \
+                     << "' behavior '"             \
+                     << it_b->first                \
+                     << "': ent '"                 \
+                     << it_e->first                \
+                     << "' not found"              \
+                     << endl;                      \
+                exit(EX_SOFTWARE);                 \
+        }
+
+#define SET_TARGET()                                               \
+        Mobile *target;                                            \
+        it_fields = it_b->second->find(string("target"));          \
+        if (it_fields != it_b->second->end()) {                    \
+                it_entses = entses.find(it_fields->second);        \
+                if (it_entses != entses.end()) {                   \
+                        target = it_entses->second;                \
+                } else {                                           \
+                        cerr << "parse error making ent '"         \
+                             << it_e->first                        \
+                             << "' behavior '"                     \
+                             << it_b->first                        \
+                             << "': field 'target' == '"           \
+                             << it_fields->second                  \
+                             << "': ent not found"                 \
+                             << endl;                              \
+                        exit(EX_DATAERR);                          \
+                }                                                  \
+        } else {                                                   \
+                cerr << "parse error making ent '"                 \
+                     << it_e->first                                \
+                     << "' behavior '"                             \
+                     << it_b->first                                \
+                     << "': required field 'target' not specified" \
+                     << endl;                                      \
+                exit(EX_DATAERR);                                  \
+        }
+
+#define SET_DOUBLE(FIELD)                                                      \
+        double FIELD ;                                                         \
+        it_fields = it_b->second->find(string( #FIELD ));                      \
+        if (it_fields != it_b->second->end()) {                                \
+                if (sscanf(it_fields->second.c_str(), "%lf", & FIELD ) != 1) { \
+                        cerr << "parse error making ent '"                     \
+                             << it_e->first                                    \
+                             << "' behavior '"                                 \
+                             << it_b->first                                    \
+                             << "': required field '" #FIELD "' == '"          \
+                             << it_fields->second                              \
+                             << "' not a floating-point number"                \
+                             << endl;                                          \
+                        exit(EX_DATAERR);                                      \
+                }                                                              \
+        } else {                                                               \
+                cerr << "parse error making ent '"                             \
+                     << it_e->first                                            \
+                     << "' behavior '"                                         \
+                     << it_b->first                                            \
+                     << "': required field '" #FIELD "' not specified"         \
+                     << endl;                                                  \
+                exit(EX_DATAERR);                                              \
+        }
+
+#define SET_P()                                        \
+        p = dynamic_cast<RuntimePekomin *>(character); \
+        if (p == NULL) {                               \
+                cerr << "parse error making ent '"     \
+                     << it_e->first                    \
+                     << "' behavior '"                 \
+                     << it_b->first                    \
+                     << "': ent '"                     \
+                     << it_e->first                    \
+                     << "' is not RuntimePekomin"      \
+                     << endl;                          \
+                exit(EX_SOFTWARE);                     \
+        }
+
 using namespace std;
 
 unordered_map<string, Mobile *> entses;
@@ -63,7 +184,7 @@ void parse_r(char *s, int chars) {
                         chars += nextchars;
         }
 #ifdef DEBUG_PARSE
-        printf("parse: entering ent %s\n", name);
+        cout << "parse: entering ent " << name_s << endl;
 #endif
 
         while (nextchars = -1, sscanf(s + chars, " } %n", &nextchars), nextchars == -1) {
@@ -122,7 +243,7 @@ void parse_r(char *s, int chars) {
         }
         chars += nextchars;
 #ifdef DEBUG_PARSE
-                        cout << "parse: leaving ent " << name_s << endl; // DEBUG
+                        cout << "parse: leaving ent " << name_s << endl;
 #endif
 
         if (name_s == "player") {
@@ -133,62 +254,26 @@ void parse_r(char *s, int chars) {
                 ent = player = new Player();
         } else {
                 ent = new RuntimePekomin();
-                ents.push_back(ent);
         }
+        ents.push_back(ent);
 
-        it = fields.find("pos.x");
-        if (it != fields.end()) {
-                if (sscanf(it->second.c_str(), "%i", &n) != 1) {
-                        cerr << "parse error reading ent field pos.x = " << it->second << endl;
-                        exit(EX_DATAERR);
-                }
-                ent->pos.x = n;
-        }
-        it = fields.find("pos.y");
-        if (it != fields.end()) {
-                if (sscanf(it->second.c_str(), "%i", &n) != 1) {
-                        cerr << "parse error reading ent field pos.y = " << it->second << endl;
-                        exit(EX_DATAERR);
-                }
-                ent->pos.y = n;
-        }
-        it = fields.find("pos.z");
-        if (it != fields.end()) {
-                if (sscanf(it->second.c_str(), "%i", &n) != 1) {
-                        cerr << "parse error reading ent field pos.z = " << it->second << endl;
-                        exit(EX_DATAERR);
-                }
-                ent->pos.z = n;
-        }
-        it = fields.find("vel.x");
-        if (it != fields.end()) {
-                if (sscanf(it->second.c_str(), "%i", &n) != 1) {
-                        cerr << "parse error reading ent field vel.x = " << it->second << endl;
-                        exit(EX_DATAERR);
-                }
-                ent->vel.x = n;
-        }
-        it = fields.find("vel.y");
-        if (it != fields.end()) {
-                if (sscanf(it->second.c_str(), "%i", &n) != 1) {
-                        cerr << "parse error reading ent field vel.y = " << it->second << endl;
-                        exit(EX_DATAERR);
-                }
-                ent->vel.y = n;
-        }
-        it = fields.find("vel.z");
-        if (it != fields.end()) {
-                if (sscanf(it->second.c_str(), "%i", &n) != 1) {
-                        cerr << "parse error reading ent field vel.z = " << it->second << endl;
-                        exit(EX_DATAERR);
-                }
-                ent->vel.z = n;
-        }
+        SET_ENT_FIELD_DOUBLE(pos.x);
+        SET_ENT_FIELD_DOUBLE(pos.y);
+        SET_ENT_FIELD_DOUBLE(pos.z);
+        SET_ENT_FIELD_DOUBLE(ang  );
+        SET_ENT_FIELD_DOUBLE(vel.x);
+        SET_ENT_FIELD_DOUBLE(vel.y);
+        SET_ENT_FIELD_DOUBLE(vel.z);
+        SET_ENT_FIELD_DOUBLE(vrot );
 
         entses[name_s]      = ent      ;
-        behaviorses[type_s] = behaviors;
+        behaviorses[name_s] = behaviors;
 
         fields.erase(fields.begin(), fields.end());
+
+#ifdef DEBUG_PARSE
+                cout << endl;
+#endif
 
         parse_r(s, chars);
 }
@@ -205,107 +290,196 @@ void parse(char *s) {
         for (it_e = behaviorses.begin(); it_e != behaviorses.end(); ++it_e) {
                 if (it_e->first == "player") continue;
                 for (it_b = it_e->second->begin(); it_b != it_e->second->end(); ++it_b) {
-
+#ifdef DEBUG_PARSE
+                        cout << "parse: making behavior: " << it_b->first << " for ent " << it_e->first << endl;
+#endif
                         // Align(Mobile *character, Mobile *target, double maxAngularAcceleration, double maxRotation, double targetRadius, double slowRadius);
-                        if (it_b->first == "Align") {
-                                Mobile *character;
-                                it_entses = entses.find(it_e->first);
-                                if (it_entses != entses.end()) {
-                                        character = it_entses->second;
-                                } else {
-                                        // this should never happen
-                                        cerr << "parse error making ent '" << it_e->first << "' behavior '" << it_b->first << "': ent '" << it_e->first << "' not found" << endl;
-                                        exit(EX_SOFTWARE);
-                                }
+                        if (it_b->first == string("Align")) {
+                                SET_CHARACTER();
+                                SET_TARGET();
+                                SET_DOUBLE(maxAngularAcceleration);
+                                SET_DOUBLE(maxRotation           );
+                                SET_DOUBLE(targetRadius          );
+                                SET_DOUBLE(slowRadius            );
 
-                                Mobile *target;
-                                it_fields = it_b->second->find(string("target"));
-                                if (it_fields != it_b->second->end()) {
-                                        it_entses = entses.find(it_fields->second);
-                                        if (it_entses != entses.end()) {
-                                                target = it_entses->second;
-                                        } else {
-                                                cerr << "parse error making ent '" << it_e->first << "' behavior '" << it_b->first << "': field 'target' == '" << it_fields->second << "': ent not found" << endl;
-                                                exit(EX_DATAERR);
-                                        }
-                                } else {
-                                        cerr << "parse error making ent '" << it_e->first << "' behavior '" << it_b->first << "': required field 'target' not specified" << endl;
-                                        exit(EX_DATAERR);
-                                }
-
-                                double maxAngularAcceleration;
-                                it_fields = it_b->second->find(string("maxAngularAcceleration"));
-                                if (it_fields != it_b->second->end()) {
-                                        if (sscanf(it_fields->second.c_str(), "%lf", &maxAngularAcceleration) != 1) {
-                                                cerr << "parse error making ent '" << it_e->first << "' behavior '" << it_b->first << "': required field 'maxAngularAcceleration' == '" << it_fields->second << "' not a floating-point number" << endl;
-                                                exit(EX_DATAERR);
-                                        }
-                                } else {
-                                        cerr << "parse error making ent '" << it_e->first << "' behavior '" << it_b->first << "': required field 'maxAngularAcceleration' not specified" << endl;
-                                        exit(EX_DATAERR);
-                                }
-
-                                double maxRotation;
-                                it_fields = it_b->second->find(string("maxRotation"));
-                                if (it_fields != it_b->second->end()) {
-                                        if (sscanf(it_fields->second.c_str(), "%lf", &maxRotation) != 1) {
-                                                cerr << "parse error making ent '" << it_e->first << "' behavior '" << it_b->first << "': required field 'maxRotation' == '" << it_fields->second << "' not a floating-point number" << endl;
-                                                exit(EX_DATAERR);
-                                        }
-                                } else {
-                                        cerr << "parse error making ent '" << it_e->first << "' behavior '" << it_b->first << "': required field 'maxRotation' not specified" << endl;
-                                        exit(EX_DATAERR);
-                                }
-
-                                double targetRadius;
-                                it_fields = it_b->second->find(string("targetRadius"));
-                                if (it_fields != it_b->second->end()) {
-                                        if (sscanf(it_fields->second.c_str(), "%lf", &targetRadius) != 1) {
-                                                cerr << "parse error making ent '" << it_e->first << "' behavior '" << it_b->first << "': required field 'targetRadius' == '" << it_fields->second << "' not a floating-point number" << endl;
-                                                exit(EX_DATAERR);
-                                        }
-                                } else {
-                                        cerr << "parse error making ent '" << it_e->first << "' behavior '" << it_b->first << "': required field 'targetRadius' not specified" << endl;
-                                        exit(EX_DATAERR);
-                                }
-
-                                double slowRadius;
-                                it_fields = it_b->second->find(string("slowRadius"));
-                                if (it_fields != it_b->second->end()) {
-                                        if (sscanf(it_fields->second.c_str(), "%lf", &slowRadius) != 1) {
-                                                cerr << "parse error making ent '" << it_e->first << "' behavior '" << it_b->first << "': required field 'slowRadius' == '" << it_fields->second << "' not a floating-point number" << endl;
-                                                exit(EX_DATAERR);
-                                        }
-                                } else {
-                                        cerr << "parse error making ent '" << it_e->first << "' behavior '" << it_b->first << "': required field 'slowRadius' not specified" << endl;
-                                        exit(EX_DATAERR);
-                                }
-
-                                p = dynamic_cast<RuntimePekomin *>(character);
-                                if (p == NULL) {
-                                        // this should never happen
-                                        cerr << "parse error making ent '" << it_e->first << "' behavior '" << it_b->first << "': ent '" << it_e->first << "' is not RuntimePekomin" << endl;
-                                        exit(EX_SOFTWARE);
-                                }
+                                SET_P();
                                 p->addBehavior(new Align(character, target, maxAngularAcceleration, maxRotation, targetRadius, slowRadius));
+                                continue;
                         }
-/*
-                        TODO: for each behavior: parse fields, instantiate behavior, set fields, add to ent.
-                        Arrive(Mobile *character, Mobile *target, double maxAcceleration, double maxSpeed, double targetRadius, double slowRadius);
-                        Evade(Mobile *character, Mobile *target, double maxAcceleration);
-                        Face(Mobile *character, Mobile *target, double maxAngularAcceleration, double maxRotation, double targetRadius, double slowRadius);
-                        Flee(Mobile *character, Mobile *target, double maxAcceleration);
-                        KinematicArrive(Ent *character, Ent *target, double maxSpeed, double radius);
-                        KinematicFlee(Ent *character, Ent *target, double maxSpeed);
-                        KinematicSeek(Ent *character, Ent *target, double maxSpeed);
-                        KinematicWander(Ent *character, double maxSpeed, double maxRotation);
-                        LookWhereYoureGoing(Mobile *character, Mobile *target, double maxAngularAcceleration, double maxRotation, double targetRadius, double slowRadius);
-                        Pursue(Mobile *character, Mobile *target, double maxAcceleration);
-                        Seek(Mobile *character, Mobile *target, double maxAcceleration);
-                        Separation(Mobile *character, Mobile *target, double threshold, double decayCoefficient, double maxAcceleration);
-                        VelocityMatch(Mobile *character, Mobile *target, double maxAcceleration);
-                        Wander(Mobile *character, Mobile *target, double maxAngularAcceleration, double maxRotation, double targetRadius, double slowRadius, double wanderOffset, double wanderRadius, double wanderRate, double wanderOrientation, double maxAcceleration);
-*/
+
+                        // Arrive(Mobile *character, Mobile *target, double maxAcceleration, double maxSpeed, double targetRadius, double slowRadius);
+                        if (it_b->first == string("Arrive")) {
+                                SET_CHARACTER();
+                                SET_TARGET();
+                                SET_DOUBLE(maxAcceleration);
+                                SET_DOUBLE(maxSpeed       );
+                                SET_DOUBLE(targetRadius   );
+                                SET_DOUBLE(slowRadius     );
+
+                                SET_P();
+                                p->addBehavior(new Arrive(character, target, maxAcceleration, maxSpeed, targetRadius, slowRadius));
+                                continue;
+                        }
+
+                        // Evade(Mobile *character, Mobile *target, double maxAcceleration);
+                        if (it_b->first == string("Evade")) {
+                                SET_CHARACTER();
+                                SET_TARGET();
+                                SET_DOUBLE(maxAcceleration);
+
+                                SET_P();
+                                p->addBehavior(new Evade(character, target, maxAcceleration));
+                                continue;
+                        }
+
+                        // Face(Mobile *character, Mobile *target, double maxAngularAcceleration, double maxRotation, double targetRadius, double slowRadius);
+                        if (it_b->first == string("Face")) {
+                                SET_CHARACTER();
+                                SET_TARGET();
+                                SET_DOUBLE(maxAngularAcceleration);
+                                SET_DOUBLE(maxRotation           );
+                                SET_DOUBLE(targetRadius          );
+                                SET_DOUBLE(slowRadius            );
+
+                                SET_P();
+                                p->addBehavior(new Face(character, target, maxAngularAcceleration, maxRotation, targetRadius, slowRadius));
+                                continue;
+                        }
+
+                        // Flee(Mobile *character, Mobile *target, double maxAcceleration);
+                        if (it_b->first == string("Flee")) {
+                                SET_CHARACTER();
+                                SET_TARGET();
+                                SET_DOUBLE(maxAcceleration);
+
+                                SET_P();
+                                p->addBehavior(new Flee(character, target, maxAcceleration));
+                                continue;
+                        }
+
+                        // KinematicArrive(Ent *character, Ent *target, double maxSpeed, double radius);
+                        if (it_b->first == string("KinematicArrive")) {
+                                SET_CHARACTER();
+                                SET_TARGET();
+                                SET_DOUBLE(maxSpeed);
+                                SET_DOUBLE(radius);
+
+                                SET_P();
+                                p->addBehavior(new KinematicArrive(character, target, maxSpeed, radius));
+                                continue;
+                        }
+
+                        // KinematicFlee(Ent *character, Ent *target, double maxSpeed);
+                        if (it_b->first == string("KinematicFlee")) {
+                                SET_CHARACTER();
+                                SET_TARGET();
+                                SET_DOUBLE(maxSpeed);
+
+                                SET_P();
+                                p->addBehavior(new KinematicFlee(character, target, maxSpeed));
+                                continue;
+                        }
+
+                        // KinematicSeek(Ent *character, Ent *target, double maxSpeed);
+                        if (it_b->first == string("KinematicSeek")) {
+                                SET_CHARACTER();
+                                SET_TARGET();
+                                SET_DOUBLE(maxSpeed);
+
+                                SET_P();
+                                p->addBehavior(new KinematicSeek(character, target, maxSpeed));
+                                continue;
+                        }
+
+                        // KinematicWander(Ent *character, double maxSpeed, double maxRotation);
+                        if (it_b->first == string("KinematicWander")) {
+                                SET_CHARACTER();
+                                SET_DOUBLE(maxSpeed);
+                                SET_DOUBLE(maxRotation);
+
+                                SET_P();
+                                p->addBehavior(new KinematicWander(character, maxSpeed, maxRotation));
+                                continue;
+                        }
+
+                        // LookWhereYoureGoing(Mobile *character, Mobile *target, double maxAngularAcceleration, double maxRotation, double targetRadius, double slowRadius);
+                        if (it_b->first == string("LookWhereYoureGoing")) {
+                                SET_CHARACTER();
+                                SET_TARGET();
+                                SET_DOUBLE(maxAngularAcceleration);
+                                SET_DOUBLE(maxRotation);
+                                SET_DOUBLE(targetRadius);
+                                SET_DOUBLE(slowRadius);
+
+                                SET_P();
+                                p->addBehavior(new LookWhereYoureGoing(character, target, maxAngularAcceleration, maxRotation, targetRadius, slowRadius));
+                                continue;
+                        }
+
+                        // Pursue(Mobile *character, Mobile *target, double maxAcceleration);
+                        if (it_b->first == string("Pursue")) {
+                                SET_CHARACTER();
+                                SET_TARGET();
+                                SET_DOUBLE(maxAcceleration);
+
+                                SET_P();
+                                p->addBehavior(new Pursue(character, target, maxAcceleration));
+                                continue;
+                        }
+
+                        // Seek(Mobile *character, Mobile *target, double maxAcceleration);
+                        if (it_b->first == string("Seek")) {
+                                SET_CHARACTER();
+                                SET_TARGET();
+                                SET_DOUBLE(maxAcceleration);
+
+                                SET_P();
+                                p->addBehavior(new Seek(character, target, maxAcceleration));
+                                continue;
+                        }
+
+                        // Separation(Mobile *character, Mobile *target, double threshold, double decayCoefficient, double maxAcceleration);
+                        if (it_b->first == string("Separation")) {
+                                SET_CHARACTER();
+                                SET_TARGET();
+                                SET_DOUBLE(threshold);
+                                SET_DOUBLE(decayCoefficient);
+                                SET_DOUBLE(maxAcceleration);
+
+                                SET_P();
+                                p->addBehavior(new Separation(character, target, threshold, decayCoefficient, maxAcceleration));
+                                continue;
+                        }
+
+                        // VelocityMatch(Mobile *character, Mobile *target, double maxAcceleration);
+                        if (it_b->first == string("VelocityMatch")) {
+                                SET_CHARACTER();
+                                SET_TARGET();
+                                SET_DOUBLE(maxAcceleration);
+
+                                SET_P();
+                                p->addBehavior(new VelocityMatch(character, target, maxAcceleration));
+                                continue;
+                        }
+
+                        // Wander(Mobile *character, Mobile *target, double maxAngularAcceleration, double maxRotation, double targetRadius, double slowRadius, double wanderOffset, double wanderRadius, double wanderRate, double wanderOrientation, double maxAcceleration);
+                        if (it_b->first == string("Wander")) {
+                                SET_CHARACTER();
+                                SET_TARGET();
+                                SET_DOUBLE(maxAngularAcceleration);
+                                SET_DOUBLE(maxRotation);
+                                SET_DOUBLE(targetRadius);
+                                SET_DOUBLE(slowRadius);
+                                SET_DOUBLE(wanderOffset);
+                                SET_DOUBLE(wanderRadius);
+                                SET_DOUBLE(wanderRate);
+                                SET_DOUBLE(wanderOrientation);
+                                SET_DOUBLE(maxAcceleration);
+
+                                SET_P();
+                                p->addBehavior(new Wander(character, target, maxAngularAcceleration, maxRotation, targetRadius, slowRadius, wanderOffset, wanderRadius, wanderRate, wanderOrientation, maxAcceleration));
+                                continue;
+                        }
                 }
         }
 

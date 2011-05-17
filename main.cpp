@@ -1,9 +1,10 @@
+#include <GL/glut.h>
+#include <iostream>
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
 #include <sysexits.h>
 #include <sys/time.h>
-#include <GL/glut.h>
 
 #include <vector>
 
@@ -16,6 +17,8 @@
 #include "Phantom.hpp"
 
 #define DEBUG_MAIN
+
+#define BUFSIZE 65536
 
 using namespace std;
 
@@ -74,14 +77,30 @@ void initJuego() {
                         }
                         delete e;
                 }
+                player = NULL;
 
+                {
+                        char buf[BUFSIZE];
+                        int pos = 0;
+                        FILE *file;
+
+                        file = fopen("games/prueba2.game", "r");
+                        while (!feof(file)) pos += fread(&buf + pos, sizeof(char), BUFSIZE - pos, file);
+                        buf[pos] = '\0';
+                        parse(buf);
+                        if (player == NULL) {
+                                cerr << "warning: no player defined in game file; using default player." << endl;
+                                player = new Player();
+                                ents.push_back(player);
+                        }
+                }
+/*
                 player = new Player();
-                ents.push_back(player);
 
                 p = new RuntimePekomin(Triple(10, 10, 0), 0);
                 //p->addBehavior(new Seek(p, player, 0.01));
                 //p->addBehavior(new Seek(p, player, 0.05));
-                //p->addBehavior(new Arrive(p, player, 0.01, 0.01, 1, 2));
+                p->addBehavior(new Arrive(p, player, 0.01, 0.01, 1, 2));
 
                 //Phantom *casper = new Phantom();
                 //ents.push_back(casper);
@@ -89,9 +108,10 @@ void initJuego() {
 
                 //p->addBehavior(new Pursue(p, player, 0.001));
 
-                p->addBehavior(new VelocityMatch(p, player, 0.01));
+                //p->addBehavior(new VelocityMatch(p, player, 0.01));
 
                 ents.push_back(p);
+*/
         }
 }
 

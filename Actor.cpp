@@ -3,6 +3,7 @@
 #define DEBUG_ACTOR
 
 #ifdef DEBUG_ACTOR
+#include <iostream>
 #include <stdio.h>
 #endif
 
@@ -171,7 +172,7 @@ void Actor::update(unsigned int ticks) {
         }
 
 #ifdef DEBUG_ACTOR
-        printf("actor %p: final vel = ", this);
+        printf("actor %p: %d behaviors: final vel = ", this, static_cast<unsigned int>(behaviors.size()));
         this->vel.print();
         printf(", vrot = %f>\n", this->vrot);
 #endif

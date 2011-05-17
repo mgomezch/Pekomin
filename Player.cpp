@@ -1,7 +1,13 @@
-#include "Player.hpp"
+#include <GL/glut.h>
 
 #include "gl.hpp"
-#include <GL/glut.h>
+#include "Player.hpp"
+
+//#define DEBUG_PLAYER
+
+#ifdef DEBUG_PLAYER
+#include <iostream>
+#endif
 
 Player::~Player() {}
 
@@ -58,4 +64,7 @@ void Player::draw() {
                 glVertex3f(0, 0, 0);
                 glVertex3f(0, 2, 0);
         glEnd();
+#ifdef DEBUG_PLAYER
+        cout << "player: drawing at (" << pos.x << ", " << pos.y << ", " << pos.z << ")" << endl;
+#endif
 }

@@ -3,6 +3,12 @@
 #include "gl.hpp"
 #include <GL/glut.h>
 
+#define DEBUG_RUNTIMEPEKOMIN
+
+#ifdef DEBUG_RUNTIMEPEKOMIN
+#include <iostream>
+#endif
+
 RuntimePekomin::RuntimePekomin() {
         this->pos  = Triple(0, 0, 0);
         this->ang  = 0;
@@ -26,12 +32,15 @@ RuntimePekomin::RuntimePekomin(Triple pos, double ang, Triple vel, double vang) 
 
 void RuntimePekomin::addBehavior(Behavior *b) {
         behaviors.push_back(b);
+#ifdef DEBUG_RUNTIMEPEKOMIN
+        cout << "actor " << static_cast<void *>(this) << ": adding behavior " << static_cast<void *>(b) << endl;
+#endif
 }
 
 void RuntimePekomin::draw() {
         glPushMatrix();
                 glBegin(GL_LINES);
-                        glColor3ub(0, 0, 128);
+                        glColor3ub(255, 0, 128);
 
                         glVertex3f(0, 0, 0);
                         glVertex3f(1, 2, 0);
@@ -40,7 +49,7 @@ void RuntimePekomin::draw() {
                         glVertex3f(-1, 2, 0);
                 glEnd();
         glPopMatrix();
-        glColor4ub(255, 0, 0, 255);
+        glColor4ub(255, 255, 255, 255);
         glCallList(cubo);
 /*
         glBegin(GL_LINES);

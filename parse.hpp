@@ -1,5 +1,5 @@
-#ifndef _GAME_HPP
-#define _GAME_HPP
+#ifndef _PARSE_HPP
+#define _PARSE_HPP
 
 void parse(char *);
 

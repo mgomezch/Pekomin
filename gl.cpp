@@ -18,7 +18,7 @@ int cuadrado        = -1,
     cielo           = -1;
 
 GLfloat black4f[4]       = {0, 0, 0, 1};
-GLfloat white4f[4]       = {0, 1, 1, 1};
+GLfloat white4f[4]       = {1, 1, 1, 1};
 
 GLubyte color_ss_on[4]   = {255,   0,   0, 160};
 GLubyte color_ss_off[4]  = { 50,   0,   0, 160};
