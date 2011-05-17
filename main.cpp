@@ -15,6 +15,7 @@
 #include "parse.hpp"
 #include "Player.hpp"
 #include "Phantom.hpp"
+#include "util.hpp"
 
 #define DEBUG_MAIN
 
@@ -94,24 +95,6 @@ void initJuego() {
                                 ents.push_back(player);
                         }
                 }
-/*
-                player = new Player();
-
-                p = new RuntimePekomin(Triple(10, 10, 0), 0);
-                //p->addBehavior(new Seek(p, player, 0.01));
-                //p->addBehavior(new Seek(p, player, 0.05));
-                p->addBehavior(new Arrive(p, player, 0.01, 0.01, 1, 2));
-
-                //Phantom *casper = new Phantom();
-                //ents.push_back(casper);
-                //p->addBehavior(new Wander(p, casper, 0.01, M_PI/6, 1, 2, 6, 5, 1.2, M_PI/6, 0.0001));
-
-                //p->addBehavior(new Pursue(p, player, 0.001));
-
-                //p->addBehavior(new VelocityMatch(p, player, 0.01));
-
-                ents.push_back(p);
-*/
         }
 }
 

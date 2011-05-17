@@ -22,8 +22,8 @@ Arrive::Arrive(Mobile *character, Mobile *target, double maxAcceleration, double
         this->slowRadius      = slowRadius;
 }
 
-tuple<bool, Triple,double> Arrive::getVel() {
-        tuple<bool, Triple,double> steering;
+tuple<bool, Triple, double> Arrive::getVel() {
+        tuple<bool, Triple, double> steering;
         Triple direction, targetVelocity;
         double distance, targetSpeed;
 

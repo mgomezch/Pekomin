@@ -19,10 +19,10 @@ void Actor::update(unsigned int ticks) {
         Dynamic         *b_dynamic        ;
 
         vector<tuple<bool, Triple, double> > v_directstatic,
-                                             v_static,
-                                             v_directkinematic,
-                                             v_kinematic,
-                                             v_dynamic;
+                                                  v_static,
+                                                  v_directkinematic,
+                                                  v_kinematic,
+                                                  v_dynamic;
 
         Triple sum_directstatic_t    = Triple(0, 0, 0),
                sum_static_t          = Triple(0, 0, 0),
@@ -176,6 +176,7 @@ void Actor::update(unsigned int ticks) {
         this->vel.print();
         printf(", vrot = %f>\n", this->vrot);
 #endif
-        this->pos += this->vel ; //* (double)ticks;
-        this->ang += this->vrot; //*         ticks;
+	this->vel += this->vel * (-0.0005) * (double)ticks;
+        this->pos += this->vel * (double)ticks;
+        this->ang += this->vrot*         ticks;
 }
