@@ -13,7 +13,7 @@ KinematicSeek::KinematicSeek(Ent *character, Ent *target, double maxSpeed) {
         this->maxSpeed  = maxSpeed ;
 }
 
-tuple<bool, Triple,double> KinematicSeek::getVelIncr() {
+tuple<bool, Triple, double> KinematicSeek::getVelIncr() {
         tuple<bool, Triple, double> steering;
         get<0>(steering) = true;
         get<1>(steering) = target->pos - character->pos;

@@ -15,6 +15,8 @@
 #include "Player.hpp"
 #include "Phantom.hpp"
 
+#include "util.hpp"
+
 #define DEBUG_MAIN
 
 using namespace std;
@@ -78,18 +80,21 @@ void initJuego() {
                 player = new Player();
                 ents.push_back(player);
 
-                p = new RuntimePekomin(Triple(10, 10, 0), 0);
-                //p->addBehavior(new Seek(p, player, 0.01));
-                //p->addBehavior(new Seek(p, player, 0.05));
-                //p->addBehavior(new Arrive(p, player, 0.01, 0.01, 1, 2));
-
-                //Phantom *casper = new Phantom();
-                //ents.push_back(casper);
-                //p->addBehavior(new Wander(p, casper, 0.01, M_PI/6, 1, 2, 6, 5, 1.2, M_PI/6, 0.0001));
+                p = new RuntimePekomin(Triple(RandBin(-10, 10), RandBin(-10, 10), 0), RandBin(-2*M_PI, 2*M_PI));
+                
+		//p->addBehavior(new Flee(p, player, 0.01));
+                
+		//p->addBehavior(new Seek(p, player, 0.01));
+                
+		p->addBehavior(new Arrive(p, player, 0.01, 0.01, 1, 2));
+         
+                //p->addBehavior(new Wander(p, 0.5, M_PI/3, 1, 2, 6, 6, 4, M_PI/6, 0.0005));
 
                 //p->addBehavior(new Pursue(p, player, 0.001));
 
-                p->addBehavior(new VelocityMatch(p, player, 0.01));
+                //p->addBehavior(new VelocityMatch(p, player, 0.01));
+
+		//p->addBehavior(new Align(p, player, 0.5, M_PI/6, 3, 2));
 
                 ents.push_back(p);
         }

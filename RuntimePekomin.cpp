@@ -34,13 +34,13 @@ void RuntimePekomin::draw() {
                         glColor3ub(0, 0, 128);
 
                         glVertex3f(0, 0, 0);
-                        glVertex3f(1, 2, 0);
+                        glVertex3f(2, 1, 0);
 
-                        glVertex3f( 0, 0, 0);
-                        glVertex3f(-1, 2, 0);
+                        glVertex3f( 0,  0, 0);
+                        glVertex3f( 2, -1, 0);
                 glEnd();
         glPopMatrix();
-        glColor4ub(255, 0, 0, 255);
+        glColor4ub(255, 0, 128, 255);
         glCallList(cubo);
 /*
         glBegin(GL_LINES);

@@ -4,3 +4,11 @@ make
 
 Para jugar:
 ./pekomin
+
+Behaviors:
+Seek
+Flee
+Arrive
+Wander
+Pursue / Prediccion
+Evade  / Prediccion
