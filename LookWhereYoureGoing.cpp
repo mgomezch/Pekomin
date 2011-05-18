@@ -3,12 +3,6 @@
 #include "LookWhereYoureGoing.hpp"
 #include "Mobile.hpp"
 
-/*
-unsigned int LookWhereYoureGoing::type() {
-        return BEHAVIOR_LOOKWHEREYOUREGOING;
-}
-*/
-
 LookWhereYoureGoing::LookWhereYoureGoing(Mobile *character, Mobile *target, double maxAngularAcceleration, double maxRotation, double targetRadius, double slowRadius) {
         this->character              = character;
         this->target                 = target;
@@ -18,7 +12,7 @@ LookWhereYoureGoing::LookWhereYoureGoing(Mobile *character, Mobile *target, doub
         this->slowRadius             = slowRadius;
 }
 
-tuple<bool, Triple, double> LookWhereYoureGoing::getVelIncr() {
+tuple<bool, Triple, double> LookWhereYoureGoing::getVelIncr(unsigned int ticks) {
         tuple<bool, Triple, double> steering;
         double rotation, rotationSize, targetRotation, angularAcceleration;
 

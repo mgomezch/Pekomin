@@ -1,19 +1,13 @@
 #include "Evade.hpp"
 #include "Mobile.hpp"
 
-/*
-unsigned int Evade::type() {
-        return BEHAVIOR_EVADE;
-}
-*/
-
 Evade::Evade(Mobile *character, Mobile *target, double maxAcceleration) {
         this->character       = character;
         this->target          = target;
         this->maxAcceleration = maxAcceleration;
 }
 
-tuple<bool, Triple, double> Evade::getVelIncr() {
+tuple<bool, Triple, double> Evade::getVelIncr(unsigned int ticks) {
         tuple<bool, Triple, double> steering;
         Triple direction;
         double distance, speed, prediction;

@@ -18,9 +18,8 @@ class Arrive : public DirectKinematic {
                 static const double timeToTarget = 0.1;
 
                 Arrive(Mobile *character, Mobile *target, double maxAcceleration, double maxSpeed, double targetRadius, double slowRadius);
-//              virtual unsigned int type();
 
-                virtual tuple<bool, Triple, double> getVel();
+                virtual tuple<bool, Triple, double> getVel(unsigned int ticks);
 };
 
 #endif

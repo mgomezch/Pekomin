@@ -3,12 +3,6 @@
 #include "Face.hpp"
 #include "Mobile.hpp"
 
-/*
-unsigned int Face::type() {
-        return BEHAVIOR_FACE;
-}
-*/
-
 Face::Face(Mobile *character, Mobile *target, double maxAngularAcceleration, double maxRotation, double targetRadius, double slowRadius) {
         this->character              = character;
         this->target                 = target;
@@ -18,7 +12,7 @@ Face::Face(Mobile *character, Mobile *target, double maxAngularAcceleration, dou
         this->slowRadius             = slowRadius;
 }
 
-tuple<bool, Triple, double> Face::getVelIncr() {
+tuple<bool, Triple, double> Face::getVelIncr(unsigned int ticks) {
         tuple<bool, Triple, double> steering;
         double rotation, rotationSize, targetRotation, angularAcceleration;
         Triple direction;

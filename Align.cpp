@@ -3,12 +3,6 @@
 #include "Align.hpp"
 #include "Mobile.hpp"
 
-/*
-unsigned int Align::type() {
-        return BEHAVIOR_ALIGN;
-}
-*/
-
 Align::Align(Mobile *character, Mobile *target, double maxAngularAcceleration, double maxRotation, double targetRadius, double slowRadius) {
         this->character              = character;
         this->target                 = target;
@@ -18,7 +12,7 @@ Align::Align(Mobile *character, Mobile *target, double maxAngularAcceleration, d
         this->slowRadius             = slowRadius;
 }
 
-tuple<bool, Triple, double> Align::getVelIncr() {
+tuple<bool, Triple, double> Align::getVelIncr(unsigned int ticks) {
         tuple<bool, Triple, double> steering;
         double rotation, rotationSize, targetRotation, angularAcceleration;
 

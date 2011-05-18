@@ -1,12 +1,6 @@
 #include "KinematicFlee.hpp"
 #include "Ent.hpp"
 
-/*
-unsigned int KinematicFlee::type() {
-        return BEHAVIOR_KINEMATICFLEE;
-}
-*/
-
 KinematicFlee::KinematicFlee(Ent *character_, Ent *target_, double maxSpeed_) {
         character = character_;
         target    = target_;
@@ -14,7 +8,7 @@ KinematicFlee::KinematicFlee(Ent *character_, Ent *target_, double maxSpeed_) {
 }
 
 // Retorna incrementos de velocidad y rotación
-tuple<bool, Triple, double> KinematicFlee::getVelIncr() {
+tuple<bool, Triple, double> KinematicFlee::getVelIncr(unsigned int ticks) {
         tuple<bool, Triple, double> steering;
         get<1>(steering) = character->pos - target->pos;
         get<1>(steering).normalize();

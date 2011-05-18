@@ -14,9 +14,8 @@ class KinematicFlee : public Kinematic {
                 double maxSpeed;
 
                 KinematicFlee(Ent *character, Ent *target, double maxSpeed);
-//              virtual unsigned int type();
 
-                virtual tuple<bool, Triple, double> getVelIncr();
+                virtual tuple<bool, Triple, double> getVelIncr(unsigned int ticks);
 };
 
 #endif

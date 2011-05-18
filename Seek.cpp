@@ -1,19 +1,13 @@
 #include "Seek.hpp"
 #include "Mobile.hpp"
 
-/*
-unsigned int Seek::type() {
-        return BEHAVIOR_SEEK;
-}
-*/
-
 Seek::Seek(Mobile *character, Mobile *target, double maxAcceleration) {
         this->character       = character;
         this->target          = target;
         this->maxAcceleration = maxAcceleration;
 }
 
-tuple<bool, Triple, double> Seek::getVelIncr() {
+tuple<bool, Triple, double> Seek::getVelIncr(unsigned int ticks) {
         tuple<bool, Triple, double> steering;
 
         get<0>(steering) = true;

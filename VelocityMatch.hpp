@@ -15,9 +15,8 @@ class VelocityMatch : public DirectKinematic {
                 static const double timeToTarget = 0.1;
 
                 VelocityMatch(Mobile *character, Mobile *target, double maxAcceleration);
-//              virtual unsigned int type();
 
-                virtual tuple<bool, Triple, double> getVel();
+                virtual tuple<bool, Triple, double> getVel(unsigned int ticks);
 };
 
 #endif
