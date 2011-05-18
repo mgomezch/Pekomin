@@ -14,13 +14,20 @@ KinematicArrive::KinematicArrive(Ent *character_, Ent *target_, double maxSpeed_
         radius    = radius_;
 }
 
-tuple<bool, Triple, double> KinematicArrive::getVelIncr() {
+tuple<bool, Triple, double> KinematicArrive::getVel() {
         tuple<bool, Triple, double> steering;
-        get<1>(steering) = target->pos - character->pos;
 
-        //cuando no se cumple esto que se retorna? o que tiene el steering? o usar una referencia e instanciar a NULL y echarnos agua :D
-        if (get<1>(steering).length() >= radius) {
-                get<1>(steering) /= timeToTarget;
+	get<0>(steering) = true;
+        get<2>(steering) = 0;
+
+	get<1>(steering) = target->pos - character->pos;
+
+        if (get<1>(steering).length() < radius) {
+		get<1>(steering) /= timeToTarget;
+		if (get<1>(steering).length() > maxSpeed) {
+			get<1>(steering).normalized();
+			get<1>(steering) *= maxSpeed;
+		}
 //              get<2>(steering) = getNewOrientation(character->ang, get<1>(steering));
         }
 

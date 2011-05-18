@@ -34,12 +34,7 @@ tuple<bool, Triple, double> Arrive::getVel() {
         distance = direction.length();
 
         if (distance < targetRadius) {
-#ifdef DEBUG_ARRIVE
-                printf("mobile %p: arrive distance = %f < %f = targetRadius\n", character, distance, targetRadius);
-                printf("mobile %p: return target->vel = ", character);
                 target->vel.print();
-                printf("\n");
-#endif
                 get<1>(steering) = target->vel;
                 if (get<1>(steering).length() > maxSpeed) {
                         get<1>(steering).normalize();
@@ -49,14 +44,8 @@ tuple<bool, Triple, double> Arrive::getVel() {
         }
 
         if (distance >= slowRadius) {
-#ifdef DEBUG_ARRIVE
-                printf("mobile %p: arrive distance = %f >= %f = slowRadius\n", character, distance, slowRadius);
-#endif
                 targetSpeed = maxSpeed;
         } else {
-#ifdef DEBUG_ARRIVE
-                printf("mobile %p: arrive distance = %f < %f = slowRadius\n", character, distance, slowRadius);
-#endif
                 targetSpeed = maxSpeed * (distance - targetRadius) / (slowRadius - targetRadius);
         }
 

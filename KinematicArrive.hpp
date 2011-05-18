@@ -1,24 +1,24 @@
 #ifndef _KINEMATICARRIVE_HPP
 #define _KINEMATICARRIVE_HPP
 
-#include "Kinematic.hpp"
+#include "DirectKinematic.hpp"
 
 using namespace std;
 
 class Ent;
 
-class KinematicArrive : public Kinematic {
+class KinematicArrive : public DirectKinematic {
         public:
                 Ent *character;
                 Ent *target;
                 double maxSpeed;
                 double radius;
-                static const double timeToTarget = 0.25;
+                static const double timeToTarget = 0.00025;
 
                 KinematicArrive(Ent *character, Ent *target, double maxSpeed, double radius);
 //              virtual unsigned int type();
 
-                virtual tuple<bool, Triple, double> getVelIncr();
+                virtual tuple<bool, Triple, double> getVel();
 };
 
 #endif
