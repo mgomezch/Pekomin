@@ -11,8 +11,8 @@ player {
 }
 
 fernando {
-        pos.x = 10;
-        pos.y = 10;
+        pos.x = 30;
+        pos.y = 30;
         pos.z =  0;
         vel.x =  0;
         vel.y =  0;
@@ -20,7 +20,7 @@ fernando {
 
         Arrive {
                 target          = player;
-                maxAcceleration = 1     ;
+                maxAcceleration = 0.1     ;
                 maxSpeed        = 0.1   ;
                 targetRadius    = 5     ;
                 slowRadius      = 10    ;

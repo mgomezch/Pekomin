@@ -80,9 +80,9 @@ void initJuego() {
                         }
                         delete e;
                 }
-                player = NULL;
+                //player = NULL;
 
-                {
+                /*{
                         char buf[BUFSIZE];
                         int pos = 0;
                         FILE *file;
@@ -96,7 +96,16 @@ void initJuego() {
                                 player = new Player();
                                 ents.push_back(player);
                         }
-                }
+                }*/
+
+		player = new Player();
+		ents.push_back(player);
+
+		p = new RuntimePekomin(Triple(10, 10, 0), 0);
+		ents.push_back(p);
+
+		p->addBehavior(new KinematicArrive(p, player, 0.0001, 3));
+
         }
 }
 

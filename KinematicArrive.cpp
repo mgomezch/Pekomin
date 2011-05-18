@@ -1,21 +1,27 @@
 #include "KinematicArrive.hpp"
 #include "Ent.hpp"
 
-KinematicArrive::KinematicArrive(Ent *character_, Ent *target_, double maxSpeed_, double radius_) {
-        character = character_;
-        target    = target_;
-        maxSpeed  = maxSpeed_;
-        radius    = radius_;
+KinematicArrive::KinematicArrive(Ent *character, Ent *target, double maxSpeed, double radius) {
+        this->character = character;
+        this->target    = target;
+        this->maxSpeed  = maxSpeed;
+        this->radius    = radius;
 }
 
-tuple<bool, Triple, double> KinematicArrive::getVelIncr(unsigned int ticks) {
+tuple<bool, Triple, double> KinematicArrive::getVel(unsigned int ticks) {
         tuple<bool, Triple, double> steering;
-        get<1>(steering) = target->pos - character->pos;
 
-        //cuando no se cumple esto que se retorna? o que tiene el steering? o usar una referencia e instanciar a NULL y echarnos agua :D
-        if (get<1>(steering).length() >= radius) {
-                get<1>(steering) /= timeToTarget;
-//              get<2>(steering) = getNewOrientation(character->ang, get<1>(steering));
+	get<0>(steering) = true;
+        get<2>(steering) = 0;
+
+	get<1>(steering) = target->pos - character->pos;
+
+        if (get<1>(steering).length() < radius) {
+		get<1>(steering) /= timeToTarget;
+		if (get<1>(steering).length() > maxSpeed) {
+			get<1>(steering).normalized();
+			get<1>(steering) *= maxSpeed;
+		}
         }
 
         return steering;
