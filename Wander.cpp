@@ -37,7 +37,7 @@ tuple<bool, Triple, double> Wander::getVelIncr(unsigned int ticks) {
                 target->pos += target->orientation() * wanderRadius;
         }
         if ((this->accum += ticks) >= 3000) this->accum = 0;
-        
+
         //steering = Face::getVelIncr();
         get<0>(steering) = true;
         get<1>(steering) = target->pos - character->pos;

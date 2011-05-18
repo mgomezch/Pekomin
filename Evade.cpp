@@ -12,7 +12,7 @@ tuple<bool, Triple, double> Evade::getVelIncr(unsigned int ticks) {
         Triple direction;
         double distance, speed, prediction;
 
-        direction = character->pos - target->pos;
+        direction = character->pos - target->pos - target->vel;
         distance = direction.length();
         speed = character->vel.length();
 
@@ -23,10 +23,11 @@ tuple<bool, Triple, double> Evade::getVelIncr(unsigned int ticks) {
         }
 
         get<0>(steering) = true;
-        get<1>(steering) = character->pos - target->vel * prediction;
+        get<2>(steering) = 0;
+
+        get<1>(steering) = direction * prediction;
         get<1>(steering).normalize();
         get<1>(steering) *= maxAcceleration;
-        get<2>(steering) = 0;
 
         return steering;
 }

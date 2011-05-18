@@ -3,9 +3,17 @@ Para compilar:
 make
 
 Para jugar:
+Si se quiere usar el archivo de juego por defecto, "games/default.game", debe ejecutarse
 ./pekomin
+Si se quiere usar otro archivo de juego, debe pasarse el camino completo del archivo así:
+./pekomin game/group.game
 
 Behaviors:
+KinematicSeek
+KinematicFlee
+KinematicArrive
+KinematicWander
+
 Seek
 Flee
 Arrive

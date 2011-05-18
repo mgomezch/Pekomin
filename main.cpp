@@ -104,25 +104,17 @@ void initJuego() {
                                         exit(EX_IOERR);
                                 }
                         }
+
                         while (!feof(file)) pos += fread(&buf + pos, sizeof(char), BUFSIZE - pos, file);
                         buf[pos] = '\0';
                         parse(buf);
+
                         if (player == NULL) {
                                 cerr << "warning: no player defined in game file; using default player." << endl;
                                 player = new Player();
                                 ents.push_back(player);
                         }
                 }
-
-/*
-                player = new Player();
-                ents.push_back(player);
-
-                p = new RuntimePekomin(Triple(10, 10, 0), 0);
-                ents.push_back(p);
-
-                p->addBehavior(new KinematicFlee(p, player, 0.025));
-*/
         }
 }
 
