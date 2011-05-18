@@ -12,7 +12,7 @@ tuple<bool, Triple, double> Pursue::getVelIncr(unsigned int ticks) {
         Triple direction;
         double distance, speed, prediction;
 
-        direction = target->pos - character->pos;
+        direction = target->pos + target->vel - character->pos;
         distance = direction.length();
         speed = character->vel.length();
 
@@ -23,10 +23,11 @@ tuple<bool, Triple, double> Pursue::getVelIncr(unsigned int ticks) {
         }
 
         get<0>(steering) = true;
-        get<1>(steering) = target->pos + target->vel * prediction - character->pos;
-        get<1>(steering).normalize();
-        get<1>(steering) *= maxAcceleration;
-        get<2>(steering) = 0;
+	get<2>(steering) = 0;
+	
+       	get<1>(steering) = direction * prediction;
+       	get<1>(steering).normalize();
+       	get<1>(steering) *= maxAcceleration;
 
         return steering;
 }

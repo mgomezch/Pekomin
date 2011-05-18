@@ -1,0 +1,478 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+Actor	Actor.hpp	/^class Actor : public Mobile {$/;"	c
+Align	Align.cpp	/^Align::Align(Mobile *character, Mobile *target, double maxAngularAcceleration, double maxRotation, double targetRadius, double slowRadius) {$/;"	f	class:Align
+Align	Align.hpp	/^class Align : public Kinematic {$/;"	c
+Arrive	Arrive.cpp	/^Arrive::Arrive(Mobile *character, Mobile *target, double maxAcceleration, double maxSpeed, double targetRadius, double slowRadius) {$/;"	f	class:Arrive
+Arrive	Arrive.hpp	/^class Arrive : public DirectKinematic {$/;"	c
+BALAS	game.hpp	41;"	d
+BLUR_TEXTURE_SIZE	game.hpp	36;"	d
+BOOM_SCALE	game.hpp	28;"	d
+BUFSIZE	main.cpp	24;"	d	file:
+Behavior	Behavior.hpp	/^class Behavior {$/;"	c
+CAM_FPS	game.hpp	/^        CAM_FPS,$/;"	e	enum:cam_enum
+CAM_MANUAL	game.hpp	/^        CAM_MANUAL$/;"	e	enum:cam_enum
+CAM_OVERHEAD	game.hpp	/^        CAM_OVERHEAD = 0,$/;"	e	enum:cam_enum
+CAM_TPS	game.hpp	/^        CAM_TPS,$/;"	e	enum:cam_enum
+COSA	game.hpp	48;"	d
+DEBUG_ACTOR	Actor.cpp	3;"	d	file:
+DEBUG_ARRIVE	Arrive.cpp	4;"	d	file:
+DEBUG_MAIN	main.cpp	20;"	d	file:
+DEBUG_PARSE	parse.cpp	18;"	d	file:
+DEBUG_RUNTIMEPEKOMIN	RuntimePekomin.cpp	6;"	d	file:
+DIGITS_SCORE	game.hpp	22;"	d
+D_BLUR	game.hpp	38;"	d
+D_TABLERO	game.hpp	16;"	d
+DirectKinematic	DirectKinematic.hpp	/^class DirectKinematic : public Behavior {$/;"	c
+DirectStatic	DirectStatic.hpp	/^class DirectStatic : public Behavior {$/;"	c
+Dynamic	Dynamic.hpp	/^class Dynamic : public Behavior {$/;"	c
+Ent	Ent.hpp	/^class Ent {$/;"	c
+Evade	Evade.cpp	/^Evade::Evade(Mobile *character, Mobile *target, double maxAcceleration) {$/;"	f	class:Evade
+Evade	Evade.hpp	/^class Evade : public Kinematic {$/;"	c
+FIRST_PASS	game.hpp	69;"	d
+Face	Face.cpp	/^Face::Face(Mobile *character, Mobile *target, double maxAngularAcceleration, double maxRotation, double targetRadius, double slowRadius) {$/;"	f	class:Face
+Face	Face.hpp	/^class Face : public Kinematic {$/;"	c
+Flee	Flee.cpp	/^Flee::Flee(Mobile *character, Mobile *target, double maxAcceleration) {$/;"	f	class:Flee
+Flee	Flee.hpp	/^class Flee : public Kinematic {$/;"	c
+GRAVEDAD	game.hpp	11;"	d
+H_LIGHT_TABLERO	game.hpp	31;"	d
+H_OVERHEAD	game.hpp	32;"	d
+H_SEGMENT	game.hpp	19;"	d
+H_TABLERO	game.hpp	14;"	d
+Kinematic	Kinematic.hpp	/^class Kinematic : public Behavior {$/;"	c
+KinematicArrive	KinematicArrive.cpp	/^KinematicArrive::KinematicArrive(Ent *character, Ent *target, double maxSpeed, double radius) {$/;"	f	class:KinematicArrive
+KinematicArrive	KinematicArrive.hpp	/^class KinematicArrive : public DirectKinematic {$/;"	c
+KinematicFlee	KinematicFlee.cpp	/^KinematicFlee::KinematicFlee(Ent *character_, Ent *target_, double maxSpeed_) {$/;"	f	class:KinematicFlee
+KinematicFlee	KinematicFlee.hpp	/^class KinematicFlee : public Kinematic {$/;"	c
+KinematicSeek	KinematicSeek.cpp	/^KinematicSeek::KinematicSeek(Ent *character, Ent *target, double maxSpeed) {$/;"	f	class:KinematicSeek
+KinematicSeek	KinematicSeek.hpp	/^class KinematicSeek : public Kinematic {$/;"	c
+KinematicWander	KinematicWander.cpp	/^KinematicWander::KinematicWander(Ent *character, double maxSpeed, double maxRotation) {$/;"	f	class:KinematicWander
+KinematicWander	KinematicWander.hpp	/^class KinematicWander : public Kinematic {$/;"	c
+LEVEL_DESERT	game.hpp	/^        LEVEL_DESERT = 0,$/;"	e	enum:levels
+LEVEL_SKY	game.hpp	/^        LEVEL_SKY,$/;"	e	enum:levels
+LEVEL_SPACE	game.hpp	/^        LEVEL_SPACE$/;"	e	enum:levels
+LookWhereYoureGoing	LookWhereYoureGoing.cpp	/^LookWhereYoureGoing::LookWhereYoureGoing(Mobile *character, Mobile *target, double maxAngularAcceleration, double maxRotation, double targetRadius, double slowRadius) {$/;"	f	class:LookWhereYoureGoing
+LookWhereYoureGoing	LookWhereYoureGoing.hpp	/^class LookWhereYoureGoing : public Kinematic {$/;"	c
+MIN	Separation.cpp	4;"	d	file:
+Mobile	Mobile.hpp	/^class Mobile : public Ent {$/;"	c
+N_BLURS	game.hpp	37;"	d
+N_BOOMS	game.hpp	25;"	d
+N_BOOM_SETS	game.hpp	26;"	d
+N_CAMS	game.hpp	59;"	d
+N_DELTAS	game.hpp	47;"	d
+N_DIVS	gl.hpp	10;"	d
+N_DIVS_HD	gl.hpp	11;"	d
+N_LEVELS	game.hpp	79;"	d
+N_LISTS	gl.hpp	25;"	d
+N_LOOPS	gl.hpp	9;"	d
+N_PASSES	game.hpp	70;"	d
+N_PBALAS	game.hpp	42;"	d
+N_SLICES	gl.hpp	8;"	d
+N_SLICES_RINGBASE	gl.hpp	7;"	d
+PASS_BLUR	game.hpp	/^        PASS_BLUR = 0,$/;"	e	enum:passes
+PASS_LAST	game.hpp	/^        PASS_LAST$/;"	e	enum:passes
+Phantom	Phantom.cpp	/^Phantom::Phantom() {$/;"	f	class:Phantom
+Phantom	Phantom.cpp	/^Phantom::Phantom(Triple pos, double ang) {$/;"	f	class:Phantom
+Phantom	Phantom.cpp	/^Phantom::Phantom(Triple pos, double ang, Triple vel, double vang) {$/;"	f	class:Phantom
+Phantom	Phantom.hpp	/^class Phantom : public Actor {$/;"	c
+Player	Player.cpp	/^Player::Player() {$/;"	f	class:Player
+Player	Player.cpp	/^Player::Player(Triple pos, double ang) {$/;"	f	class:Player
+Player	Player.cpp	/^Player::Player(Triple pos, double ang, Triple vel, double vang) {$/;"	f	class:Player
+Player	Player.cpp	/^Player::Player(const Player &p) {$/;"	f	class:Player
+Player	Player.hpp	/^class Player : public Mobile {$/;"	c
+Punto	Triple.hpp	/^typedef Triple Punto;$/;"	t
+Pursue	Pursue.cpp	/^Pursue::Pursue(Mobile *character, Mobile *target, double maxAcceleration) {$/;"	f	class:Pursue
+Pursue	Pursue.hpp	/^class Pursue : public Kinematic {$/;"	c
+RandBin	util.cpp	/^double RandBin(double fMin, double fMax) {$/;"	f
+RuntimePekomin	RuntimePekomin.cpp	/^RuntimePekomin::RuntimePekomin() {$/;"	f	class:RuntimePekomin
+RuntimePekomin	RuntimePekomin.cpp	/^RuntimePekomin::RuntimePekomin(Triple pos, double ang) {$/;"	f	class:RuntimePekomin
+RuntimePekomin	RuntimePekomin.cpp	/^RuntimePekomin::RuntimePekomin(Triple pos, double ang, Triple vel, double vang) {$/;"	f	class:RuntimePekomin
+RuntimePekomin	RuntimePekomin.hpp	/^class RuntimePekomin : public Actor {$/;"	c
+SET_CHARACTER	parse.cpp	57;"	d	file:
+SET_DOUBLE	parse.cpp	102;"	d	file:
+SET_ENT_FIELD_DOUBLE	parse.cpp	21;"	d	file:
+SET_ENT_FIELD_DOUBLE	parse.cpp	42;"	d	file:
+SET_P	parse.cpp	127;"	d	file:
+SET_TARGET	parse.cpp	74;"	d	file:
+START_LEVEL	game.hpp	78;"	d
+Seek	Seek.cpp	/^Seek::Seek(Mobile *character, Mobile *target, double maxAcceleration) {$/;"	f	class:Seek
+Seek	Seek.hpp	/^class Seek : public Kinematic {$/;"	c
+Separation	Separation.cpp	/^Separation::Separation(Mobile *character, Mobile *target, double threshold, double decayCoefficient, double maxAcceleration) {$/;"	f	class:Separation
+Separation	Separation.hpp	/^class Separation : public Kinematic {$/;"	c
+Static	Static.hpp	/^class Static : public Behavior {$/;"	c
+T_BOOM	game.hpp	27;"	d
+T_CAM_OLD	game.hpp	33;"	d
+Triple	Triple.hpp	/^                Triple() : x(0), y(0), z(0) {}$/;"	f	class:Triple
+Triple	Triple.hpp	/^                Triple(double X, double Y, double Z) : x(X), y(Y), z(Z) {}$/;"	f	class:Triple
+Triple	Triple.hpp	/^class Triple {$/;"	c
+V_BALA_MAX	game.hpp	44;"	d
+V_BALA_MIN	game.hpp	43;"	d
+Vector	Triple.hpp	/^typedef Triple Vector;$/;"	t
+VelocityMatch	VelocityMatch.cpp	/^VelocityMatch::VelocityMatch(Mobile *character, Mobile *target, double maxAcceleration) {$/;"	f	class:VelocityMatch
+VelocityMatch	VelocityMatch.hpp	/^class VelocityMatch : public Kinematic {$/;"	c
+W_SEGMENT	game.hpp	20;"	d
+W_SEGMENT_T	game.hpp	21;"	d
+W_TABLERO	game.hpp	15;"	d
+Wander	Wander.cpp	/^Wander::Wander(Mobile *character            ,$/;"	f	class:Wander
+Wander	Wander.hpp	/^class Wander : public Kinematic {$/;"	c
+_ACTOR_HPP	Actor.hpp	2;"	d
+_ALIGN_HPP	Align.hpp	2;"	d
+_ARRIVE_HPP	Arrive.hpp	2;"	d
+_BEHAVIORS_HPP	Behaviors.hpp	2;"	d
+_BEHAVIOR_HPP	Behavior.hpp	2;"	d
+_DIRECTKINEMATIC_HPP	DirectKinematic.hpp	2;"	d
+_DIRECTSTATIC_HPP	DirectStatic.hpp	2;"	d
+_DYNAMIC_HPP	Dynamic.hpp	2;"	d
+_ENT_HPP	Ent.hpp	2;"	d
+_EVADE_HPP	Evade.hpp	2;"	d
+_FACE_HPP	Face.hpp	2;"	d
+_FAMILIES_HPP	Families.hpp	2;"	d
+_FLEE_HPP	Flee.hpp	2;"	d
+_GAME_HPP	game.hpp	2;"	d
+_GL_HPP	gl.hpp	2;"	d
+_KINEMATICARRIVE_HPP	KinematicArrive.hpp	2;"	d
+_KINEMATICFLEE_HPP	KinematicFlee.hpp	2;"	d
+_KINEMATICSEEK_HPP	KinematicSeek.hpp	2;"	d
+_KINEMATICWANDER_HPP	KinematicWander.hpp	2;"	d
+_KINEMATIC_HPP	Kinematic.hpp	2;"	d
+_LOOKWHEREYOUREGOING_HPP	LookWhereYoureGoing.hpp	2;"	d
+_MOBILE_HPP	Immobile.hpp	2;"	d
+_MOBILE_HPP	Mobile.hpp	2;"	d
+_PARSE_HPP	parse.hpp	2;"	d
+_PHANTOM_HPP	Phantom.hpp	2;"	d
+_PLAYER_HPP	Player.hpp	2;"	d
+_PURSUE_HPP	Pursue.hpp	2;"	d
+_RUNTIMEPEKOMIN_HPP	RuntimePekomin.hpp	2;"	d
+_SEEK_HPP	Seek.hpp	2;"	d
+_SEPARATION_HPP	Separation.hpp	2;"	d
+_STATIC_HPP	Static.hpp	2;"	d
+_TRIPLE_HPP	Triple.hpp	2;"	d
+_UTIL_HPP	util.hpp	2;"	d
+_VELOCITYMATCH_HPP	VelocityMatch.hpp	2;"	d
+_WANDER_HPP	Wander.hpp	2;"	d
+a	game.hpp	/^        float  a[N_BOOMS];$/;"	m	struct:boom_data
+accum	KinematicWander.hpp	/^		int accum;$/;"	m	class:KinematicWander
+accum	Wander.hpp	/^                unsigned int accum;$/;"	m	class:Wander
+addBehavior	RuntimePekomin.cpp	/^void RuntimePekomin::addBehavior(Behavior *b) {$/;"	f	class:RuntimePekomin
+ang	Ent.hpp	/^                double ang;$/;"	m	class:Ent
+aspectratio	game.cpp	/^GLfloat aspectratio = 4.0\/3.0;$/;"	v
+b	game.hpp	/^        float  b[N_BOOMS];$/;"	m	struct:boom_data
+bala	gl.cpp	/^    bala            = -1,$/;"	v
+balas	game.cpp	/^int balas = 0;$/;"	v
+barra	gl.cpp	/^    barra           = -1,$/;"	v
+behaviors	Actor.hpp	/^                vector<Behavior *> behaviors;$/;"	m	class:Actor
+behaviorses	parse.cpp	/^unordered_map<string, unordered_map<string, unordered_map<string, string> *> *> behaviorses;$/;"	v
+black4f	gl.cpp	/^GLfloat black4f[4]       = {0, 0, 0, 1};$/;"	v
+blur	game.cpp	/^int blur = 0;$/;"	v
+boom	game.cpp	/^struct boom_data boom[N_BOOM_SETS];$/;"	v	typeref:struct:boom_data
+boom_data	game.hpp	/^struct boom_data {$/;"	s
+borde	gl.cpp	/^    borde           = -1,$/;"	v
+buildLists	gl.cpp	/^void buildLists() {$/;"	f
+cam	game.cpp	/^int cam  = 0;$/;"	v
+cam_enum	game.hpp	/^enum cam_enum {$/;"	g
+cam_old_adj	game.cpp	/^int cam_old_adj      = 0;$/;"	v
+cam_old_rotx	game.cpp	/^GLfloat cam_old_rotx = 0;$/;"	v
+cam_old_roty	game.cpp	/^GLfloat cam_old_roty = 0;$/;"	v
+cam_old_t	game.cpp	/^int cam_old_t        = 0;$/;"	v
+cam_old_x	game.cpp	/^GLfloat cam_old_x    = 0;$/;"	v
+cam_old_y	game.cpp	/^GLfloat cam_old_y    = 0;$/;"	v
+cam_old_z	game.cpp	/^GLfloat cam_old_z    = 0;$/;"	v
+cam_rotx	game.cpp	/^GLfloat cam_rotx    =     0.0;$/;"	v
+cam_roty	game.cpp	/^GLfloat cam_roty    =     0.0;$/;"	v
+cam_x	game.cpp	/^GLfloat cam_x       =     0.0;$/;"	v
+cam_y	game.cpp	/^GLfloat cam_y       =     0.0;$/;"	v
+cam_z	game.cpp	/^GLfloat cam_z       =     0.0;$/;"	v
+character	Align.hpp	/^                Mobile *character;$/;"	m	class:Align
+character	Arrive.hpp	/^                Mobile *character;$/;"	m	class:Arrive
+character	Evade.hpp	/^                Mobile *character;$/;"	m	class:Evade
+character	Face.hpp	/^                Mobile *character;$/;"	m	class:Face
+character	Flee.hpp	/^                Mobile *character;$/;"	m	class:Flee
+character	KinematicArrive.hpp	/^                Ent *character;$/;"	m	class:KinematicArrive
+character	KinematicFlee.hpp	/^                Ent *character;$/;"	m	class:KinematicFlee
+character	KinematicSeek.hpp	/^                Ent *character;$/;"	m	class:KinematicSeek
+character	KinematicWander.hpp	/^                Ent *character;$/;"	m	class:KinematicWander
+character	LookWhereYoureGoing.hpp	/^                Mobile *character;$/;"	m	class:LookWhereYoureGoing
+character	Pursue.hpp	/^                Mobile *character;$/;"	m	class:Pursue
+character	Seek.hpp	/^                Mobile *character;$/;"	m	class:Seek
+character	Separation.hpp	/^                Mobile *character;$/;"	m	class:Separation
+character	VelocityMatch.hpp	/^                Mobile *character;$/;"	m	class:VelocityMatch
+character	Wander.hpp	/^                Mobile* character;$/;"	m	class:Wander
+checker	gl.cpp	/^    checker         = -1,$/;"	v
+cielo	gl.cpp	/^    cielo           = -1;$/;"	v
+color_borde	gl.cpp	/^GLubyte color_borde[4]   = { 90,  60,  30, 255};$/;"	v
+color_empty	gl.cpp	/^GLubyte color_empty[4]   = {139, 136, 120, 255};$/;"	v
+color_inicial	gl.cpp	/^GLubyte color_inicial[4] = {124, 252,   0, 255};$/;"	v
+color_lleno	gl.cpp	/^GLubyte color_lleno[4]   = {255,   0,   0, 255};$/;"	v
+color_medio	gl.cpp	/^GLubyte color_medio[4]   = {255, 235,   0, 255};$/;"	v
+color_ss_off	gl.cpp	/^GLubyte color_ss_off[4]  = { 50,   0,   0, 160};$/;"	v
+color_ss_on	gl.cpp	/^GLubyte color_ss_on[4]   = {255,   0,   0, 160};$/;"	v
+color_wall	gl.cpp	/^GLubyte color_wall[4]    = { 90,  40,   0, 255};$/;"	v
+control_d	Player.hpp	/^                     control_d,$/;"	m	class:Player
+control_jump	Player.hpp	/^                     control_jump,$/;"	m	class:Player
+control_l	Player.hpp	/^                     control_l,$/;"	m	class:Player
+control_r	Player.hpp	/^                     control_r,$/;"	m	class:Player
+control_rot_l	Player.hpp	/^                     control_rot_l,$/;"	m	class:Player
+control_rot_r	Player.hpp	/^                     control_rot_r,$/;"	m	class:Player
+control_shoot	Player.hpp	/^                     control_shoot;$/;"	m	class:Player
+control_u	Player.hpp	/^                bool control_u,$/;"	m	class:Player
+cosa	game.cpp	/^int cosa = 0;$/;"	v
+cross	Triple.cpp	/^Triple Triple::cross(Triple t) {$/;"	f	class:Triple
+cuadrado	gl.cpp	/^int cuadrado        = -1,$/;"	v
+cuadrado_hd	gl.cpp	/^    cuadrado_hd     = -1,$/;"	v
+cuadrado_simple	gl.cpp	/^    cuadrado_simple = -1,$/;"	v
+cubo	gl.cpp	/^    cubo            = -1,$/;"	v
+cubo_simple	gl.cpp	/^    cubo_simple     = -1,$/;"	v
+decayCoefficient	Separation.hpp	/^                double decayCoefficient;$/;"	m	class:Separation
+delay	game.cpp	/^int delay             = 0;$/;"	v
+delta	game.cpp	/^unsigned int delta    = 0;$/;"	v
+deltas	game.cpp	/^int deltas[N_DELTAS];$/;"	v
+deltas_cur	game.cpp	/^int deltas_cur        = 0;$/;"	v
+deltas_sum	game.cpp	/^int deltas_sum        = 0;$/;"	v
+display	main.cpp	/^void display() {$/;"	f
+dot	Triple.cpp	/^double Triple::dot(Triple t) {$/;"	f	class:Triple
+draw	Phantom.cpp	/^void Phantom::draw() {$/;"	f	class:Phantom
+draw	Player.cpp	/^void Player::draw() {$/;"	f	class:Player
+draw	RuntimePekomin.cpp	/^void RuntimePekomin::draw() {$/;"	f	class:RuntimePekomin
+ents	game.cpp	/^vector<Ent *> ents;$/;"	v
+fov	game.cpp	/^GLfloat fov         =    60.0;$/;"	v
+frame_delay	game.cpp	/^float frame_delay     = 0;$/;"	v
+frozen	game.cpp	/^int frozen            = 0;$/;"	v
+g	game.hpp	/^        float  g[N_BOOMS];$/;"	m	struct:boom_data
+getVel	Arrive.cpp	/^tuple<bool, Triple, double> Arrive::getVel(unsigned int ticks) {$/;"	f	class:Arrive
+getVel	KinematicArrive.cpp	/^tuple<bool, Triple, double> KinematicArrive::getVel(unsigned int ticks) {$/;"	f	class:KinematicArrive
+getVelIncr	Align.cpp	/^tuple<bool, Triple, double> Align::getVelIncr(unsigned int ticks) {$/;"	f	class:Align
+getVelIncr	Evade.cpp	/^tuple<bool, Triple, double> Evade::getVelIncr(unsigned int ticks) {$/;"	f	class:Evade
+getVelIncr	Face.cpp	/^tuple<bool, Triple, double> Face::getVelIncr(unsigned int ticks) {$/;"	f	class:Face
+getVelIncr	Flee.cpp	/^tuple<bool, Triple, double> Flee::getVelIncr(unsigned int ticks) {$/;"	f	class:Flee
+getVelIncr	KinematicFlee.cpp	/^tuple<bool, Triple, double> KinematicFlee::getVelIncr(unsigned int ticks) {$/;"	f	class:KinematicFlee
+getVelIncr	KinematicSeek.cpp	/^tuple<bool, Triple, double> KinematicSeek::getVelIncr(unsigned int ticks) {$/;"	f	class:KinematicSeek
+getVelIncr	KinematicWander.cpp	/^tuple<bool, Triple, double> KinematicWander::getVelIncr(unsigned int ticks) {$/;"	f	class:KinematicWander
+getVelIncr	LookWhereYoureGoing.cpp	/^tuple<bool, Triple, double> LookWhereYoureGoing::getVelIncr(unsigned int ticks) {$/;"	f	class:LookWhereYoureGoing
+getVelIncr	Pursue.cpp	/^tuple<bool, Triple, double> Pursue::getVelIncr(unsigned int ticks) {$/;"	f	class:Pursue
+getVelIncr	Seek.cpp	/^tuple<bool, Triple, double> Seek::getVelIncr(unsigned int ticks) {$/;"	f	class:Seek
+getVelIncr	Separation.cpp	/^tuple<bool, Triple, double> Separation::getVelIncr(unsigned int ticks) {$/;"	f	class:Separation
+getVelIncr	VelocityMatch.cpp	/^tuple<bool, Triple, double> VelocityMatch::getVelIncr(unsigned int ticks) {$/;"	f	class:VelocityMatch
+getVelIncr	Wander.cpp	/^tuple<bool, Triple, double> Wander::getVelIncr(unsigned int ticks) {$/;"	f	class:Wander
+i	game.cpp	/^int i = 0,$/;"	v
+initGL	main.cpp	/^void initGL() {$/;"	f
+initJuego	main.cpp	/^void initJuego() {$/;"	f
+j	game.cpp	/^    j = 0,$/;"	v
+juego	main.cpp	/^void juego(int v) {$/;"	f
+k	game.cpp	/^    k = 0;$/;"	v
+key_back	game.cpp	/^int key_back         =  's';$/;"	v
+key_cam_back	game.cpp	/^int key_cam_back     =  'k';$/;"	v
+key_cam_down	game.cpp	/^int key_cam_down     =  ';';$/;"	v
+key_cam_fwd	game.cpp	/^int key_cam_fwd      =  'i';$/;"	v
+key_cam_left	game.cpp	/^int key_cam_left     =  'j';$/;"	v
+key_cam_right	game.cpp	/^int key_cam_right    =  'l';$/;"	v
+key_cam_rotdown	game.cpp	/^int key_cam_rotdown  =  'h';$/;"	v
+key_cam_rotleft	game.cpp	/^int key_cam_rotleft  =  'u';$/;"	v
+key_cam_rotright	game.cpp	/^int key_cam_rotright =  'o';$/;"	v
+key_cam_rotup	game.cpp	/^int key_cam_rotup    =  'y';$/;"	v
+key_cam_switch	game.cpp	/^int key_cam_switch   = '\\t';$/;"	v
+key_cam_up	game.cpp	/^int key_cam_up       =  'p';$/;"	v
+key_enter	game.cpp	/^int key_enter        =   13;$/;"	v
+key_fwd	game.cpp	/^int key_fwd          =  'w';$/;"	v
+key_left	game.cpp	/^int key_left         =  'a';$/;"	v
+key_right	game.cpp	/^int key_right        =  'd';$/;"	v
+key_shoot	game.cpp	/^int key_shoot        =  ' ';$/;"	v
+keydown	main.cpp	/^void keydown(unsigned char key, int mx, int my) {$/;"	f
+keystate_back	game.cpp	/^int keystate_back         = 0;$/;"	v
+keystate_cam_back	game.cpp	/^int keystate_cam_back     = 0;$/;"	v
+keystate_cam_down	game.cpp	/^int keystate_cam_down     = 0;$/;"	v
+keystate_cam_fwd	game.cpp	/^int keystate_cam_fwd      = 0;$/;"	v
+keystate_cam_left	game.cpp	/^int keystate_cam_left     = 0;$/;"	v
+keystate_cam_right	game.cpp	/^int keystate_cam_right    = 0;$/;"	v
+keystate_cam_rotdown	game.cpp	/^int keystate_cam_rotdown  = 0;$/;"	v
+keystate_cam_rotleft	game.cpp	/^int keystate_cam_rotleft  = 0;$/;"	v
+keystate_cam_rotright	game.cpp	/^int keystate_cam_rotright = 0;$/;"	v
+keystate_cam_rotup	game.cpp	/^int keystate_cam_rotup    = 0;$/;"	v
+keystate_cam_up	game.cpp	/^int keystate_cam_up       = 0;$/;"	v
+keystate_d	game.cpp	/^int keystate_d            = 0;$/;"	v
+keystate_enter	game.cpp	/^int keystate_enter        = 0;$/;"	v
+keystate_fwd	game.cpp	/^int keystate_fwd          = 0;$/;"	v
+keystate_l	game.cpp	/^int keystate_l            = 0;$/;"	v
+keystate_left	game.cpp	/^int keystate_left         = 0;$/;"	v
+keystate_r	game.cpp	/^int keystate_r            = 0;$/;"	v
+keystate_right	game.cpp	/^int keystate_right        = 0;$/;"	v
+keystate_shoot	game.cpp	/^int keystate_shoot        = 0;$/;"	v
+keystate_u	game.cpp	/^int keystate_u            = 0;$/;"	v
+keyup	main.cpp	/^void keyup(unsigned char key, int mx, int my) {$/;"	f
+length	Triple.cpp	/^double Triple::length() {$/;"	f	class:Triple
+length_2	Triple.cpp	/^double Triple::length_2() {$/;"	f	class:Triple
+level	game.cpp	/^int level = 0;$/;"	v
+level	game.hpp	/^        int level;$/;"	m	struct:boom_data
+levels	game.hpp	/^enum levels {$/;"	g
+light_cone	gl.cpp	/^    light_cone      = -1,$/;"	v
+light_pos	gl.cpp	/^GLfloat light_pos[4]     = {0, 0, H_LIGHT_TABLERO, 1};$/;"	v
+lives	game.cpp	/^int lives = 0;$/;"	v
+loadPNG	gl.cpp	/^int loadPNG(char *name, int *outWidth, int *outHeight, int *outHasAlpha, GLubyte **outData) {$/;"	f
+main	main.cpp	/^int main(int argc, char **argv) {$/;"	f
+mapToRange	Align.cpp	/^void Align::mapToRange(double *value) {$/;"	f	class:Align
+mapToRange	Face.cpp	/^void Face::mapToRange(double *value) {$/;"	f	class:Face
+mapToRange	LookWhereYoureGoing.cpp	/^void LookWhereYoureGoing::mapToRange(double *value) {$/;"	f	class:LookWhereYoureGoing
+maxAcceleration	Arrive.hpp	/^                double maxAcceleration;$/;"	m	class:Arrive
+maxAcceleration	Evade.hpp	/^                double maxAcceleration;$/;"	m	class:Evade
+maxAcceleration	Flee.hpp	/^                double maxAcceleration;$/;"	m	class:Flee
+maxAcceleration	Pursue.hpp	/^                double maxAcceleration;$/;"	m	class:Pursue
+maxAcceleration	Seek.hpp	/^                double maxAcceleration;$/;"	m	class:Seek
+maxAcceleration	Separation.hpp	/^                double maxAcceleration;$/;"	m	class:Separation
+maxAcceleration	VelocityMatch.hpp	/^                double maxAcceleration;$/;"	m	class:VelocityMatch
+maxAcceleration	Wander.hpp	/^                double maxAcceleration;$/;"	m	class:Wander
+maxAngularAcceleration	Align.hpp	/^                double maxAngularAcceleration;$/;"	m	class:Align
+maxAngularAcceleration	Face.hpp	/^                double maxAngularAcceleration;$/;"	m	class:Face
+maxAngularAcceleration	LookWhereYoureGoing.hpp	/^                double maxAngularAcceleration;$/;"	m	class:LookWhereYoureGoing
+maxAngularAcceleration	Wander.hpp	/^                double maxAngularAcceleration;$/;"	m	class:Wander
+maxPrediction	Evade.hpp	/^                static const double maxPrediction = 0.01;$/;"	m	class:Evade
+maxPrediction	Pursue.hpp	/^                static const double maxPrediction = 0.01;$/;"	m	class:Pursue
+maxRotation	Align.hpp	/^                double maxRotation;$/;"	m	class:Align
+maxRotation	Face.hpp	/^                double maxRotation;$/;"	m	class:Face
+maxRotation	KinematicWander.hpp	/^                double maxRotation;$/;"	m	class:KinematicWander
+maxRotation	LookWhereYoureGoing.hpp	/^                double maxRotation;$/;"	m	class:LookWhereYoureGoing
+maxRotation	Wander.hpp	/^                double maxRotation;$/;"	m	class:Wander
+maxSpeed	Arrive.hpp	/^                double maxSpeed;$/;"	m	class:Arrive
+maxSpeed	KinematicArrive.hpp	/^                double maxSpeed;$/;"	m	class:KinematicArrive
+maxSpeed	KinematicFlee.hpp	/^                double maxSpeed;$/;"	m	class:KinematicFlee
+maxSpeed	KinematicSeek.hpp	/^                double maxSpeed;$/;"	m	class:KinematicSeek
+maxSpeed	KinematicWander.hpp	/^                double maxSpeed;$/;"	m	class:KinematicWander
+max_frame_delay	game.cpp	/^float max_frame_delay = 0;$/;"	v
+nboom	game.cpp	/^int nboom = 0;$/;"	v
+new_time	game.cpp	/^int new_time          = 0;$/;"	v
+normalize	Triple.cpp	/^Triple& Triple::normalize() {$/;"	f	class:Triple
+normalized	Triple.cpp	/^Triple Triple::normalized() {$/;"	f	class:Triple
+old_cam	game.cpp	/^int old_cam          = 0;$/;"	v
+old_time	game.cpp	/^int old_time          = 0;$/;"	v
+on	game.hpp	/^        int on;$/;"	m	struct:boom_data
+operator *	Triple.cpp	/^Triple Triple::operator*(Triple t) {$/;"	f	class:Triple
+operator *	Triple.cpp	/^Triple Triple::operator*(double f) {$/;"	f	class:Triple
+operator *=	Triple.cpp	/^Triple& Triple::operator*=(double f) {$/;"	f	class:Triple
+operator +	Triple.cpp	/^Triple Triple::operator+(Triple t) {$/;"	f	class:Triple
+operator +	Triple.cpp	/^Triple Triple::operator+(double f) {$/;"	f	class:Triple
+operator +=	Triple.cpp	/^Triple& Triple::operator+=(const Triple &t) {$/;"	f	class:Triple
+operator +=	Triple.cpp	/^Triple& Triple::operator+=(double f) {$/;"	f	class:Triple
+operator -	Triple.cpp	/^Triple Triple::operator-() {$/;"	f	class:Triple
+operator -	Triple.cpp	/^Triple Triple::operator-(Triple t) {$/;"	f	class:Triple
+operator -	Triple.cpp	/^Triple Triple::operator-(double f) {$/;"	f	class:Triple
+operator -=	Triple.cpp	/^Triple& Triple::operator-=(const Triple &t) {$/;"	f	class:Triple
+operator -=	Triple.cpp	/^Triple& Triple::operator-=(double f) {$/;"	f	class:Triple
+operator /	Triple.cpp	/^Triple Triple::operator\/(double f) {$/;"	f	class:Triple
+operator /=	Triple.cpp	/^Triple& Triple::operator\/=(double f) {$/;"	f	class:Triple
+operator =	Triple.cpp	/^Triple& Triple::operator=(double f) {$/;"	f	class:Triple
+orientation	Ent.cpp	/^Triple Ent::orientation() {$/;"	f	class:Ent
+pa	game.cpp	/^      pa   = 0,$/;"	v
+parse	parse.cpp	/^void parse(char *s) {$/;"	f
+parse_r	parse.cpp	/^void parse_r(char *s, int chars) {$/;"	f
+pass	game.cpp	/^int pass = 0;$/;"	v
+passes	game.hpp	/^enum passes {$/;"	g
+pav	game.cpp	/^      pav  = 0;$/;"	v
+pb	game.cpp	/^int pb[N_PBALAS];$/;"	v
+pbi	game.cpp	/^int pbi = 0,$/;"	v
+pbl	game.cpp	/^int pbl[N_PBALAS];$/;"	v
+pbn	game.cpp	/^    pbn = 0;$/;"	v
+pbv	game.cpp	/^float pbv[N_PBALAS];$/;"	v
+pbvx	game.cpp	/^float pbx[N_PBALAS], pby[N_PBALAS], pbz[N_PBALAS], pbvx[N_PBALAS], pbvy[N_PBALAS], pbvz[N_PBALAS];$/;"	v
+pbvy	game.cpp	/^float pbx[N_PBALAS], pby[N_PBALAS], pbz[N_PBALAS], pbvx[N_PBALAS], pbvy[N_PBALAS], pbvz[N_PBALAS];$/;"	v
+pbvz	game.cpp	/^float pbx[N_PBALAS], pby[N_PBALAS], pbz[N_PBALAS], pbvx[N_PBALAS], pbvy[N_PBALAS], pbvz[N_PBALAS];$/;"	v
+pbx	game.cpp	/^float pbx[N_PBALAS], pby[N_PBALAS], pbz[N_PBALAS], pbvx[N_PBALAS], pbvy[N_PBALAS], pbvz[N_PBALAS];$/;"	v
+pby	game.cpp	/^float pbx[N_PBALAS], pby[N_PBALAS], pbz[N_PBALAS], pbvx[N_PBALAS], pbvy[N_PBALAS], pbvz[N_PBALAS];$/;"	v
+pbz	game.cpp	/^float pbx[N_PBALAS], pby[N_PBALAS], pbz[N_PBALAS], pbvx[N_PBALAS], pbvy[N_PBALAS], pbvz[N_PBALAS];$/;"	v
+player	game.cpp	/^Player *player = 0;$/;"	v
+pos	Ent.hpp	/^                Triple pos;$/;"	m	class:Ent
+power	main.cpp	/^int power(int b, unsigned int e) {$/;"	f
+print	Triple.cpp	/^void Triple::print() {$/;"	f	class:Triple
+prz	game.cpp	/^      prz  = 0,$/;"	v
+pts	game.cpp	/^int pts = 0;$/;"	v
+pv	game.cpp	/^      pv   = 0,$/;"	v
+pvrz	game.cpp	/^      pvrz = 0,$/;"	v
+pvx	game.cpp	/^      pvx  = 0,$/;"	v
+pvy	game.cpp	/^      pvy  = 0,$/;"	v
+pvz	game.cpp	/^      pvz  = 0,$/;"	v
+px	game.cpp	/^float px   = 0,$/;"	v
+py	game.cpp	/^      py   = 0,$/;"	v
+pz	game.cpp	/^      pz   = 0,$/;"	v
+r	game.hpp	/^        float  r[N_BOOMS];$/;"	m	struct:boom_data
+radius	KinematicArrive.hpp	/^                double radius;$/;"	m	class:KinematicArrive
+randomBinomial	util.cpp	/^double randomBinomial() {$/;"	f
+realDisplay	main.cpp	/^void realDisplay() {$/;"	f
+reshape	main.cpp	/^void reshape(int w, int h){$/;"	f
+retract	game.cpp	/^float retract        = 0;$/;"	v
+rx	game.hpp	/^        float rx[N_BOOMS];$/;"	m	struct:boom_data
+ry	game.hpp	/^        float ry[N_BOOMS];$/;"	m	struct:boom_data
+rz	game.hpp	/^        float rz[N_BOOMS];$/;"	m	struct:boom_data
+s	game.hpp	/^        float  s[N_BOOMS];$/;"	m	struct:boom_data
+segmento	gl.cpp	/^    segmento        = -1,$/;"	v
+segs	gl.cpp	/^int segs[12];$/;"	v
+skeydown	main.cpp	/^void skeydown(int key, int mx, int my) {$/;"	f
+skeyup	main.cpp	/^void skeyup(int key, int mx, int my) {$/;"	f
+slowRadius	Align.hpp	/^                double slowRadius;$/;"	m	class:Align
+slowRadius	Arrive.hpp	/^                double slowRadius;$/;"	m	class:Arrive
+slowRadius	Face.hpp	/^                double slowRadius;$/;"	m	class:Face
+slowRadius	LookWhereYoureGoing.hpp	/^                double slowRadius;$/;"	m	class:LookWhereYoureGoing
+slowRadius	Wander.hpp	/^                double slowRadius;$/;"	m	class:Wander
+ss	gl.cpp	/^int ss[12][7] = {$/;"	v
+state	Actor.hpp	/^                unsigned int state;$/;"	m	class:Actor
+ta	gl.cpp	/^    ta = 0;$/;"	v
+target	Align.hpp	/^                Mobile *target;$/;"	m	class:Align
+target	Arrive.hpp	/^                Mobile *target;$/;"	m	class:Arrive
+target	Evade.hpp	/^                Mobile *target;$/;"	m	class:Evade
+target	Face.hpp	/^                Mobile *target;$/;"	m	class:Face
+target	Flee.hpp	/^                Mobile *target;$/;"	m	class:Flee
+target	KinematicArrive.hpp	/^                Ent *target;$/;"	m	class:KinematicArrive
+target	KinematicFlee.hpp	/^                Ent *target;$/;"	m	class:KinematicFlee
+target	KinematicSeek.hpp	/^                Ent *target;$/;"	m	class:KinematicSeek
+target	LookWhereYoureGoing.hpp	/^                Mobile *target;$/;"	m	class:LookWhereYoureGoing
+target	Pursue.hpp	/^                Mobile *target;$/;"	m	class:Pursue
+target	Seek.hpp	/^                Mobile *target;$/;"	m	class:Seek
+target	Separation.hpp	/^                Mobile *target;$/;"	m	class:Separation
+target	VelocityMatch.hpp	/^                Mobile *target;$/;"	m	class:VelocityMatch
+target	Wander.hpp	/^                Mobile* target;$/;"	m	class:Wander
+targetRadius	Align.hpp	/^                double targetRadius;$/;"	m	class:Align
+targetRadius	Arrive.hpp	/^                double targetRadius;$/;"	m	class:Arrive
+targetRadius	Face.hpp	/^                double targetRadius;$/;"	m	class:Face
+targetRadius	LookWhereYoureGoing.hpp	/^                double targetRadius;$/;"	m	class:LookWhereYoureGoing
+targetRadius	Wander.hpp	/^                double targetRadius;$/;"	m	class:Wander
+tblur	gl.cpp	/^GLuint   tblur = -1;$/;"	v
+tcielo	gl.cpp	/^         tcielo  = -1;$/;"	v
+tcielo_img	gl.cpp	/^        *tcielo_img  = NULL;$/;"	v
+tdesert	gl.cpp	/^         tdesert = -1,$/;"	v
+tdesert_img	gl.cpp	/^        *tdesert_img = NULL,$/;"	v
+th	gl.cpp	/^    th = 0,$/;"	v
+threshold	Separation.hpp	/^                double threshold;$/;"	m	class:Separation
+timeToTarget	Align.hpp	/^                static const double timeToTarget = 0.1;$/;"	m	class:Align
+timeToTarget	Arrive.hpp	/^                static const double timeToTarget = 0.1;$/;"	m	class:Arrive
+timeToTarget	Face.hpp	/^                static const double timeToTarget = 0.1;$/;"	m	class:Face
+timeToTarget	KinematicArrive.hpp	/^                static const double timeToTarget = 0.25;$/;"	m	class:KinematicArrive
+timeToTarget	LookWhereYoureGoing.hpp	/^                static const double timeToTarget = 0.1;$/;"	m	class:LookWhereYoureGoing
+timeToTarget	VelocityMatch.hpp	/^                static const double timeToTarget = 0.1;$/;"	m	class:VelocityMatch
+tstars	gl.cpp	/^GLuint   tstars  = -1,$/;"	v
+tstars_img	gl.cpp	/^GLubyte *tstars_img  = NULL,$/;"	v
+tw	gl.cpp	/^int tw = 0,$/;"	v
+update	Actor.cpp	/^void Actor::update(unsigned int ticks) {$/;"	f	class:Actor
+update	Player.cpp	/^void Player::update(unsigned int ticks) {$/;"	f	class:Player
+va	game.hpp	/^        float va[N_BOOMS];$/;"	m	struct:boom_data
+vel	Mobile.hpp	/^                Triple vel;$/;"	m	class:Mobile
+vrot	Mobile.hpp	/^                double vrot;$/;"	m	class:Mobile
+vx	game.hpp	/^        float vx[N_BOOMS];$/;"	m	struct:boom_data
+vy	game.hpp	/^        float vy[N_BOOMS];$/;"	m	struct:boom_data
+vz	game.hpp	/^        float vz[N_BOOMS];$/;"	m	struct:boom_data
+wanderOffset	Wander.hpp	/^                double wanderOffset;$/;"	m	class:Wander
+wanderOrientation	Wander.hpp	/^                double wanderOrientation;$/;"	m	class:Wander
+wanderRadius	Wander.hpp	/^                double wanderRadius;$/;"	m	class:Wander
+wanderRate	Wander.hpp	/^                double wanderRate;$/;"	m	class:Wander
+wh	game.cpp	/^int wh = 384;$/;"	v
+white4f	gl.cpp	/^GLfloat white4f[4]       = {1, 1, 1, 1};$/;"	v
+ww	game.cpp	/^int ww = 512;$/;"	v
+x	Triple.hpp	/^                double x, y, z;$/;"	m	class:Triple
+x	game.hpp	/^        float  x[N_BOOMS];$/;"	m	struct:boom_data
+y	Triple.hpp	/^                double x, y, z;$/;"	m	class:Triple
+y	game.hpp	/^        float  y[N_BOOMS];$/;"	m	struct:boom_data
+z	Triple.hpp	/^                double x, y, z;$/;"	m	class:Triple
+z	game.hpp	/^        float  z[N_BOOMS];$/;"	m	struct:boom_data
+zfar	game.cpp	/^GLfloat zfar        =  1000.0;$/;"	v
+znear	game.cpp	/^GLfloat znear       =    0.01;$/;"	v
+~Behavior	Behavior.hpp	/^inline Behavior::~Behavior() {}$/;"	f	class:Behavior
+~Player	Player.cpp	/^Player::~Player() {}$/;"	f	class:Player

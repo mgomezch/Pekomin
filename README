@@ -6,6 +6,11 @@ Para jugar:
 ./pekomin
 
 Behaviors:
+KinematicSeek
+KinematicFlee
+KinematicArrive
+KinematicWander
+
 Seek
 Flee
 Arrive

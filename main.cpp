@@ -104,7 +104,9 @@ void initJuego() {
 		p = new RuntimePekomin(Triple(10, 10, 0), 0);
 		ents.push_back(p);
 
-		p->addBehavior(new KinematicFlee(p, player, 0.025));
+		//p->addBehavior(new KinematicWander(p, 0.005, M_PI/6));
+		//p->addBehavior(new Pursue(p, player, 0.025));
+		p->addBehavior(new Evade(p, player, 0.001));
 
         }
 }

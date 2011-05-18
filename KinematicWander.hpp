@@ -10,6 +10,7 @@ class KinematicWander : public Kinematic {
                 Ent *character;
                 double maxSpeed;
                 double maxRotation;
+		int accum;
 
                 KinematicWander(Ent *character, double maxSpeed, double maxRotation);
 
