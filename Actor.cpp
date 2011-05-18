@@ -49,7 +49,7 @@ void Actor::update(unsigned int ticks) {
 #ifdef DEBUG_ACTOR
                         printf("actor %p: behavior %d is direct static\n", this, i);
 #endif
-                        steering = b_directstatic->getPos();
+                        steering = b_directstatic->getPos(ticks);
                         if (get<0>(steering)) {
                                 n_directstatic++;
                                 v_directstatic.push_back(steering);
@@ -64,7 +64,7 @@ void Actor::update(unsigned int ticks) {
 #ifdef DEBUG_ACTOR
                         printf("actor %p: behavior %d is static\n", this, i); // DEBUG_ACTOR
 #endif
-                        steering = b_static->getPosIncr();
+                        steering = b_static->getPosIncr(ticks);
                         if (get<0>(steering)) {
                                 n_static++;
                                 v_static.push_back(steering);
@@ -79,7 +79,7 @@ void Actor::update(unsigned int ticks) {
 #ifdef DEBUG_ACTOR
                         printf("actor %p: behavior %d is direct kinematic\n", this, i); // DEBUG_ACTOR
 #endif
-                        steering = b_directkinematic->getVel();
+                        steering = b_directkinematic->getVel(ticks);
                         if (get<0>(steering)) {
                                 n_directkinematic++;
                                 v_directkinematic.push_back(steering);
@@ -94,7 +94,7 @@ void Actor::update(unsigned int ticks) {
 #ifdef DEBUG_ACTOR
                         printf("actor %p: behavior %d is kinematic\n", this, i); // DEBUG_ACTOR
 #endif
-                        steering = b_kinematic->getVelIncr();
+                        steering = b_kinematic->getVelIncr(ticks);
                         if (get<0>(steering)) {
                                 n_kinematic++;
                                 v_kinematic.push_back(steering);
@@ -109,7 +109,7 @@ void Actor::update(unsigned int ticks) {
 #ifdef DEBUG_ACTOR
                         printf("actor %p: behavior %d: dynamic\n", this, i); // DEBUG_ACTOR
 #endif
-                        steering = b_dynamic->getForce();
+                        steering = b_dynamic->getForce(ticks);
                         if (get<0>(steering)) {
                                 n_dynamic++;
                                 v_dynamic.push_back(steering);
@@ -172,11 +172,12 @@ void Actor::update(unsigned int ticks) {
         }
 
 #ifdef DEBUG_ACTOR
-        printf("actor %p: %d behaviors: final vel = ", this, static_cast<unsigned int>(behaviors.size()));
+        printf("actor %p: final vel = ", this);
         this->vel.print();
         printf(", vrot = %f>\n", this->vrot);
 #endif
-	this->vel += this->vel * (-0.0005) * (double)ticks;
-        this->pos += this->vel * (double)ticks;
-        this->ang += this->vrot*         ticks;
+        // roce; si se hace un salto, chequear que estés en el piso
+        this->vel += Triple(this->vel.x, this->vel.y, 0) * (-0.005) * static_cast<double>(ticks);
+        this->pos += this->vel  * static_cast<double>(ticks);
+        this->ang += this->vrot * static_cast<double>(ticks);
 }

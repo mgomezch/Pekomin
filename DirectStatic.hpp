@@ -10,7 +10,7 @@ using namespace std;
 
 class DirectStatic : public Behavior {
         public:
-                virtual tuple<bool, Triple, double> getPos() = 0;
+                virtual tuple<bool, Triple, double> getPos(unsigned int ticks) = 0;
 };
 
 #endif

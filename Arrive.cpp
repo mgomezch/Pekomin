@@ -7,12 +7,6 @@
 #include <stdio.h>
 #endif
 
-/*
-unsigned int Arrive::type() {
-        return BEHAVIOR_ARRIVE;
-}
-*/
-
 Arrive::Arrive(Mobile *character, Mobile *target, double maxAcceleration, double maxSpeed, double targetRadius, double slowRadius) {
         this->character       = character;
         this->target          = target;
@@ -22,7 +16,7 @@ Arrive::Arrive(Mobile *character, Mobile *target, double maxAcceleration, double
         this->slowRadius      = slowRadius;
 }
 
-tuple<bool, Triple, double> Arrive::getVel() {
+tuple<bool, Triple, double> Arrive::getVel(unsigned int ticks) {
         tuple<bool, Triple, double> steering;
         Triple direction, targetVelocity;
         double distance, targetSpeed;

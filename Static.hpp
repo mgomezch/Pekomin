@@ -10,7 +10,7 @@ using namespace std;
 
 class Static : public Behavior {
         public:
-                virtual tuple<bool, Triple, double> getPosIncr() = 0;
+                virtual tuple<bool, Triple, double> getPosIncr(unsigned int ticks) = 0;
 };
 
 #endif

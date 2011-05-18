@@ -10,7 +10,7 @@ using namespace std;
 
 class Dynamic : public Behavior {
         public:
-                virtual tuple<bool, Triple, double> getForce() = 0;
+                virtual tuple<bool, Triple, double> getForce(unsigned int ticks) = 0;
 };
 
 #endif

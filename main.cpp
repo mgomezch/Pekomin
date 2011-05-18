@@ -19,6 +19,8 @@
 
 #define DEBUG_MAIN
 
+//#define NO_LIGHTING
+
 #define BUFSIZE 65536
 
 using namespace std;
@@ -137,13 +139,17 @@ void display() {
 
         switch (pass) {
                 case PASS_BLUR:
+#ifndef NO_LIGHTING
                         glEnable(GL_LIGHTING);
+#endif
                         for (i = 0; i < 8; i++) {
                                 glDisable(GL_LIGHT0 + i);
                         }
                         break;
                 case PASS_LAST:
+#ifndef NO_LIGHTING
                         glEnable(GL_LIGHTING);
+#endif
                         for (i = 0; i < 8; i++) {
                                 glDisable(GL_LIGHT0 + i);
                         }
@@ -186,18 +192,15 @@ void display() {
                 if (pass == PASS_LAST) {
                         glPushMatrix();
                                 glScalef(5, 5, 5);
-//                              glDisable(GL_LIGHTING);
                                 glColor4ub(200, 200, 200, 255);
                                 glCallList(checker);
                                 glTranslatef(1, 0, 0);
                                 glColor4ub(0, 0, 0, 255);
                                 glCallList(checker);
-//                              glEnable(GL_LIGHTING);
                         glPopMatrix();
                 }
 
                 if (pass == PASS_LAST) {
-//                      glDisable(GL_LIGHTING);
                         for (i = 0; (unsigned int)i < ents.size(); i++) {
                                 glPushMatrix();
                                         glTranslatef(ents[i]->pos.x, ents[i]->pos.y, ents[i]->pos.z);
@@ -205,7 +208,6 @@ void display() {
                                         ents[i]->draw();
                                 glPopMatrix();
                         }
-//                      glEnable(GL_LIGHTING);
                 }
 
                 /* Balas del jugador */
@@ -218,7 +220,9 @@ void display() {
                                 glScalef(0.6, 1.0, 0.6);
                                 switch (pass) {
                                         case PASS_BLUR:
+#ifndef NO_LIGHTING
                                                 glDisable(GL_LIGHTING);
+#endif
                                                 glColor4ub(255, 255, 255, 255);
                                                 break;
                                         case PASS_LAST:
@@ -231,7 +235,9 @@ void display() {
                                 glCallList(bala);
                                 switch (pass) {
                                         case PASS_BLUR:
+#ifndef NO_LIGHTING
                                                 glEnable(GL_LIGHTING);
+#endif
                                                 break;
                                         case PASS_LAST:
                                                 //glDisable(GL_TEXTURE_2D);
@@ -315,12 +321,16 @@ void display() {
 
                         glLineWidth(3);
                         glColor4ub(255, 0, 0, 80);
+#ifndef NO_LIGHTING
                         glDisable(GL_LIGHTING);
+#endif
                         glBegin(GL_LINES);
                                 glVertex3f(cosax, cosay, cosaz);
                                 glVertex3f(cosax+600*cosavx, cosay+600*cosavy, cosaz+600*cosavz);
                         glEnd();
+#ifndef NO_LIGHTING
                         glEnable(GL_LIGHTING);
+#endif
                         glTranslatef(cosax, cosay, cosaz);
                         glRotatef((-180.0*atan2(cosavx, cosavy))/M_PI, 0, 0, 1);
                         glRotatef(( 180.0*atan(cosavz/sqrt(cosavx*cosavx + cosavy*cosavy)))/M_PI, 1, 0, 0);
@@ -331,7 +341,9 @@ void display() {
 */
 
                 glDisable(GL_CULL_FACE);
+#ifndef NO_LIGHTING
                 glDisable(GL_LIGHTING);
+#endif
                 if (pass == PASS_LAST) for (i = 0; i < N_BOOM_SETS; i++) {
                         if (boom[i].on > 0 && boom[i].level == level) {
                                 for (k = 0; k < N_BOOMS; k++) {
@@ -368,14 +380,18 @@ void display() {
                                 }
                         }
                 }
+#ifndef NO_LIGHTING
                 glEnable(GL_LIGHTING);
+#endif
                 glEnable(GL_CULL_FACE);
 
         glPopMatrix();
 
         if (pass == PASS_LAST) {
                 /* HUD */
+#ifndef NO_LIGHTING
                 glDisable(GL_LIGHTING);
+#endif
 
                 if (blur) {
                         glMatrixMode(GL_PROJECTION);

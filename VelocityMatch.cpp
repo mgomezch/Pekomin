@@ -1,19 +1,13 @@
 #include "VelocityMatch.hpp"
 #include "Mobile.hpp"
 
-/*
-unsigned int VelocityMatch::type() {
-        return BEHAVIOR_VELOCITYMATCH;
-}
-*/
-
 VelocityMatch::VelocityMatch(Mobile *character, Mobile *target, double maxAcceleration) {
         this->character       = character;
         this->target          = target;
         this->maxAcceleration = maxAcceleration;
 }
 
-tuple<bool, Triple, double> VelocityMatch::getVelIncr() {
+tuple<bool, Triple, double> VelocityMatch::getVelIncr(unsigned int ticks) {
         tuple<bool, Triple, double> steering;
 
         get<0>(steering) = true;

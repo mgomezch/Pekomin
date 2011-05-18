@@ -16,9 +16,8 @@ class Separation : public Kinematic {
                 double maxAcceleration;
 
                 Separation(Mobile *character, Mobile *target, double threshold, double decayCoefficient, double maxAcceleration);
-//              virtual unsigned int type();
 
-                tuple<bool, Triple, double> getVelIncr();
+                virtual tuple<bool, Triple, double> getVelIncr(unsigned int ticks);
 };
 
 #endif

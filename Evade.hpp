@@ -15,9 +15,8 @@ class Evade : public Kinematic {
                 static const double maxPrediction = 0.01;
 
                 Evade(Mobile *character, Mobile *target, double maxAcceleration);
-//              virtual unsigned int type();
 
-                virtual tuple<bool, Triple, double> getVelIncr();
+                virtual tuple<bool, Triple, double> getVelIncr(unsigned int ticks);
 };
 
 #endif

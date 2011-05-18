@@ -10,7 +10,7 @@ using namespace std;
 
 class DirectKinematic : public Behavior {
         public:
-                virtual tuple<bool, Triple, double> getVel() = 0;
+                virtual tuple<bool, Triple, double> getVel(unsigned int ticks) = 0;
 };
 
 #endif

@@ -7,22 +7,30 @@
 class Wander : public Kinematic {
         public:
                 Mobile* character;
-		Mobile* target;
-		double maxAngularAcceleration;
-		double maxRotation;
-		double targetRadius;
-		double slowRadius;
-		double wanderOffset;
+                Mobile* target;
+                double maxAngularAcceleration;
+                double maxRotation;
+                double targetRadius;
+                double slowRadius;
+                double wanderOffset;
                 double wanderRadius;
                 double wanderRate;
                 double wanderOrientation;
                 double maxAcceleration;
-		int ticks;
+                unsigned int accum;
 
-                Wander(Mobile *character, double maxAngularAcceleration, double maxRotation, double targetRadius, double slowRadius, double wanderOffset, double wanderRadius, double wanderRate, double wanderOrientation, double maxAcceleration);
-//              virtual unsigned int type();
+                Wander(Mobile *character            ,
+                       double maxAngularAcceleration,
+                       double maxRotation           ,
+                       double targetRadius          ,
+                       double slowRadius            ,
+                       double wanderOffset          ,
+                       double wanderRadius          ,
+                       double wanderRate            ,
+                       double wanderOrientation     ,
+                       double maxAcceleration       );
 
-                tuple<bool, Triple, double> getVelIncr();
+                virtual tuple<bool, Triple, double> getVelIncr(unsigned int ticks);
 };
 
 #endif

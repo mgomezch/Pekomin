@@ -1,20 +1,14 @@
 #include "KinematicArrive.hpp"
 #include "Ent.hpp"
 
-/*
-unsigned int KinematicArrive::type() {
-        return BEHAVIOR_KINEMATICARRIVE;
-}
-*/
-
-KinematicArrive::KinematicArrive(Ent *character_, Ent *target_, double maxSpeed_, double radius_) {
-        character = character_;
-        target    = target_;
-        maxSpeed  = maxSpeed_;
-        radius    = radius_;
+KinematicArrive::KinematicArrive(Ent *character, Ent *target, double maxSpeed, double radius) {
+        this->character = character;
+        this->target    = target;
+        this->maxSpeed  = maxSpeed;
+        this->radius    = radius;
 }
 
-tuple<bool, Triple, double> KinematicArrive::getVel() {
+tuple<bool, Triple, double> KinematicArrive::getVel(unsigned int ticks) {
         tuple<bool, Triple, double> steering;
 
 	get<0>(steering) = false;

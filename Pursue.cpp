@@ -1,19 +1,13 @@
 #include "Pursue.hpp"
 #include "Mobile.hpp"
 
-/*
-unsigned int Pursue::type() {
-        return BEHAVIOR_PURSUE;
-}
-*/
-
 Pursue::Pursue(Mobile *character, Mobile *target, double maxAcceleration) {
         this->character       = character;
         this->target          = target;
         this->maxAcceleration = maxAcceleration;
 }
 
-tuple<bool, Triple, double> Pursue::getVelIncr() {
+tuple<bool, Triple, double> Pursue::getVelIncr(unsigned int ticks) {
         tuple<bool, Triple, double> steering;
         Triple direction;
         double distance, speed, prediction;

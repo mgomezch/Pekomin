@@ -10,7 +10,7 @@ using namespace std;
 
 class Kinematic : public Behavior {
         public:
-                virtual tuple<bool, Triple, double> getVelIncr() = 0;
+                virtual tuple<bool, Triple, double> getVelIncr(unsigned int ticks) = 0;
 };
 
 #endif

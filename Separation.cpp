@@ -3,12 +3,6 @@
 
 #define MIN(X, Y)  ((X) < (Y) ? (X) : (Y))
 
-/*
-unsigned int Separation::type() {
-        return BEHAVIOR_SEPARATION;
-}
-*/
-
 Separation::Separation(Mobile *character, Mobile *target, double threshold, double decayCoefficient, double maxAcceleration) {
         this->character        = character;
         this->target           = target;
@@ -17,7 +11,7 @@ Separation::Separation(Mobile *character, Mobile *target, double threshold, doub
         this->maxAcceleration  = maxAcceleration;
 }
 
-tuple<bool, Triple, double> Separation::getVelIncr() {
+tuple<bool, Triple, double> Separation::getVelIncr(unsigned int ticks) {
         tuple<bool, Triple, double> steering;
         double distance, strength;
 
