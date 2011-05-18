@@ -13,7 +13,7 @@ class KinematicArrive : public DirectKinematic {
                 Ent *target;
                 double maxSpeed;
                 double radius;
-                static const double timeToTarget = 0.00025;
+                static const double timeToTarget = 0.25;
 
                 KinematicArrive(Ent *character, Ent *target, double maxSpeed, double radius);
 //              virtual unsigned int type();

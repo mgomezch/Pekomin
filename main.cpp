@@ -102,7 +102,7 @@ void initJuego() {
 		p = new RuntimePekomin(Triple(10, 10, 0), 0);
 		ents.push_back(p);
 
-		p->addBehavior(new KinematicArrive(p, player, 0.0001, 3));
+		p->addBehavior(new KinematicFlee(p, player, 0.025));
 
         }
 }
