@@ -28,7 +28,6 @@ tuple<bool, Triple, double> Arrive::getVel(unsigned int ticks) {
         distance = direction.length();
 
         if (distance < targetRadius) {
-                target->vel.print();
                 get<1>(steering) = target->vel;
                 if (get<1>(steering).length() > maxSpeed) {
                         get<1>(steering).normalize();

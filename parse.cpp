@@ -57,9 +57,7 @@
 #define SET_CHARACTER()                            \
         Mobile *character;                         \
         it_entses = entses.find(it_e->first);      \
-        if (it_entses != entses.end()) {           \
-                character = it_entses->second;     \
-        } else {                                   \
+        if (it_entses == entses.end()) {           \
                 cerr << "parse error making ent '" \
                      << it_e->first                \
                      << "' behavior '"             \
@@ -69,27 +67,13 @@
                      << "' not found"              \
                      << endl;                      \
                 exit(EX_SOFTWARE);                 \
-        }
+        }                                          \
+        character = it_entses->second;
 
 #define SET_TARGET()                                               \
         Mobile *target;                                            \
         it_fields = it_b->second->find(string("target"));          \
-        if (it_fields != it_b->second->end()) {                    \
-                it_entses = entses.find(it_fields->second);        \
-                if (it_entses != entses.end()) {                   \
-                        target = it_entses->second;                \
-                } else {                                           \
-                        cerr << "parse error making ent '"         \
-                             << it_e->first                        \
-                             << "' behavior '"                     \
-                             << it_b->first                        \
-                             << "': field 'target' == '"           \
-                             << it_fields->second                  \
-                             << "': ent not found"                 \
-                             << endl;                              \
-                        exit(EX_DATAERR);                          \
-                }                                                  \
-        } else {                                                   \
+        if (it_fields == it_b->second->end()) {                    \
                 cerr << "parse error making ent '"                 \
                      << it_e->first                                \
                      << "' behavior '"                             \
@@ -97,31 +81,43 @@
                      << "': required field 'target' not specified" \
                      << endl;                                      \
                 exit(EX_DATAERR);                                  \
-        }
+        }                                                          \
+        it_entses = entses.find(it_fields->second);                \
+        if (it_entses == entses.end()) {                           \
+                cerr << "parse error making ent '"                 \
+                     << it_e->first                                \
+                     << "' behavior '"                             \
+                     << it_b->first                                \
+                     << "': field 'target' == '"                   \
+                     << it_fields->second                          \
+                     << "': ent not found"                         \
+                     << endl;                                      \
+                exit(EX_DATAERR);                                  \
+        }                                                          \
+        target = it_entses->second;
 
-#define SET_DOUBLE(FIELD)                                                      \
-        double FIELD ;                                                         \
-        it_fields = it_b->second->find(string( #FIELD ));                      \
-        if (it_fields != it_b->second->end()) {                                \
-                if (sscanf(it_fields->second.c_str(), "%lf", & FIELD ) != 1) { \
-                        cerr << "parse error making ent '"                     \
-                             << it_e->first                                    \
-                             << "' behavior '"                                 \
-                             << it_b->first                                    \
-                             << "': required field '" #FIELD "' == '"          \
-                             << it_fields->second                              \
-                             << "' not a floating-point number"                \
-                             << endl;                                          \
-                        exit(EX_DATAERR);                                      \
-                }                                                              \
-        } else {                                                               \
-                cerr << "parse error making ent '"                             \
-                     << it_e->first                                            \
-                     << "' behavior '"                                         \
-                     << it_b->first                                            \
-                     << "': required field '" #FIELD "' not specified"         \
-                     << endl;                                                  \
-                exit(EX_DATAERR);                                              \
+#define SET_DOUBLE(FIELD)                                              \
+        double FIELD ;                                                 \
+        it_fields = it_b->second->find(string( #FIELD ));              \
+        if (it_fields == it_b->second->end()) {                        \
+                cerr << "parse error making ent '"                     \
+                     << it_e->first                                    \
+                     << "' behavior '"                                 \
+                     << it_b->first                                    \
+                     << "': required field '" #FIELD "' not specified" \
+                     << endl;                                          \
+                exit(EX_DATAERR);                                      \
+        }                                                              \
+        if (sscanf(it_fields->second.c_str(), "%lf", & FIELD ) != 1) { \
+                cerr << "parse error making ent '"                     \
+                     << it_e->first                                    \
+                     << "' behavior '"                                 \
+                     << it_b->first                                    \
+                     << "': required field '" #FIELD "' == '"          \
+                     << it_fields->second                              \
+                     << "' not a floating-point number"                \
+                     << endl;                                          \
+                exit(EX_DATAERR);                                      \
         }
 
 #define SET_P()                                        \
@@ -272,13 +268,14 @@ void parse_r(char *s, int chars) {
         fields.erase(fields.begin(), fields.end());
 
 #ifdef DEBUG_PARSE
-                cout << endl;
+        cout << endl;
 #endif
 
         parse_r(s, chars);
 }
 
 void parse(char *s) {
+        string class_s;
         unordered_map<string, string                                                  >::const_iterator it_fields;
         unordered_map<string, Mobile *                                                >::const_iterator it_entses;
         unordered_map<string, unordered_map<string, unordered_map<string, string> *> *>::const_iterator it_e;
@@ -293,8 +290,17 @@ void parse(char *s) {
 #ifdef DEBUG_PARSE
                         cout << "parse: making behavior: " << it_b->first << " for ent " << it_e->first << endl;
 #endif
+
+                        it_fields = it_b->second->find(string("class"));
+                        if (it_fields != it_b->second->end()) {
+                                class_s = it_fields->second;
+                        } else {
+                                cerr << "parse error making ent '" << it_e->first << "' behavior '" << it_b->first << "': required field 'class' not specified" << endl;
+                                exit(EX_DATAERR);
+                        }
+
                         // Align(Mobile *character, Mobile *target, double maxAngularAcceleration, double maxRotation, double targetRadius, double slowRadius);
-                        if (it_b->first == string("Align")) {
+                        if (class_s == string("Align")) {
                                 SET_CHARACTER();
                                 SET_TARGET();
                                 SET_DOUBLE(maxAngularAcceleration);
@@ -308,7 +314,7 @@ void parse(char *s) {
                         }
 
                         // Arrive(Mobile *character, Mobile *target, double maxAcceleration, double maxSpeed, double targetRadius, double slowRadius);
-                        if (it_b->first == string("Arrive")) {
+                        if (class_s == string("Arrive")) {
                                 SET_CHARACTER();
                                 SET_TARGET();
                                 SET_DOUBLE(maxAcceleration);
@@ -322,7 +328,7 @@ void parse(char *s) {
                         }
 
                         // Evade(Mobile *character, Mobile *target, double maxAcceleration);
-                        if (it_b->first == string("Evade")) {
+                        if (class_s == string("Evade")) {
                                 SET_CHARACTER();
                                 SET_TARGET();
                                 SET_DOUBLE(maxAcceleration);
@@ -333,7 +339,7 @@ void parse(char *s) {
                         }
 
                         // Face(Mobile *character, Mobile *target, double maxAngularAcceleration, double maxRotation, double targetRadius, double slowRadius);
-                        if (it_b->first == string("Face")) {
+                        if (class_s == string("Face")) {
                                 SET_CHARACTER();
                                 SET_TARGET();
                                 SET_DOUBLE(maxAngularAcceleration);
@@ -347,7 +353,7 @@ void parse(char *s) {
                         }
 
                         // Flee(Mobile *character, Mobile *target, double maxAcceleration);
-                        if (it_b->first == string("Flee")) {
+                        if (class_s == string("Flee")) {
                                 SET_CHARACTER();
                                 SET_TARGET();
                                 SET_DOUBLE(maxAcceleration);
@@ -358,7 +364,7 @@ void parse(char *s) {
                         }
 
                         // KinematicArrive(Ent *character, Ent *target, double maxSpeed, double radius);
-                        if (it_b->first == string("KinematicArrive")) {
+                        if (class_s == string("KinematicArrive")) {
                                 SET_CHARACTER();
                                 SET_TARGET();
                                 SET_DOUBLE(maxSpeed);
@@ -370,7 +376,7 @@ void parse(char *s) {
                         }
 
                         // KinematicFlee(Ent *character, Ent *target, double maxSpeed);
-                        if (it_b->first == string("KinematicFlee")) {
+                        if (class_s == string("KinematicFlee")) {
                                 SET_CHARACTER();
                                 SET_TARGET();
                                 SET_DOUBLE(maxSpeed);
@@ -381,7 +387,7 @@ void parse(char *s) {
                         }
 
                         // KinematicSeek(Ent *character, Ent *target, double maxSpeed);
-                        if (it_b->first == string("KinematicSeek")) {
+                        if (class_s == string("KinematicSeek")) {
                                 SET_CHARACTER();
                                 SET_TARGET();
                                 SET_DOUBLE(maxSpeed);
@@ -392,7 +398,7 @@ void parse(char *s) {
                         }
 
                         // KinematicWander(Ent *character, double maxSpeed, double maxRotation);
-                        if (it_b->first == string("KinematicWander")) {
+                        if (class_s == string("KinematicWander")) {
                                 SET_CHARACTER();
                                 SET_DOUBLE(maxSpeed);
                                 SET_DOUBLE(maxRotation);
@@ -403,7 +409,7 @@ void parse(char *s) {
                         }
 
                         // LookWhereYoureGoing(Mobile *character, Mobile *target, double maxAngularAcceleration, double maxRotation, double targetRadius, double slowRadius);
-                        if (it_b->first == string("LookWhereYoureGoing")) {
+                        if (class_s == string("LookWhereYoureGoing")) {
                                 SET_CHARACTER();
                                 SET_TARGET();
                                 SET_DOUBLE(maxAngularAcceleration);
@@ -417,7 +423,7 @@ void parse(char *s) {
                         }
 
                         // Pursue(Mobile *character, Mobile *target, double maxAcceleration);
-                        if (it_b->first == string("Pursue")) {
+                        if (class_s == string("Pursue")) {
                                 SET_CHARACTER();
                                 SET_TARGET();
                                 SET_DOUBLE(maxAcceleration);
@@ -428,7 +434,7 @@ void parse(char *s) {
                         }
 
                         // Seek(Mobile *character, Mobile *target, double maxAcceleration);
-                        if (it_b->first == string("Seek")) {
+                        if (class_s == string("Seek")) {
                                 SET_CHARACTER();
                                 SET_TARGET();
                                 SET_DOUBLE(maxAcceleration);
@@ -439,7 +445,7 @@ void parse(char *s) {
                         }
 
                         // Separation(Mobile *character, Mobile *target, double threshold, double decayCoefficient, double maxAcceleration);
-                        if (it_b->first == string("Separation")) {
+                        if (class_s == string("Separation")) {
                                 SET_CHARACTER();
                                 SET_TARGET();
                                 SET_DOUBLE(threshold);
@@ -452,7 +458,7 @@ void parse(char *s) {
                         }
 
                         // VelocityMatch(Mobile *character, Mobile *target, double maxAcceleration);
-                        if (it_b->first == string("VelocityMatch")) {
+                        if (class_s == string("VelocityMatch")) {
                                 SET_CHARACTER();
                                 SET_TARGET();
                                 SET_DOUBLE(maxAcceleration);
@@ -463,7 +469,7 @@ void parse(char *s) {
                         }
 
                         // Wander(Mobile *character, Mobile *target, double maxAngularAcceleration, double maxRotation, double targetRadius, double slowRadius, double wanderOffset, double wanderRadius, double wanderRate, double wanderOrientation, double maxAcceleration);
-                        if (it_b->first == string("Wander")) {
+                        if (class_s == string("Wander")) {
                                 SET_CHARACTER();
                                 SET_DOUBLE(maxAngularAcceleration);
                                 SET_DOUBLE(maxRotation);
@@ -479,6 +485,9 @@ void parse(char *s) {
                                 p->addBehavior(new Wander(character, maxAngularAcceleration, maxRotation, targetRadius, slowRadius, wanderOffset, wanderRadius, wanderRate, wanderOrientation, maxAcceleration));
                                 continue;
                         }
+
+                        cerr << "parse error making ent '" << it_e->first << "' behavior '" << it_b->first << "': field 'class' == '" << it_fields->second << "': class not found" << endl;
+                        exit(EX_DATAERR);
                 }
         }
 

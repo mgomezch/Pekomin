@@ -19,11 +19,14 @@
 
 #define DEBUG_MAIN
 
-//#define NO_LIGHTING
+#define NO_LIGHTING
 
 #define BUFSIZE 65536
+#define DEFAULT_GAME_FILENAME "games/default.game"
 
 using namespace std;
+
+char *game_filename;
 
 int power(int b, unsigned int e) {
         int r = 1;
@@ -82,12 +85,25 @@ void initJuego() {
                 }
                 //player = NULL;
 
-                /*{
+                {
                         char buf[BUFSIZE];
                         int pos = 0;
                         FILE *file;
 
-                        file = fopen("games/prueba2.game", "r");
+                        if (game_filename == NULL) {
+                                file = fopen(DEFAULT_GAME_FILENAME, "r");
+                                if (file == NULL) {
+                                        perror("error opening default game file " DEFAULT_GAME_FILENAME ": fopen");
+                                        exit(EX_IOERR);
+                                }
+                        } else {
+                                file = fopen(game_filename, "r");
+                                if (file == NULL) {
+                                        fprintf(stderr, "error opening game file %s: ", game_filename);
+                                        perror("fopen");
+                                        exit(EX_IOERR);
+                                }
+                        }
                         while (!feof(file)) pos += fread(&buf + pos, sizeof(char), BUFSIZE - pos, file);
                         buf[pos] = '\0';
                         parse(buf);
@@ -96,16 +112,17 @@ void initJuego() {
                                 player = new Player();
                                 ents.push_back(player);
                         }
-                }*/
+                }
 
-		player = new Player();
-		ents.push_back(player);
+/*
+                player = new Player();
+                ents.push_back(player);
 
-		p = new RuntimePekomin(Triple(10, 10, 0), 0);
-		ents.push_back(p);
+                p = new RuntimePekomin(Triple(10, 10, 0), 0);
+                ents.push_back(p);
 
-		p->addBehavior(new KinematicFlee(p, player, 0.025));
-
+                p->addBehavior(new KinematicFlee(p, player, 0.025));
+*/
         }
 }
 
@@ -521,41 +538,43 @@ void skeyup(int key, int mx, int my) {
 }
 
 void keyup(unsigned char key, int mx, int my) {
-        if      (key == key_fwd)          keystate_fwd          = 0;
-        else if (key == key_back)         keystate_back         = 0;
-        else if (key == key_left)         keystate_left         = 0;
-        else if (key == key_right)        keystate_right        = 0;
-        else if (key == key_cam_up)       keystate_cam_up       = 0;
-        else if (key == key_cam_down)     keystate_cam_down     = 0;
-        else if (key == key_cam_left)     keystate_cam_left     = 0;
-        else if (key == key_cam_right)    keystate_cam_right    = 0;
-        else if (key == key_cam_fwd)      keystate_cam_fwd      = 0;
-        else if (key == key_cam_back)     keystate_cam_back     = 0;
-        else if (key == key_cam_rotup)    keystate_cam_rotup    = 0;
-        else if (key == key_cam_rotdown)  keystate_cam_rotdown  = 0;
-        else if (key == key_cam_rotleft)  keystate_cam_rotleft  = 0;
+        if      (key == key_fwd         ) keystate_fwd          = 0;
+        else if (key == key_back        ) keystate_back         = 0;
+        else if (key == key_left        ) keystate_left         = 0;
+        else if (key == key_right       ) keystate_right        = 0;
+        else if (key == key_cam_up      ) keystate_cam_up       = 0;
+        else if (key == key_cam_down    ) keystate_cam_down     = 0;
+        else if (key == key_cam_left    ) keystate_cam_left     = 0;
+        else if (key == key_cam_right   ) keystate_cam_right    = 0;
+        else if (key == key_cam_fwd     ) keystate_cam_fwd      = 0;
+        else if (key == key_cam_back    ) keystate_cam_back     = 0;
+        else if (key == key_cam_rotup   ) keystate_cam_rotup    = 0;
+        else if (key == key_cam_rotdown ) keystate_cam_rotdown  = 0;
+        else if (key == key_cam_rotleft ) keystate_cam_rotleft  = 0;
         else if (key == key_cam_rotright) keystate_cam_rotright = 0;
-        else if (key == key_enter)        keystate_enter        = 0;
-        else if (key == key_shoot)        keystate_shoot        = 0;
+        else if (key == key_enter       ) keystate_enter        = 0;
+        else if (key == key_shoot       ) keystate_shoot        = 0;
+        else if (key == key_jump        ) keystate_jump         = 0;
 }
 
 void keydown(unsigned char key, int mx, int my) {
-        if      (key == key_fwd)          keystate_fwd          = 1;
-        else if (key == key_back)         keystate_back         = 1;
-        else if (key == key_left)         keystate_left         = 1;
-        else if (key == key_right)        keystate_right        = 1;
-        else if (key == key_cam_up)       keystate_cam_up       = 1;
-        else if (key == key_cam_down)     keystate_cam_down     = 1;
-        else if (key == key_cam_left)     keystate_cam_left     = 1;
-        else if (key == key_cam_right)    keystate_cam_right    = 1;
-        else if (key == key_cam_fwd)      keystate_cam_fwd      = 1;
-        else if (key == key_cam_back)     keystate_cam_back     = 1;
-        else if (key == key_cam_rotup)    keystate_cam_rotup    = 1;
-        else if (key == key_cam_rotdown)  keystate_cam_rotdown  = 1;
-        else if (key == key_cam_rotleft)  keystate_cam_rotleft  = 1;
+        if      (key == key_fwd         ) keystate_fwd          = 1;
+        else if (key == key_back        ) keystate_back         = 1;
+        else if (key == key_left        ) keystate_left         = 1;
+        else if (key == key_right       ) keystate_right        = 1;
+        else if (key == key_cam_up      ) keystate_cam_up       = 1;
+        else if (key == key_cam_down    ) keystate_cam_down     = 1;
+        else if (key == key_cam_left    ) keystate_cam_left     = 1;
+        else if (key == key_cam_right   ) keystate_cam_right    = 1;
+        else if (key == key_cam_fwd     ) keystate_cam_fwd      = 1;
+        else if (key == key_cam_back    ) keystate_cam_back     = 1;
+        else if (key == key_cam_rotup   ) keystate_cam_rotup    = 1;
+        else if (key == key_cam_rotdown ) keystate_cam_rotdown  = 1;
+        else if (key == key_cam_rotleft ) keystate_cam_rotleft  = 1;
         else if (key == key_cam_rotright) keystate_cam_rotright = 1;
-        else if (key == key_enter)        keystate_enter        = 1;
-        else if (key == key_shoot)        keystate_shoot        = 1;
+        else if (key == key_enter       ) keystate_enter        = 1;
+        else if (key == key_shoot       ) keystate_shoot        = 1;
+        else if (key == key_jump        ) keystate_jump         = 1;
         else if (key == key_cam_switch) {
                 if ((cam += 1) >= N_CAMS) cam = 0;
 #ifdef DEBUG_MAIN
@@ -606,25 +625,40 @@ void juego(int v) {
                 if (keystate_l) if ((a_turret += delta / 20.0) > MAX_A_TURRET) a_turret = MAX_A_TURRET;
                 if (keystate_r) if ((a_turret -= delta / 20.0) < MIN_A_TURRET) a_turret = MIN_A_TURRET;
  */
-                if (keystate_fwd)   pv   += delta / 20000.0;
-                if (keystate_back)  pv   -= delta / 20000.0;
-                if (keystate_left)  pvrz += delta / 5000.0;
-                if (keystate_right) pvrz -= delta / 5000.0;
-                pv += -0.005 * pv * delta;
-                if (!keystate_fwd && !keystate_back && fabs(pv) < 0.01) pv = 0;
-                pvrz += -0.005 * pvrz * delta;
-                prz += (pv < 0 ? -1 : 1) * pvrz * delta;
-                prz -= (((int)prz)/360)*360;
-                pvx = pv * sin((-prz*M_PI)/180.0);
-                pvy = pv * cos((-prz*M_PI)/180.0);
-/*
-                pvx  += -0.005 * pvx  * delta;
-                pvy  += -0.005 * pvy  * delta;
-                pvz  += -0.005 * pvz  * delta; // Roce vertical; cambiar?
- */
-                px += pvx * delta;
-                py += pvy * delta;
-                pz += pvz * delta;
+
+                if (keystate_jump && pz == 0 && pvz == 0) {
+                        pvz = 0.1;
+                }
+
+                if (pz != 0 || pvz != 0) {
+                        pvz += GRAVEDAD * 10 * delta;
+                        px  += pvx * delta;
+                        py  += pvy * delta;
+                        pz  += pvz * delta;
+                        if (pz <= 0) {
+                                pz  = 0;
+                                pvz = 0;
+                        }
+                } else {
+                        if (keystate_fwd)   pv   += delta / 20000.0;
+                        if (keystate_back)  pv   -= delta / 20000.0;
+                        if (keystate_left)  pvrz += delta / 2500.0;
+                        if (keystate_right) pvrz -= delta / 2500.0;
+//                      pv += -0.005 * pv * delta;
+                        if (!keystate_fwd && !keystate_back && fabs(pv) < 0.01) pv = 0;
+                        pvrz += -0.005 * pvrz * delta;
+                        prz += (pv < 0 ? -1 : 1) * pvrz * delta;
+                        prz -= (((int)prz)/360)*360;
+                        pvx = pv * sin((-prz*M_PI)/180.0);
+                        pvy = pv * cos((-prz*M_PI)/180.0);
+                        pvx += -0.002 * pvx  * delta;
+                        pvy += -0.002 * pvy  * delta;
+                        pv = sqrt(pvx*pvx + pvy*pvy) * (pv > 0 ? 1 : -1);
+//                      pvz  += -0.005 * pvz  * delta; // Roce vertical
+                        px += pvx * delta;
+                        py += pvy * delta;
+                        pz += pvz * delta;
+                }
 
                 player->pos  = Triple(px , py , pz );
                 player->vel  = Triple(pvx, pvy, pvz);
@@ -662,7 +696,13 @@ void juego(int v) {
 
                 case CAM_FPS:
                         {
-                                // TODO
+                                /*
+                                cam_x = player->pos.y + 0.6;
+                                cam_y = player->pos.z + 0.5;
+                                cam_z = player->pos.x;
+                                cam_rotx = 0;
+                                cam_roty = 90-player->ang;
+                                */
                                 /*
                                 PDK_Vector3 mPos = m_AntiVirus->getActualMachine()->getPosition();
                                 PDK_Vector3 pPos = m_AntiVirus->getPosition();
@@ -672,6 +712,39 @@ void juego(int v) {
                                 cam_rotx = 15;
                                 cam_roty = -(180.0*m_AntiVirus->getRads())/M_PI;
                                 */
+
+                                double ncam_x, ncam_y, ncam_z;
+                                double cam_vx, cam_vy, cam_vz;
+                                double ncam_vx, ncam_vy, ncam_vz;
+
+                                cam_x  = 0.51;
+                                cam_y  = 0;
+                                cam_z  = 0;
+                                ncam_x = cam_x * cos((player->ang*M_PI)/180.0) - cam_y * sin((player->ang*M_PI)/180.0);
+                                ncam_y = cam_x * sin((player->ang*M_PI)/180.0) + cam_y * cos((player->ang*M_PI)/180.0);
+                                ncam_z = cam_z;
+                                cam_x  = ncam_x;
+                                cam_y  = ncam_y;
+                                cam_z  = ncam_z;
+                                cam_x += px;
+                                cam_y += py;
+                                cam_z += pz;
+                                cam_vx = cam_x;
+                                cam_vy = cam_y;
+                                cam_vz = cam_z;
+
+                                ncam_vx = cam_vx - px;
+                                ncam_vy = cam_vy - py;
+                                ncam_vz = cam_vz - pz;
+                                cam_vx = ncam_vy;
+                                cam_vy = ncam_vz;
+                                cam_vz = ncam_vx;
+                                cam_x  = py;
+                                cam_y  = pz + 0.5;
+                                cam_z  = px;
+
+                                cam_roty = (180.0*atan2(cam_vz, cam_vx))/M_PI;
+                                cam_rotx = (-180.0*atan(cam_vy/sqrt(cam_vx*cam_vx + cam_vz*cam_vz)))/M_PI;
                         }
                         break;
 
@@ -856,9 +929,9 @@ void juego(int v) {
                 if (boom[i].on) {
                         if ((boom[i].on -= delta) < 0) boom[i].on = 0;
                         for (k = 0; k < N_BOOMS; k++) {
+                                boom[i].vz[k] += (GRAVEDAD/3.0) * delta;
                                 boom[i].x[k]  += boom[i].vx[k] * delta;
                                 boom[i].y[k]  += boom[i].vy[k] * delta;
-                                boom[i].vz[k] += (GRAVEDAD/3.0) * delta;
                                 boom[i].z[k]  += boom[i].vz[k] * delta;
                                 boom[i].a[k]  += boom[i].va[k] * delta;
                         }
@@ -907,6 +980,9 @@ void juego(int v) {
 }
 
 void initGL() {
+#ifdef NO_LIGHTING
+        glDisable(GL_LIGHTING);
+#endif
         glEnable(GL_CULL_FACE);
         glFrontFace(GL_CCW);
         glEnable(GL_NORMALIZE);
@@ -1009,6 +1085,14 @@ int main(int argc, char **argv) {
         }
 
         initGL();
+
+        // TODO: use getopt, implement a decent set of command-line arguments; figure out how glutInit rapes argv
+        if (argc == 2) {
+                game_filename = argv[1];
+                printf("%s\n", game_filename);
+        } else {
+                game_filename = NULL;
+        }
         initJuego();
 
         blur = 0;

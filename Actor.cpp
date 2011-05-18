@@ -1,6 +1,6 @@
 #include "Actor.hpp"
 
-#define DEBUG_ACTOR
+//#define DEBUG_ACTOR
 
 #ifdef DEBUG_ACTOR
 #include <iostream>

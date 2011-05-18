@@ -18,17 +18,19 @@ fernando {
         vel.y =  0;
         vel.z =  0;
 
-        Seek {
-                target          = krisvely;
-                maxAcceleration = 0.05    ;
+        jala {
+                class           = Seek   ;
+                target          = player ;
+                maxAcceleration = 0.005  ;
         }
 
-        Arrive {
-                target          = player;
-                maxAcceleration = 1     ;
-                maxSpeed        = 0.1   ;
-                targetRadius    = 5     ;
-                slowRadius      = 10    ;
+        babosea {
+                class           = Arrive  ;
+                target          = krisvely;
+                maxAcceleration = 0.1     ;
+                maxSpeed        = 0.01    ;
+                targetRadius    = 5       ;
+                slowRadius      = 10      ;
         }
 }
 
@@ -42,9 +44,16 @@ krisvely {
         vel.z =  0;
         vrot  =  0;
 
-        KinematicWander {
-                maxSpeed    = 1;
-                maxRotation = 5;
+        lalala {
+                class       = KinematicWander;
+                maxSpeed    = 0.01           ;
+                maxRotation = 0.5            ;
+        }
+
+        asco {
+                class           = Flee    ;
+                target          = fernando;
+                maxAcceleration = 0.1     ;
         }
 }
 
