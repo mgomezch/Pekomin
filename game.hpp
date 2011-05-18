@@ -75,7 +75,7 @@ enum levels {
         LEVEL_SKY,
         LEVEL_SPACE
 };
-#define START_LEVEL LEVEL_SPACE
+#define START_LEVEL LEVEL_DESERT
 #define N_LEVELS 3
 
 extern GLfloat aspectratio;

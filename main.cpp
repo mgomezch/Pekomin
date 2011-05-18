@@ -688,23 +688,6 @@ void juego(int v) {
 
                 case CAM_FPS:
                         {
-                                /*
-                                cam_x = player->pos.y + 0.6;
-                                cam_y = player->pos.z + 0.5;
-                                cam_z = player->pos.x;
-                                cam_rotx = 0;
-                                cam_roty = 90-player->ang;
-                                */
-                                /*
-                                PDK_Vector3 mPos = m_AntiVirus->getActualMachine()->getPosition();
-                                PDK_Vector3 pPos = m_AntiVirus->getPosition();
-                                cam_x = pPos.y + 0.1 * (pPos.y - mPos.y);
-                                cam_y = 1;
-                                cam_z = pPos.x + 0.1 * (pPos.x - mPos.x);
-                                cam_rotx = 15;
-                                cam_roty = -(180.0*m_AntiVirus->getRads())/M_PI;
-                                */
-
                                 double ncam_x, ncam_y, ncam_z;
                                 double cam_vx, cam_vy, cam_vz;
                                 double ncam_vx, ncam_vy, ncam_vz;
@@ -742,16 +725,39 @@ void juego(int v) {
 
                 case CAM_TPS:
                         {
-                                // TODO
-                                /*
-                                PDK_Vector3 mPos = m_AntiVirus->getActualMachine()->getPosition();
-                                PDK_Vector3 pPos = m_AntiVirus->getPosition();
-                                cam_x = mPos.y;
-                                cam_y = 2 * m_AntiVirus->getActualMachine()->getRadius();;
-                                cam_z = mPos.x;
-                                cam_rotx = 90;
-                                cam_roty = 0;
-                                */
+                                double ncam_x, ncam_y, ncam_z;
+                                double cam_vx, cam_vy, cam_vz;
+                                double ncam_vx, ncam_vy, ncam_vz;
+
+                                cam_x  = -20;
+                                cam_y  =  0;
+                                cam_z  =  0;
+                                ncam_x = cam_x * cos((player->ang*M_PI)/180.0) - cam_y * sin((player->ang*M_PI)/180.0);
+                                ncam_y = cam_x * sin((player->ang*M_PI)/180.0) + cam_y * cos((player->ang*M_PI)/180.0);
+                                ncam_z = cam_z;
+                                cam_x  = ncam_x;
+                                cam_y  = ncam_y;
+                                cam_z  = ncam_z;
+                                cam_x += px;
+                                cam_y += py;
+                                cam_z += pz;
+                                cam_vx = cam_x;
+                                cam_vy = cam_y;
+                                cam_vz = cam_z;
+
+                                ncam_vx = cam_vx - px;
+                                ncam_vy = cam_vy - py;
+                                ncam_vz = cam_vz - pz;
+                                cam_vx = ncam_vy;
+                                cam_vy = ncam_vz;
+                                cam_vz = ncam_vx;
+                                cam_x  = py;
+                                cam_y  = pz + 1.5;
+                                cam_z  = px;
+
+                                cam_roty = 180 + (180.0*atan2(cam_vz, cam_vx))/M_PI;
+                                cam_rotx = (-180.0*atan(cam_vy/sqrt(cam_vx*cam_vx + cam_vz*cam_vz)))/M_PI;
+                                // TODO: hacer bien, sin piratería
                         }
                         break;
 
