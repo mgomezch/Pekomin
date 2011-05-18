@@ -105,8 +105,9 @@ void initJuego() {
 		ents.push_back(p);
 
 		//p->addBehavior(new KinematicWander(p, 0.005, M_PI/6));
-		//p->addBehavior(new Pursue(p, player, 0.025));
-		p->addBehavior(new Evade(p, player, 0.001));
+		//p->addBehavior(new Seek(p, player, 0.025));
+		//p->addBehavior(new Evade(p, player, 0.001));
+		p->addBehavior(new LookWhereYoureGoing(p, player, 0.05, M_PI/6, 2, 1));
 
         }
 }
