@@ -1,6 +1,7 @@
-#include "Phantom.hpp"
-
 #include <GL/glut.h>
+
+#include "Phantom.hpp"
+#include "gl.hpp"
 
 Phantom::Phantom() {
         this->pos  = Triple(0, 0, 0);
@@ -24,8 +25,6 @@ Phantom::Phantom(Triple pos, double ang, Triple vel, double vang) {
 }
 
 void Phantom::draw() {
-        glPushMatrix();
-                glColor3ub(0, 255, 0);
-                glutSolidCube(1);
-        glPopMatrix();
+        glColor3ub(0, 255, 0);
+        glCallList(cubo);
 }

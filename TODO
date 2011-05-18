@@ -1,8 +1,8 @@
 Leer imagenes y hacer displays
 Cambiar a puro SDL y quitar GLUT
-Usar typeid() en vez de métodos type() con constantes
 Meter todas las actualizaciones en if (!frozen) en main.cpp
 Hacer tecla que modifique a frozen (pausa)
+Arreglar las cámaras
 Decidir cómo va a ser el jugador y su modelo
 Agregar draws opcionales a cada Ent, Mobile y Actor mostrando vectores varios
 Hacer el parser con cosas serias de hacer parsers

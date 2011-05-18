@@ -177,7 +177,7 @@ void Actor::update(unsigned int ticks) {
         printf(", vrot = %f>\n", this->vrot);
 #endif
         // roce; si se hace un salto, chequear que estés en el piso
-        this->vel += Triple(this->vel.x, this->vel.y, 0) * static_cast<double>(ticks);
+        this->vel += Triple(this->vel.x, this->vel.y, 0) * (-0.005) * static_cast<double>(ticks);
         this->pos += this->vel  * static_cast<double>(ticks);
         this->ang += this->vrot * static_cast<double>(ticks);
 }
