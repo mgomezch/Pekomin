@@ -12,84 +12,91 @@ player {
 
 doc {
         pos.x = 10; pos.y = 1;
-        Arrive       { class = Arrive; target = player ; maxAcceleration = 0.1; maxSpeed = 0.01; targetRadius = 5; slowRadius = 10; }
-        Flee_player  { class = Flee  ; target = player ; maxAcceleration = 0.01; }
-        Flee_grumpy  { class = Flee  ; target = grumpy ; maxAcceleration = 0.01; }
-        Flee_happy   { class = Flee  ; target = happy  ; maxAcceleration = 0.01; }
-        Flee_sleepy  { class = Flee  ; target = sleepy ; maxAcceleration = 0.01; }
-        Flee_bashful { class = Flee  ; target = bashful; maxAcceleration = 0.01; }
-        Flee_sneezy  { class = Flee  ; target = sneezy ; maxAcceleration = 0.01; }
-        Flee_dopey   { class = Flee  ; target = dopey  ; maxAcceleration = 0.01; }
+        LookWhereYoureGoing { class = LookWhereYoureGoing; maxAngularAcceleration = 0.1; maxRotation = 0.01; targetRadius = 0.2; slowRadius = 1; }
+        Arrive              { class = Arrive             ; target = player ; maxAcceleration = 0.1; maxSpeed = 0.01; targetRadius = 5; slowRadius = 10; }
+        Flee_player         { class = Flee               ; target = player ; maxAcceleration = 0.01; fleeRadius = 3; }
+        Flee_grumpy         { class = Flee               ; target = grumpy ; maxAcceleration = 0.01; fleeRadius = 3; }
+        Flee_happy          { class = Flee               ; target = happy  ; maxAcceleration = 0.01; fleeRadius = 3; }
+        Flee_sleepy         { class = Flee               ; target = sleepy ; maxAcceleration = 0.01; fleeRadius = 3; }
+        Flee_bashful        { class = Flee               ; target = bashful; maxAcceleration = 0.01; fleeRadius = 3; }
+        Flee_sneezy         { class = Flee               ; target = sneezy ; maxAcceleration = 0.01; fleeRadius = 3; }
+        Flee_dopey          { class = Flee               ; target = dopey  ; maxAcceleration = 0.01; fleeRadius = 3; }
 }
 
 grumpy {
         pos.x = 10; pos.y = 2;
-        Arrive       { class = Arrive; target = player ; maxAcceleration = 0.1; maxSpeed = 0.01; targetRadius = 5; slowRadius = 10; }
-        Flee_player  { class = Flee  ; target = player ; maxAcceleration = 0.01; }
-        Flee_doc     { class = Flee  ; target = doc    ; maxAcceleration = 0.01; }
-        Flee_happy   { class = Flee  ; target = happy  ; maxAcceleration = 0.01; }
-        Flee_sleepy  { class = Flee  ; target = sleepy ; maxAcceleration = 0.01; }
-        Flee_bashful { class = Flee  ; target = bashful; maxAcceleration = 0.01; }
-        Flee_sneezy  { class = Flee  ; target = sneezy ; maxAcceleration = 0.01; }
-        Flee_dopey   { class = Flee  ; target = dopey  ; maxAcceleration = 0.01; }
+        LookWhereYoureGoing { class = LookWhereYoureGoing; maxAngularAcceleration = 0.1; maxRotation = 0.01; targetRadius = 0.2; slowRadius = 1; }
+        Arrive              { class = Arrive             ; target = player ; maxAcceleration = 0.1; maxSpeed = 0.01; targetRadius = 5; slowRadius = 10; }
+        Flee_player         { class = Flee               ; target = player ; maxAcceleration = 0.01; fleeRadius = 3; }
+        Flee_doc            { class = Flee               ; target = doc    ; maxAcceleration = 0.01; fleeRadius = 3; }
+        Flee_happy          { class = Flee               ; target = happy  ; maxAcceleration = 0.01; fleeRadius = 3; }
+        Flee_sleepy         { class = Flee               ; target = sleepy ; maxAcceleration = 0.01; fleeRadius = 3; }
+        Flee_bashful        { class = Flee               ; target = bashful; maxAcceleration = 0.01; fleeRadius = 3; }
+        Flee_sneezy         { class = Flee               ; target = sneezy ; maxAcceleration = 0.01; fleeRadius = 3; }
+        Flee_dopey          { class = Flee               ; target = dopey  ; maxAcceleration = 0.01; fleeRadius = 3; }
 }
 
 happy {
         pos.x = 10; pos.y = 3;
-        Arrive       { class = Arrive; target = player ; maxAcceleration = 0.1; maxSpeed = 0.01; targetRadius = 5; slowRadius = 10; }
-        Flee_player  { class = Flee  ; target = player ; maxAcceleration = 0.01; }
-        Flee_doc     { class = Flee  ; target = doc    ; maxAcceleration = 0.01; }
-        Flee_grumpy  { class = Flee  ; target = grumpy ; maxAcceleration = 0.01; }
-        Flee_sleepy  { class = Flee  ; target = sleepy ; maxAcceleration = 0.01; }
-        Flee_bashful { class = Flee  ; target = bashful; maxAcceleration = 0.01; }
-        Flee_sneezy  { class = Flee  ; target = sneezy ; maxAcceleration = 0.01; }
-        Flee_dopey   { class = Flee  ; target = dopey  ; maxAcceleration = 0.01; }
+        LookWhereYoureGoing { class = LookWhereYoureGoing; maxAngularAcceleration = 0.1; maxRotation = 0.01; targetRadius = 0.2; slowRadius = 1; }
+        Arrive              { class = Arrive             ; target = player ; maxAcceleration = 0.1; maxSpeed = 0.01; targetRadius = 5; slowRadius = 10; }
+        Flee_player         { class = Flee               ; target = player ; maxAcceleration = 0.01; fleeRadius = 3; }
+        Flee_doc            { class = Flee               ; target = doc    ; maxAcceleration = 0.01; fleeRadius = 3; }
+        Flee_grumpy         { class = Flee               ; target = grumpy ; maxAcceleration = 0.01; fleeRadius = 3; }
+        Flee_sleepy         { class = Flee               ; target = sleepy ; maxAcceleration = 0.01; fleeRadius = 3; }
+        Flee_bashful        { class = Flee               ; target = bashful; maxAcceleration = 0.01; fleeRadius = 3; }
+        Flee_sneezy         { class = Flee               ; target = sneezy ; maxAcceleration = 0.01; fleeRadius = 3; }
+        Flee_dopey          { class = Flee               ; target = dopey  ; maxAcceleration = 0.01; fleeRadius = 3; }
 }
 
 sleepy {
         pos.x = 10; pos.y = 4;
-        Arrive       { class = Arrive; target = player ; maxAcceleration = 0.1; maxSpeed = 0.01; targetRadius = 5; slowRadius = 10; }
-        Flee_player  { class = Flee  ; target = player ; maxAcceleration = 0.01; }
-        Flee_doc     { class = Flee  ; target = doc    ; maxAcceleration = 0.01; }
-        Flee_grumpy  { class = Flee  ; target = grumpy ; maxAcceleration = 0.01; }
-        Flee_happy   { class = Flee  ; target = happy  ; maxAcceleration = 0.01; }
-        Flee_bashful { class = Flee  ; target = bashful; maxAcceleration = 0.01; }
-        Flee_sneezy  { class = Flee  ; target = sneezy ; maxAcceleration = 0.01; }
-        Flee_dopey   { class = Flee  ; target = dopey  ; maxAcceleration = 0.01; }
+        LookWhereYoureGoing { class = LookWhereYoureGoing; maxAngularAcceleration = 0.1; maxRotation = 0.01; targetRadius = 0.2; slowRadius = 1; }
+        Arrive              { class = Arrive             ; target = player ; maxAcceleration = 0.1; maxSpeed = 0.01; targetRadius = 5; slowRadius = 10; }
+        Flee_player         { class = Flee               ; target = player ; maxAcceleration = 0.01; fleeRadius = 3; }
+        Flee_doc            { class = Flee               ; target = doc    ; maxAcceleration = 0.01; fleeRadius = 3; }
+        Flee_grumpy         { class = Flee               ; target = grumpy ; maxAcceleration = 0.01; fleeRadius = 3; }
+        Flee_happy          { class = Flee               ; target = happy  ; maxAcceleration = 0.01; fleeRadius = 3; }
+        Flee_bashful        { class = Flee               ; target = bashful; maxAcceleration = 0.01; fleeRadius = 3; }
+        Flee_sneezy         { class = Flee               ; target = sneezy ; maxAcceleration = 0.01; fleeRadius = 3; }
+        Flee_dopey          { class = Flee               ; target = dopey  ; maxAcceleration = 0.01; fleeRadius = 3; }
 }
 
 bashful {
         pos.x = 10; pos.y = 5;
-        Arrive       { class = Arrive; target = player ; maxAcceleration = 0.1; maxSpeed = 0.01; targetRadius = 5; slowRadius = 10; }
-        Flee_player  { class = Flee  ; target = player ; maxAcceleration = 0.01; }
-        Flee_doc     { class = Flee  ; target = doc    ; maxAcceleration = 0.01; }
-        Flee_grumpy  { class = Flee  ; target = grumpy ; maxAcceleration = 0.01; }
-        Flee_happy   { class = Flee  ; target = happy  ; maxAcceleration = 0.01; }
-        Flee_sleepy  { class = Flee  ; target = sleepy ; maxAcceleration = 0.01; }
-        Flee_sneezy  { class = Flee  ; target = sneezy ; maxAcceleration = 0.01; }
-        Flee_dopey   { class = Flee  ; target = dopey  ; maxAcceleration = 0.01; }
+        LookWhereYoureGoing { class = LookWhereYoureGoing; maxAngularAcceleration = 0.1; maxRotation = 0.01; targetRadius = 0.2; slowRadius = 1; }
+        Arrive              { class = Arrive             ; target = player ; maxAcceleration = 0.1; maxSpeed = 0.01; targetRadius = 5; slowRadius = 10; }
+        Flee_player         { class = Flee               ; target = player ; maxAcceleration = 0.01; fleeRadius = 3; }
+        Flee_doc            { class = Flee               ; target = doc    ; maxAcceleration = 0.01; fleeRadius = 3; }
+        Flee_grumpy         { class = Flee               ; target = grumpy ; maxAcceleration = 0.01; fleeRadius = 3; }
+        Flee_happy          { class = Flee               ; target = happy  ; maxAcceleration = 0.01; fleeRadius = 3; }
+        Flee_sleepy         { class = Flee               ; target = sleepy ; maxAcceleration = 0.01; fleeRadius = 3; }
+        Flee_sneezy         { class = Flee               ; target = sneezy ; maxAcceleration = 0.01; fleeRadius = 3; }
+        Flee_dopey          { class = Flee               ; target = dopey  ; maxAcceleration = 0.01; fleeRadius = 3; }
 }
 
 sneezy {
         pos.x = 10; pos.y = 6;
-        Arrive       { class = Arrive; target = player ; maxAcceleration = 0.1; maxSpeed = 0.01; targetRadius = 5; slowRadius = 10; }
-        Flee_player  { class = Flee  ; target = player ; maxAcceleration = 0.01; }
-        Flee_doc     { class = Flee  ; target = doc    ; maxAcceleration = 0.01; }
-        Flee_grumpy  { class = Flee  ; target = grumpy ; maxAcceleration = 0.01; }
-        Flee_happy   { class = Flee  ; target = happy  ; maxAcceleration = 0.01; }
-        Flee_sleepy  { class = Flee  ; target = sleepy ; maxAcceleration = 0.01; }
-        Flee_bashful { class = Flee  ; target = bashful; maxAcceleration = 0.01; }
-        Flee_dopey   { class = Flee  ; target = dopey  ; maxAcceleration = 0.01; }
+        LookWhereYoureGoing { class = LookWhereYoureGoing; maxAngularAcceleration = 0.1; maxRotation = 0.01; targetRadius = 0.2; slowRadius = 1; }
+        Arrive              { class = Arrive             ; target = player ; maxAcceleration = 0.1; maxSpeed = 0.01; targetRadius = 5; slowRadius = 10; }
+        Flee_player         { class = Flee               ; target = player ; maxAcceleration = 0.01; fleeRadius = 3; }
+        Flee_doc            { class = Flee               ; target = doc    ; maxAcceleration = 0.01; fleeRadius = 3; }
+        Flee_grumpy         { class = Flee               ; target = grumpy ; maxAcceleration = 0.01; fleeRadius = 3; }
+        Flee_happy          { class = Flee               ; target = happy  ; maxAcceleration = 0.01; fleeRadius = 3; }
+        Flee_sleepy         { class = Flee               ; target = sleepy ; maxAcceleration = 0.01; fleeRadius = 3; }
+        Flee_bashful        { class = Flee               ; target = bashful; maxAcceleration = 0.01; fleeRadius = 3; }
+        Flee_dopey          { class = Flee               ; target = dopey  ; maxAcceleration = 0.01; fleeRadius = 3; }
 }
 
 dopey {
         pos.x = 10; pos.y = 7;
-        Arrive       { class = Arrive; target = player ; maxAcceleration = 0.1; maxSpeed = 0.01; targetRadius = 5; slowRadius = 10; }
-        Flee_player  { class = Flee  ; target = player ; maxAcceleration = 0.01; }
-        Flee_doc     { class = Flee  ; target = doc    ; maxAcceleration = 0.01; }
-        Flee_grumpy  { class = Flee  ; target = grumpy ; maxAcceleration = 0.01; }
-        Flee_happy   { class = Flee  ; target = happy  ; maxAcceleration = 0.01; }
-        Flee_sleepy  { class = Flee  ; target = sleepy ; maxAcceleration = 0.01; }
-        Flee_bashful { class = Flee  ; target = bashful; maxAcceleration = 0.01; }
-        Flee_sneezy  { class = Flee  ; target = sneezy ; maxAcceleration = 0.01; }
+        LookWhereYoureGoing { class = LookWhereYoureGoing; maxAngularAcceleration = 0.1; maxRotation = 0.01; targetRadius = 0.2; slowRadius = 1; }
+        Arrive              { class = Arrive             ; target = player ; maxAcceleration = 0.1; maxSpeed = 0.01; targetRadius = 5; slowRadius = 10; }
+        Flee_player         { class = Flee               ; target = player ; maxAcceleration = 0.01; fleeRadius = 3; }
+        Flee_doc            { class = Flee               ; target = doc    ; maxAcceleration = 0.01; fleeRadius = 3; }
+        Flee_grumpy         { class = Flee               ; target = grumpy ; maxAcceleration = 0.01; fleeRadius = 3; }
+        Flee_happy          { class = Flee               ; target = happy  ; maxAcceleration = 0.01; fleeRadius = 3; }
+        Flee_sleepy         { class = Flee               ; target = sleepy ; maxAcceleration = 0.01; fleeRadius = 3; }
+        Flee_bashful        { class = Flee               ; target = bashful; maxAcceleration = 0.01; fleeRadius = 3; }
+        Flee_sneezy         { class = Flee               ; target = sneezy ; maxAcceleration = 0.01; fleeRadius = 3; }
 }

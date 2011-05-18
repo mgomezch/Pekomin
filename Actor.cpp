@@ -1,4 +1,5 @@
 #include "Actor.hpp"
+#include "util.hpp"
 
 //#define DEBUG_ACTOR
 
@@ -43,6 +44,8 @@ void Actor::update(unsigned int ticks) {
                      n_directkinematic = 0,
                      n_kinematic       = 0,
                      n_dynamic         = 0;
+
+        this->ang = mapToRange(this->ang);
 
         for (i = 0; i < behaviors.size(); i++) {
                 if ((b_directstatic = dynamic_cast<DirectStatic *>(behaviors[i])) != NULL) {
@@ -177,7 +180,13 @@ void Actor::update(unsigned int ticks) {
         printf(", vrot = %f>\n", this->vrot);
 #endif
         // roce; si se hace un salto, chequear que estés en el piso
-        this->vel += Triple(this->vel.x, this->vel.y, 0) * (-0.005) * static_cast<double>(ticks);
-        this->pos += this->vel  * static_cast<double>(ticks);
-        this->ang += this->vrot * static_cast<double>(ticks);
+        this->vel  += Triple(this->vel.x, this->vel.y, 0) * (-0.005) * static_cast<double>(ticks);
+        this->vrot += this->vrot                          * (-0.030) * static_cast<double>(ticks);
+        this->pos  += this->vel  * static_cast<double>(ticks);
+        this->ang  += this->vrot * static_cast<double>(ticks);
+        this->ang   = mapToRange(this->ang);
+
+        // piratería para que el salto funcione
+        this->pos.z = 0;
+        this->vel.z = 0;
 }

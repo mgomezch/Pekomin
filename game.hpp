@@ -8,7 +8,7 @@
 #include "Player.hpp"
 #include "Ent.hpp"
 
-#define GRAVEDAD   (-0.00003)
+#define GRAVEDAD   (-0.00001)
 
 // Mundo
 #define H_TABLERO       250.0

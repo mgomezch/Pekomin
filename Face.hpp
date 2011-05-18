@@ -11,16 +11,13 @@ class Face : public Kinematic {
         public:
                 Mobile *character;
                 Mobile *target;
-                double maxAngularAcceleration;
-                double maxRotation;
+                double maxAngularVelocity;
                 double targetRadius;
                 double slowRadius;
-                static const double timeToTarget = 0.1;
 
-                Face(Mobile *character, Mobile *target, double maxAngularAcceleration, double maxRotation, double targetRadius, double slowRadius);
+                Face(Mobile *character, Mobile *target, double maxAngularVelocity, double targetRadius, double slowRadius);
 
                 virtual tuple<bool, Triple, double> getVelIncr(unsigned int ticks);
-                void mapToRange(double *value);
 };
 
 #endif

@@ -12,8 +12,9 @@ class Flee : public Kinematic {
                 Mobile *character;
                 Mobile *target;
                 double maxAcceleration;
+                double fleeRadius;
 
-                Flee(Mobile *character, Mobile *target, double maxAcceleration);
+                Flee(Mobile *character, Mobile *target, double maxAcceleration, double fleeRadius);
 
                 virtual tuple<bool, Triple, double> getVelIncr(unsigned int ticks);
 };

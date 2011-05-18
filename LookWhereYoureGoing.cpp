@@ -1,11 +1,17 @@
 #include <cmath>
 
+#define DEBUG_LOOKWHEREYOUREGOING
+
+#ifdef DEBUG_LOOKWHEREYOUREGOING
+#include <iostream>
+#endif
+
 #include "LookWhereYoureGoing.hpp"
 #include "Mobile.hpp"
+#include "util.hpp"
 
-LookWhereYoureGoing::LookWhereYoureGoing(Mobile *character, Mobile *target, double maxAngularAcceleration, double maxRotation, double targetRadius, double slowRadius) {
+LookWhereYoureGoing::LookWhereYoureGoing(Mobile *character, double maxAngularAcceleration, double maxRotation, double targetRadius, double slowRadius) {
         this->character              = character;
-        this->target                 = target;
         this->maxAngularAcceleration = maxAngularAcceleration;
         this->maxRotation            = maxRotation;
         this->targetRadius           = targetRadius;
@@ -22,18 +28,17 @@ tuple<bool, Triple, double> LookWhereYoureGoing::getVelIncr(unsigned int ticks) 
         }
 
         rotation = atan2(-character->vel.y, character->vel.x) - character->ang;
-        mapToRange(&rotation);
+        rotation = mapToRange(rotation);
         rotationSize = abs(rotation);
 
         if (rotationSize < targetRadius) {
-                get<0>(steering) = true;
+                get<0>(steering) = false;
                 return steering;
         }
 
         if (rotationSize > slowRadius) {
                 targetRotation = maxRotation;
-        }
-        else {
+        } else {
                 targetRotation = maxRotation * rotationSize / slowRadius;
         }
 
@@ -53,14 +58,3 @@ tuple<bool, Triple, double> LookWhereYoureGoing::getVelIncr(unsigned int ticks) 
         return steering;
 }
 
-void LookWhereYoureGoing::mapToRange(double *value) {
-        if (*value > M_PI) {
-                *value -= 2 * M_PI;
-                mapToRange(value);
-        }
-
-        else if(*value < -M_PI) {
-                *value += 2 * M_PI;
-                mapToRange(value);
-        }
-}

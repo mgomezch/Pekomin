@@ -20,7 +20,6 @@ class Align : public Kinematic {
                 Align(Mobile *character, Mobile *target, double maxAngularAcceleration, double maxRotation, double targetRadius, double slowRadius);
 
                 virtual tuple<bool, Triple, double> getVelIncr(unsigned int ticks);
-                void mapToRange(double *value);
 };
 
 #endif

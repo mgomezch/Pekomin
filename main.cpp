@@ -19,7 +19,7 @@
 
 #define DEBUG_MAIN
 
-#define NO_LIGHTING
+//#define NO_LIGHTING
 
 #define BUFSIZE 65536
 #define DEFAULT_GAME_FILENAME "games/default.game"
@@ -213,7 +213,7 @@ void display() {
                         for (i = 0; (unsigned int)i < ents.size(); i++) {
                                 glPushMatrix();
                                         glTranslatef(ents[i]->pos.x, ents[i]->pos.y, ents[i]->pos.z);
-                                        glRotatef(ents[i]->ang, 0, 0, 1);
+                                        glRotatef((ents[i]->ang * 180.0)/M_PI, 0, 0, 1);
                                         ents[i]->draw();
                                 glPopMatrix();
                         }
@@ -639,23 +639,23 @@ void juego(int v) {
 //                      pv += -0.005 * pv * delta;
                         if (!keystate_fwd && !keystate_back && fabs(pv) < 0.01) pv = 0;
                         pvrz += -0.005 * pvrz * delta;
-                        prz += (pv < 0 ? -1 : 1) * pvrz * delta;
-                        prz -= (((int)prz)/360)*360;
-                        pvx = pv * sin((-prz*M_PI)/180.0);
-                        pvy = pv * cos((-prz*M_PI)/180.0);
-                        pvx += -0.002 * pvx  * delta;
-                        pvy += -0.002 * pvy  * delta;
-                        pv = sqrt(pvx*pvx + pvy*pvy) * (pv > 0 ? 1 : -1);
+                        prz  += (pv < 0 ? -1 : 1) * pvrz * delta;
+                        prz  -= (((int)prz)/360)*360;
+                        pvx   = pv * sin((-prz*M_PI)/180.0);
+                        pvy   = pv * cos((-prz*M_PI)/180.0);
+                        pvx  += -0.002 * pvx  * delta;
+                        pvy  += -0.002 * pvy  * delta;
+                        pv    = sqrt(pvx*pvx + pvy*pvy) * (pv > 0 ? 1 : -1);
 //                      pvz  += -0.005 * pvz  * delta; // Roce vertical
-                        px += pvx * delta;
-                        py += pvy * delta;
-                        pz += pvz * delta;
+                        px   += pvx * delta;
+                        py   += pvy * delta;
+                        pz   += pvz * delta;
                 }
 
                 player->pos  = Triple(px , py , pz );
                 player->vel  = Triple(pvx, pvy, pvz);
-                player->ang  = prz;
-                player->vrot = pvrz;
+                player->ang  = (prz  * M_PI) / 180.0;
+                player->vrot = (pvrz * M_PI) / 180.0;
 
 /*
                 if (px < -(W_TABLERO - mesh[MESH_TANK].size_x)/2) {
@@ -695,8 +695,8 @@ void juego(int v) {
                                 cam_x  = 0.51;
                                 cam_y  = 0;
                                 cam_z  = 0;
-                                ncam_x = cam_x * cos((player->ang*M_PI)/180.0) - cam_y * sin((player->ang*M_PI)/180.0);
-                                ncam_y = cam_x * sin((player->ang*M_PI)/180.0) + cam_y * cos((player->ang*M_PI)/180.0);
+                                ncam_x = cam_x * cos(player->ang) - cam_y * sin(player->ang);
+                                ncam_y = cam_x * sin(player->ang) + cam_y * cos(player->ang);
                                 ncam_z = cam_z;
                                 cam_x  = ncam_x;
                                 cam_y  = ncam_y;
@@ -732,8 +732,8 @@ void juego(int v) {
                                 cam_x  = -20;
                                 cam_y  =  0;
                                 cam_z  =  0;
-                                ncam_x = cam_x * cos((player->ang*M_PI)/180.0) - cam_y * sin((player->ang*M_PI)/180.0);
-                                ncam_y = cam_x * sin((player->ang*M_PI)/180.0) + cam_y * cos((player->ang*M_PI)/180.0);
+                                ncam_x = cam_x * cos(player->ang) - cam_y * sin(player->ang);
+                                ncam_y = cam_x * sin(player->ang) + cam_y * cos(player->ang);
                                 ncam_z = cam_z;
                                 cam_x  = ncam_x;
                                 cam_y  = ncam_y;

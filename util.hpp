@@ -5,4 +5,6 @@ double randomBinomial();
 
 double RandBin(double fMin, double fMax);
 
+double mapToRange(double value);
+
 #endif

@@ -2,6 +2,7 @@
 
 #include "Align.hpp"
 #include "Mobile.hpp"
+#include "util.hpp"
 
 Align::Align(Mobile *character, Mobile *target, double maxAngularAcceleration, double maxRotation, double targetRadius, double slowRadius) {
         this->character              = character;
@@ -17,7 +18,7 @@ tuple<bool, Triple, double> Align::getVelIncr(unsigned int ticks) {
         double rotation, rotationSize, targetRotation, angularAcceleration;
 
         rotation = target->ang - character->ang;
-        mapToRange(&rotation);
+        rotation = mapToRange(rotation);
         rotationSize = abs(rotation);
 
         if (rotationSize < targetRadius) {
@@ -46,16 +47,4 @@ tuple<bool, Triple, double> Align::getVelIncr(unsigned int ticks) {
         get<1>(steering) = 0;
 
         return steering;
-}
-
-void Align::mapToRange(double *value) {
-        if (*value > M_PI) {
-                *value -= 2 * M_PI;
-                mapToRange(value);
-        }
-
-        else if(*value < -M_PI) {
-                *value += 2 * M_PI;
-                mapToRange(value);
-        }
 }

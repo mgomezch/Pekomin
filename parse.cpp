@@ -313,17 +313,16 @@ void parse(char *s) {
                                 continue;
                         }
 
-                        // Arrive(Mobile *character, Mobile *target, double maxAcceleration, double maxSpeed, double targetRadius, double slowRadius);
+                        // Arrive(Mobile *character, Mobile *target, double maxSpeed, double targetRadius, double slowRadius);
                         if (class_s == string("Arrive")) {
                                 SET_CHARACTER();
                                 SET_TARGET();
-                                SET_DOUBLE(maxAcceleration);
                                 SET_DOUBLE(maxSpeed       );
                                 SET_DOUBLE(targetRadius   );
                                 SET_DOUBLE(slowRadius     );
 
                                 SET_P();
-                                p->addBehavior(new Arrive(character, target, maxAcceleration, maxSpeed, targetRadius, slowRadius));
+                                p->addBehavior(new Arrive(character, target, maxSpeed, targetRadius, slowRadius));
                                 continue;
                         }
 
@@ -338,28 +337,28 @@ void parse(char *s) {
                                 continue;
                         }
 
-                        // Face(Mobile *character, Mobile *target, double maxAngularAcceleration, double maxRotation, double targetRadius, double slowRadius);
+                        // Face(Mobile *character, Mobile *target, double maxAngularVelocity, double targetRadius, double slowRadius);
                         if (class_s == string("Face")) {
                                 SET_CHARACTER();
                                 SET_TARGET();
-                                SET_DOUBLE(maxAngularAcceleration);
-                                SET_DOUBLE(maxRotation           );
-                                SET_DOUBLE(targetRadius          );
-                                SET_DOUBLE(slowRadius            );
+                                SET_DOUBLE(maxAngularVelocity);
+                                SET_DOUBLE(targetRadius);
+                                SET_DOUBLE(slowRadius);
 
                                 SET_P();
-                                p->addBehavior(new Face(character, target, maxAngularAcceleration, maxRotation, targetRadius, slowRadius));
+                                p->addBehavior(new Face(character, target, maxAngularVelocity, targetRadius, slowRadius));
                                 continue;
                         }
 
-                        // Flee(Mobile *character, Mobile *target, double maxAcceleration);
+                        // Flee(Mobile *character, Mobile *target, double maxAcceleration, double fleeRadius);
                         if (class_s == string("Flee")) {
                                 SET_CHARACTER();
                                 SET_TARGET();
                                 SET_DOUBLE(maxAcceleration);
+                                SET_DOUBLE(fleeRadius);
 
                                 SET_P();
-                                p->addBehavior(new Flee(character, target, maxAcceleration));
+                                p->addBehavior(new Flee(character, target, maxAcceleration, fleeRadius));
                                 continue;
                         }
 
@@ -408,17 +407,16 @@ void parse(char *s) {
                                 continue;
                         }
 
-                        // LookWhereYoureGoing(Mobile *character, Mobile *target, double maxAngularAcceleration, double maxRotation, double targetRadius, double slowRadius);
+                        // LookWhereYoureGoing(Mobile *character, double maxAngularAcceleration, double maxRotation, double targetRadius, double slowRadius);
                         if (class_s == string("LookWhereYoureGoing")) {
                                 SET_CHARACTER();
-                                SET_TARGET();
                                 SET_DOUBLE(maxAngularAcceleration);
                                 SET_DOUBLE(maxRotation);
                                 SET_DOUBLE(targetRadius);
                                 SET_DOUBLE(slowRadius);
 
                                 SET_P();
-                                p->addBehavior(new LookWhereYoureGoing(character, target, maxAngularAcceleration, maxRotation, targetRadius, slowRadius));
+                                p->addBehavior(new LookWhereYoureGoing(character, maxAngularAcceleration, maxRotation, targetRadius, slowRadius));
                                 continue;
                         }
 
