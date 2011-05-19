@@ -22,7 +22,7 @@
 //#define NO_LIGHTING
 
 #define BUFSIZE 65536
-#define DEFAULT_GAME_FILENAME "games/default.game"
+#define DEFAULT_GAME_FILENAME "games/default"
 
 using namespace std;
 
@@ -46,19 +46,19 @@ void initJuego() {
         cam_old_t  = 0;
         retract    = 1;
 
-        px       = 0;
-        py       = 0;
-        pz       = 0;
-        pv       = 0;
-        prz      = 0;
-        pvx      = 0;
-        pvy      = 0;
-        pvz      = 0;
-        pvrz     = 0;
-        pa       = 0;
-        pav      = 0;
-        pbi      = 0;
-        pbn      = 0;
+        px   = 0;
+        py   = 0;
+        pz   = 0;
+        pv   = 0;
+        prz  = 0;
+        pvx  = 0;
+        pvy  = 0;
+        pvz  = 0;
+        pvrz = 0;
+        pa   = 0;
+        pav  = 0;
+        pbi  = 0;
+        pbn  = 0;
         for (i = 0; i < N_PBALAS; i++) {
                 pb[i] = 0;
                 pbv[i] = V_BALA_MAX;
@@ -83,7 +83,7 @@ void initJuego() {
                         }
                         delete e;
                 }
-                //player = NULL;
+                player = NULL;
 
 		player = new Player(Triple(0, 0, 0), 0);
 		ents.push_back(player);
@@ -326,7 +326,7 @@ void display() {
                                 // TODO: usar solo dirección del cañón para mostrar la inclinación de la bala
                                 glRotatef((-180.0*atan2(pbvx[i], pbvy[i]))/M_PI, 0, 0, 1);
                                 glRotatef(( 180.0*atan2(pbvz[i], sqrt(pbvx[i]*pbvx[i] + pbvy[i]*pbvy[i])))/M_PI, 1, 0, 0);
-                                glScalef(0.6, 1.0, 0.6);
+                                glScalef(3.0, 7.0, 3.0);
                                 switch (pass) {
                                         case PASS_BLUR:
 #ifndef NO_LIGHTING
@@ -357,8 +357,8 @@ void display() {
 
 /*
                 glPushMatrix();
-                        float cosax, cosay, cosaz, cosavx, cosavy, cosavz;
-                        float ncosax, ncosay, ncosaz, ncosavx, ncosavy, ncosavz;
+                        double cosax, cosay, cosaz, cosavx, cosavy, cosavz;
+                        double ncosax, ncosay, ncosaz, ncosavx, ncosavy, ncosavz;
 
                         cosax  = 0;
                         cosay  = mesh[MESH_CANNON].zM + 1;
@@ -461,7 +461,7 @@ void display() {
                                                 glScalef(3 * boom[i].s[k], 3 * boom[i].s[k], 3 * boom[i].s[k]);
                                                 glRotatef(boom[i].a[k], boom[i].rx[k], boom[i].ry[k], boom[i].rz[k]);
                                                 glBegin(GL_TRIANGLES);
-                                                        glColor4ub(boom[i].r[k], boom[i].g[k], boom[i].b[k], 255 * ((float)boom[i].on) / ((float)T_BOOM));
+                                                        glColor4ub(boom[i].r[k], boom[i].g[k], boom[i].b[k], 255 * ((double)boom[i].on) / ((double)T_BOOM));
                                                         glVertex3f(-0.5, -0.5, 0);
                                                         glVertex3f( 0.5, -0.5, 0);
                                                         glVertex3f( 0  ,  0.5, 0);
@@ -479,8 +479,8 @@ void display() {
                                                 glScalef(3 * boom[i].s[k], 3 * boom[i].s[k], 3 * boom[i].s[k]);
                                                 glRotatef(boom[i].a[k], boom[i].rx[k], boom[i].ry[k], boom[i].rz[k]);
                                                 glBegin(GL_TRIANGLES);
-                                                        glColor4ub(boom[i].r[k] * ((float)boom[i].on) / ((float)T_BOOM), boom[i].g[k] * ((float)boom[i].on) / ((float)T_BOOM), boom[i].b[k] * ((float)boom[i].on) / ((float)T_BOOM), 255);
-//                                                      glColor4ub(255, 255, 255, ((boom[i].r[k] + boom[i].g[k] + boom[i].b[k])/3.0) * ((float)boom[i].on) / ((float)T_BOOM));
+                                                        glColor4ub(boom[i].r[k] * ((double)boom[i].on) / ((double)T_BOOM), boom[i].g[k] * ((double)boom[i].on) / ((double)T_BOOM), boom[i].b[k] * ((double)boom[i].on) / ((double)T_BOOM), 255);
+//                                                      glColor4ub(255, 255, 255, ((boom[i].r[k] + boom[i].g[k] + boom[i].b[k])/3.0) * ((double)boom[i].on) / ((double)T_BOOM));
                                                         glVertex3f(-0.5, -0.5, 0);
                                                         glVertex3f( 0.5, -0.5, 0);
                                                         glVertex3f( 0  ,  0.5, 0);
@@ -522,7 +522,7 @@ void display() {
                                                 glTranslatef(0, D_BLUR/N_BLURS, 0);
                                                 glPushMatrix();
                                                         glScalef(1.0 + D_BLUR, 1.0 + D_BLUR, 1);
-                                                        glColor4f(1, 1, 1, (12.0/(N_BLURS*N_BLURS))*(sqrtf(0.5) - sqrtf((((float)i)/N_BLURS - 0.5)*(((float)i)/N_BLURS - 0.5) + (((float)j)/N_BLURS - 0.5)*(((float)j)/N_BLURS - 0.5))));
+                                                        glColor4f(1, 1, 1, (12.0/(N_BLURS*N_BLURS))*(sqrtf(0.5) - sqrtf((((double)i)/N_BLURS - 0.5)*(((double)i)/N_BLURS - 0.5) + (((double)j)/N_BLURS - 0.5)*(((double)j)/N_BLURS - 0.5))));
                                                         glCallList(cuadrado_simple);
                                                 glPopMatrix();
                                         }
@@ -610,7 +610,7 @@ void reshape(int w, int h){
         if (h == 0) h = 1;
         ww = w;
         wh = h;
-        aspectratio = ((float)w)/((float)h);
+        aspectratio = ((double)w)/((double)h);
         glViewport(0, 0, w, h);
 }
 
@@ -646,31 +646,42 @@ void keyup(unsigned char key, int mx, int my) {
         else if (key == key_cam_rotright) keystate_cam_rotright = 0;
         else if (key == key_enter       ) keystate_enter        = 0;
         else if (key == key_shoot       ) keystate_shoot        = 0;
+        else if (key == key_reload      ) keystate_reload       = 0;
         else if (key == key_jump        ) keystate_jump         = 0;
 }
 
 void keydown(unsigned char key, int mx, int my) {
-        if      (key == key_fwd         ) keystate_fwd          = 1;
-        else if (key == key_back        ) keystate_back         = 1;
-        else if (key == key_left        ) keystate_left         = 1;
-        else if (key == key_right       ) keystate_right        = 1;
-        else if (key == key_cam_up      ) keystate_cam_up       = 1;
-        else if (key == key_cam_down    ) keystate_cam_down     = 1;
-        else if (key == key_cam_left    ) keystate_cam_left     = 1;
-        else if (key == key_cam_right   ) keystate_cam_right    = 1;
-        else if (key == key_cam_fwd     ) keystate_cam_fwd      = 1;
-        else if (key == key_cam_back    ) keystate_cam_back     = 1;
-        else if (key == key_cam_rotup   ) keystate_cam_rotup    = 1;
-        else if (key == key_cam_rotdown ) keystate_cam_rotdown  = 1;
-        else if (key == key_cam_rotleft ) keystate_cam_rotleft  = 1;
-        else if (key == key_cam_rotright) keystate_cam_rotright = 1;
-        else if (key == key_enter       ) keystate_enter        = 1;
-        else if (key == key_shoot       ) keystate_shoot        = 1;
-        else if (key == key_jump        ) keystate_jump         = 1;
+        if      (key == key_fwd         ) keystate_fwd           = 1;
+        else if (key == key_back        ) keystate_back          = 1;
+        else if (key == key_left        ) keystate_left          = 1;
+        else if (key == key_right       ) keystate_right         = 1;
+        else if (key == key_cam_up      ) keystate_cam_up        = 1;
+        else if (key == key_cam_down    ) keystate_cam_down      = 1;
+        else if (key == key_cam_left    ) keystate_cam_left      = 1;
+        else if (key == key_cam_right   ) keystate_cam_right     = 1;
+        else if (key == key_cam_fwd     ) keystate_cam_fwd       = 1;
+        else if (key == key_cam_back    ) keystate_cam_back      = 1;
+        else if (key == key_cam_rotup   ) keystate_cam_rotup     = 1;
+        else if (key == key_cam_rotdown ) keystate_cam_rotdown   = 1;
+        else if (key == key_cam_rotleft ) keystate_cam_rotleft   = 1;
+        else if (key == key_cam_rotright) keystate_cam_rotright  = 1;
+        else if (key == key_enter       ) keystate_enter         = 1;
+        else if (key == key_shoot       ) keystate_shoot         = 1;
+        else if (key == key_reload      ) keystate_reload        = 1;
+        else if (key == key_jump        ) keystate_jump          = 1;
+        else if (key == key_pause) {
+                frozen ^= 1;
+#ifdef DEBUG_MAIN
+                cout << "toggling pause" << endl;
+#endif
+        }
         else if (key == key_cam_switch) {
                 if ((cam += 1) >= N_CAMS) cam = 0;
 #ifdef DEBUG_MAIN
                 switch (cam) {
+                        case CAM_STATIC_OVERHEAD:
+                                printf("cam is now static overhead\n");
+                                break;
                         case CAM_OVERHEAD:
                                 printf("cam is now overhead\n");
                                 break;
@@ -705,12 +716,6 @@ void juego(int v) {
         deltas_cur = (deltas_cur + 1) % N_DELTAS;
 
         if (!frozen) {
-                /*
-                if (keystate_l)     m_AntiVirus->setFlag('l', true); else m_AntiVirus->setFlag('l', false);
-                if (keystate_r)     m_AntiVirus->setFlag('r', true); else m_AntiVirus->setFlag('r', false);
-                if (keystate_shoot) m_AntiVirus->setFlag('m', true); else m_AntiVirus->setFlag('m', false);
-                if (keystate_enter) m_AntiVirus->setFlag('s', true); else m_AntiVirus->setFlag('s', false);
-                */
 /*
                 if (keystate_u) if ((a_cannon += delta / 20.0) > MAX_A_CANNON) a_cannon = MAX_A_CANNON;
                 if (keystate_d) if ((a_cannon -= delta / 20.0) < MIN_A_CANNON) a_cannon = MIN_A_CANNON;
@@ -719,11 +724,16 @@ void juego(int v) {
  */
 
                 if (keystate_jump && pz == 0 && pvz == 0) {
-                        pvz = 0.1;
+                        pvz = 0.04;
+                }
+
+                if (keystate_reload && balas < BALAS) {
+                        // TODO: limit ammo
+                        balas = BALAS;
                 }
 
                 if (pz != 0 || pvz != 0) {
-                        pvz += GRAVEDAD * 10 * delta;
+                        pvz += GRAVEDAD * delta;
                         px  += pvx * delta;
                         py  += pvy * delta;
                         pz  += pvz * delta;
@@ -741,12 +751,12 @@ void juego(int v) {
                         pvrz += -0.005 * pvrz * delta;
                         prz  += (pv < 0 ? -1 : 1) * pvrz * delta;
                         prz  -= (((int)prz)/360)*360;
-                        pvx   = pv * sin((-prz*M_PI)/180.0);
-                        pvy   = pv * cos((-prz*M_PI)/180.0);
-                        pvx  += -0.002 * pvx  * delta;
-                        pvy  += -0.002 * pvy  * delta;
+                        pvx   = pv * cos((prz*M_PI)/180.0);
+                        pvy   = pv * sin((prz*M_PI)/180.0);
+                        pvx  += -0.002 * pvx * delta;
+                        pvy  += -0.002 * pvy * delta;
                         pv    = sqrt(pvx*pvx + pvy*pvy) * (pv > 0 ? 1 : -1);
-//                      pvz  += -0.005 * pvz  * delta; // Roce vertical
+//                      pvz  += -0.005 * pvz * delta; // Roce vertical
                         px   += pvx * delta;
                         py   += pvy * delta;
                         pz   += pvz * delta;
@@ -754,7 +764,7 @@ void juego(int v) {
 
                 player->pos  = Triple(px , py , pz );
                 player->vel  = Triple(pvx, pvy, pvz);
-                player->ang  = (prz  * M_PI) / 180.0;
+                player->ang  = mapToRange((prz  * M_PI) / 180.0);
                 player->vrot = (pvrz * M_PI) / 180.0;
 
 /*
@@ -775,13 +785,228 @@ void juego(int v) {
                         pvy = 0;
                 }
  */
+
+                for (i = 0; (unsigned int)i < ents.size(); i++) {
+                        ents[i]->update(delta);
+                }
+
+                if (pbn < N_PBALAS) {
+                        if (keystate_enter && balas > 0 && retract == 1) {
+                                double npbx, npby, npbz;
+                                pbn++;
+                                if ((++pbi) == N_PBALAS) pbi = 0;
+                                pb[pbi]   = 1;
+                                pbl[pbi]  = level;
+
+                                // TODO: optimize
+        /*
+                                pbx[pbi]  = 0;
+                                pby[pbi]  = mesh[MESH_CANNON].zM + v_cannon;
+                                pbz[pbi]  = 0;
+                                npbx = pbx[pbi];
+                                npby = pby[pbi] * cos((a_cannon*M_PI)/180.0) - pbz[pbi] * sin((a_cannon*M_PI)/180.0);
+                                npbz = pby[pbi] * sin((a_cannon*M_PI)/180.0) + pbz[pbi] * cos((a_cannon*M_PI)/180.0);
+                                pbx[pbi]  = npbx;
+                                pby[pbi]  = npby;
+                                pbz[pbi]  = npbz;
+                                pbx[pbi] += 0;
+                                pby[pbi] += CANNON_Z - TURRET_Z;
+                                pbz[pbi] += CANNON_Y;
+                                npbx = pbx[pbi] * cos((a_turret*M_PI)/180.0) - pby[pbi] * sin((a_turret*M_PI)/180.0);
+                                npby = pbx[pbi] * sin((a_turret*M_PI)/180.0) + pby[pbi] * cos((a_turret*M_PI)/180.0);
+                                npbz = pbz[pbi];
+                                pbx[pbi]  = npbx;
+                                pby[pbi]  = npby;
+                                pbz[pbi]  = npbz;
+                                pbx[pbi] += 0;
+                                pby[pbi] += TURRET_Z;
+                                pbz[pbi] += 0;
+                                npbx = pbx[pbi] * cos((prz*M_PI)/180.0) - pby[pbi] * sin((prz*M_PI)/180.0);
+                                npby = pbx[pbi] * sin((prz*M_PI)/180.0) + pby[pbi] * cos((prz*M_PI)/180.0);
+                                npbz = pbz[pbi];
+                                pbx[pbi]  = npbx;
+                                pby[pbi]  = npby;
+                                pbz[pbi]  = npbz;
+                                pbx[pbi] += px;
+                                pby[pbi] += py;
+                                pbz[pbi] += pz;
+                                pbvx[pbi] = pbx[pbi];
+                                pbvy[pbi] = pby[pbi];
+                                pbvz[pbi] = pbz[pbi];
+
+                                pbx[pbi]  = 0;
+                                pby[pbi]  = mesh[MESH_CANNON].zM;
+                                pbz[pbi]  = 0;
+                                npbx = pbx[pbi];
+                                npby = pby[pbi] * cos((a_cannon*M_PI)/180.0) - pbz[pbi] * sin((a_cannon*M_PI)/180.0);
+                                npbz = pby[pbi] * sin((a_cannon*M_PI)/180.0) + pbz[pbi] * cos((a_cannon*M_PI)/180.0);
+                                pbx[pbi]  = npbx;
+                                pby[pbi]  = npby;
+                                pbz[pbi]  = npbz;
+                                pbx[pbi] += 0;
+                                pby[pbi] += CANNON_Z - TURRET_Z;
+                                pbz[pbi] += CANNON_Y;
+                                npbx = pbx[pbi] * cos((a_turret*M_PI)/180.0) - pby[pbi] * sin((a_turret*M_PI)/180.0);
+                                npby = pbx[pbi] * sin((a_turret*M_PI)/180.0) + pby[pbi] * cos((a_turret*M_PI)/180.0);
+                                npbz = pbz[pbi];
+                                pbx[pbi]  = npbx;
+                                pby[pbi]  = npby;
+                                pbz[pbi]  = npbz;
+                                pbx[pbi] += 0;
+                                pby[pbi] += TURRET_Z;
+                                pbz[pbi] += 0;
+                                npbx = pbx[pbi] * cos((prz*M_PI)/180.0) - pby[pbi] * sin((prz*M_PI)/180.0);
+                                npby = pbx[pbi] * sin((prz*M_PI)/180.0) + pby[pbi] * cos((prz*M_PI)/180.0);
+                                npbz = pbz[pbi];
+                                pbx[pbi]  = npbx;
+                                pby[pbi]  = npby;
+                                pbz[pbi]  = npbz;
+                                pbx[pbi] += px;
+                                pby[pbi] += py;
+                                pbz[pbi] += pz;
+                                pbvx[pbi] += pvx - pbx[pbi];
+                                pbvy[pbi] += pvy - pby[pbi];
+                                pbvz[pbi] += pvz - pbz[pbi];
+         */
+                                pbx[pbi]  = 0.55;
+                                pby[pbi]  = 0;
+                                pbz[pbi]  = 0;
+                                npbx = pbx[pbi] * cos((30.0*M_PI)/180.0) - pbz[pbi] * sin((30.0*M_PI)/180.0);
+                                npby = pby[pbi];
+                                npbz = pbx[pbi] * sin((30.0*M_PI)/180.0) + pbz[pbi] * cos((30.0*M_PI)/180.0);
+                                pbx[pbi]  = npbx;
+                                pby[pbi]  = npby;
+                                pbz[pbi]  = npbz;
+                                pbx[pbi] += 0;
+                                pby[pbi] += 0;
+                                pbz[pbi] += 0.5;
+                                npbx = pbx[pbi] * cos((prz*M_PI)/180.0) - pby[pbi] * sin((prz*M_PI)/180.0);
+                                npby = pbx[pbi] * sin((prz*M_PI)/180.0) + pby[pbi] * cos((prz*M_PI)/180.0);
+                                npbz = pbz[pbi];
+                                pbx[pbi]  = npbx;
+                                pby[pbi]  = npby;
+                                pbz[pbi]  = npbz;
+                                pbx[pbi] += px;
+                                pby[pbi] += py;
+                                pbz[pbi] += pz;
+                                pbvx[pbi] = pbx[pbi];
+                                pbvy[pbi] = pby[pbi];
+                                pbvz[pbi] = pbz[pbi];
+
+                                pbx[pbi]  = 0.50;
+                                pby[pbi]  = 0;
+                                pbz[pbi]  = 0;
+                                npbx = pbx[pbi] * cos((30.0*M_PI)/180.0) - pbz[pbi] * sin((30.0*M_PI)/180.0);
+                                npby = pby[pbi];
+                                npbz = pbx[pbi] * sin((30.0*M_PI)/180.0) + pbz[pbi] * cos((30.0*M_PI)/180.0);
+                                pbx[pbi]  = npbx;
+                                pby[pbi]  = npby;
+                                pbz[pbi]  = npbz;
+                                pbx[pbi] += 0;
+                                pby[pbi] += 0;
+                                pbz[pbi] += 0.5;
+                                npbx = pbx[pbi] * cos((prz*M_PI)/180.0) - pby[pbi] * sin((prz*M_PI)/180.0);
+                                npby = pbx[pbi] * sin((prz*M_PI)/180.0) + pby[pbi] * cos((prz*M_PI)/180.0);
+                                npbz = pbz[pbi];
+                                pbx[pbi]  = npbx;
+                                pby[pbi]  = npby;
+                                pbz[pbi]  = npbz;
+                                pbx[pbi] += px;
+                                pby[pbi] += py;
+                                pbz[pbi] += pz;
+                                pbvx[pbi] += pvx - pbx[pbi];
+                                pbvy[pbi] += pvy - pby[pbi];
+                                pbvz[pbi] += pvz - pbz[pbi];
+                                retract = 0;
+                                balas--;
+
+                                boom[nboom].on = 1000;
+                                for (k = 0; k < N_BOOMS; k++) {
+                                        boom[nboom].x[k]  = pbx[pbi];
+                                        boom[nboom].y[k]  = pby[pbi];
+                                        boom[nboom].z[k]  = pbz[pbi];
+                                        boom[nboom].a[k]  =                                                                                         ((double)rand())/((double)RAND_MAX)  * 180.0     ;
+                                        boom[nboom].rx[k] =                                                                                   0.5 - ((double)rand())/((double)RAND_MAX)              ;
+                                        boom[nboom].ry[k] =                                                                                   0.5 - ((double)rand())/((double)RAND_MAX)              ;
+                                        boom[nboom].rz[k] =                                                                                   0.5 - ((double)rand())/((double)RAND_MAX)              ;
+                                        boom[nboom].vx[k] = (pbx[pbi] <= -W_TABLERO/2.0 || W_TABLERO/2.0 <= pbx[pbi] ? -1 : 1) * pbvx[pbi] + (0.5 - ((double)rand())/((double)RAND_MAX)) * 0.01      ;
+                                        boom[nboom].vy[k] = (pby[pbi] <= -H_TABLERO/2.0 || H_TABLERO/2.0 <= pby[pbi] ? -1 : 1) * pbvy[pbi] + (0.5 - ((double)rand())/((double)RAND_MAX)) * 0.01      ;
+                                        boom[nboom].vz[k] = (pbz[pbi] <= 0                                           ? -1 : 1) * pbvz[pbi] + (0.5 - ((double)rand())/((double)RAND_MAX)) * 0.01      ;
+                                        boom[nboom].va[k] =                                                                                   0.5 - ((double)rand())/((double)RAND_MAX)              ;
+                                        boom[nboom].s[k]  =                                                                                         ((double)rand())/((double)RAND_MAX)  * BOOM_SCALE;
+                                        boom[nboom].r[k]  = 120 + 120.0 * ((double)rand())/((double)RAND_MAX);
+                                        boom[nboom].g[k]  = 120 + 120.0 * ((double)rand())/((double)RAND_MAX);
+                                        boom[nboom].b[k]  =        60.0 * ((double)rand())/((double)RAND_MAX);
+                                }
+                                boom[nboom].level = level;
+                                if ((++nboom) == N_BOOM_SETS) nboom = 0;
+                        }
+                }
+                if ((retract += delta * 0.0025) > 1) retract = 1;
+
+                for (i = 0; i < N_BOOM_SETS; i++) {
+                        if (boom[i].on) {
+                                if ((boom[i].on -= delta) < 0) boom[i].on = 0;
+                                for (k = 0; k < N_BOOMS; k++) {
+                                        boom[i].vz[k] += (GRAVEDAD/3.0) * delta;
+                                        boom[i].x[k]  += boom[i].vx[k]  * delta;
+                                        boom[i].y[k]  += boom[i].vy[k]  * delta;
+                                        boom[i].z[k]  += boom[i].vz[k]  * delta;
+                                        boom[i].a[k]  += boom[i].va[k]  * delta;
+                                }
+                        }
+                }
+
+                for (int q = 0; q < N_PBALAS; q++) if (pb[q]) {
+                        pbvz[q] += delta * GRAVEDAD;
+                        pbx[q]  += delta * pbvx[q] ;
+                        pby[q]  += delta * pbvy[q] ;
+                        pbz[q]  += delta * pbvz[q] ;
+                        if (
+        //                      pbx[q] <= -W_TABLERO/2.0 || W_TABLERO/2.0 <= pbx[q] ||
+        //                      pby[q] <= -H_TABLERO/2.0 || H_TABLERO/2.0 <= pby[q] ||
+                                pbz[q] <= 0
+                            ) {
+                                pb[q] = 0;
+                                pbn--;
+                                boom[nboom].on = T_BOOM;
+                                for (k = 0; k < N_BOOMS; k++) {
+                                        boom[nboom].x[k]  = pbx[q];
+                                        boom[nboom].y[k]  = pby[q];
+                                        boom[nboom].z[k]  = pbz[q];
+                                        boom[nboom].a[k]  =                                                                                          ((double)rand())/((double)RAND_MAX)  * 180.0;
+                                        boom[nboom].rx[k] =                                                                                    0.5 - ((double)rand())/((double)RAND_MAX);
+                                        boom[nboom].ry[k] =                                                                                    0.5 - ((double)rand())/((double)RAND_MAX);
+                                        boom[nboom].rz[k] =                                                                                    0.5 - ((double)rand())/((double)RAND_MAX);
+                                        boom[nboom].vx[k] = (pbx[q] <= -W_TABLERO/2.0 || W_TABLERO/2.0 <= pbx[q] ? -1 : 1) * pbvx[q] * 0.25 + (0.5 - ((double)rand())/((double)RAND_MAX)) * 0.01;
+                                        boom[nboom].vy[k] = (pby[q] <= -H_TABLERO/2.0 || H_TABLERO/2.0 <= pby[q] ? -1 : 1) * pbvy[q] * 0.25 + (0.5 - ((double)rand())/((double)RAND_MAX)) * 0.01;
+                                        boom[nboom].vz[k] = (pbz[q] <= 0                                         ? -1 : 1) * pbvz[q] * 0.25 + (0.5 - ((double)rand())/((double)RAND_MAX)) * 0.01;
+                                        boom[nboom].va[k] = 0.5 - ((double)rand())/((double)RAND_MAX);
+                                        boom[nboom].s[k]  = ((double)rand())/((double)RAND_MAX)*BOOM_SCALE;
+                                        boom[nboom].r[k]  = 120 + 120.0 * ((double)rand())/((double)RAND_MAX);
+                                        boom[nboom].g[k]  = 120 + 120.0 * ((double)rand())/((double)RAND_MAX);
+                                        boom[nboom].b[k]  =        60.0 * ((double)rand())/((double)RAND_MAX);
+                                }
+                                boom[nboom].level = level;
+                                if ((++nboom) == N_BOOM_SETS) nboom = 0;
+                        }
+                }
+
         }
 
         switch (cam) {
-                case CAM_OVERHEAD:
+                case CAM_STATIC_OVERHEAD:
                         cam_x = 0;
                         cam_y = H_OVERHEAD;
                         cam_z = 0;
+                        cam_rotx = 90;
+                        cam_roty = 0;
+                        break;
+
+                case CAM_OVERHEAD:
+                        cam_x = py;
+                        cam_y = H_OVERHEAD;
+                        cam_z = px;
                         cam_rotx = 90;
                         cam_roty = 0;
                         break;
@@ -792,8 +1017,8 @@ void juego(int v) {
                                 double cam_vx, cam_vy, cam_vz;
                                 double ncam_vx, ncam_vy, ncam_vz;
 
-                                cam_x  = 0.51;
-                                cam_y  = 0;
+                                cam_x  = 0;
+                                cam_y  = -0.51;
                                 cam_z  = 0;
                                 ncam_x = cam_x * cos(player->ang) - cam_y * sin(player->ang);
                                 ncam_y = cam_x * sin(player->ang) + cam_y * cos(player->ang);
@@ -824,41 +1049,12 @@ void juego(int v) {
                         break;
 
                 case CAM_TPS:
-                        {
-                                double ncam_x, ncam_y, ncam_z;
-                                double cam_vx, cam_vy, cam_vz;
-                                double ncam_vx, ncam_vy, ncam_vz;
+                        cam_x = py - 12 * sin((prz*M_PI)/180.0);
+                        cam_y = pz + 5;
+                        cam_z = px - 12 * cos((prz*M_PI)/180.0);
 
-                                cam_x  = -20;
-                                cam_y  =  0;
-                                cam_z  =  0;
-                                ncam_x = cam_x * cos(player->ang) - cam_y * sin(player->ang);
-                                ncam_y = cam_x * sin(player->ang) + cam_y * cos(player->ang);
-                                ncam_z = cam_z;
-                                cam_x  = ncam_x;
-                                cam_y  = ncam_y;
-                                cam_z  = ncam_z;
-                                cam_x += px;
-                                cam_y += py;
-                                cam_z += pz;
-                                cam_vx = cam_x;
-                                cam_vy = cam_y;
-                                cam_vz = cam_z;
-
-                                ncam_vx = cam_vx - px;
-                                ncam_vy = cam_vy - py;
-                                ncam_vz = cam_vz - pz;
-                                cam_vx = ncam_vy;
-                                cam_vy = ncam_vz;
-                                cam_vz = ncam_vx;
-                                cam_x  = py;
-                                cam_y  = pz + 1.5;
-                                cam_z  = px;
-
-                                cam_roty = 180 + (180.0*atan2(cam_vz, cam_vx))/M_PI;
-                                cam_rotx = (-180.0*atan(cam_vy/sqrt(cam_vx*cam_vx + cam_vz*cam_vz)))/M_PI;
-                                // TODO: hacer bien, sin piratería
-                        }
+                        cam_roty = 180.0-prz;
+                        cam_rotx = 10;
                         break;
 
                 case CAM_MANUAL:
@@ -903,171 +1099,13 @@ void juego(int v) {
                                 if ((cam_roty - cam_old_roty) > 180) cam_old_roty += 360;
                                 cam_old_adj = 0;
                         }
-                        float t = ((float)(T_CAM_OLD - cam_old_t))/T_CAM_OLD;
+                        double t = ((double)(T_CAM_OLD - cam_old_t))/T_CAM_OLD;
                         t = t*t*(t - 2)*(t - 2);
                         cam_x    = cam_x    * t + cam_old_x    * (1 - t);
                         cam_y    = cam_y    * t + cam_old_y    * (1 - t);
                         cam_z    = cam_z    * t + cam_old_z    * (1 - t);
                         cam_rotx = cam_rotx * t + cam_old_rotx * (1 - t);
                         cam_roty = cam_roty * t + cam_old_roty * (1 - t);
-                }
-        }
-
-        for (i = 0; (unsigned int)i < ents.size(); i++) {
-                ents[i]->update(delta);
-        }
-
-        if (pbn < N_PBALAS) {
-                if (!frozen && keystate_enter && balas > 0 && retract == 1) {
-//                      float npbx, npby, npbz;
-                        pbn++;
-                        if ((++pbi) == N_PBALAS) pbi = 0;
-                        pb[pbi]   = 1;
-                        pbl[pbi]  = level;
-
-                        // TODO: optimize
-                        // TODO: velocidad inicial por rotación de tanque y turret
-/*
-                        pbx[pbi]  = 0;
-                        pby[pbi]  = mesh[MESH_CANNON].zM + v_cannon;
-                        pbz[pbi]  = 0;
-                        npbx = pbx[pbi];
-                        npby = pby[pbi] * cos((a_cannon*M_PI)/180.0) - pbz[pbi] * sin((a_cannon*M_PI)/180.0);
-                        npbz = pby[pbi] * sin((a_cannon*M_PI)/180.0) + pbz[pbi] * cos((a_cannon*M_PI)/180.0);
-                        pbx[pbi]  = npbx;
-                        pby[pbi]  = npby;
-                        pbz[pbi]  = npbz;
-                        pbx[pbi] += 0;
-                        pby[pbi] += CANNON_Z - TURRET_Z;
-                        pbz[pbi] += CANNON_Y;
-                        npbx = pbx[pbi] * cos((a_turret*M_PI)/180.0) - pby[pbi] * sin((a_turret*M_PI)/180.0);
-                        npby = pbx[pbi] * sin((a_turret*M_PI)/180.0) + pby[pbi] * cos((a_turret*M_PI)/180.0);
-                        npbz = pbz[pbi];
-                        pbx[pbi]  = npbx;
-                        pby[pbi]  = npby;
-                        pbz[pbi]  = npbz;
-                        pbx[pbi] += 0;
-                        pby[pbi] += TURRET_Z;
-                        pbz[pbi] += 0;
-                        npbx = pbx[pbi] * cos((prz*M_PI)/180.0) - pby[pbi] * sin((prz*M_PI)/180.0);
-                        npby = pbx[pbi] * sin((prz*M_PI)/180.0) + pby[pbi] * cos((prz*M_PI)/180.0);
-                        npbz = pbz[pbi];
-                        pbx[pbi]  = npbx;
-                        pby[pbi]  = npby;
-                        pbz[pbi]  = npbz;
-                        pbx[pbi] += px;
-                        pby[pbi] += py;
-                        pbz[pbi] += pz;
-                        pbvx[pbi] = pbx[pbi];
-                        pbvy[pbi] = pby[pbi];
-                        pbvz[pbi] = pbz[pbi];
-
-                        pbx[pbi]  = 0;
-                        pby[pbi]  = mesh[MESH_CANNON].zM;
-                        pbz[pbi]  = 0;
-                        npbx = pbx[pbi];
-                        npby = pby[pbi] * cos((a_cannon*M_PI)/180.0) - pbz[pbi] * sin((a_cannon*M_PI)/180.0);
-                        npbz = pby[pbi] * sin((a_cannon*M_PI)/180.0) + pbz[pbi] * cos((a_cannon*M_PI)/180.0);
-                        pbx[pbi]  = npbx;
-                        pby[pbi]  = npby;
-                        pbz[pbi]  = npbz;
-                        pbx[pbi] += 0;
-                        pby[pbi] += CANNON_Z - TURRET_Z;
-                        pbz[pbi] += CANNON_Y;
-                        npbx = pbx[pbi] * cos((a_turret*M_PI)/180.0) - pby[pbi] * sin((a_turret*M_PI)/180.0);
-                        npby = pbx[pbi] * sin((a_turret*M_PI)/180.0) + pby[pbi] * cos((a_turret*M_PI)/180.0);
-                        npbz = pbz[pbi];
-                        pbx[pbi]  = npbx;
-                        pby[pbi]  = npby;
-                        pbz[pbi]  = npbz;
-                        pbx[pbi] += 0;
-                        pby[pbi] += TURRET_Z;
-                        pbz[pbi] += 0;
-                        npbx = pbx[pbi] * cos((prz*M_PI)/180.0) - pby[pbi] * sin((prz*M_PI)/180.0);
-                        npby = pbx[pbi] * sin((prz*M_PI)/180.0) + pby[pbi] * cos((prz*M_PI)/180.0);
-                        npbz = pbz[pbi];
-                        pbx[pbi]  = npbx;
-                        pby[pbi]  = npby;
-                        pbz[pbi]  = npbz;
-                        pbx[pbi] += px;
-                        pby[pbi] += py;
-                        pbz[pbi] += pz;
-                        pbvx[pbi] += pvx - pbx[pbi];
-                        pbvy[pbi] += pvy - pby[pbi];
-                        pbvz[pbi] += pvz - pbz[pbi];
- */
-                        retract = 0;
-                        balas--;
-
-                        boom[nboom].on = 1000;
-                        for (k = 0; k < N_BOOMS; k++) {
-                                boom[nboom].x[k]  = pbx[pbi];
-                                boom[nboom].y[k]  = pby[pbi];
-                                boom[nboom].z[k]  = pbz[pbi];
-                                boom[nboom].a[k]  =                                                                                                ((float)rand())/((float)RAND_MAX)  * 180.0;
-                                boom[nboom].rx[k] =                                                                                          0.5 - ((float)rand())/((float)RAND_MAX);
-                                boom[nboom].ry[k] =                                                                                          0.5 - ((float)rand())/((float)RAND_MAX);
-                                boom[nboom].rz[k] =                                                                                          0.5 - ((float)rand())/((float)RAND_MAX);
-                                boom[nboom].vx[k] = (pbx[pbi] <= -W_TABLERO/2.0 || W_TABLERO/2.0 <= pbx[pbi] ? -1 : 1) * pbvx[pbi] + (0.5 - ((float)rand())/((float)RAND_MAX)) * 0.01;
-                                boom[nboom].vy[k] = (pby[pbi] <= -H_TABLERO/2.0 || H_TABLERO/2.0 <= pby[pbi] ? -1 : 1) * pbvy[pbi] + (0.5 - ((float)rand())/((float)RAND_MAX)) * 0.01;
-                                boom[nboom].vz[k] = (pbz[pbi] <= 0                                           ? -1 : 1) * pbvz[pbi] + (0.5 - ((float)rand())/((float)RAND_MAX)) * 0.01;
-                                boom[nboom].va[k] = 0.5 - ((float)rand())/((float)RAND_MAX);
-                                boom[nboom].s[k]  = ((float)rand())/((float)RAND_MAX)*BOOM_SCALE;
-                                boom[nboom].r[k]  = 120 + 120.0 * ((float)rand())/((float)RAND_MAX);
-                                boom[nboom].g[k]  = 120 + 120.0 * ((float)rand())/((float)RAND_MAX);
-                                boom[nboom].b[k]  =        60.0 * ((float)rand())/((float)RAND_MAX);
-                        }
-                        boom[nboom].level = level;
-                        if ((++nboom) == N_BOOM_SETS) nboom = 0;
-                }
-        }
-        if (!frozen && (retract += delta * 0.0025) > 1) retract = 1;
-
-        for (i = 0; i < N_BOOM_SETS; i++) {
-                if (boom[i].on) {
-                        if ((boom[i].on -= delta) < 0) boom[i].on = 0;
-                        for (k = 0; k < N_BOOMS; k++) {
-                                boom[i].vz[k] += (GRAVEDAD/3.0) * delta;
-                                boom[i].x[k]  += boom[i].vx[k] * delta;
-                                boom[i].y[k]  += boom[i].vy[k] * delta;
-                                boom[i].z[k]  += boom[i].vz[k] * delta;
-                                boom[i].a[k]  += boom[i].va[k] * delta;
-                        }
-                }
-        }
-
-        for (int q = 0; q < N_PBALAS; q++) if (pb[q]) {
-                pbvz[q] += delta * GRAVEDAD;
-                pbx[q]  += delta * pbvx[q] / 15.0;
-                pby[q]  += delta * pbvy[q] / 15.0;
-                pbz[q]  += delta * pbvz[q];
-                if (
-                        pbx[q] <= -W_TABLERO/2.0 || W_TABLERO/2.0 <= pbx[q] ||
-                        pby[q] <= -H_TABLERO/2.0 || H_TABLERO/2.0 <= pby[q] ||
-                        pbz[q] <= 0
-                    ) {
-                        pb[q] = 0;
-                        pbn--;
-                        boom[nboom].on = T_BOOM;
-                        for (k = 0; k < N_BOOMS; k++) {
-                                boom[nboom].x[k]  = pbx[q];
-                                boom[nboom].y[k]  = pby[q];
-                                boom[nboom].z[k]  = pbz[q];
-                                boom[nboom].a[k]  =                                                                                   ((float)rand())/((float)RAND_MAX)  * 180.0;
-                                boom[nboom].rx[k] =                                                                             0.5 - ((float)rand())/((float)RAND_MAX);
-                                boom[nboom].ry[k] =                                                                             0.5 - ((float)rand())/((float)RAND_MAX);
-                                boom[nboom].rz[k] =                                                                             0.5 - ((float)rand())/((float)RAND_MAX);
-                                boom[nboom].vx[k] = (pbx[q] <= -W_TABLERO/2.0 || W_TABLERO/2.0 <= pbx[q] ? -1 : 1) * pbvx[q] * 0.25 + (0.5 - ((float)rand())/((float)RAND_MAX)) * 0.01;
-                                boom[nboom].vy[k] = (pby[q] <= -H_TABLERO/2.0 || H_TABLERO/2.0 <= pby[q] ? -1 : 1) * pbvy[q] * 0.25 + (0.5 - ((float)rand())/((float)RAND_MAX)) * 0.01;
-                                boom[nboom].vz[k] = (pbz[q] <= 0                                         ? -1 : 1) * pbvz[q] * 0.25 + (0.5 - ((float)rand())/((float)RAND_MAX)) * 0.01;
-                                boom[nboom].va[k] = 0.5 - ((float)rand())/((float)RAND_MAX);
-                                boom[nboom].s[k]  = ((float)rand())/((float)RAND_MAX)*BOOM_SCALE;
-                                boom[nboom].r[k]  = 120 + 120.0 * ((float)rand())/((float)RAND_MAX);
-                                boom[nboom].g[k]  = 120 + 120.0 * ((float)rand())/((float)RAND_MAX);
-                                boom[nboom].b[k]  =        60.0 * ((float)rand())/((float)RAND_MAX);
-                        }
-                        boom[nboom].level = level;
-                        if ((++nboom) == N_BOOM_SETS) nboom = 0;
                 }
         }
 
@@ -1193,7 +1231,7 @@ int main(int argc, char **argv) {
         }
         initJuego();
 
-        blur = 0;
+        blur = 1;
         glutDisplayFunc(realDisplay);
         glutReshapeFunc(reshape);
         glutKeyboardFunc(keydown);

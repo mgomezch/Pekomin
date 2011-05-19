@@ -1,7 +1,7 @@
 #include "Arrive.hpp"
 #include "Mobile.hpp"
 
-#define DEBUG_ARRIVE
+//#define DEBUG_ARRIVE
 
 #ifdef DEBUG_ARRIVE
 #include <stdio.h>

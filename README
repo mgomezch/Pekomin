@@ -1,3 +1,8 @@
+Dependencias:
+ruby (para el script "configure" que genera el Makefile)
+std::unordered_map en libstdc++
+GLUT
+
 Para compilar:
 ./configure.rb
 make

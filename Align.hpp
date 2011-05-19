@@ -11,13 +11,11 @@ class Align : public Kinematic {
         public:
                 Mobile *character;
                 Mobile *target;
-                double maxAngularAcceleration;
-                double maxRotation;
+                double maxAngularVelocity;
                 double targetRadius;
                 double slowRadius;
-                static const double timeToTarget = 0.1;
 
-                Align(Mobile *character, Mobile *target, double maxAngularAcceleration, double maxRotation, double targetRadius, double slowRadius);
+                Align(Mobile *character, Mobile *target, double maxAngularVelocity, double targetRadius, double slowRadius);
 
                 virtual tuple<bool, Triple, double> getVelIncr(unsigned int ticks);
 };
