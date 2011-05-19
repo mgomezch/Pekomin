@@ -1,3 +1,4 @@
+Segfault si no se define un player!!!!!!
 Leer imagenes y hacer displays
 Cambiar a puro SDL y quitar GLUT
 Arreglar las cámaras: faltan las de cada ent
