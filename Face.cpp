@@ -4,7 +4,7 @@
 #include "Mobile.hpp"
 #include "util.hpp"
 
-#define DEBUG_FACE
+//#define DEBUG_FACE
 
 #ifdef DEBUG_FACE
 #include <iostream>
@@ -27,13 +27,13 @@ tuple<bool, Triple, double> Face::getVelIncr(unsigned int ticks) {
         get<1>(steering) = 0;
 
         direction = target->pos - character->pos;
-        rotation = atan2(direction.y, direction.x) - character->ang;
-        if (rotation > 2 * M_PI) rotation -= 360;
+        rotation = atan2(direction.y, direction.x) - mapToRange(character->ang);
+        if (rotation > M_PI) rotation -= 2 * M_PI;
         rotationSize = abs(rotation);
 
         if (rotationSize < targetRadius) {
 #ifdef DEBUG_FACE
-                cout << "face %p" << static_cast<void *>(this) << ": dentro de targetRadius" << endl;
+                cout << "Face " << static_cast<void *>(this) << ": dentro de targetRadius" << endl;
 #endif
                 get<2>(steering) = target->vrot - character->vrot;
                 if (abs(get<2>(steering)) > maxAngularVelocity) {
@@ -45,13 +45,13 @@ tuple<bool, Triple, double> Face::getVelIncr(unsigned int ticks) {
         targetRotation = maxAngularVelocity;// - target->vrot;
         if (rotationSize < slowRadius) {
 #ifdef DEBUG_FACE
-                cout << "face %p" << static_cast<void *>(this) << ": entre targetRadius y slowRadius" << endl;
+                cout << "Face " << static_cast<void *>(this) << ": entre targetRadius y slowRadius" << endl;
 #endif
                 targetRotation *= rotationSize / slowRadius;
         }
 #ifdef DEBUG_FACE
         else {
-                cout << "face %p" << static_cast<void *>(this) << ": fuera de slowRadius" << endl;
+                cout << "Face " << static_cast<void *>(this) << ": fuera de slowRadius" << endl;
         }
 #endif
         if (targetRotation < 0) targetRotation = 0;

@@ -1,8 +1,6 @@
 Leer imagenes y hacer displays
 Cambiar a puro SDL y quitar GLUT
-Meter todas las actualizaciones en if (!frozen) en main.cpp
-Hacer tecla que modifique a frozen (pausa)
-Arreglar las cámaras: falta la TPS y las de cada ent
+Arreglar las cámaras: faltan las de cada ent
 Decidir cómo va a ser el jugador y su modelo
 Agregar draws opcionales a cada Ent, Mobile y Actor mostrando vectores varios
 Hacer el parser con cosas serias de hacer parsers

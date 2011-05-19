@@ -1,59 +1,65 @@
 #include <cmath>
 
-#define DEBUG_LOOKWHEREYOUREGOING
+#include "LookWhereYoureGoing.hpp"
+#include "Mobile.hpp"
+#include "util.hpp"
+
+//#define DEBUG_LOOKWHEREYOUREGOING
 
 #ifdef DEBUG_LOOKWHEREYOUREGOING
 #include <iostream>
 #endif
 
-#include "LookWhereYoureGoing.hpp"
-#include "Mobile.hpp"
-#include "util.hpp"
-
-LookWhereYoureGoing::LookWhereYoureGoing(Mobile *character, double maxAngularAcceleration, double maxRotation, double targetRadius, double slowRadius) {
-        this->character              = character;
-        this->maxAngularAcceleration = maxAngularAcceleration;
-        this->maxRotation            = maxRotation;
-        this->targetRadius           = targetRadius;
-        this->slowRadius             = slowRadius;
+LookWhereYoureGoing::LookWhereYoureGoing(Mobile *character, double maxAngularVelocity, double targetRadius, double slowRadius) {
+        this->character          = character;
+        this->maxAngularVelocity = maxAngularVelocity;
+        this->targetRadius       = targetRadius;
+        this->slowRadius         = slowRadius;
 }
 
 tuple<bool, Triple, double> LookWhereYoureGoing::getVelIncr(unsigned int ticks) {
         tuple<bool, Triple, double> steering;
-        double rotation, rotationSize, targetRotation, angularAcceleration;
-
-        if (character->vel.length() == 0) {
-                get<0>(steering) = false;
-                return steering;
-        }
-
-        rotation = atan2(-character->vel.y, character->vel.x) - character->ang;
-        rotation = mapToRange(rotation);
-        rotationSize = abs(rotation);
-
-        if (rotationSize < targetRadius) {
-                get<0>(steering) = false;
-                return steering;
-        }
-
-        if (rotationSize > slowRadius) {
-                targetRotation = maxRotation;
-        } else {
-                targetRotation = maxRotation * rotationSize / slowRadius;
-        }
-
-        targetRotation *= rotation / rotationSize;
-        get<2>(steering) = targetRotation - character->ang;
-        get<2>(steering) /= timeToTarget;
-        angularAcceleration = abs(get<2>(steering));
-
-        if (angularAcceleration > maxAngularAcceleration) {
-                get<2>(steering) /= angularAcceleration;
-                get<2>(steering) *= maxAngularAcceleration;
-        }
+        double rotation, rotationSize, targetRotation;
+        Triple direction;
 
         get<0>(steering) = true;
         get<1>(steering) = 0;
+
+        direction = character->vel;
+        if (direction.length() == 0) {
+                get<0>(steering) = false;
+                return steering;
+        }
+        rotation = mapToRange(atan2(direction.y, direction.x)) - mapToRange(character->ang);
+        if (rotation > M_PI) rotation -= 2 * M_PI;
+        rotationSize = abs(rotation);
+
+        if (rotationSize < targetRadius) {
+#ifdef DEBUG_LOOKWHEREYOUREGOING
+                cout << "LookWhereYoureGoing " << static_cast<void *>(this) << ": dentro de targetRadius" << endl;
+#endif
+                get<2>(steering) = -character->vrot;
+                if (abs(get<2>(steering)) > maxAngularVelocity) {
+                        get<2>(steering) = maxAngularVelocity;
+                }
+                return steering;
+        }
+
+        targetRotation = maxAngularVelocity;
+        if (rotationSize < slowRadius) {
+#ifdef DEBUG_LOOKWHEREYOUREGOING
+                cout << "LookWhereYoureGoing " << static_cast<void *>(this) << ": entre targetRadius y slowRadius" << endl;
+#endif
+                targetRotation *= rotationSize / slowRadius;
+        }
+#ifdef DEBUG_LOOKWHEREYOUREGOING
+        else {
+                cout << "LookWhereYoureGoing " << static_cast<void *>(this) << ": fuera de slowRadius" << endl;
+        }
+#endif
+        if (targetRotation < 0) targetRotation = 0;
+
+        get<2>(steering) = targetRotation * (rotation > 0 ? 1 : -1);
 
         return steering;
 }

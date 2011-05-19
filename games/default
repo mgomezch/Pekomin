@@ -19,8 +19,7 @@ npc {
         vel.z =  0;
 
         face {
-                class              = Face  ;
-                target             = player;
+                class              = LookWhereYoureGoing;
                 maxAngularVelocity = 0.001 ;
                 targetRadius       = 0.0   ;
                 slowRadius         = 0.5   ;

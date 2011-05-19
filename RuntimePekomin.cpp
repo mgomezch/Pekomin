@@ -3,7 +3,7 @@
 #include "gl.hpp"
 #include <GL/glut.h>
 
-#define DEBUG_RUNTIMEPEKOMIN
+//#define DEBUG_RUNTIMEPEKOMIN
 
 #ifdef DEBUG_RUNTIMEPEKOMIN
 #include <iostream>

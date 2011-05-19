@@ -299,17 +299,16 @@ void parse(char *s) {
                                 exit(EX_DATAERR);
                         }
 
-                        // Align(Mobile *character, Mobile *target, double maxAngularAcceleration, double maxRotation, double targetRadius, double slowRadius);
+                        // Align(Mobile *character, Mobile *target, double maxAngularVelocity, double targetRadius, double slowRadius);
                         if (class_s == string("Align")) {
                                 SET_CHARACTER();
                                 SET_TARGET();
-                                SET_DOUBLE(maxAngularAcceleration);
-                                SET_DOUBLE(maxRotation           );
-                                SET_DOUBLE(targetRadius          );
-                                SET_DOUBLE(slowRadius            );
+                                SET_DOUBLE(maxAngularVelocity);
+                                SET_DOUBLE(targetRadius      );
+                                SET_DOUBLE(slowRadius        );
 
                                 SET_P();
-                                p->addBehavior(new Align(character, target, maxAngularAcceleration, maxRotation, targetRadius, slowRadius));
+                                p->addBehavior(new Align(character, target, maxAngularVelocity, targetRadius, slowRadius));
                                 continue;
                         }
 
@@ -317,9 +316,9 @@ void parse(char *s) {
                         if (class_s == string("Arrive")) {
                                 SET_CHARACTER();
                                 SET_TARGET();
-                                SET_DOUBLE(maxSpeed       );
-                                SET_DOUBLE(targetRadius   );
-                                SET_DOUBLE(slowRadius     );
+                                SET_DOUBLE(maxSpeed    );
+                                SET_DOUBLE(targetRadius);
+                                SET_DOUBLE(slowRadius  );
 
                                 SET_P();
                                 p->addBehavior(new Arrive(character, target, maxSpeed, targetRadius, slowRadius));
@@ -350,15 +349,15 @@ void parse(char *s) {
                                 continue;
                         }
 
-                        // Flee(Mobile *character, Mobile *target, double maxAcceleration, double fleeRadius);
+                        // Flee(Mobile *character, Mobile *target, double maxSpeed, double fleeRadius);
                         if (class_s == string("Flee")) {
                                 SET_CHARACTER();
                                 SET_TARGET();
-                                SET_DOUBLE(maxAcceleration);
+                                SET_DOUBLE(maxSpeed);
                                 SET_DOUBLE(fleeRadius);
 
                                 SET_P();
-                                p->addBehavior(new Flee(character, target, maxAcceleration, fleeRadius));
+                                p->addBehavior(new Flee(character, target, maxSpeed, fleeRadius));
                                 continue;
                         }
 
@@ -407,16 +406,15 @@ void parse(char *s) {
                                 continue;
                         }
 
-                        // LookWhereYoureGoing(Mobile *character, double maxAngularAcceleration, double maxRotation, double targetRadius, double slowRadius);
+                        // LookWhereYoureGoing(Mobile *character, double maxAngularVelocity, double targetRadius, double slowRadius);
                         if (class_s == string("LookWhereYoureGoing")) {
                                 SET_CHARACTER();
-                                SET_DOUBLE(maxAngularAcceleration);
-                                SET_DOUBLE(maxRotation);
+                                SET_DOUBLE(maxAngularVelocity);
                                 SET_DOUBLE(targetRadius);
                                 SET_DOUBLE(slowRadius);
 
                                 SET_P();
-                                p->addBehavior(new LookWhereYoureGoing(character, maxAngularAcceleration, maxRotation, targetRadius, slowRadius));
+                                p->addBehavior(new LookWhereYoureGoing(character, maxAngularVelocity, targetRadius, slowRadius));
                                 continue;
                         }
 

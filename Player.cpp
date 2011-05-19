@@ -64,7 +64,7 @@ void Player::draw() {
                 glCallList(cubo);
                 glBegin(GL_LINES);
                         glVertex3f(0, 0, 0);
-                        glVertex3f(0, 2, 0);
+                        glVertex3f(2, 0, 0);
                 glEnd();
         glPopMatrix();
 #ifdef DEBUG_PLAYER
