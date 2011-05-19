@@ -6,6 +6,7 @@
 #include "Evade.hpp"
 #include "Face.hpp"
 #include "Flee.hpp"
+#include "Flock.hpp"
 #include "KinematicArrive.hpp"
 #include "KinematicFlee.hpp"
 #include "KinematicSeek.hpp"

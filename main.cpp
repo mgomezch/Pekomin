@@ -85,7 +85,107 @@ void initJuego() {
                 }
                 //player = NULL;
 
-                {
+		player = new Player(Triple(0, 0, 0), 0);
+		ents.push_back(player);
+
+		RuntimePekomin *p1 = new RuntimePekomin(Triple(10, 0, 0), 0);
+		RuntimePekomin *p2 = new RuntimePekomin(Triple(10, 4, 0), 0);
+		RuntimePekomin *p3 = new RuntimePekomin(Triple(10, 8, 0), 0);
+		RuntimePekomin *p4 = new RuntimePekomin(Triple(10, 12, 0), 0);
+		RuntimePekomin *p5 = new RuntimePekomin(Triple(10, 16, 0), 0);
+		RuntimePekomin *p6 = new RuntimePekomin(Triple(10, 20, 0), 0);
+
+		p1->addBehavior(new Seek(p1, player, 0.025));
+		p1->addBehavior(new Flee(p1, p2, 0.01, 3));
+		p1->addBehavior(new Flee(p1, p3, 0.01, 3));
+		p1->addBehavior(new Flee(p1, p4, 0.01, 3));
+		p1->addBehavior(new Flee(p1, p5, 0.01, 3));
+		p1->addBehavior(new Flee(p1, p6, 0.01, 3));
+		p1->addBehavior(new Flock(p1, 1, 2, 0.001));
+		dynamic_cast<Flock *>(p1->behaviors[6])->addBoid(p2);
+		dynamic_cast<Flock *>(p1->behaviors[6])->addBoid(p3);
+		dynamic_cast<Flock *>(p1->behaviors[6])->addBoid(p4);
+		dynamic_cast<Flock *>(p1->behaviors[6])->addBoid(p5);
+		dynamic_cast<Flock *>(p1->behaviors[6])->addBoid(p6);
+		p1->addBehavior(new LookWhereYoureGoing(p1, 0.1, 0.01, 5, 1));
+		ents.push_back(p1);
+
+		p2->addBehavior(new Seek(p2, player, 0.025));
+		p2->addBehavior(new Flee(p2, p1, 0.01, 3));
+		p2->addBehavior(new Flee(p2, p3, 0.01, 3));
+		p2->addBehavior(new Flee(p2, p4, 0.01, 3));
+		p2->addBehavior(new Flee(p2, p5, 0.01, 3));
+		p2->addBehavior(new Flee(p2, p6, 0.01, 3));
+		p2->addBehavior(new Flock(p2, 1, 2, 0.001));
+		dynamic_cast<Flock *>(p2->behaviors[6])->addBoid(p1);
+		dynamic_cast<Flock *>(p2->behaviors[6])->addBoid(p3);
+		dynamic_cast<Flock *>(p2->behaviors[6])->addBoid(p4);
+		dynamic_cast<Flock *>(p2->behaviors[6])->addBoid(p5);
+		dynamic_cast<Flock *>(p2->behaviors[6])->addBoid(p6);
+		p2->addBehavior(new LookWhereYoureGoing(p2, 0.1, 0.01, 5, 1));
+		ents.push_back(p2);
+
+		p3->addBehavior(new Seek(p3, player, 0.025));
+		p3->addBehavior(new Flee(p3, p1, 0.01, 3));
+		p3->addBehavior(new Flee(p3, p2, 0.01, 3));
+		p3->addBehavior(new Flee(p3, p4, 0.01, 3));
+		p3->addBehavior(new Flee(p3, p5, 0.01, 3));
+		p3->addBehavior(new Flee(p3, p6, 0.01, 3));
+		p3->addBehavior(new Flock(p3, 1, 2, 0.001));
+		dynamic_cast<Flock *>(p3->behaviors[6])->addBoid(p1);
+		dynamic_cast<Flock *>(p3->behaviors[6])->addBoid(p2);
+		dynamic_cast<Flock *>(p3->behaviors[6])->addBoid(p4);
+		dynamic_cast<Flock *>(p3->behaviors[6])->addBoid(p5);
+		dynamic_cast<Flock *>(p3->behaviors[6])->addBoid(p6);
+		p3->addBehavior(new LookWhereYoureGoing(p3, 0.1, 0.01, 5, 1));
+		ents.push_back(p3);
+
+		p4->addBehavior(new Seek(p4, player, 0.025));
+		p4->addBehavior(new Flee(p4, p1, 0.01, 3));
+		p4->addBehavior(new Flee(p4, p2, 0.01, 3));
+		p4->addBehavior(new Flee(p4, p3, 0.01, 3));
+		p4->addBehavior(new Flee(p4, p5, 0.01, 3));
+		p4->addBehavior(new Flee(p4, p6, 0.01, 3));
+		p4->addBehavior(new Flock(p4, 1, 2, 0.001));
+		dynamic_cast<Flock *>(p4->behaviors[6])->addBoid(p1);
+		dynamic_cast<Flock *>(p4->behaviors[6])->addBoid(p2);
+		dynamic_cast<Flock *>(p4->behaviors[6])->addBoid(p3);
+		dynamic_cast<Flock *>(p4->behaviors[6])->addBoid(p5);
+		dynamic_cast<Flock *>(p4->behaviors[6])->addBoid(p6);
+		p4->addBehavior(new LookWhereYoureGoing(p4, 0.1, 0.01, 5, 1));
+		ents.push_back(p4);
+	
+		p5->addBehavior(new Seek(p5, player, 0.025));
+		p5->addBehavior(new Flee(p5, p1, 0.01, 3));
+		p5->addBehavior(new Flee(p5, p2, 0.01, 3));
+		p5->addBehavior(new Flee(p5, p3, 0.01, 3));
+		p5->addBehavior(new Flee(p5, p4, 0.01, 3));
+		p5->addBehavior(new Flee(p5, p6, 0.01, 3));
+		p5->addBehavior(new Flock(p5, 1, 2, 0.001));
+		dynamic_cast<Flock *>(p5->behaviors[6])->addBoid(p1);
+		dynamic_cast<Flock *>(p5->behaviors[6])->addBoid(p2);
+		dynamic_cast<Flock *>(p5->behaviors[6])->addBoid(p3);
+		dynamic_cast<Flock *>(p5->behaviors[6])->addBoid(p4);
+		dynamic_cast<Flock *>(p5->behaviors[6])->addBoid(p6);
+		p5->addBehavior(new LookWhereYoureGoing(p5, 0.1, 0.01, 5, 1));
+		ents.push_back(p5);
+
+		p6->addBehavior(new Seek(p6, player, 0.025));
+		p6->addBehavior(new Flee(p6, p1, 0.01, 3));
+		p6->addBehavior(new Flee(p6, p2, 0.01, 3));
+		p6->addBehavior(new Flee(p6, p3, 0.01, 3));
+		p6->addBehavior(new Flee(p6, p4, 0.01, 3));
+		p6->addBehavior(new Flee(p6, p5, 0.01, 3));
+		p6->addBehavior(new Flock(p6, 1, 2, 0.001));
+		dynamic_cast<Flock *>(p6->behaviors[6])->addBoid(p1);
+		dynamic_cast<Flock *>(p6->behaviors[6])->addBoid(p2);
+		dynamic_cast<Flock *>(p6->behaviors[6])->addBoid(p3);
+		dynamic_cast<Flock *>(p6->behaviors[6])->addBoid(p4);
+		dynamic_cast<Flock *>(p6->behaviors[6])->addBoid(p5);
+		p6->addBehavior(new LookWhereYoureGoing(p6, 0.1, 0.01, 5, 1));
+		ents.push_back(p6);
+
+                /*{
                         char buf[BUFSIZE];
                         int pos = 0;
                         FILE *file;
@@ -114,7 +214,7 @@ void initJuego() {
                                 player = new Player();
                                 ents.push_back(player);
                         }
-                }
+                }*/
         }
 }
 
