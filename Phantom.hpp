@@ -12,6 +12,7 @@ class Phantom : public Actor {
                 Phantom();
                 ~Phantom();
 
+		void addBehavior(Behavior *b);
                 virtual void draw();
 };
 

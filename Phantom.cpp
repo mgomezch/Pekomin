@@ -24,7 +24,11 @@ Phantom::Phantom(Triple pos, double ang, Triple vel, double vang) {
         this->vrot = vrot;
 }
 
+void Phantom::addBehavior(Behavior *b) {
+	behaviors.push_back(b);
+}
+
 void Phantom::draw() {
-        glColor3ub(0, 255, 0);
+        glColor3ub(255, 0, 255);
         glCallList(cubo);
 }

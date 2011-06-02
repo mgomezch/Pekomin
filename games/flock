@@ -1,0 +1,311 @@
+player {
+        class = Player;
+        pos.x = 0     ;
+        pos.y = 0     ;
+        pos.z = 0     ;
+        ang   = 0     ;
+        vel.x = 0     ;
+        vel.y = 0     ;
+        vel.z = 0     ;
+        vrot  = 0     ;
+}
+
+manuel {
+        class = Phantom;
+	pos.x = 10     ; 
+	pos.y = 0      ;
+	Wander { 
+		class = Wander             ; 
+		character = manuel         ;
+		maxRotation = M_PI/3       ; 
+		targetRadius = 1           ; 
+		slowRadius = 2             ; 
+		wanderOffset = 1           ; 
+		wanderRadius = 5           ; 	
+		wanderRate =  1.2          ; 
+		wanderOrientation = M_PI/3 ;
+		maxAcceleration = 0.001
+	}
+}
+
+clau {
+	class = RuntimePekomin;
+        pos.x = 10            ;
+	pos.y = 4             ;
+        Seek { 
+		class = Seek           ;
+		target = manuel        ;
+		maxAcceleration = 0.001; 
+	}	
+        Flee_manuel { 
+		class = Flee    ; 
+		target = manuel ; 
+		maxSpeed = 0.001; 
+		fleeRadius = 5  ; 
+	}
+        Flee_sab { 
+		class = Flee    ; 
+		target = sab    ; 
+		maxSpeed = 0.001; 
+		fleeRadius = 5  ; 
+	}
+        Flee_mari { 
+		class = Flee    ; 
+		target = mari   ; 
+		maxSpeed = 0.001; 
+		fleeRadius = 5  ; 
+	}
+        Flee_kris { 
+		class = Flee    ; 
+		target = kris   ; 
+		maxSpeed = 0.001; 
+		fleeRadius = 5  ; 
+	}
+        Flee_dani { 
+		class = Flee    ; 
+		target = dani   ; 
+		maxSpeed = 0.001; 
+		fleeRadius = 5  ; 
+	}
+        Flee_fab { 
+		class = Flee    ; 
+		target =  fab   ; 
+		maxSpeed = 0.001; 
+		fleeRadius = 5  ; 
+	}
+}
+
+sab {
+	class = RuntimePekomin;
+        pos.x = 10            ;
+	pos.y = 8             ;
+        Seek { 
+		class = Seek           ;
+		target = manuel        ;
+		maxAcceleration = 0.001; 
+	}	
+        Flee_manuel { 
+		class = Flee    ; 
+		target = manuel ; 
+		maxSpeed = 0.001; 
+		fleeRadius = 5  ; 
+	}
+        Flee_clau { 
+		class = Flee    ; 
+		target = clau   ; 
+		maxSpeed = 0.001; 
+		fleeRadius = 5  ; 
+	}
+        Flee_mari { 
+		class = Flee    ; 
+		target = mari   ; 
+		maxSpeed = 0.001; 
+		fleeRadius = 5  ; 
+	}
+        Flee_kris { 
+		class = Flee    ; 
+		target = kris   ; 
+		maxSpeed = 0.001; 
+		fleeRadius = 5  ; 
+	}
+        Flee_dani { 
+		class = Flee    ; 
+		target = dani   ; 
+		maxSpeed = 0.001; 
+		fleeRadius = 5  ; 
+	}
+        Flee_fab { 
+		class = Flee    ; 
+		target =  fab   ; 
+		maxSpeed = 0.001; 
+		fleeRadius = 5  ; 
+	}
+}
+
+mari {
+	class = RuntimePekomin;
+        pos.x = 10            ;
+	pos.y = 12            ;
+        Seek { 
+		class = Seek           ;
+		target = manuel        ;
+		maxAcceleration = 0.001; 
+	}	
+        Flee_manuel { 
+		class = Flee    ; 
+		target = manuel ; 
+		maxSpeed = 0.001; 
+		fleeRadius = 5  ; 
+	}
+        Flee_clau { 
+		class = Flee    ; 
+		target = clau   ; 
+		maxSpeed = 0.001; 
+		fleeRadius = 5  ; 
+	}
+        Flee_sab { 
+		class = Flee    ; 
+		target = sab    ; 
+		maxSpeed = 0.001; 
+		fleeRadius = 5  ; 
+	}
+        Flee_kris { 
+		class = Flee    ; 
+		target = kris   ; 
+		maxSpeed = 0.001; 
+		fleeRadius = 5  ; 
+	}
+        Flee_dani { 
+		class = Flee    ; 
+		target = dani   ; 
+		maxSpeed = 0.001; 
+		fleeRadius = 5  ; 
+	}
+        Flee_fab { 
+		class = Flee    ; 
+		target =  fab   ; 
+		maxSpeed = 0.001; 
+		fleeRadius = 5  ; 
+	}
+}
+
+kris {
+	class = RuntimePekomin;
+        pos.x = 10            ;
+	pos.y = 16            ;
+        Seek { 
+		class = Seek           ;
+		target = manuel        ;
+		maxAcceleration = 0.001; 
+	}	
+        Flee_manuel { 
+		class = Flee    ; 
+		target = manuel ; 
+		maxSpeed = 0.001; 
+		fleeRadius = 5  ; 
+	}
+        Flee_clau { 
+		class = Flee    ; 
+		target = clau   ; 
+		maxSpeed = 0.001; 
+		fleeRadius = 5  ; 
+	}
+        Flee_sab { 
+		class = Flee    ; 
+		target = sab    ; 
+		maxSpeed = 0.001; 
+		fleeRadius = 5  ; 
+	}
+        Flee_mari { 
+		class = Flee    ; 
+		target = mari   ; 
+		maxSpeed = 0.001; 
+		fleeRadius = 5  ; 
+	}
+        Flee_dani { 
+		class = Flee    ; 
+		target = dani   ; 
+		maxSpeed = 0.001; 
+		fleeRadius = 5  ; 
+	}
+        Flee_fab { 
+		class = Flee    ; 
+		target =  fab   ; 
+		maxSpeed = 0.001; 
+		fleeRadius = 5  ; 
+	}
+}
+
+dani {
+	class = RuntimePekomin;
+        pos.x = 10            ;
+	pos.y = 20            ;
+        Seek { 
+		class = Seek           ;
+		target = manuel        ;
+		maxAcceleration = 0.001; 
+	}	
+        Flee_manuel { 
+		class = Flee    ; 
+		target = manuel ; 
+		maxSpeed = 0.001; 
+		fleeRadius = 5  ; 
+	}
+        Flee_clau { 
+		class = Flee    ; 
+		target = clau   ; 
+		maxSpeed = 0.001; 
+		fleeRadius = 5  ; 
+	}
+        Flee_sab { 
+		class = Flee    ; 
+		target = sab    ; 
+		maxSpeed = 0.001; 
+		fleeRadius = 5  ; 
+	}
+        Flee_mari { 
+		class = Flee    ; 
+		target = mari   ; 
+		maxSpeed = 0.001; 
+		fleeRadius = 5  ; 
+	}
+        Flee_kris { 
+		class = Flee    ; 
+		target = kris   ; 
+		maxSpeed = 0.001; 
+		fleeRadius = 5  ; 
+	}
+        Flee_fab { 
+		class = Flee    ; 
+		target =  fab   ; 
+		maxSpeed = 0.001; 
+		fleeRadius = 5  ; 
+	}
+}
+
+fab {
+	class = RuntimePekomin;
+        pos.x = 10            ;
+	pos.y = 24            ;
+        Seek { 
+		class = Seek           ;
+		target = manuel        ;
+		maxAcceleration = 0.001; 
+	}
+        Flee_manuel { 
+		class = Flee    ; 
+		target = manuel ; 
+		maxSpeed = 0.001; 
+		fleeRadius = 5  ; 
+	}
+        Flee_clau { 
+		class = Flee    ; 
+		target = clau   ; 
+		maxSpeed = 0.001; 
+		fleeRadius = 5  ; 
+	}
+        Flee_sab { 
+		class = Flee    ; 
+		target = sab    ; 
+		maxSpeed = 0.001; 
+		fleeRadius = 5  ; 
+	}
+        Flee_mari { 
+		class = Flee    ; 
+		target = mari   ; 
+		maxSpeed = 0.001; 
+		fleeRadius = 5  ; 
+	}
+        Flee_dani { 
+		class = Flee    ; 
+		target = dani   ; 
+		maxSpeed = 0.001; 
+		fleeRadius = 5  ; 
+	}
+        Flee_kris { 
+		class = Flee    ; 
+		target = kris   ; 
+		maxSpeed = 0.001; 
+		fleeRadius = 5  ; 
+	}
+}

@@ -467,7 +467,6 @@ void parse(char *s) {
                         // Wander(Mobile *character, Mobile *target, double maxAngularAcceleration, double maxRotation, double targetRadius, double slowRadius, double wanderOffset, double wanderRadius, double wanderRate, double wanderOrientation, double maxAcceleration);
                         if (class_s == string("Wander")) {
                                 SET_CHARACTER();
-                                SET_DOUBLE(maxAngularAcceleration);
                                 SET_DOUBLE(maxRotation);
                                 SET_DOUBLE(targetRadius);
                                 SET_DOUBLE(slowRadius);
@@ -478,7 +477,7 @@ void parse(char *s) {
                                 SET_DOUBLE(maxAcceleration);
 
                                 SET_P();
-                                p->addBehavior(new Wander(character, maxAngularAcceleration, maxRotation, targetRadius, slowRadius, wanderOffset, wanderRadius, wanderRate, wanderOrientation, maxAcceleration));
+                                p->addBehavior(new Wander(character, maxRotation, targetRadius, slowRadius, wanderOffset, wanderRadius, wanderRate, wanderOrientation, maxAcceleration));
                                 continue;
                         }
 

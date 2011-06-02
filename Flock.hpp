@@ -7,17 +7,19 @@
 
 class Flock : public Kinematic {
 	public:
-		Mobile* character;
-		Mobile* target;
-		vector<Mobile*> boids;	
-		double targetRadius;
-		double slowRadius;
+		Mobile* character     ;
+		Mobile* target        ;
+		vector<Mobile*> boids ;	
+		double targetRadius   ;
+		double slowRadius     ;
+		double flockRadius    ;
 		double maxAcceleration;
-		unsigned int accum;
+		unsigned int accum    ;
 
 		Flock(Mobile *character     ,
 		      double targetRadius   ,
 		      double slowRadius     ,
+		      double flockRadius    ,
 		      double maxAcceleration);
 
 		virtual tuple<bool, Triple, double> getVelIncr(unsigned int ticks);
