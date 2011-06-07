@@ -13,6 +13,7 @@
 #include "Mobile.hpp"
 #include "parse.hpp"
 #include "Player.hpp"
+#include "Phantom.hpp"
 #include "RuntimePekomin.hpp"
 
 #define DEBUG_PARSE
@@ -242,16 +243,23 @@ void parse_r(char *s, int chars) {
                         cout << "parse: leaving ent " << name_s << endl;
 #endif
 
-        if (name_s == "player") {
-                if (player != NULL) {
-                        cerr << "parse error: player already defined" << endl;
-                        exit(EX_DATAERR);
-                }
-                ent = player = new Player();
+        it = fields.find(string("class"));
+        if (it == fields.end()) {
+                cerr << "parse error reading ent " << name_s << ": class attribute not specified" << endl;
+                exit(EX_DATAERR);
         } else {
-                ent = new RuntimePekomin();
+                if (it->second == string("Player")) {
+                        if (player != NULL) {
+                                cerr << "parse error: player already defined" << endl;
+                                exit(EX_DATAERR);
+                        }
+                        ent = player = new Player();
+                }
+                else if (it->second == string("Phantom"       )) ent = new Phantom()       ;
+                else if (it->second == string("RuntimePekomin")) ent = new RuntimePekomin();
+
+                ents.push_back(ent);
         }
-        ents.push_back(ent);
 
         SET_ENT_FIELD_DOUBLE(pos.x);
         SET_ENT_FIELD_DOUBLE(pos.y);
@@ -464,21 +472,20 @@ void parse(char *s) {
                                 continue;
                         }
 
-                        // Wander(Mobile *character, Mobile *target, double maxAngularAcceleration, double maxRotation, double targetRadius, double slowRadius, double wanderOffset, double wanderRadius, double wanderRate, double wanderOrientation, double maxAcceleration);
+                        // Wander(Mobile *character, Mobile *target, double maxAngularAcceleration, double maxRotation, double targetRadius, double slowRadius, double wanderOffset, double wanderRadius, double wanderRate, double wanderTime, double maxAcceleration);
                         if (class_s == string("Wander")) {
                                 SET_CHARACTER();
-                                SET_DOUBLE(maxAngularAcceleration);
                                 SET_DOUBLE(maxRotation);
                                 SET_DOUBLE(targetRadius);
                                 SET_DOUBLE(slowRadius);
                                 SET_DOUBLE(wanderOffset);
                                 SET_DOUBLE(wanderRadius);
                                 SET_DOUBLE(wanderRate);
-                                SET_DOUBLE(wanderOrientation);
+                                SET_DOUBLE(wanderTime);
                                 SET_DOUBLE(maxAcceleration);
 
                                 SET_P();
-                                p->addBehavior(new Wander(character, maxAngularAcceleration, maxRotation, targetRadius, slowRadius, wanderOffset, wanderRadius, wanderRate, wanderOrientation, maxAcceleration));
+                                p->addBehavior(new Wander(character, maxRotation, targetRadius, slowRadius, wanderOffset, wanderRadius, wanderRate, wanderTime, maxAcceleration));
                                 continue;
                         }
 
