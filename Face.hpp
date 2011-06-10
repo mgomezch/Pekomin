@@ -1,13 +1,13 @@
 #ifndef _FACE_HPP
 #define _FACE_HPP
 
-#include "Kinematic.hpp"
+#include "KinematicA.hpp"
 
 using namespace std;
 
 class Mobile;
 
-class Face : public Kinematic {
+class Face : public KinematicA {
         public:
                 Mobile *character;
                 Mobile *target;
@@ -17,7 +17,7 @@ class Face : public Kinematic {
 
                 Face(Mobile *character, Mobile *target, double maxAngularVelocity, double targetRadius, double slowRadius);
 
-                virtual tuple<bool, Triple, double> getVelIncr(unsigned int ticks);
+                virtual pair<bool, double> getAngVelIncr(unsigned int ticks);
 };
 
 #endif

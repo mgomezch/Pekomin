@@ -18,13 +18,13 @@ Align::Align(Mobile *character, Mobile *target, double maxAngularVelocity, doubl
         this->slowRadius         = slowRadius;
 }
 
-tuple<bool, Triple, double> Align::getVelIncr(unsigned int ticks) {
-        tuple<bool, Triple, double> steering;
+pair<bool, double> Align::getAngVelIncr(unsigned int ticks) {
+        pair<bool, double> steering;
         double rotation, rotationSize, targetRotation;
         Triple direction;
 
-        get<0>(steering) = true;
-        get<1>(steering) = 0;
+        steering.first  = true;
+        steering.second = 0;
 
         rotation = mapToRange(target->ang) - mapToRange(character->ang);
         if (rotation > M_PI) rotation -= 2 * M_PI;
@@ -34,9 +34,9 @@ tuple<bool, Triple, double> Align::getVelIncr(unsigned int ticks) {
 #ifdef DEBUG_ALIGN
                 cout << "Align " << static_cast<void *>(this) << ": dentro de targetRadius" << endl;
 #endif
-                get<2>(steering) = target->vrot - character->vrot;
-                if (abs(get<2>(steering)) > maxAngularVelocity) {
-                        get<2>(steering) = maxAngularVelocity;
+                steering.second = target->vrot - character->vrot;
+                if (abs(steering.second) > maxAngularVelocity) {
+                        steering.second = maxAngularVelocity;
                 }
                 return steering;
         }
@@ -55,7 +55,7 @@ tuple<bool, Triple, double> Align::getVelIncr(unsigned int ticks) {
 #endif
         if (targetRotation < 0) targetRotation = 0;
 
-        get<2>(steering) = targetRotation * (rotation > 0 ? 1 : -1);
+        steering.second = targetRotation * (rotation > 0 ? 1 : -1);
 
         return steering;
 }

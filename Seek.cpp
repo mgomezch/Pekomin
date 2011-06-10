@@ -7,14 +7,13 @@ Seek::Seek(Mobile *character, Mobile *target, double maxAcceleration) {
         this->maxAcceleration = maxAcceleration;
 }
 
-tuple<bool, Triple, double> Seek::getVelIncr(unsigned int ticks) {
-        tuple<bool, Triple, double> steering;
+pair<bool, Triple> Seek::getVelIncr(unsigned int ticks) {
+        pair<bool, Triple> steering;
 
-        get<0>(steering) = true;
-        get<1>(steering) = target->pos - character->pos;
-        get<1>(steering).normalize();
-        get<1>(steering) *= maxAcceleration;
-        get<2>(steering) = 0;
+        steering.first = true;
+        steering.second = target->pos - character->pos;
+        steering.second.normalize();
+        steering.second *= maxAcceleration;
 
         return steering;
 }

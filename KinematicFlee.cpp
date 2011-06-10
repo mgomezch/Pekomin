@@ -8,18 +8,17 @@ KinematicFlee::KinematicFlee(Ent *character_, Ent *target_, double maxSpeed_) {
 }
 
 // Retorna incrementos de velocidad y rotación
-tuple<bool, Triple, double> KinematicFlee::getVelIncr(unsigned int ticks) {
-        tuple<bool, Triple, double> steering;
+pair<bool, Triple> KinematicFlee::getVelIncr(unsigned int ticks) {
+        pair<bool, Triple> steering;
 
-        get<1>(steering) = character->pos - target->pos;
-        if (get<1>(steering).length() < 3) {
-                get<0>(steering) = true;
-                get<1>(steering).normalize();
-                get<1>(steering) *= maxSpeed;
-                get<2>(steering) = 0;
+        steering.second = character->pos - target->pos;
+        if (steering.second.length() < 3) {
+                steering.first = true;
+                steering.second.normalize();
+                steering.second *= maxSpeed;
         }
         else {
-                get<0>(steering) = false;
+                steering.first = false;
         }
 
         return steering;

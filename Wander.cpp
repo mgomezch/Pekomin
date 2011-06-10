@@ -29,12 +29,12 @@ Wander::Wander(Mobile *character  ,
         target->pos = character->pos + target->orientation() * wanderRadius;
 }
 
-tuple<bool, Triple, double> Wander::getVelIncr(unsigned int ticks) {
-        tuple<bool, Triple, double> steering;
+pair<bool, Triple> Wander::getVelIncr(unsigned int ticks) {
+        pair<bool, Triple> steering;
         Triple direction;
         double distance, targetSpeed;
 
-        get<0>(steering) = true;
+        steering.first = true;
 
         direction = target->pos - character->pos;
         distance = direction.length();
@@ -49,10 +49,10 @@ tuple<bool, Triple, double> Wander::getVelIncr(unsigned int ticks) {
                         accum = 0;
                 }
 
-                get<1>(steering) = target->vel - character->vel;
-                if (get<1>(steering).length() > maxSpeed) {
-                        get<1>(steering).normalized();
-                        get<1>(steering) *= maxSpeed;
+                steering.second = target->vel - character->vel;
+                if (steering.second.length() > maxSpeed) {
+                        steering.second.normalized();
+                        steering.second *= maxSpeed;
                 }
                 return steering;
         }
@@ -64,6 +64,6 @@ tuple<bool, Triple, double> Wander::getVelIncr(unsigned int ticks) {
         if (targetSpeed < 0) targetSpeed = 0;
         if (targetSpeed > maxSpeed) targetSpeed = maxSpeed;
 
-        get<1>(steering) = direction.normalized() * targetSpeed;
+        steering.second = direction.normalized() * targetSpeed;
         return steering;
 }

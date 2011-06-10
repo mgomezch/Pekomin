@@ -11,17 +11,18 @@ Separation::Separation(Mobile *character, Mobile *target, double threshold, doub
         this->maxAcceleration  = maxAcceleration;
 }
 
-tuple<bool, Triple, double> Separation::getVelIncr(unsigned int ticks) {
-        tuple<bool, Triple, double> steering;
+pair<bool, Triple> Separation::getVelIncr(unsigned int ticks) {
+        pair<bool, Triple> steering;
         double distance, strength;
 
-        get<1>(steering) = target->pos - character->pos;
-        distance = get<1>(steering).length();
+        steering.first = true;
+        steering.second = target->pos - character->pos;
+        distance = steering.second.length();
 
         if (distance < threshold) {
                 strength = MIN(decayCoefficient / (distance * distance), maxAcceleration);
-                get<1>(steering).normalize();
-                get<1>(steering) *= strength;
+                steering.second.normalize();
+                steering.second *= strength;
         }
 
         return steering;

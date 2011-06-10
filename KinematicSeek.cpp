@@ -7,13 +7,13 @@ KinematicSeek::KinematicSeek(Ent *character, Ent *target, double maxSpeed) {
         this->maxSpeed  = maxSpeed ;
 }
 
-tuple<bool, Triple, double> KinematicSeek::getVelIncr(unsigned int ticks) {
-        tuple<bool, Triple, double> steering;
-        get<0>(steering) = true;
-        get<1>(steering) = target->pos - character->pos;
-        get<1>(steering).normalize();
-        get<1>(steering) *= maxSpeed;
-        //get<2>(steering) = getNewOrientation(character->ang, get<1>(steering));
+pair<bool, Triple> KinematicSeek::getVelIncr(unsigned int ticks) {
+        pair<bool, Triple> steering;
+        steering.first = true;
+        steering.second = target->pos - character->pos;
+        steering.second.normalize();
+        steering.second *= maxSpeed;
+        //steering.second = getNewOrientation(character->ang, steering.second);
 
         return steering;
 }

@@ -1,13 +1,13 @@
 #ifndef _EVADE_HPP
 #define _EVADE_HPP
 
-#include "Kinematic.hpp"
+#include "KinematicV.hpp"
 
 using namespace std;
 
 class Mobile;
 
-class Evade : public Kinematic {
+class Evade : public KinematicV {
         public:
                 Mobile *character;
                 Mobile *target;
@@ -16,7 +16,7 @@ class Evade : public Kinematic {
 
                 Evade(Mobile *character, Mobile *target, double maxAcceleration);
 
-                virtual tuple<bool, Triple, double> getVelIncr(unsigned int ticks);
+                virtual pair<bool, Triple> getVelIncr(unsigned int ticks);
 };
 
 #endif

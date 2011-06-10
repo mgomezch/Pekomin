@@ -1,13 +1,13 @@
 #ifndef _KINEMATICFLEE_HPP
 #define _KINEMATICFLEE_HPP
 
-#include "Kinematic.hpp"
+#include "KinematicV.hpp"
 
 using namespace std;
 
 class Ent;
 
-class KinematicFlee : public Kinematic {
+class KinematicFlee : public KinematicV {
         public:
                 Ent *character;
                 Ent *target;
@@ -15,7 +15,7 @@ class KinematicFlee : public Kinematic {
 
                 KinematicFlee(Ent *character, Ent *target, double maxSpeed);
 
-                virtual tuple<bool, Triple, double> getVelIncr(unsigned int ticks);
+                virtual pair<bool, Triple> getVelIncr(unsigned int ticks);
 };
 
 #endif

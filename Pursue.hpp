@@ -1,13 +1,13 @@
 #ifndef _PURSUE_HPP
 #define _PURSUE_HPP
 
-#include "Kinematic.hpp"
+#include "KinematicV.hpp"
 
 using namespace std;
 
 class Mobile;
 
-class Pursue : public Kinematic {
+class Pursue : public KinematicV {
         public:
                 Mobile *character;
                 Mobile *target;
@@ -16,7 +16,7 @@ class Pursue : public Kinematic {
 
                 Pursue(Mobile *character, Mobile *target, double maxAcceleration);
 
-                virtual tuple<bool, Triple, double> getVelIncr(unsigned int ticks);
+                virtual pair<bool, Triple> getVelIncr(unsigned int ticks);
 };
 
 #endif

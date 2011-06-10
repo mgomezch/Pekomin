@@ -15,8 +15,8 @@ Flock::Flock(Mobile *character     ,
         this->accum           = 0              ;
 }
 
-tuple<bool, Triple, double> Flock::getVelIncr(unsigned int ticks) {
-        tuple<bool, Triple, double> steering;
+pair<bool, Triple> Flock::getVelIncr(unsigned int ticks) {
+        pair<bool, Triple> steering;
         Triple direction;
         int tam = 0;
         double distance, targetSpeed;
@@ -32,20 +32,22 @@ tuple<bool, Triple, double> Flock::getVelIncr(unsigned int ticks) {
         //}
         //if (this->accum++ == 3000) this->accum = 0;
 
-        /*get<0>(steering) = true;
-        get<1>(steering) = target->pos - character->pos;
-        if (get<1>(steering).length() > 0.001) {
-                get<1>(steering).normalized();
-                get<1>(steering) *= maxAcceleration;
+        /*steering.first = true;
+        steering.second = target->pos - character->pos;
+        if (steering.second.length() > 0.001) {
+                steering.second.normalized();
+                steering.second *= maxAcceleration;
         }*/
 
+        // TODO: distance
         direction = target->pos - character->pos;
         distance = direction.length();
+
         if (distance < targetRadius) {
-                get<1>(steering) = target->vel - character->vel;
-                if (get<1>(steering).length() > maxAcceleration) {
-                        get<1>(steering).normalized();
-                        get<1>(steering) *= maxAcceleration;
+                steering.second = target->vel - character->vel;
+                if (steering.second.length() > maxAcceleration) {
+                        steering.second.normalized();
+                        steering.second *= maxAcceleration;
                 }
                 return steering;
         }
@@ -57,7 +59,7 @@ tuple<bool, Triple, double> Flock::getVelIncr(unsigned int ticks) {
         if (targetSpeed < 0) targetSpeed = 0;
         if (targetSpeed > maxAcceleration) targetSpeed = maxAcceleration;
 
-        get<1>(steering) = direction.normalized() * targetSpeed;
+        steering.second = direction.normalized() * targetSpeed;
 
         return steering;
 }

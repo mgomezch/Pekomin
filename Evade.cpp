@@ -7,8 +7,8 @@ Evade::Evade(Mobile *character, Mobile *target, double maxAcceleration) {
         this->maxAcceleration = maxAcceleration;
 }
 
-tuple<bool, Triple, double> Evade::getVelIncr(unsigned int ticks) {
-        tuple<bool, Triple, double> steering;
+pair<bool, Triple> Evade::getVelIncr(unsigned int ticks) {
+        pair<bool, Triple> steering;
         Triple direction;
         double distance, speed, prediction;
 
@@ -22,12 +22,11 @@ tuple<bool, Triple, double> Evade::getVelIncr(unsigned int ticks) {
                 prediction = distance / speed;
         }
 
-        get<0>(steering) = true;
-        get<2>(steering) = 0;
+        steering.first = true;
 
-        get<1>(steering) = direction * prediction;
-        get<1>(steering).normalize();
-        get<1>(steering) *= maxAcceleration;
+        steering.second = direction * prediction;
+        steering.second.normalize();
+        steering.second *= maxAcceleration;
 
         return steering;
 }

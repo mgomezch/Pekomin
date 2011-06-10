@@ -17,17 +17,16 @@ LookWhereYoureGoing::LookWhereYoureGoing(Mobile *character, double maxAngularVel
         this->slowRadius         = slowRadius;
 }
 
-tuple<bool, Triple, double> LookWhereYoureGoing::getVelIncr(unsigned int ticks) {
-        tuple<bool, Triple, double> steering;
+pair<bool, double> LookWhereYoureGoing::getAngVelIncr(unsigned int ticks) {
+        pair<bool, double> steering;
         double rotation, rotationSize, targetRotation;
         Triple direction;
 
-        get<0>(steering) = true;
-        get<1>(steering) = 0;
+        steering.first = true;
 
         direction = character->vel;
         if (direction.length() == 0) {
-                get<0>(steering) = false;
+                steering.first = false;
                 return steering;
         }
         rotation = mapToRange(atan2(direction.y, direction.x)) - mapToRange(character->ang);
@@ -38,9 +37,9 @@ tuple<bool, Triple, double> LookWhereYoureGoing::getVelIncr(unsigned int ticks) 
 #ifdef DEBUG_LOOKWHEREYOUREGOING
                 cout << "LookWhereYoureGoing " << static_cast<void *>(this) << ": dentro de targetRadius" << endl;
 #endif
-                get<2>(steering) = -character->vrot;
-                if (abs(get<2>(steering)) > maxAngularVelocity) {
-                        get<2>(steering) = maxAngularVelocity;
+                steering.second = -character->vrot;
+                if (abs(steering.second) > maxAngularVelocity) {
+                        steering.second = maxAngularVelocity;
                 }
                 return steering;
         }
@@ -59,7 +58,7 @@ tuple<bool, Triple, double> LookWhereYoureGoing::getVelIncr(unsigned int ticks) 
 #endif
         if (targetRotation < 0) targetRotation = 0;
 
-        get<2>(steering) = targetRotation * (rotation > 0 ? 1 : -1);
+        steering.second = targetRotation * (rotation > 0 ? 1 : -1);
 
         return steering;
 }

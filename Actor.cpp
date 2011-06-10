@@ -1,3 +1,5 @@
+#include <utility>
+
 #include "Actor.hpp"
 #include "util.hpp"
 
@@ -13,165 +15,208 @@ using namespace std;
 void Actor::update(unsigned int ticks) {
         unsigned int i;
 
-        DirectStatic    *b_directstatic   ;
-        Static          *b_static         ;
-        DirectKinematic *b_directkinematic;
-        Kinematic       *b_kinematic      ;
-        Dynamic         *b_dynamic        ;
+        DirectStaticV    *p_v_directstatic   ;
+        StaticV          *p_v_static         ;
+        DirectKinematicV *p_v_directkinematic;
+        KinematicV       *p_v_kinematic      ;
+        DynamicV         *p_v_dynamic        ;
 
-        vector<tuple<bool, Triple, double> > v_directstatic,
-                                                  v_static,
-                                                  v_directkinematic,
-                                                  v_kinematic,
-                                                  v_dynamic;
+        DirectStaticA    *p_a_directstatic   ;
+        StaticA          *p_a_static         ;
+        DirectKinematicA *p_a_directkinematic;
+        KinematicA       *p_a_kinematic      ;
+        DynamicA         *p_a_dynamic        ;
 
-        Triple sum_directstatic_t    = Triple(0, 0, 0),
-               sum_static_t          = Triple(0, 0, 0),
-               sum_directkinematic_t = Triple(0, 0, 0),
-               sum_kinematic_t       = Triple(0, 0, 0),
-               sum_dynamic_t         = Triple(0, 0, 0);
+        vector<Triple> v_directstatic   ,
+                       v_static         ,
+                       v_directkinematic,
+                       v_kinematic      ,
+                       v_dynamic        ;
 
-        double sum_directstatic_d    = 0,
-               sum_static_d          = 0,
-               sum_directkinematic_d = 0,
-               sum_kinematic_d       = 0,
-               sum_dynamic_d         = 0;
+        vector<double> a_directstatic   ,
+                       a_static         ,
+                       a_directkinematic,
+                       a_kinematic      ,
+                       a_dynamic        ;
 
-        tuple<bool, Triple, double> steering;
+        Triple sum_v_directstatic    = Triple(0, 0, 0),
+               sum_v_static          = Triple(0, 0, 0),
+               sum_v_directkinematic = Triple(0, 0, 0),
+               sum_v_kinematic       = Triple(0, 0, 0),
+               sum_v_dynamic         = Triple(0, 0, 0);
 
-        unsigned int n_directstatic    = 0,
-                     n_static          = 0,
-                     n_directkinematic = 0,
-                     n_kinematic       = 0,
-                     n_dynamic         = 0;
+        double sum_a_directstatic    = 0,
+               sum_a_static          = 0,
+               sum_a_directkinematic = 0,
+               sum_a_kinematic       = 0,
+               sum_a_dynamic         = 0;
+
+        pair<bool, Triple> v_steering;
+        pair<bool, double> a_steering;
+
+        unsigned int n_v_directstatic    = 0,
+                     n_v_static          = 0,
+                     n_v_directkinematic = 0,
+                     n_v_kinematic       = 0,
+                     n_v_dynamic         = 0,
+                     n_a_directstatic    = 0,
+                     n_a_static          = 0,
+                     n_a_directkinematic = 0,
+                     n_a_kinematic       = 0,
+                     n_a_dynamic         = 0;
 
         this->ang = mapToRange(this->ang);
 
         for (i = 0; i < behaviors.size(); i++) {
-                if ((b_directstatic = dynamic_cast<DirectStatic *>(behaviors[i])) != NULL) {
-#ifdef DEBUG_ACTOR
-                        printf("actor %p: behavior %d is direct static\n", this, i);
-#endif
-                        steering = b_directstatic->getPos(ticks);
-                        if (get<0>(steering)) {
-                                n_directstatic++;
-                                v_directstatic.push_back(steering);
+                if ((p_v_directstatic = dynamic_cast<DirectStaticV *>(behaviors[i])) != NULL) {
+                        v_steering = p_v_directstatic->getPos(ticks);
+                        if (v_steering.first) {
+                                n_v_directstatic++;
+                                v_directstatic.push_back(v_steering.second);
                         }
-#ifdef DEBUG_ACTOR
-                        printf("actor %p: behavior %d: steering: <%s, ", this, i, get<0>(steering) ? "true" : "false");
-                        get<1>(steering).print();
-                        printf(", %f>\n", get<2>(steering));
-#endif
                 }
-                if ((b_static = dynamic_cast<Static *>(behaviors[i])) != NULL) {
-#ifdef DEBUG_ACTOR
-                        printf("actor %p: behavior %d is static\n", this, i); // DEBUG_ACTOR
-#endif
-                        steering = b_static->getPosIncr(ticks);
-                        if (get<0>(steering)) {
-                                n_static++;
-                                v_static.push_back(steering);
+                if ((p_v_static = dynamic_cast<StaticV *>(behaviors[i])) != NULL) {
+                        v_steering = p_v_static->getPosIncr(ticks);
+                        if (v_steering.first) {
+                                n_v_static++;
+                                v_static.push_back(v_steering.second);
                         }
-#ifdef DEBUG_ACTOR
-                        printf("actor %p: behavior %d: steering: <%s, ", this, i, get<0>(steering) ? "true" : "false");
-                        get<1>(steering).print();
-                        printf(", %f>\n", get<2>(steering));
-#endif
                 }
-                if ((b_directkinematic = dynamic_cast<DirectKinematic *>(behaviors[i])) != NULL) {
-#ifdef DEBUG_ACTOR
-                        printf("actor %p: behavior %d is direct kinematic\n", this, i); // DEBUG_ACTOR
-#endif
-                        steering = b_directkinematic->getVel(ticks);
-                        if (get<0>(steering)) {
-                                n_directkinematic++;
-                                v_directkinematic.push_back(steering);
+                if ((p_v_directkinematic = dynamic_cast<DirectKinematicV *>(behaviors[i])) != NULL) {
+                        v_steering = p_v_directkinematic->getVel(ticks);
+                        if (v_steering.first) {
+                                n_v_directkinematic++;
+                                v_directkinematic.push_back(v_steering.second);
                         }
-#ifdef DEBUG_ACTOR
-                        printf("actor %p: behavior %d: steering: <%s, ", this, i, get<0>(steering) ? "true" : "false");
-                        get<1>(steering).print();
-                        printf(", %f>\n", get<2>(steering));
-#endif
                 }
-                if ((b_kinematic = dynamic_cast<Kinematic *>(behaviors[i])) != NULL) {
-#ifdef DEBUG_ACTOR
-                        printf("actor %p: behavior %d is kinematic\n", this, i); // DEBUG_ACTOR
-#endif
-                        steering = b_kinematic->getVelIncr(ticks);
-                        if (get<0>(steering)) {
-                                n_kinematic++;
-                                v_kinematic.push_back(steering);
+                if ((p_v_kinematic = dynamic_cast<KinematicV *>(behaviors[i])) != NULL) {
+                        v_steering = p_v_kinematic->getVelIncr(ticks);
+                        if (v_steering.first) {
+                                n_v_kinematic++;
+                                v_kinematic.push_back(v_steering.second);
                         }
-#ifdef DEBUG_ACTOR
-                        printf("actor %p: behavior %d: steering: <%s, ", this, i, get<0>(steering) ? "true" : "false");
-                        get<1>(steering).print();
-                        printf(", %f>\n", get<2>(steering));
-#endif
                 }
-                if ((b_dynamic = dynamic_cast<Dynamic *>(behaviors[i])) != NULL) {
-#ifdef DEBUG_ACTOR
-                        printf("actor %p: behavior %d: dynamic\n", this, i); // DEBUG_ACTOR
-#endif
-                        steering = b_dynamic->getForce(ticks);
-                        if (get<0>(steering)) {
-                                n_dynamic++;
-                                v_dynamic.push_back(steering);
+                if ((p_v_dynamic = dynamic_cast<DynamicV *>(behaviors[i])) != NULL) {
+                        v_steering = p_v_dynamic->getForce(ticks);
+                        if (v_steering.first) {
+                                n_v_dynamic++;
+                                v_dynamic.push_back(v_steering.second);
                         }
-#ifdef DEBUG_ACTOR
-                        printf("actor %p: behavior %d: steering: <%s, ", this, i, get<0>(steering) ? "true" : "false");
-                        get<1>(steering).print();
-                        printf(", %f>\n", get<2>(steering));
-#endif
+                }
+
+                if ((p_a_directstatic = dynamic_cast<DirectStaticA *>(behaviors[i])) != NULL) {
+                        a_steering = p_a_directstatic->getAng(ticks);
+                        if (a_steering.first) {
+                                n_v_directstatic++;
+                                a_directstatic.push_back(a_steering.second);
+                        }
+                }
+                if ((p_a_static = dynamic_cast<StaticA *>(behaviors[i])) != NULL) {
+                        a_steering = p_a_static->getAngIncr(ticks);
+                        if (a_steering.first) {
+                                n_v_static++;
+                                a_static.push_back(a_steering.second);
+                        }
+                }
+                if ((p_a_directkinematic = dynamic_cast<DirectKinematicA *>(behaviors[i])) != NULL) {
+                        a_steering = p_a_directkinematic->getAngVel(ticks);
+                        if (a_steering.first) {
+                                n_v_directkinematic++;
+                                a_directkinematic.push_back(a_steering.second);
+                        }
+                }
+                if ((p_a_kinematic = dynamic_cast<KinematicA *>(behaviors[i])) != NULL) {
+                        a_steering = p_a_kinematic->getAngVelIncr(ticks);
+                        if (a_steering.first) {
+                                n_v_kinematic++;
+                                a_kinematic.push_back(a_steering.second);
+                        }
+                }
+                if ((p_a_dynamic = dynamic_cast<DynamicA *>(behaviors[i])) != NULL) {
+                        a_steering = p_a_dynamic->getTorque(ticks);
+                        if (a_steering.first) {
+                                n_v_dynamic++;
+                                a_dynamic.push_back(a_steering.second);
+                        }
                 }
         }
 
-        if (n_directstatic) {
-                for (i = 0; i < n_directstatic; i++) {
-                        sum_directstatic_t += get<1>(v_directstatic[i]);
-                        sum_directstatic_d += get<2>(v_directstatic[i]);
+        if (n_v_directstatic) {
+                for (i = 0; i < n_v_directstatic; i++) {
+                        sum_v_directstatic += v_directstatic[i];
                 }
                 // NOTA: se SUSTITUYE la posición actual
-                this->pos = sum_directstatic_t / n_directstatic;
-                this->ang = sum_directstatic_d / n_directstatic;
+                this->pos = sum_v_directstatic / n_v_directstatic;
         }
 
-        if (n_directkinematic) {
-                for (i = 0; i < n_directkinematic; i++) {
-                        sum_directkinematic_t += get<1>(v_directkinematic[i]);
-                        sum_directkinematic_d += get<2>(v_directkinematic[i]);
+        if (n_v_directkinematic) {
+                for (i = 0; i < n_v_directkinematic; i++) {
+                        sum_v_directkinematic += v_directkinematic[i];
                 }
                 // NOTA: se SUSTITUYE la velocidad actual
-                this->vel  = sum_directkinematic_t;
-                this->vrot = sum_directkinematic_d;
+                this->vel  = sum_v_directkinematic;
         }
 
-        if (n_dynamic) {
-                for (i = 0; i < n_dynamic; i++) {
-                        sum_dynamic_t += get<1>(v_dynamic[i]);
-                        sum_dynamic_d += get<2>(v_dynamic[i]);
+        if (n_v_dynamic) {
+                for (i = 0; i < n_v_dynamic; i++) {
+                        sum_v_dynamic += v_dynamic[i];
                 }
                 // Δv = t * ΣF / m
                 // TODO: mass
-                this->vel  += sum_dynamic_t * (double)ticks;
-                this->vrot += sum_dynamic_d *         ticks;
+                this->vel  += sum_v_dynamic * (double)ticks;
         }
 
-        if (n_kinematic) {
-                for (i = 0; i < n_kinematic; i++) {
-                        sum_kinematic_t += get<1>(v_kinematic[i]);
-                        sum_kinematic_d += get<2>(v_kinematic[i]);
+        if (n_v_kinematic) {
+                for (i = 0; i < n_v_kinematic; i++) {
+                        sum_v_kinematic += v_kinematic[i];
                 }
-                this->vel  += sum_kinematic_t;
-                this->vrot += sum_kinematic_d;
+                this->vel  += sum_v_kinematic;
         }
 
-        if (n_static) {
-                for (i = 0; i < n_static; i++) {
-                        sum_static_t += get<1>(v_static[i]);
-                        sum_static_d += get<2>(v_static[i]);
+        if (n_v_static) {
+                for (i = 0; i < n_v_static; i++) {
+                        sum_v_static += v_static[i];
                 }
-                this->pos += sum_static_t;
-                this->ang += sum_static_d;
+                this->pos += sum_v_static;
+        }
+
+        if (n_a_directstatic) {
+                for (i = 0; i < n_a_directstatic; i++) {
+                        sum_a_directstatic += a_directstatic[i];
+                }
+                // NOTA: se SUSTITUYE el ángulo actual
+                this->ang = sum_a_directstatic / n_a_directstatic;
+        }
+
+        if (n_a_directkinematic) {
+                for (i = 0; i < n_a_directkinematic; i++) {
+                        sum_a_directkinematic += a_directkinematic[i];
+                }
+                // NOTA: se SUSTITUYE la velocidad angular actual
+                this->vrot = sum_a_directkinematic;
+        }
+
+        if (n_a_dynamic) {
+                for (i = 0; i < n_a_dynamic; i++) {
+                        sum_a_dynamic += a_dynamic[i];
+                }
+                // Δw = t * ΣT / I
+                // TODO: mass
+                this->vrot += sum_a_dynamic * ticks;
+        }
+
+        if (n_a_kinematic) {
+                for (i = 0; i < n_a_kinematic; i++) {
+                        sum_a_kinematic += a_kinematic[i];
+                }
+                this->vrot += sum_a_kinematic;
+        }
+
+        if (n_a_static) {
+                for (i = 0; i < n_a_static; i++) {
+                        sum_a_static += a_static[i];
+                }
+                this->ang += sum_a_static;
         }
 
 #ifdef DEBUG_ACTOR
@@ -179,14 +224,17 @@ void Actor::update(unsigned int ticks) {
         this->vel.print();
         printf(", vrot = %f>\n", this->vrot);
 #endif
+
         // roce; si se hace un salto, chequear que estés en el piso
-        this->vel  += Triple(this->vel.x, this->vel.y, 0) * (-0.005) * static_cast<double>(ticks);
+        // TODO: 
+        if (this->pos.z != 0) this->vel  += Triple(this->vel.x, this->vel.y, 0) * (-0.005) * static_cast<double>(ticks);
         this->vrot += this->vrot                          * (-0.030) * static_cast<double>(ticks);
+
         this->pos  += this->vel  * static_cast<double>(ticks);
         this->ang  += this->vrot * static_cast<double>(ticks);
         this->ang   = mapToRange(this->ang);
 
-        // piratería para que el salto funcione
+        // TODO: piratería para que el salto funcione
         this->pos.z = 0;
         this->vel.z = 0;
 }

@@ -1,10 +1,10 @@
 #ifndef _WANDER_HPP
 #define _WANDER_HPP
 
-#include "Kinematic.hpp"
+#include "KinematicV.hpp"
 #include "Mobile.hpp"
 
-class Wander : public Kinematic {
+class Wander : public KinematicV {
         public:
                 Mobile* character;
                 Mobile* target;
@@ -29,7 +29,7 @@ class Wander : public Kinematic {
                        double wanderTime  ,
                        double maxSpeed    );
 
-                virtual tuple<bool, Triple, double> getVelIncr(unsigned int ticks);
+                virtual pair<bool, Triple> getVelIncr(unsigned int ticks);
 };
 
 #endif

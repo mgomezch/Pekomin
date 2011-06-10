@@ -1,13 +1,13 @@
 #ifndef _ALIGN_HPP
 #define _ALIGN_HPP
 
-#include "Kinematic.hpp"
+#include "KinematicA.hpp"
 
 using namespace std;
 
 class Mobile;
 
-class Align : public Kinematic {
+class Align : public KinematicA {
         public:
                 Mobile *character;
                 Mobile *target;
@@ -17,7 +17,7 @@ class Align : public Kinematic {
 
                 Align(Mobile *character, Mobile *target, double maxAngularVelocity, double targetRadius, double slowRadius);
 
-                virtual tuple<bool, Triple, double> getVelIncr(unsigned int ticks);
+                virtual pair<bool, double> getAngVelIncr(unsigned int ticks);
 };
 
 #endif

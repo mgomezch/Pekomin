@@ -1,13 +1,11 @@
 #ifndef _SEPARATION_HPP
 #define _SEPARATION_HPP
 
-#include <tuple>
-
-#include "Kinematic.hpp"
+#include "KinematicV.hpp"
 
 class Mobile;
 
-class Separation : public Kinematic {
+class Separation : public KinematicV {
         public:
                 Mobile *character;
                 Mobile *target;
@@ -17,7 +15,7 @@ class Separation : public Kinematic {
 
                 Separation(Mobile *character, Mobile *target, double threshold, double decayCoefficient, double maxAcceleration);
 
-                virtual tuple<bool, Triple, double> getVelIncr(unsigned int ticks);
+                virtual pair<bool, Triple> getVelIncr(unsigned int ticks);
 };
 
 #endif

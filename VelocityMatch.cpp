@@ -7,19 +7,17 @@ VelocityMatch::VelocityMatch(Mobile *character, Mobile *target, double maxAccele
         this->maxAcceleration = maxAcceleration;
 }
 
-tuple<bool, Triple, double> VelocityMatch::getVelIncr(unsigned int ticks) {
-        tuple<bool, Triple, double> steering;
+pair<bool, Triple> VelocityMatch::getVelIncr(unsigned int ticks) {
+        pair<bool, Triple> steering;
 
-        get<0>(steering) = true;
-        get<1>(steering) = target->vel - character->vel;
-        get<1>(steering) /= timeToTarget;
+        steering.first = true;
+        steering.second = target->vel - character->vel;
+        steering.second /= timeToTarget;
 
-        if (get<1>(steering).length() > maxAcceleration) {
-                get<1>(steering).normalize();
-                get<1>(steering) *= maxAcceleration;
+        if (steering.second.length() > maxAcceleration) {
+                steering.second.normalize();
+                steering.second *= maxAcceleration;
         }
-
-        get<2>(steering) = 0;
 
         return steering;
 }

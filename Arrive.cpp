@@ -15,22 +15,21 @@ Arrive::Arrive(Mobile *character, Mobile *target, double maxSpeed, double target
         this->slowRadius      = slowRadius;
 }
 
-tuple<bool, Triple, double> Arrive::getVelIncr(unsigned int ticks) {
-        tuple<bool, Triple, double> steering;
+pair<bool, Triple> Arrive::getVelIncr(unsigned int ticks) {
+        pair<bool, Triple> steering;
         Triple direction, targetVelocity;
         double distance, targetSpeed;
 
-        get<0>(steering) = true;
-        get<2>(steering) = 0;
+        steering.first = true;
 
         direction = target->pos - character->pos;
         distance = direction.length();
 
         if (distance < targetRadius) {
-                get<1>(steering) = target->vel - character->vel;
-                if (get<1>(steering).length() > maxSpeed) { // TODO: es aceleración, no speed
-                        get<1>(steering).normalize();
-                        get<1>(steering) *= maxSpeed;
+                steering.second = target->vel - character->vel;
+                if (steering.second.length() > maxSpeed) { // TODO: es aceleración, no speed
+                        steering.second.normalize();
+                        steering.second *= maxSpeed;
                 }
                 return steering;
         }
@@ -42,7 +41,7 @@ tuple<bool, Triple, double> Arrive::getVelIncr(unsigned int ticks) {
         if (targetSpeed < 0       ) targetSpeed = 0       ;
         if (targetSpeed > maxSpeed) targetSpeed = maxSpeed;
 
-        get<1>(steering) = direction.normalized() * targetSpeed;
+        steering.second = direction.normalized() * targetSpeed;
 
         return steering;
 }

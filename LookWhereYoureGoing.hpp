@@ -1,13 +1,13 @@
 #ifndef _LOOKWHEREYOUREGOING_HPP
 #define _LOOKWHEREYOUREGOING_HPP
 
-#include "Kinematic.hpp"
+#include "KinematicA.hpp"
 
 using namespace std;
 
 class Mobile;
 
-class LookWhereYoureGoing : public Kinematic {
+class LookWhereYoureGoing : public KinematicA {
         public:
                 Mobile *character;
                 Mobile *target;
@@ -17,7 +17,7 @@ class LookWhereYoureGoing : public Kinematic {
 
                 LookWhereYoureGoing(Mobile *character, double maxAngularVelocity, double targetRadius, double slowRadius);
 
-                virtual tuple<bool, Triple, double> getVelIncr(unsigned int ticks);
+                virtual pair<bool, double> getAngVelIncr(unsigned int ticks);
 };
 
 #endif
