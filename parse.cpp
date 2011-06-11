@@ -19,39 +19,39 @@
 #define DEBUG_PARSE
 
 #ifdef DEBUG_PARSE
-        #define SET_ENT_FIELD_DOUBLE(FIELD)                              \
-                it = fields.find(string( #FIELD ));                      \
-                if (it != fields.end()) {                                \
-                        cout << "parse: ent "                            \
-                             << name_s                                   \
-                             << " processing field "                     \
-                             << it->first                                \
-                             << " with value "                           \
-                             << it->second                               \
-                             << endl;                                    \
-                        if (sscanf(it->second.c_str(), "%i", &n) != 1) { \
-                                cerr << "parse error reading ent field " \
-                                     << it->first                        \
-                                     << " == "                           \
-                                     << it->second                       \
-                                     << endl;                            \
-                                exit(EX_DATAERR);                        \
-                        }                                                \
-                        ent-> FIELD = n;                                 \
+        #define SET_ENT_FIELD_DOUBLE(FIELD)                               \
+                it = fields.find(string( #FIELD ));                       \
+                if (it != fields.end()) {                                 \
+                        cout << "parse: ent "                             \
+                             << name_s                                    \
+                             << " processing field "                      \
+                             << it->first                                 \
+                             << " with value "                            \
+                             << it->second                                \
+                             << endl;                                     \
+                        if (sscanf(it->second.c_str(), "%lf", &d) != 1) { \
+                                cerr << "parse error reading ent field "  \
+                                     << it->first                         \
+                                     << " == "                            \
+                                     << it->second                        \
+                                     << endl;                             \
+                                exit(EX_DATAERR);                         \
+                        }                                                 \
+                        ent-> FIELD = d;                                  \
                 }
 #else
-        #define SET_ENT_FIELD_DOUBLE(FIELD)                              \
-                it = fields.find(string( #FIELD ));                      \
-                if (it != fields.end()) {                                \
-                        if (sscanf(it->second.c_str(), "%i", &n) != 1) { \
-                                cerr << "parse error reading ent field " \
-                                     << it->first                        \
-                                     << " == "                           \
-                                     << it->second                       \
-                                     << endl;                            \
-                                exit(EX_DATAERR);                        \
-                        }                                                \
-                        ent-> FIELD = n;                                 \
+        #define SET_ENT_FIELD_DOUBLE(FIELD)                               \
+                it = fields.find(string( #FIELD ));                       \
+                if (it != fields.end()) {                                 \
+                        if (sscanf(it->second.c_str(), "%lf", &d) != 1) { \
+                                cerr << "parse error reading ent field "  \
+                                     << it->first                         \
+                                     << " == "                            \
+                                     << it->second                        \
+                                     << endl;                             \
+                                exit(EX_DATAERR);                         \
+                        }                                                 \
+                        ent-> FIELD = d;                                  \
                 }
 #endif
 
@@ -141,7 +141,7 @@ unordered_map<string, Mobile *> entses;
 unordered_map<string, unordered_map<string, unordered_map<string, string> *> *> behaviorses;
 
 void parse_r(char *s, int chars) {
-        unsigned int n;
+        double d;
         char   *name  , *type  , *field  , *value  ;
         string  name_s,  type_s,  field_s,  value_s;
         unordered_map<string, string> fields = unordered_map<string, string>();
