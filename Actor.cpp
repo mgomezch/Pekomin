@@ -107,35 +107,35 @@ void Actor::update(unsigned int ticks) {
                 if ((p_a_directstatic = dynamic_cast<DirectStaticA *>(behaviors[i])) != NULL) {
                         a_steering = p_a_directstatic->getAng(ticks);
                         if (a_steering.first) {
-                                n_v_directstatic++;
+                                n_a_directstatic++;
                                 a_directstatic.push_back(a_steering.second);
                         }
                 }
                 if ((p_a_static = dynamic_cast<StaticA *>(behaviors[i])) != NULL) {
                         a_steering = p_a_static->getAngIncr(ticks);
                         if (a_steering.first) {
-                                n_v_static++;
+                                n_a_static++;
                                 a_static.push_back(a_steering.second);
                         }
                 }
                 if ((p_a_directkinematic = dynamic_cast<DirectKinematicA *>(behaviors[i])) != NULL) {
                         a_steering = p_a_directkinematic->getAngVel(ticks);
                         if (a_steering.first) {
-                                n_v_directkinematic++;
+                                n_a_directkinematic++;
                                 a_directkinematic.push_back(a_steering.second);
                         }
                 }
                 if ((p_a_kinematic = dynamic_cast<KinematicA *>(behaviors[i])) != NULL) {
                         a_steering = p_a_kinematic->getAngVelIncr(ticks);
                         if (a_steering.first) {
-                                n_v_kinematic++;
+                                n_a_kinematic++;
                                 a_kinematic.push_back(a_steering.second);
                         }
                 }
                 if ((p_a_dynamic = dynamic_cast<DynamicA *>(behaviors[i])) != NULL) {
                         a_steering = p_a_dynamic->getTorque(ticks);
                         if (a_steering.first) {
-                                n_v_dynamic++;
+                                n_a_dynamic++;
                                 a_dynamic.push_back(a_steering.second);
                         }
                 }
