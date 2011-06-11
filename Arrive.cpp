@@ -26,7 +26,7 @@ pair<bool, Triple> Arrive::getVel(unsigned int ticks) {
         distance = direction.length();
 
         if (distance < targetRadius) {
-                steering.second = target->vel - character->vel;
+                steering.second = target->vel;
                 if (steering.second.length() > maxSpeed) { // TODO: es aceleración, no speed
                         steering.second.normalize();
                         steering.second *= maxSpeed;

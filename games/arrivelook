@@ -1,0 +1,36 @@
+player {
+        class = Player;
+        pos.x = 0;
+        pos.y = 0;
+        pos.z = 0;
+        ang   = 0;
+        vel.x = 0;
+        vel.y = 0;
+        vel.z = 0;
+        vrot  = 0;
+}
+
+arrivador {
+	class = RuntimePekomin;
+	pos.x = 10;
+	pos.y = 46;
+	Arrive {
+		class        = Arrive;
+		target       = player;
+		maxSpeed     = 0.01;
+		targetRadius = 2;
+		slowRadius   = 5; 
+	}
+	Flee {
+		class      = Flee;
+		target     = player;
+		maxSpeed   = 0.005;
+		fleeRadius = 2;
+	}
+	LookWhereYoureGoing {
+		class              = LookWhereYoureGoing;
+		maxAngularVelocity = 0.001;
+		targetRadius       = 0.2;
+		slowRadius         = 0.5;
+	}
+}
