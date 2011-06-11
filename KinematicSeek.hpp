@@ -1,13 +1,13 @@
 #ifndef _KINEMATICSEEK_HPP
 #define _KINEMATICSEEK_HPP
 
-#include "KinematicV.hpp"
+#include "DirectKinematicV.hpp"
 
 using namespace std;
 
 class Ent;
 
-class KinematicSeek : public KinematicV {
+class KinematicSeek : public DirectKinematicV {
         public:
                 Ent *character;
                 Ent *target;
@@ -15,7 +15,7 @@ class KinematicSeek : public KinematicV {
 
                 KinematicSeek(Ent *character, Ent *target, double maxSpeed);
 
-                virtual pair<bool, Triple> getVelIncr(unsigned int ticks);
+                virtual pair<bool, Triple> getVel(unsigned int ticks);
 };
 
 #endif

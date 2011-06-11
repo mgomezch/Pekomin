@@ -1,0 +1,34 @@
+player {
+        class = Player;
+        pos.x = 0;
+        pos.y = 0;
+        pos.z = 0;
+        ang   = 0;
+        vel.x = 0;
+        vel.y = 0;
+        vel.z = 0;
+        vrot  = 0;
+}
+
+buscador {
+	class = RuntimePekomin;
+	pos.x = 10;
+	pos.y = 46;
+	kinematicSeek {
+		class    = KinematicSeek;
+		target   = player;
+		maxSpeed = 0.05;
+	}
+}
+
+huidor {
+	class = RuntimePekomin;
+	pos.x = 10;
+	pos.y = 40;
+	kinematicFlee {
+		class      = KinematicFlee;
+		target     = player;
+		maxSpeed   = 0.025;
+		fleeRadius = 5;
+	}
+}
