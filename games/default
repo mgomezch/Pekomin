@@ -19,17 +19,17 @@ npc {
         vel.y =  0;
         vel.z =  0;
 
-        face {
+        angular {
                 class              = LookWhereYoureGoing;
                 maxAngularVelocity = 0.001 ;
                 targetRadius       = 0.0   ;
                 slowRadius         = 0.5   ;
         }
-        arrive {
+        vectorial {
                 class           = Arrive;
                 target          = player;
                 maxAcceleration = 0.1   ;
-                maxSpeed        = 0.005 ;
+                maxSpeed        = 0.025 ;
                 targetRadius    = 5     ;
                 slowRadius      = 10    ;
         }

@@ -15,7 +15,7 @@ Arrive::Arrive(Mobile *character, Mobile *target, double maxSpeed, double target
         this->slowRadius      = slowRadius;
 }
 
-pair<bool, Triple> Arrive::getVelIncr(unsigned int ticks) {
+pair<bool, Triple> Arrive::getVel(unsigned int ticks) {
         pair<bool, Triple> steering;
         Triple direction, targetVelocity;
         double distance, targetSpeed;
