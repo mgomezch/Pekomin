@@ -9,7 +9,7 @@ KinematicFlee::KinematicFlee(Ent *character_, Ent *target_, double maxSpeed_, do
 }
 
 // Retorna incrementos de velocidad y rotación
-pair<bool, Triple> KinematicFlee::getVel(unsigned int ticks) {
+pair<bool, Triple> KinematicFlee::getVelIncr(unsigned int ticks) {
         pair<bool, Triple> steering;
 
         steering.second = character->pos - target->pos;

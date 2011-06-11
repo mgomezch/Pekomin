@@ -29,7 +29,7 @@ Wander::Wander(Mobile *character  ,
         target->pos = character->pos + target->orientation() * wanderRadius;
 }
 
-pair<bool, Triple> Wander::getVelIncr(unsigned int ticks) {
+pair<bool, Triple> Wander::getVel(unsigned int ticks) {
         pair<bool, Triple> steering;
         Triple direction;
         double distance, targetSpeed;

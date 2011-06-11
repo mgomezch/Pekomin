@@ -14,21 +14,15 @@ Wanderer {
         class = RuntimePekomin;
         pos.x = 0;
         pos.y = 0;
-        pos.z = 0;
-        ang   = 0;
-        vel.x = 0;
-        vel.y = 0;
-        vel.z = 0;
-        vrot  = 0;
         Wander {
-                class = Wander;
-                maxRotation = 0.2;
-                targetRadius = 0.25;
-                slowRadius = 1;
-                wanderOffset = 1;
-                wanderRadius = 7;
-                wanderRate = 3.1415;
-                wanderTime = 100;
+                class           = Wander;
+                maxRotation     = 0.2;
+                targetRadius    = 0.25;
+                slowRadius      = 1;
+                wanderOffset    = 1;
+                wanderRadius    = 7;
+                wanderRate      = 3.1415;
+                wanderTime      = 100;
                 maxAcceleration = 0.01;
         }
 }

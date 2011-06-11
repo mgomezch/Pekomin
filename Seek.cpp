@@ -7,7 +7,7 @@ Seek::Seek(Mobile *character, Mobile *target, double maxAcceleration) {
         this->maxAcceleration = maxAcceleration;
 }
 
-pair<bool, Triple> Seek::getVelIncr(unsigned int ticks) {
+pair<bool, Triple> Seek::getVel(unsigned int ticks) {
         pair<bool, Triple> steering;
 
         steering.first = true;

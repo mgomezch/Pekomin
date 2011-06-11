@@ -17,7 +17,7 @@ buscador {
 	Seek {
 		class           = Seek;
 		target          = player;
-		maxAcceleration = 0.005;	
+		maxAcceleration = 0.05;	
 	}
 }
 
@@ -28,7 +28,7 @@ huidor {
 	Flee {
 		class      = Flee;
 		target     = player;
-		maxSpeed   = 0.0001;
+		maxSpeed   = 0.025;
 		fleeRadius = 3;
 	}
 }

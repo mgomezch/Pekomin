@@ -7,7 +7,7 @@ KinematicSeek::KinematicSeek(Ent *character, Ent *target, double maxSpeed) {
         this->maxSpeed  = maxSpeed ;
 }
 
-pair<bool, Triple> KinematicSeek::getVel(unsigned int ticks) {
+pair<bool, Triple> KinematicSeek::getVelIncr(unsigned int ticks) {
         pair<bool, Triple> steering;
         steering.first = true;
         steering.second = target->pos - character->pos;

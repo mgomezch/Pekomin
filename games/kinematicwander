@@ -17,6 +17,6 @@ vagueador {
 	kinematicWander {
 		class       = KinematicWander;
 		maxSpeed    = 0.005;
-		maxRotation = 6.28;
+		maxRotation = 6.2830;
 	}
 }
