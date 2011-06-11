@@ -414,6 +414,15 @@ void parse(char *s) {
                                 continue;
                         }
 
+                        // StaticLookWhereYoureGoing(Mobile *character);
+                        if (class_s == string("StaticLookWhereYoureGoing")) {
+                                SET_CHARACTER();
+
+                                SET_P();
+                                p->addBehavior(new StaticLookWhereYoureGoing(character));
+                                continue;
+                        }
+
                         // LookWhereYoureGoing(Mobile *character, double maxAngularVelocity, double targetRadius, double slowRadius);
                         if (class_s == string("LookWhereYoureGoing")) {
                                 SET_CHARACTER();

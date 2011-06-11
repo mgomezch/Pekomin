@@ -34,6 +34,7 @@ class Triple {
                 double length();
                 double length_2();
                 Triple normalized();
+                double ang_xy();
                 void print();
 };
 

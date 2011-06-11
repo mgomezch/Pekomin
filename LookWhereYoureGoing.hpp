@@ -10,7 +10,6 @@ class Mobile;
 class LookWhereYoureGoing : public DirectKinematicA {
         public:
                 Mobile *character;
-                Mobile *target;
                 double maxAngularVelocity;
                 double targetRadius;
                 double slowRadius;

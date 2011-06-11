@@ -11,6 +11,7 @@
 #include "KinematicFlee.hpp"
 #include "KinematicSeek.hpp"
 #include "KinematicWander.hpp"
+#include "StaticLookWhereYoureGoing.hpp"
 #include "LookWhereYoureGoing.hpp"
 #include "Pursue.hpp"
 #include "Seek.hpp"

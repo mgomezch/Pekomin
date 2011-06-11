@@ -24,7 +24,7 @@ pair<bool, double> LookWhereYoureGoing::getAngVel(unsigned int ticks) {
 
         steering.first = true;
 
-        direction = 2 * atan(character->vel.length()) / M_PI;
+        direction = character->vel;
         if (direction.length() == 0) {
                 steering.first = false;
 #ifdef DEBUG_LOOKWHEREYOUREGOING
@@ -33,8 +33,7 @@ pair<bool, double> LookWhereYoureGoing::getAngVel(unsigned int ticks) {
                 return steering;
         }
 
-        rotation = mapToRange(atan2(direction.y, direction.x)) - mapToRange(character->ang);
-        if (rotation > M_PI) rotation -= 2 * M_PI;
+        rotation = mapToRange(mapToRange(atan2(direction.y, direction.x)) - mapToRange(character->ang));
         rotationSize = abs(rotation);
 
         if (rotationSize < targetRadius) {
@@ -60,12 +59,14 @@ pair<bool, double> LookWhereYoureGoing::getAngVel(unsigned int ticks) {
                 cout << "LookWhereYoureGoing " << static_cast<void *>(this) << ": fuera de slowRadius" << endl;
         }
 #endif
-        targetRotation *= 2 * atan(200*character->vel.length()) / M_PI;
-	cout << "SEXOOOOOOOO " << targetRotation << endl;
-        steering.second = targetRotation * (rotation > 0 ? 1 : -1);
+
+        targetRotation *= map_atan(20000*character->vel.length());
+
+#ifdef DEBUG_LOOKWHEREYOUREGOING
+        cout << "LookWhereYoureGoing " << static_cast<void *>(this) << ": targetRotation == " << targetRotation << " after mapping vel with factor " << map_atan(200*character->vel.length()) << endl;
+#endif
+
+        steering.second = targetRotation * (rotation > 0 ? -1 : 1);
 
         return steering;
 }
-
-
- 

@@ -145,6 +145,10 @@ Triple& Triple::normalize() {
         return *this;
 }
 
+double Triple::ang_xy() {
+        return atan2(this->y, this->x);
+}
+
 void Triple::print() {
         printf("(%f, %f, %f)", x, y, z);
 }

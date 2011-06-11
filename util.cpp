@@ -23,3 +23,7 @@ double mapToRange(double value) {
         }
         return value;
 }
+
+double map_atan(double x) {
+        return (2.0 * atan((M_PI * x)/2.0))/M_PI;
+}

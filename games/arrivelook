@@ -14,22 +14,22 @@ arrivador {
 	class = RuntimePekomin;
 	pos.x = 10;
 	pos.y = 46;
-	Arrive {
+	arrive {
 		class        = Arrive;
 		target       = player;
 		maxSpeed     = 0.01;
 		targetRadius = 2;
 		slowRadius   = 5; 
 	}
-	Flee {
+	flee {
 		class      = Flee;
 		target     = player;
 		maxSpeed   = 0.005;
-		fleeRadius = 2;
+		fleeRadius = 5;
 	}
-	LookWhereYoureGoing {
-		class              = LookWhereYoureGoing;
-		maxAngularVelocity = 0.001;
+	look {
+		class              = StaticLookWhereYoureGoing;
+		maxAngularVelocity = 0.005;
 		targetRadius       = 0.2;
 		slowRadius         = 0.5;
 	}
