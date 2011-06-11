@@ -386,9 +386,10 @@ void parse(char *s) {
                                 SET_CHARACTER();
                                 SET_TARGET();
                                 SET_DOUBLE(maxSpeed);
+				SET_DOUBLE(fleeRadius);
 
                                 SET_P();
-                                p->addBehavior(new KinematicFlee(character, target, maxSpeed));
+                                p->addBehavior(new KinematicFlee(character, target, maxSpeed, fleeRadius));
                                 continue;
                         }
 

@@ -9,17 +9,17 @@ KinematicWander::KinematicWander(Ent *character, double maxSpeed, double maxRota
         this->accum       = 0;
 }
 
-pair<bool, Triple> KinematicWander::getVelIncr(unsigned int ticks) {
+pair<bool, Triple> KinematicWander::getVel(unsigned int ticks) {
         pair<bool, Triple> steering;
 
         if (this->accum == 0) {
-                steering.second = randomBinomial() * maxRotation;
+               character->ang = randomBinomial() * maxRotation;
         }
-        if ((this->accum += ticks) >= 5000) this->accum = 0;
+        if ((this->accum += ticks) >= 500) this->accum = 0;
 
         steering.first = true;
         steering.second = character->orientation() * maxSpeed;
-        steering.second = randomBinomial()         * maxRotation;
+        steering.second.normalized();// = randomBinomial()         * maxRotation;
 
         return steering;
 }

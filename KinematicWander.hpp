@@ -1,11 +1,11 @@
 #ifndef _KINEMATICWANDER_HPP
 #define _KINEMATICWANDER_HPP
 
-#include "KinematicV.hpp"
+#include "DirectKinematicV.hpp"
 
 class Ent;
 
-class KinematicWander : public KinematicV {
+class KinematicWander : public DirectKinematicV {
         public:
                 Ent *character;
                 double maxSpeed;
@@ -14,7 +14,7 @@ class KinematicWander : public KinematicV {
 
                 KinematicWander(Ent *character, double maxSpeed, double maxRotation);
 
-                virtual pair<bool, Triple> getVelIncr(unsigned int ticks);
+                virtual pair<bool, Triple> getVel(unsigned int ticks);
 };
 
 #endif
