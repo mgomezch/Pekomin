@@ -381,12 +381,12 @@ void parse(char *s) {
                                 continue;
                         }
 
-                        // KinematicFlee(Ent *character, Ent *target, double maxSpeed);
+                        // KinematicFlee(Ent *character, Ent *target, double maxSpeed, double fleeRadius);
                         if (class_s == string("KinematicFlee")) {
                                 SET_CHARACTER();
                                 SET_TARGET();
                                 SET_DOUBLE(maxSpeed);
-				SET_DOUBLE(fleeRadius);
+                                SET_DOUBLE(fleeRadius);
 
                                 SET_P();
                                 p->addBehavior(new KinematicFlee(character, target, maxSpeed, fleeRadius));
@@ -506,4 +506,3 @@ void parse(char *s) {
 
         // TODO: DELETE HEAP GARBAGE: delete behaviorses and entses.
 }
-

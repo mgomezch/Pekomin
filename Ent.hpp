@@ -11,6 +11,10 @@ class Ent {
                 virtual void draw()                     = 0;
                 virtual void update(unsigned int ticks) = 0;
                 Triple orientation();
+
+                friend double dist(Ent &e1, Ent &e2);
 };
+
+double dist(Ent &e1, Ent &e2);
 
 #endif
