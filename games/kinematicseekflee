@@ -17,7 +17,7 @@ buscador {
 	kinematicSeek {
 		class    = KinematicSeek;
 		target   = player;
-		maxSpeed = 0.05;
+		maxSpeed = 0.005;
 	}
 }
 
@@ -28,7 +28,7 @@ huidor {
 	kinematicFlee {
 		class      = KinematicFlee;
 		target     = player;
-		maxSpeed   = 0.025;
+		maxSpeed   = 0.0025;
 		fleeRadius = 5;
 	}
 }

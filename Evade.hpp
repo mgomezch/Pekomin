@@ -1,22 +1,22 @@
 #ifndef _EVADE_HPP
 #define _EVADE_HPP
 
-#include "KinematicV.hpp"
+#include "DirectKinematicV.hpp"
 
 using namespace std;
 
 class Mobile;
 
-class Evade : public KinematicV {
+class Evade : public DirectKinematicV {
         public:
                 Mobile *character;
                 Mobile *target;
-                double maxAcceleration;
-                static const double maxPrediction = 0.01;
+                double maxSpeed;
+                static const double maxPrediction = 10;
 
                 Evade(Mobile *character, Mobile *target, double maxAcceleration);
 
-                virtual pair<bool, Triple> getVelIncr(unsigned int ticks);
+                virtual pair<bool, Triple> getVel(unsigned int ticks);
 };
 
 #endif

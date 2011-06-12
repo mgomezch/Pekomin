@@ -8,7 +8,7 @@ Flee::Flee(Mobile *character, Mobile *target, double maxSpeed, double fleeRadius
         this->fleeRadius = fleeRadius;
 }
 
-pair<bool, Triple> Flee::getVelIncr(unsigned int ticks) {
+pair<bool, Triple> Flee::getVel(unsigned int ticks) {
         pair<bool, Triple> steering;
 
         steering.second = character->pos - target->pos;

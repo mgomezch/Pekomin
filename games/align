@@ -10,13 +10,15 @@ player {
         vrot  = 0;
 }
 
-vagueador {
+alineador {
 	class = RuntimePekomin;
 	pos.x = 10;
-	pos.y = 24;
-	kinematicWander {
-		class       = KinematicWander;
-		maxSpeed    = 0.005;
-		maxRotation = 6.2830;
+	pos.y = 34;
+	align {
+		class              = Align;
+		target             = player;
+		maxAngularVelocity = 0.005;
+		targetRadius       = 0.5;
+		slowRadius         = 0.8;
 	}
 }

@@ -1,13 +1,13 @@
 #ifndef _FLEE_HPP
 #define _FLEE_HPP
 
-#include "KinematicV.hpp"
+#include "DirectKinematicV.hpp"
 
 using namespace std;
 
 class Mobile;
 
-class Flee : public KinematicV {
+class Flee : public DirectKinematicV {
         public:
                 Mobile *character;
                 Mobile *target;
@@ -16,7 +16,7 @@ class Flee : public KinematicV {
 
                 Flee(Mobile *character, Mobile *target, double maxSpeed, double fleeRadius);
 
-                virtual pair<bool, Triple> getVelIncr(unsigned int ticks);
+                virtual pair<bool, Triple> getVel(unsigned int ticks);
 };
 
 #endif

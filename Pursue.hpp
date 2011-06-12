@@ -1,22 +1,22 @@
 #ifndef _PURSUE_HPP
 #define _PURSUE_HPP
 
-#include "KinematicV.hpp"
+#include "DirectKinematicV.hpp"
 
 using namespace std;
 
 class Mobile;
 
-class Pursue : public KinematicV {
+class Pursue : public DirectKinematicV {
         public:
                 Mobile *character;
                 Mobile *target;
-                double maxAcceleration;
-                static const double maxPrediction = 0.01;
+                double maxSpeed;
+                static const double maxPrediction = 10;
 
-                Pursue(Mobile *character, Mobile *target, double maxAcceleration);
+                Pursue(Mobile *character, Mobile *target, double maxSpeed);
 
-                virtual pair<bool, Triple> getVelIncr(unsigned int ticks);
+                virtual pair<bool, Triple> getVel(unsigned int ticks);
 };
 
 #endif
