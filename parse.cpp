@@ -337,10 +337,10 @@ void parse(char *s) {
                         if (class_s == string("Evade")) {
                                 SET_CHARACTER();
                                 SET_TARGET();
-                                SET_DOUBLE(maxAcceleration);
+                                SET_DOUBLE(maxSpeed);
 
                                 SET_P();
-                                p->addBehavior(new Evade(character, target, maxAcceleration));
+                                p->addBehavior(new Evade(character, target, maxSpeed));
                                 continue;
                         }
 
@@ -440,10 +440,10 @@ void parse(char *s) {
                         if (class_s == string("Pursue")) {
                                 SET_CHARACTER();
                                 SET_TARGET();
-                                SET_DOUBLE(maxAcceleration);
+                                SET_DOUBLE(maxSpeed);
 
                                 SET_P();
-                                p->addBehavior(new Pursue(character, target, maxAcceleration));
+                                p->addBehavior(new Pursue(character, target, maxSpeed));
                                 continue;
                         }
 
@@ -451,23 +451,10 @@ void parse(char *s) {
                         if (class_s == string("Seek")) {
                                 SET_CHARACTER();
                                 SET_TARGET();
-                                SET_DOUBLE(maxAcceleration);
+                                SET_DOUBLE(maxSpeed);
 
                                 SET_P();
-                                p->addBehavior(new Seek(character, target, maxAcceleration));
-                                continue;
-                        }
-
-                        // Separation(Mobile *character, Mobile *target, double threshold, double decayCoefficient, double maxAcceleration);
-                        if (class_s == string("Separation")) {
-                                SET_CHARACTER();
-                                SET_TARGET();
-                                SET_DOUBLE(threshold);
-                                SET_DOUBLE(decayCoefficient);
-                                SET_DOUBLE(maxAcceleration);
-
-                                SET_P();
-                                p->addBehavior(new Separation(character, target, threshold, decayCoefficient, maxAcceleration));
+                                p->addBehavior(new Seek(character, target, maxSpeed));
                                 continue;
                         }
 

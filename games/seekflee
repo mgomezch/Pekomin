@@ -15,9 +15,9 @@ buscador {
 	pos.x = 10;
 	pos.y = 24;
 	Seek {
-		class           = Seek;
-		target          = player;
-		maxAcceleration = 0.05;	
+		class    = Seek;
+		target   = player;
+		maxSpeed = 0.05;	
 	}
 }
 

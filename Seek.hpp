@@ -11,9 +11,9 @@ class Seek : public DirectKinematicV {
         public:
                 Mobile *character;
                 Mobile *target;
-                double maxAcceleration;
+                double maxSpeed;
 
-                Seek(Mobile *character, Mobile *target, double maxAcceleration);
+                Seek(Mobile *character, Mobile *target, double maxSpeed);
 
                 virtual pair<bool, Triple> getVel(unsigned int ticks);
 };

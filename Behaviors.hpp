@@ -15,7 +15,6 @@
 #include "LookWhereYoureGoing.hpp"
 #include "Pursue.hpp"
 #include "Seek.hpp"
-#include "Separation.hpp"
 #include "VelocityMatch.hpp"
 #include "Wander.hpp"
 

@@ -1,0 +1,24 @@
+player {
+        class = Player;
+        pos.x = 0;
+        pos.y = 0;
+        pos.z = 0;
+        ang   = 0;
+        vel.x = 0;
+        vel.y = 0;
+        vel.z = 0;
+        vrot  = 0;
+}
+
+alineador {
+	class = RuntimePekomin;
+	pos.x = 10;
+	pos.y = 34;
+	align {
+		class              = Align;
+		target             = player;
+		maxAngularVelocity = 0.005;
+		targetRadius       = 0.5;
+		slowRadius         = 0.8;
+	}
+}

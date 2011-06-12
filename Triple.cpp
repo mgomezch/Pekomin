@@ -150,5 +150,5 @@ double Triple::ang_xy() {
 }
 
 void Triple::print() {
-        printf("(%f, %f, %f)", x, y, z);
+        printf("(%f, %f, %f)\n", x, y, z);
 }
