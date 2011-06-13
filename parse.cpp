@@ -499,6 +499,16 @@ void parse(char *s) {
                                 continue;
                         }
 
+                        // StaticVelocityMatch(Mobile *character, Mobile *target);
+                        if (class_s == string("StaticVelocityMatch")) {
+                                SET_CHARACTER();
+                                SET_TARGET();
+
+                                SET_P();
+                                p->addBehavior(new StaticVelocityMatch(character, target));
+                                continue;
+                        }
+                        
                         // VelocityMatch(Mobile *character, Mobile *target, double maxAcceleration);
                         if (class_s == string("VelocityMatch")) {
                                 SET_CHARACTER();
@@ -522,6 +532,18 @@ void parse(char *s) {
                                 SET_DOUBLE(maxAcceleration);
 
                                 SET_P(new Wander(character, maxRotation, targetRadius, slowRadius, wanderOffset, wanderRadius, wanderRate, wanderTime, maxAcceleration));
+                                continue;
+                        }
+
+                        // PathFollowing(Mobile *character, double maxSpeed, double targetRadius, double slowRadius);
+                        if (class_s == string("PathFollowing")) {
+                                SET_CHARACTER();
+                                SET_DOUBLE(maxSpeed);
+                                SET_DOUBLE(targetRadius);
+                                SET_DOUBLE(slowRadius);
+
+                                SET_P();
+                                p->addBehavior(new PathFollowing(character, maxSpeed, targetRadius, slowRadius));
                                 continue;
                         }
 

@@ -4,6 +4,7 @@
 
 #include <GL/glut.h>
 
+vector<Node *> graph;
 Player *player = 0;
 vector<Ent *> ents;
 

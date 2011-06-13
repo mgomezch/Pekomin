@@ -22,8 +22,8 @@ Wanderer {
                 wanderOffset    = 1;
                 wanderRadius    = 7;
                 wanderRate      = 3.1415;
-                wanderTime      = 100;
-                maxAcceleration = 0.01;
+                wanderTime      = 600;
+                maxAcceleration = 0.025;
         }
 }
 

@@ -35,6 +35,7 @@ class Triple {
                 double length_2();
                 Triple normalized();
                 double ang_xy();
+		Triple proyection(Triple t);
                 void print();
 };
 

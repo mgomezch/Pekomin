@@ -26,8 +26,8 @@ pair<bool, double> Face::getAngVelIncr(unsigned int ticks) {
         steering.first = true;
 
         direction = target->pos - character->pos;
-        rotation = atan2(direction.y, direction.x) - mapToRange(character->ang);
-        if (rotation > M_PI) rotation -= 2 * M_PI;
+        rotation = mapToRange(atan2(direction.y, direction.x) - character->ang);
+        //if (rotation > M_PI) rotation -= 2 * M_PI;
         rotationSize = abs(rotation);
 
         if (rotationSize < targetRadius) {
@@ -53,9 +53,9 @@ pair<bool, double> Face::getAngVelIncr(unsigned int ticks) {
                 cout << "Face " << static_cast<void *>(this) << ": fuera de slowRadius" << endl;
         }
 #endif
-        if (targetRotation < 0) targetRotation = 0;
+        //if (targetRotation < 0) targetRotation = 0;
 
-        steering.second = targetRotation * (rotation > 0 ? 1 : -1);
+        steering.second = targetRotation * (rotation > 0 ? -1 : 1);
 
         return steering;
 }
