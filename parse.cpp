@@ -504,11 +504,10 @@ void parse(char *s) {
                                 SET_CHARACTER();
                                 SET_TARGET();
 
-                                SET_P();
-                                p->addBehavior(new StaticVelocityMatch(character, target));
+                                SET_P(new StaticVelocityMatch(character, target));
                                 continue;
                         }
-                        
+
                         // VelocityMatch(Mobile *character, Mobile *target, double maxAcceleration);
                         if (class_s == string("VelocityMatch")) {
                                 SET_CHARACTER();
@@ -542,8 +541,7 @@ void parse(char *s) {
                                 SET_DOUBLE(targetRadius);
                                 SET_DOUBLE(slowRadius);
 
-                                SET_P();
-                                p->addBehavior(new PathFollowing(character, maxSpeed, targetRadius, slowRadius));
+                                SET_P(new PathFollowing(character, maxSpeed, targetRadius, slowRadius));
                                 continue;
                         }
 
