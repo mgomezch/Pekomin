@@ -27,9 +27,6 @@ pair<bool, double> LookWhereYoureGoing::getAngVel(unsigned int ticks) {
         direction = character->vel;
         if (direction.length() == 0) {
                 steering.first = false;
-#ifdef DEBUG_LOOKWHEREYOUREGOING
-                cout << "velocidad : " << direction.x << direction.y << direction.z << endl;
-#endif
                 return steering;
         }
 

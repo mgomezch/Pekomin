@@ -3,6 +3,8 @@
 
 #include "Triple.hpp"
 
+class Segment;
+
 class Ent {
         public:
                 Triple pos;
@@ -12,9 +14,14 @@ class Ent {
                 virtual void update(unsigned int ticks) = 0;
                 Triple orientation();
 
-                friend double dist(Ent &e1, Ent &e2);
+/*
+                friend double dist(Ent &    , Ent &    );
+                friend double dist(Segment &, Ent &    );
+                friend double dist(Ent &    , Segment &);
+*/
 };
 
-double dist(Ent &e1, Ent &e2);
+//double dist(Ent &e1, Ent &e2);
+double dist(Ent *e1, Ent *e2);
 
 #endif

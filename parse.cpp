@@ -15,6 +15,7 @@
 #include "Player.hpp"
 #include "Phantom.hpp"
 #include "RuntimePekomin.hpp"
+#include "RuntimeWall.hpp"
 
 #define DEBUG_PARSE
 
@@ -52,6 +53,43 @@
                                 exit(EX_DATAERR);                         \
                         }                                                 \
                         ent-> FIELD = d;                                  \
+                }
+#endif
+
+#ifdef DEBUG_PARSE
+        #define SET_WALL_FIELD_DOUBLE(FIELD)                              \
+                it = fields.find(string( #FIELD ));                       \
+                if (it != fields.end()) {                                 \
+                        cout << "parse: ent "                             \
+                             << name_s                                    \
+                             << " processing wall field "                 \
+                             << it->first                                 \
+                             << " with value "                            \
+                             << it->second                                \
+                             << endl;                                     \
+                        if (sscanf(it->second.c_str(), "%lf", &d) != 1) { \
+                                cerr << "parse error reading wall field " \
+                                     << it->first                         \
+                                     << " == "                            \
+                                     << it->second                        \
+                                     << endl;                             \
+                                exit(EX_DATAERR);                         \
+                        }                                                 \
+                        wall-> FIELD = d;                                 \
+                }
+#else
+        #define SET_ENT_FIELD_DOUBLE(FIELD)                               \
+                it = fields.find(string( #FIELD ));                       \
+                if (it != fields.end()) {                                 \
+                        if (sscanf(it->second.c_str(), "%lf", &d) != 1) { \
+                                cerr << "parse error reading wall field " \
+                                     << it->first                         \
+                                     << " == "                            \
+                                     << it->second                        \
+                                     << endl;                             \
+                                exit(EX_DATAERR);                         \
+                        }                                                 \
+                        wall-> FIELD = d;                                 \
                 }
 #endif
 
@@ -121,18 +159,23 @@
                 exit(EX_DATAERR);                                      \
         }
 
-#define SET_P()                                        \
-        p = dynamic_cast<RuntimePekomin *>(character); \
-        if (p == NULL) {                               \
-                cerr << "parse error making ent '"     \
-                     << it_e->first                    \
-                     << "' behavior '"                 \
-                     << it_b->first                    \
-                     << "': ent '"                     \
-                     << it_e->first                    \
-                     << "' is not RuntimePekomin"      \
-                     << endl;                          \
-                exit(EX_SOFTWARE);                     \
+#define SET_P(BEHAVIOR)                                                       \
+        p = dynamic_cast<RuntimePekomin *>(character);                        \
+        if (p != NULL) p->addBehavior(BEHAVIOR);                              \
+        else {                                                                \
+                w = dynamic_cast<RuntimeWall *>(character);                   \
+                if (w != NULL) w->addBehavior(BEHAVIOR);                      \
+                else {                                                        \
+                        cerr << "parse error making ent '"                    \
+                             << it_e->first                                   \
+                             << "' behavior '"                                \
+                             << it_b->first                                   \
+                             << "': ent '"                                    \
+                             << it_e->first                                   \
+                             << "' is neither RuntimePekomin nor RuntimeWall" \
+                             << endl;                                         \
+                        exit(EX_SOFTWARE);                                    \
+                }                                                             \
         }
 
 using namespace std;
@@ -187,7 +230,7 @@ void parse_r(char *s, int chars) {
         while (nextchars = -1, sscanf(s + chars, " } %n", &nextchars), nextchars == -1) {
                 // Field
                 field = value = NULL;
-                if (sscanf(s + chars, " %m[a-zA-Z_0-9.] = %m[a-zA-Z_0-9.] ;%n", &field, &value, &nextchars) >= 2) {
+                if (sscanf(s + chars, " %m[a-zA-Z_0-9.] = %m[a-zA-Z_0-9.-] ;%n", &field, &value, &nextchars) >= 2) {
                         chars += nextchars;
                         field_s = string(field);
                         free(field);
@@ -257,6 +300,16 @@ void parse_r(char *s, int chars) {
                 }
                 else if (it->second == string("Phantom"       )) ent = new Phantom()       ;
                 else if (it->second == string("RuntimePekomin")) ent = new RuntimePekomin();
+                else if (it->second == string("RuntimeWall"   )) {
+                        RuntimeWall *wall = new RuntimeWall();
+                        SET_WALL_FIELD_DOUBLE(p1.x);
+                        SET_WALL_FIELD_DOUBLE(p1.y);
+                        SET_WALL_FIELD_DOUBLE(p1.z);
+                        SET_WALL_FIELD_DOUBLE(p2.x);
+                        SET_WALL_FIELD_DOUBLE(p2.y);
+                        SET_WALL_FIELD_DOUBLE(p2.z);
+                        ent = wall;
+                }
 
                 ents.push_back(ent);
         }
@@ -289,6 +342,7 @@ void parse(char *s) {
         unordered_map<string, unordered_map<string, unordered_map<string, string> *> *>::const_iterator it_e;
                               unordered_map<string, unordered_map<string, string> *>   ::const_iterator it_b;
         RuntimePekomin *p;
+        RuntimeWall    *w;
 
         parse_r(s, 0);
 
@@ -315,8 +369,7 @@ void parse(char *s) {
                                 SET_DOUBLE(targetRadius      );
                                 SET_DOUBLE(slowRadius        );
 
-                                SET_P();
-                                p->addBehavior(new Align(character, target, maxAngularVelocity, targetRadius, slowRadius));
+                                SET_P(new Align(character, target, maxAngularVelocity, targetRadius, slowRadius));
                                 continue;
                         }
 
@@ -328,8 +381,7 @@ void parse(char *s) {
                                 SET_DOUBLE(targetRadius);
                                 SET_DOUBLE(slowRadius  );
 
-                                SET_P();
-                                p->addBehavior(new Arrive(character, target, maxSpeed, targetRadius, slowRadius));
+                                SET_P(new Arrive(character, target, maxSpeed, targetRadius, slowRadius));
                                 continue;
                         }
 
@@ -339,8 +391,7 @@ void parse(char *s) {
                                 SET_TARGET();
                                 SET_DOUBLE(maxSpeed);
 
-                                SET_P();
-                                p->addBehavior(new Evade(character, target, maxSpeed));
+                                SET_P(new Evade(character, target, maxSpeed));
                                 continue;
                         }
 
@@ -352,8 +403,7 @@ void parse(char *s) {
                                 SET_DOUBLE(targetRadius);
                                 SET_DOUBLE(slowRadius);
 
-                                SET_P();
-                                p->addBehavior(new Face(character, target, maxAngularVelocity, targetRadius, slowRadius));
+                                SET_P(new Face(character, target, maxAngularVelocity, targetRadius, slowRadius));
                                 continue;
                         }
 
@@ -364,8 +414,7 @@ void parse(char *s) {
                                 SET_DOUBLE(maxSpeed);
                                 SET_DOUBLE(fleeRadius);
 
-                                SET_P();
-                                p->addBehavior(new Flee(character, target, maxSpeed, fleeRadius));
+                                SET_P(new Flee(character, target, maxSpeed, fleeRadius));
                                 continue;
                         }
 
@@ -376,8 +425,7 @@ void parse(char *s) {
                                 SET_DOUBLE(maxSpeed);
                                 SET_DOUBLE(radius);
 
-                                SET_P();
-                                p->addBehavior(new KinematicArrive(character, target, maxSpeed, radius));
+                                SET_P(new KinematicArrive(character, target, maxSpeed, radius));
                                 continue;
                         }
 
@@ -388,8 +436,7 @@ void parse(char *s) {
                                 SET_DOUBLE(maxSpeed);
                                 SET_DOUBLE(fleeRadius);
 
-                                SET_P();
-                                p->addBehavior(new KinematicFlee(character, target, maxSpeed, fleeRadius));
+                                SET_P(new KinematicFlee(character, target, maxSpeed, fleeRadius));
                                 continue;
                         }
 
@@ -399,8 +446,7 @@ void parse(char *s) {
                                 SET_TARGET();
                                 SET_DOUBLE(maxSpeed);
 
-                                SET_P();
-                                p->addBehavior(new KinematicSeek(character, target, maxSpeed));
+                                SET_P(new KinematicSeek(character, target, maxSpeed));
                                 continue;
                         }
 
@@ -410,8 +456,7 @@ void parse(char *s) {
                                 SET_DOUBLE(maxSpeed);
                                 SET_DOUBLE(maxRotation);
 
-                                SET_P();
-                                p->addBehavior(new KinematicWander(character, maxSpeed, maxRotation));
+                                SET_P(new KinematicWander(character, maxSpeed, maxRotation));
                                 continue;
                         }
 
@@ -419,8 +464,7 @@ void parse(char *s) {
                         if (class_s == string("StaticLookWhereYoureGoing")) {
                                 SET_CHARACTER();
 
-                                SET_P();
-                                p->addBehavior(new StaticLookWhereYoureGoing(character));
+                                SET_P(new StaticLookWhereYoureGoing(character));
                                 continue;
                         }
 
@@ -431,8 +475,7 @@ void parse(char *s) {
                                 SET_DOUBLE(targetRadius);
                                 SET_DOUBLE(slowRadius);
 
-                                SET_P();
-                                p->addBehavior(new LookWhereYoureGoing(character, maxAngularVelocity, targetRadius, slowRadius));
+                                SET_P(new LookWhereYoureGoing(character, maxAngularVelocity, targetRadius, slowRadius));
                                 continue;
                         }
 
@@ -442,8 +485,7 @@ void parse(char *s) {
                                 SET_TARGET();
                                 SET_DOUBLE(maxSpeed);
 
-                                SET_P();
-                                p->addBehavior(new Pursue(character, target, maxSpeed));
+                                SET_P(new Pursue(character, target, maxSpeed));
                                 continue;
                         }
 
@@ -453,8 +495,7 @@ void parse(char *s) {
                                 SET_TARGET();
                                 SET_DOUBLE(maxSpeed);
 
-                                SET_P();
-                                p->addBehavior(new Seek(character, target, maxSpeed));
+                                SET_P(new Seek(character, target, maxSpeed));
                                 continue;
                         }
 
@@ -464,8 +505,7 @@ void parse(char *s) {
                                 SET_TARGET();
                                 SET_DOUBLE(maxAcceleration);
 
-                                SET_P();
-                                p->addBehavior(new VelocityMatch(character, target, maxAcceleration));
+                                SET_P(new VelocityMatch(character, target, maxAcceleration));
                                 continue;
                         }
 
@@ -481,8 +521,7 @@ void parse(char *s) {
                                 SET_DOUBLE(wanderTime);
                                 SET_DOUBLE(maxAcceleration);
 
-                                SET_P();
-                                p->addBehavior(new Wander(character, maxRotation, targetRadius, slowRadius, wanderOffset, wanderRadius, wanderRate, wanderTime, maxAcceleration));
+                                SET_P(new Wander(character, maxRotation, targetRadius, slowRadius, wanderOffset, wanderRadius, wanderRate, wanderTime, maxAcceleration));
                                 continue;
                         }
 

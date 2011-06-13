@@ -7,14 +7,6 @@ using namespace std;
 
 class Phantom : public RuntimePekomin {
         public:
-                /*
-                Phantom(Triple pos, double ang, Triple vel, double vang);
-                Phantom(Triple pos, double ang);
-                Phantom();
-                ~Phantom();
-                */
-
-                //void addBehavior(Behavior *b);
                 virtual void draw();
 };
 

@@ -85,10 +85,10 @@ void initJuego() {
                 }
                 player = NULL;
 
-		/*
+/*
                 player = new Player(Triple(0, 0, 0), 0);
                 ents.push_back(player);
-				
+
                 Phantom *manuel      = new Phantom(       Triple(10,  0, 0), 0);
                 RuntimePekomin *clau = new RuntimePekomin(Triple(10,  4, 0), 0);
                 RuntimePekomin *sab  = new RuntimePekomin(Triple(10,  8, 0), 0);
@@ -189,7 +189,7 @@ void initJuego() {
                 dynamic_cast<Flock *>(fab->behaviors[7])->addBoid(kris);
                 dynamic_cast<Flock *>(fab->behaviors[7])->addBoid(dani);
                 ents.push_back(fab);
-		*/
+*/
                 {
                         char buf[BUFSIZE];
                         int pos = 0;

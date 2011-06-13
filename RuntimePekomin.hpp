@@ -5,7 +5,7 @@
 
 using namespace std;
 
-class RuntimePekomin : public Actor {
+class RuntimePekomin : public virtual Actor {
         public:
                 RuntimePekomin(Triple pos, double ang, Triple vel, double vang);
                 RuntimePekomin(Triple pos, double ang);

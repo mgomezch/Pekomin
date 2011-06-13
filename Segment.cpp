@@ -1,22 +1,30 @@
 #include "Segment.hpp"
 
+//#define DEBUG_SEGMENT
+
+#ifdef DEBUG_SEGMENT
+#include <iostream>
+#endif
+
 Triple Segment::v1() {
-        // TODO: rotate w.r.t. center
-        return this->p1;
+        return Triple(this->p1.x * cos(this->ang) - this->p1.y * sin(this->ang),
+                      this->p1.x * sin(this->ang) + this->p1.y * cos(this->ang),
+                      this->p1.z) + this->pos;
 }
 
 Triple Segment::v2() {
-        // TODO: rotate w.r.t. center
-        return this->p2;
+        return Triple(this->p2.x * cos(this->ang) - this->p2.y * sin(this->ang),
+                      this->p2.x * sin(this->ang) + this->p2.y * cos(this->ang),
+                      this->p2.z) + this->pos;
 }
 
-double dist(Segment &s, Ent &e) {
+double dist(Segment *s, Ent *e) {
         double l1, l2;
         Triple d, sv1, sv2, p;
 
-        p = e.pos;
-        sv1 = s.v1();
-        sv2 = s.v2();
+        p   = e->pos;
+        sv1 = s->v1();
+        sv2 = s->v2();
 
         d   = sv2 - sv1;
         l2  = d.length();
@@ -30,19 +38,26 @@ double dist(Segment &s, Ent &e) {
         return l2;
 }
 
-double dist(Ent &e, Segment &s) {
+double dist(Ent *e, Segment *s) {
         return dist(s, e);
 }
 
-double dist(Segment &s1, Segment &s2) {
-        // TODO: si se intersectan, return 0
+double dist(Mobile *e, Segment *s) {
+        return dist(s, static_cast<Ent *>(e));
+}
+
+double dist(Segment *s, Mobile *e) {
+        return dist(s, static_cast<Ent *>(e));
+}
+
+double dist(Segment *s1, Segment *s2) {
         Triple d1, d2, dc, s1v1, s1v2, s2v1, s2v2, p1, p2, ps;
         double ndc2, t, s, l1, l2;
 
-        s1v1 = s1.v1();
-        s1v2 = s1.v2();
-        s2v1 = s2.v1();
-        s2v2 = s2.v2();
+        s1v1 = s1->v1();
+        s1v2 = s1->v2();
+        s2v1 = s2->v1();
+        s2v2 = s2->v2();
         d1   = (s1v2 - s1v1);
         d2   = (s2v2 - s2v1);
         l1   = d1.length();
@@ -100,6 +115,7 @@ double dist(Segment &s1, Segment &s2) {
         }
 }
 
+/*
 Triple project(Triple r1, Triple r2, Triple p) {
         Triple dir = (r2 - r1).normalized();
         return r1 + dir * (p - r1).dot(dir);
@@ -108,3 +124,4 @@ Triple project(Triple r1, Triple r2, Triple p) {
 double line_point_distance(Triple r1, Triple r2, Triple p) {
         return (p - project(r1, r2, p)).length();
 }
+*/
