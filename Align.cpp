@@ -19,7 +19,7 @@ Align::Align(Mobile *character, Mobile *target, double maxAngularVelocity, doubl
 }
 
 pair<bool, double> Align::getAngVel(unsigned int ticks) {
-        pair<bool, double> steering;
+	pair<bool, double> steering;
         double rotation, rotationSize, targetRotation;
         Triple direction;
 

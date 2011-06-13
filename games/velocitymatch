@@ -1,0 +1,32 @@
+player {
+        class = Player;
+        pos.x = 0;
+        pos.y = 0;
+        pos.z = 0;
+        ang   = 0;
+        vel.x = 0;
+        vel.y = 0;
+        vel.z = 0;
+        vrot  = 0;
+}
+
+velocitymatcheador {
+	class = RuntimePekomin;
+	pos.x = 10;
+	pos.y = 24;
+	VelocityMatch {
+		class           = VelocityMatch;
+		target          = player;
+		maxAcceleration = 0.01;
+	}
+}
+
+staticvelocitymatcheador {
+	class = RuntimePekomin;
+	pos.x = 10;
+	pos.y = 20;
+	StaticVelocityMatch {
+		class           = StaticVelocityMatch;
+		target          = player;
+	}
+}

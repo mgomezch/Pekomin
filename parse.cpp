@@ -386,7 +386,7 @@ void parse(char *s) {
                                 SET_CHARACTER();
                                 SET_TARGET();
                                 SET_DOUBLE(maxSpeed);
-				SET_DOUBLE(fleeRadius);
+                                SET_DOUBLE(fleeRadius);
 
                                 SET_P();
                                 p->addBehavior(new KinematicFlee(character, target, maxSpeed, fleeRadius));
@@ -458,6 +458,16 @@ void parse(char *s) {
                                 continue;
                         }
 
+                        // StaticVelocityMatch(Mobile *character, Mobile *target);
+                        if (class_s == string("StaticVelocityMatch")) {
+                                SET_CHARACTER();
+                                SET_TARGET();
+
+                                SET_P();
+                                p->addBehavior(new StaticVelocityMatch(character, target));
+                                continue;
+                        }
+                        
                         // VelocityMatch(Mobile *character, Mobile *target, double maxAcceleration);
                         if (class_s == string("VelocityMatch")) {
                                 SET_CHARACTER();
