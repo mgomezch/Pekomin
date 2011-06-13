@@ -496,6 +496,18 @@ void parse(char *s) {
                                 continue;
                         }
 
+                        // PathFollowing(Mobile *character, double maxSpeed, double targetRadius, double slowRadius);
+                        if (class_s == string("PathFollowing")) {
+                                SET_CHARACTER();
+                                SET_DOUBLE(maxSpeed);
+                                SET_DOUBLE(targetRadius);
+                                SET_DOUBLE(slowRadius);
+
+                                SET_P();
+                                p->addBehavior(new PathFollowing(character, maxSpeed, targetRadius, slowRadius));
+                                continue;
+                        }
+
                         cerr << "parse error making ent '" << it_e->first << "' behavior '" << it_b->first << "': field 'class' == '" << it_fields->second << "': class not found" << endl;
                         exit(EX_DATAERR);
                 }

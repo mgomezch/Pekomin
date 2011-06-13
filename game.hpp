@@ -5,6 +5,7 @@
 
 #include <vector>
 
+#include "Node.hpp"
 #include "Player.hpp"
 #include "Ent.hpp"
 
@@ -49,6 +50,7 @@
 
 extern Player *player;
 extern vector<Ent *> ents;
+extern vector<Node *> graph;
 
 enum cam_enum {
         CAM_STATIC_OVERHEAD = 0,

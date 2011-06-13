@@ -14,6 +14,7 @@
 #include "StaticLookWhereYoureGoing.hpp"
 #include "LookWhereYoureGoing.hpp"
 #include "Pursue.hpp"
+#include "PathFollowing.hpp"
 #include "Seek.hpp"
 #include "StaticVelocityMatch.hpp"
 #include "VelocityMatch.hpp"
