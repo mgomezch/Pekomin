@@ -3,10 +3,11 @@
 #include "util.hpp"
 
 KinematicWander::KinematicWander(Ent *character, double maxSpeed, double maxRotation) {
-        this->character   = character;
-        this->maxSpeed    = maxSpeed;
+        this->character   = character  ;
+        this->maxSpeed    = maxSpeed   ;
         this->maxRotation = maxRotation;
-        this->accum       = 0;
+        this->accum       = 0          ;
+        this->dead        = false      ;
 }
 
 pair<bool, Triple> KinematicWander::getVel(unsigned int ticks) {

@@ -11,11 +11,12 @@
 #endif
 
 Face::Face(Mobile *character, Mobile *target, double maxAngularVelocity, double targetRadius, double slowRadius) {
-        this->character          = character;
-        this->target             = target;
+        this->character          = character         ;
+        this->target             = target            ;
         this->maxAngularVelocity = maxAngularVelocity;
-        this->targetRadius       = targetRadius;
-        this->slowRadius         = slowRadius;
+        this->targetRadius       = targetRadius      ;
+        this->slowRadius         = slowRadius        ;
+        this->dead               = false             ;
 }
 
 pair<bool, double> Face::getAngVelIncr(unsigned int ticks) {

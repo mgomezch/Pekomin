@@ -2,11 +2,11 @@
 #include "Mobile.hpp"
 
 Flee::Flee(Mobile *character, Mobile *target, double maxSpeed, double fleeRadius) {
-        this->character  = character ;
-        this->target     = target    ;
-        this->maxSpeed   = maxSpeed  ;
+        this->character  = character;
+        this->target     = target;
+        this->maxSpeed   = maxSpeed;
         this->fleeRadius = fleeRadius;
-        this->dead       = false     ;
+        this->dead       = false;
 }
 
 pair<bool, Triple> Flee::getVel(unsigned int ticks) {

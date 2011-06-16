@@ -5,6 +5,8 @@ using namespace std;
 
 class Behavior {
         public:
+                bool dead;
+
                 virtual ~Behavior() = 0;
 //              virtual unsigned int type() = 0;
 };

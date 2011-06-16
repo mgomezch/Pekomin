@@ -12,17 +12,18 @@ Wander::Wander(Mobile *character  ,
                double wanderRate  ,
                double wanderTime  ,
                double maxSpeed    ) {
-        this->character    = character;
+        this->character    = character    ;
         this->target       = new Phantom();
-        this->maxRotation  = maxRotation;
-        this->targetRadius = targetRadius;
-        this->slowRadius   = slowRadius;
-        this->wanderOffset = wanderOffset;
-        this->wanderRadius = wanderRadius;
-        this->wanderRate   = wanderRate;
-        this->wanderTime   = wanderTime;
-        this->maxSpeed     = maxSpeed;
-        this->accum        = wanderTime;
+        this->maxRotation  = maxRotation  ;
+        this->targetRadius = targetRadius ;
+        this->slowRadius   = slowRadius   ;
+        this->wanderOffset = wanderOffset ;
+        this->wanderRadius = wanderRadius ;
+        this->wanderRate   = wanderRate   ;
+        this->wanderTime   = wanderTime   ;
+        this->maxSpeed     = maxSpeed     ;
+        this->accum        = wanderTime   ;
+        this->dead         = false        ;
 
         wanderOrientation = RandBin(-1, 1) * M_PI;
         target->ang = character->ang + wanderOrientation;

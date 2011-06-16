@@ -9,8 +9,9 @@
 
 Pursue::Pursue(Mobile *character, Mobile *target, double maxSpeed) {
         this->character = character;
-        this->target    = target;
-        this->maxSpeed  = maxSpeed;
+        this->target    = target   ;
+        this->maxSpeed  = maxSpeed ;
+        this->dead      = false    ; 
 }
 
 pair<bool, Triple> Pursue::getVel(unsigned int ticks) {
@@ -18,39 +19,39 @@ pair<bool, Triple> Pursue::getVel(unsigned int ticks) {
         Triple direction;
         double distance, targetRadius = 2.0, speed, prediction;
 
-	if (character->vel.length() == 0) {
-		steering.first = false;
+        if (character->vel.length() == 0) {
+                steering.first = false;
 #ifdef DEBUG_PURSUE
-		cout << "Pursue : " << dynamic_cast<void *>(this) << "1 distancia : " << distance << " velocidad : " << endl; steering.second.print();
+                cout << "Pursue : " << dynamic_cast<void *>(this) << "1 distancia : " << distance << " velocidad : " << endl; steering.second.print();
 #endif
-		return steering;
-	}
+                return steering;
+        }
 
-	direction = target->pos - character->pos;
+        direction = target->pos - character->pos;
         distance = direction.length();
  
-	if (distance < targetRadius) { 
-		steering.first = false;
+        if (distance < targetRadius) { 
+                steering.first = false;
 #ifdef DEBUG_PURSUE
-		cout << "Pursue : " << dynamic_cast<void *>(this) << "2 distancia : " << distance << " velocidad : " << endl; steering.second.print();
+                cout << "Pursue : " << dynamic_cast<void *>(this) << "2 distancia : " << distance << " velocidad : " << endl; steering.second.print();
 #endif
-		return steering;
-	}
-	
-	speed = character->vel.length();
+                return steering;
+        }
 
-	if (speed <= (distance / maxPrediction)) prediction = maxPrediction;
-	else                                     prediction = distance / speed;
+        speed = character->vel.length();
 
-	steering.first = true;
-	steering.second = target->pos + target->vel * prediction - character->pos;
-	steering.second.normalized();
+        if (speed <= (distance / maxPrediction)) prediction = maxPrediction;
+        else                                     prediction = distance / speed;
+
+        steering.first = true;
+        steering.second = target->pos + target->vel * prediction - character->pos;
+        steering.second.normalized();
 
 #ifdef DEBUG_PURSUE
-	cout << "Pursue : " << dynamic_cast<void *>(this) << "3 distancia : " << distance << " velocidad : " << endl; steering.second.print();
+        cout << "Pursue : " << dynamic_cast<void *>(this) << "3 distancia : " << distance << " velocidad : " << endl; steering.second.print();
 #endif
 
-	steering.second *= maxSpeed;
+        steering.second *= maxSpeed;
 
         return steering;
 }

@@ -1,19 +1,39 @@
 #include "PathFollowing.hpp"
 #include "Mobile.hpp"
 
-PathFollowing::PathFollowing(Mobile *character, double maxSpeed, double targetRadius, double slowRadius) {
-        this->character    = character;
-        this->maxSpeed     = maxSpeed;
+PathFollowing::PathFollowing(Mobile *character, Mobile *target, double maxSpeed, double targetRadius, double slowRadius) {
+        this->character    = character   ;
+        this->target       = target      ;
+        this->begin        = NULL        ;
+        this->end          = NULL        ;
+        this->maxSpeed     = maxSpeed    ;
         this->targetRadius = targetRadius;
-        this->slowRadius   = slowRadius; 
+        this->slowRadius   = slowRadius  ;
+        this->dead         = false       ;
+
+        double distance;
+
+        distance = (graph[0]->pos - this->character->pos).length();
+        this->begin = graph[0];
+        for (unsigned int i = 1; i < graph.size(); i++) {
+                if (distance > (graph[i]->pos - this->character->pos).length()) {
+                        distance = (graph[i]->pos - this->character->pos).length();
+                        this->begin = graph[i];
+                }
+        }
+
+        distance = (graph[0]->pos - this->target->pos).length();
+        this->end = graph[0];
+        for (unsigned int i = 1; i < graph.size(); i++) {
+                if (distance > (graph[i]->pos - this->target->pos).length()) {
+                        distance = (graph[i]->pos - this->target->pos).length();
+                        this->end = graph[i];
+                }
+        }
+
 }
 
-void PathFollowing::add_Nodes(Node *begin, Node *end) {
-        this->begin = begin;
-        this->end   = end;
-}
-
-pair<bool, Triple> PathFollowing::getVel(unsigned int ticks){
+pair<bool, Triple> PathFollowing::getVel(unsigned int ticks) {
         pair<bool, Triple> steering;
         Triple direction;
         double distance, targetSpeed;
@@ -32,14 +52,14 @@ pair<bool, Triple> PathFollowing::getVel(unsigned int ticks){
                         steering.second = direction.normalized();
                         steering.second *= maxSpeed;
                 }
-                else if (path.size() == 1) {
-                        direction = path.front()->pos - character->pos;
+                else {
+                        direction = target->pos - character->pos;
                         distance = direction.length();
                         direction.normalize();
 
                         if (distance < targetRadius) {
-                                steering.second = character->vel;;
-                                path.erase(path.begin());
+                                steering.second = target->vel;;
+                                dead = true; //MATANDO PATHFOLLOWING
                                 if (steering.second.length() > maxSpeed) {
                                         steering.second.normalize();
                                         steering.second *= maxSpeed;
@@ -53,6 +73,8 @@ pair<bool, Triple> PathFollowing::getVel(unsigned int ticks){
                         }
 
                         steering.second = direction * targetSpeed;
+
+                        return steering;
                 }
         }
 

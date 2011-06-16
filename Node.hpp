@@ -10,7 +10,7 @@
 
 using namespace std;
 
-class Node : public Mobile{
+class Node : public Mobile {
         public :
                 string id; 
                 //Triple pos;
@@ -35,7 +35,9 @@ class Node : public Mobile{
 
                 void print_adj();
 
-                virtual void draw();                 
+                virtual void draw();
+
+                virtual void update(unsigned int ticks);                 
 };
 
 #endif

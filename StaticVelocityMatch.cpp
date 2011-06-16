@@ -3,7 +3,8 @@
 
 StaticVelocityMatch::StaticVelocityMatch(Mobile *character, Mobile *target) {
         this->character = character;
-        this->target    = target;
+        this->target    = target   ;
+        this->dead      = false    ;
 }
 
 pair<bool, Triple> StaticVelocityMatch::getVel(unsigned int ticks) {

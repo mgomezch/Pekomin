@@ -13,6 +13,7 @@ Flock::Flock(Mobile *character     ,
         this->flockRadius     = flockRadius    ;
         this->maxAcceleration = maxAcceleration;
         this->accum           = 0              ;
+        this->dead            = false          ;
 }
 
 pair<bool, Triple> Flock::getVelIncr(unsigned int ticks) {
