@@ -1,6 +1,8 @@
 #ifndef _ENT_HPP
 #define _ENT_HPP
 
+#include <tuple>
+
 #include "Triple.hpp"
 
 class Segment;
@@ -13,15 +15,8 @@ class Ent {
                 virtual void draw()                     = 0;
                 virtual void update(unsigned int ticks) = 0;
                 Triple orientation();
-
-/*
-                friend double dist(Ent &    , Ent &    );
-                friend double dist(Segment &, Ent &    );
-                friend double dist(Ent &    , Segment &);
-*/
 };
 
-//double dist(Ent &e1, Ent &e2);
-double dist(Ent *e1, Ent *e2);
+tuple<Triple, Triple> points(Ent *e1, Ent *e2);
 
 #endif

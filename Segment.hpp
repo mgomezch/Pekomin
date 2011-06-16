@@ -1,6 +1,8 @@
 #ifndef _SEGMENT_HPP
 #define _SEGMENT_HPP
 
+#include <tuple>
+
 #include "Triple.hpp"
 #include "Mobile.hpp"
 
@@ -14,10 +16,10 @@ class Segment : public virtual Mobile {
                 Triple v2();
 };
 
-double dist(Segment *, Ent     *);
-double dist(Ent     *, Segment *);
-double dist(Segment *, Mobile  *);
-double dist(Mobile  *, Segment *);
-double dist(Segment *, Segment *);
+tuple<Triple, Triple> points(Segment *, Ent     *);
+tuple<Triple, Triple> points(Ent     *, Segment *);
+tuple<Triple, Triple> points(Segment *, Mobile  *);
+tuple<Triple, Triple> points(Mobile  *, Segment *);
+tuple<Triple, Triple> points(Segment *, Segment *);
 
 #endif
