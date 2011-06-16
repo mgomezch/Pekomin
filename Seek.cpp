@@ -3,8 +3,9 @@
 
 Seek::Seek(Mobile *character, Mobile *target, double maxSpeed) {
         this->character = character;
-        this->target    = target;
-        this->maxSpeed  = maxSpeed;
+        this->target    = target   ;
+        this->maxSpeed  = maxSpeed ;
+        this->dead      = false    ; 
 }
 
 pair<bool, Triple> Seek::getVel(unsigned int ticks) {

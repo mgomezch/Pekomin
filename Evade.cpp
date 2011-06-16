@@ -7,8 +7,9 @@
 
 Evade::Evade(Mobile *character, Mobile *target, double maxSpeed) {
         this->character = character;
-        this->target    = target;
-        this->maxSpeed  = maxSpeed;
+        this->target    = target   ;
+        this->maxSpeed  = maxSpeed ;
+        this->dead      = false    ;
 }
 
 pair<bool, Triple> Evade::getVel(unsigned int ticks) {
@@ -16,24 +17,24 @@ pair<bool, Triple> Evade::getVel(unsigned int ticks) {
         Triple direction;
         double distance, targetRadius = 5.0, speed, prediction;
 
-	if (character->vel.length() == 0) {
-		steering.first = false;
+        if (character->vel.length() == 0) {
+                steering.first = false;
 #ifdef DEBUG_EVADE
-		cout << "Evade : " << dynamic_cast<void *>(this) << "1 distancia : " << distance << " velocidad : " << endl; steering.second.print();
+                cout << "Evade : " << dynamic_cast<void *>(this) << "1 distancia : " << distance << " velocidad : " << endl; steering.second.print();
 #endif
-		return steering;
-	}
+                return steering;
+        }
 
         direction = character->pos - target->pos;
         distance = direction.length();
 
-	if (distance < targetRadius) {
-		steering.first = false;
+        if (distance < targetRadius) {
+                steering.first = false;
 #ifdef DEBUG_EVADE
-		cout << "Evade : " << dynamic_cast<void *>(this) << "2 distancia : " << distance << " velocidad : " << endl; steering.second.print();
+                cout << "Evade : " << dynamic_cast<void *>(this) << "2 distancia : " << distance << " velocidad : " << endl; steering.second.print();
 #endif
-		return steering;
-	}
+                return steering;
+        }
 
         speed = character->vel.length();
 
@@ -45,7 +46,7 @@ pair<bool, Triple> Evade::getVel(unsigned int ticks) {
         steering.second.normalized();
 
 #ifdef DEBUG_EVADE
-		cout << "Evade : " << dynamic_cast<void *>(this) << "3 distancia : " << distance << " velocidad : " << endl; steering.second.print();
+                cout << "Evade : " << dynamic_cast<void *>(this) << "3 distancia : " << distance << " velocidad : " << endl; steering.second.print();
 #endif
 
         steering.second *= maxSpeed;

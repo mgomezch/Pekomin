@@ -1,10 +1,17 @@
 #include "Pursue.hpp"
 #include "Mobile.hpp"
 
+#define DEBUG_PURSUE
+
+#ifdef DEBUG_PURSUE
+#include <iostream>
+#endif
+
 Pursue::Pursue(Mobile *character, Mobile *target, double maxSpeed) {
         this->character = character;
-        this->target    = target;
-        this->maxSpeed  = maxSpeed;
+        this->target    = target   ;
+        this->maxSpeed  = maxSpeed ;
+        this->dead      = false    ;
 }
 
 pair<bool, Triple> Pursue::getVel(unsigned int ticks) {
@@ -14,6 +21,9 @@ pair<bool, Triple> Pursue::getVel(unsigned int ticks) {
 
         if (character->vel.length() == 0) {
                 steering.first = false;
+#ifdef DEBUG_PURSUE
+                cout << "Pursue : " << dynamic_cast<void *>(this) << "1 distancia : " << distance << " velocidad : " << endl; steering.second.print();
+#endif
                 return steering;
         }
 
@@ -22,6 +32,9 @@ pair<bool, Triple> Pursue::getVel(unsigned int ticks) {
 
         if (distance < targetRadius) {
                 steering.first = false;
+#ifdef DEBUG_PURSUE
+                cout << "Pursue : " << dynamic_cast<void *>(this) << "2 distancia : " << distance << " velocidad : " << endl; steering.second.print();
+#endif
                 return steering;
         }
 
@@ -33,8 +46,11 @@ pair<bool, Triple> Pursue::getVel(unsigned int ticks) {
         steering.first = true;
         steering.second = target->pos + target->vel * prediction - character->pos;
 
-        steering.second.normalize();
-        steering.second *= maxSpeed;
+#ifdef DEBUG_PURSUE
+        cout << "Pursue : " << dynamic_cast<void *>(this) << "3 distancia : " << distance << " velocidad : " << endl; steering.second.print();
+#endif
+
+        steering.second = steering.second.normalized() * maxSpeed;
 
         return steering;
 }

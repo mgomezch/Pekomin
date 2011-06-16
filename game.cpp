@@ -1,6 +1,7 @@
 #include "game.hpp"
 #include "Player.hpp"
 #include "Ent.hpp"
+#include "Node.hpp"
 
 #include <GL/glut.h>
 

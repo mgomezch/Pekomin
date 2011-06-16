@@ -77,3 +77,5 @@ void Node::draw() {
                 glEnd();*/
         glPopMatrix();
 }
+
+void Node::update(unsigned int ticks) {}

@@ -11,10 +11,11 @@
 #endif
 
 LookWhereYoureGoing::LookWhereYoureGoing(Mobile *character, double maxAngularVelocity, double targetRadius, double slowRadius) {
-        this->character          = character;
+        this->character          = character         ;
         this->maxAngularVelocity = maxAngularVelocity;
-        this->targetRadius       = targetRadius;
-        this->slowRadius         = slowRadius;
+        this->targetRadius       = targetRadius      ;
+        this->slowRadius         = slowRadius        ;
+        this->dead               = false             ;
 }
 
 pair<bool, double> LookWhereYoureGoing::getAngVel(unsigned int ticks) {

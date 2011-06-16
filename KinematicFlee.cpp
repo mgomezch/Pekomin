@@ -1,11 +1,12 @@
 #include "KinematicFlee.hpp"
 #include "Ent.hpp"
 
-KinematicFlee::KinematicFlee(Ent *character_, Ent *target_, double maxSpeed_, double fleeRadius_) {
-        character  = character_;
-        target     = target_;
-        maxSpeed   = maxSpeed_;
-	fleeRadius = fleeRadius_;	
+KinematicFlee::KinematicFlee(Ent *character, Ent *target, double maxSpeed, double fleeRadius) {
+        this->character  = character ;
+        this->target     = target    ;
+        this->maxSpeed   = maxSpeed  ;
+        this->fleeRadius = fleeRadius;
+        this->dead       = false     ;
 }
 
 // Retorna incrementos de velocidad y rotación

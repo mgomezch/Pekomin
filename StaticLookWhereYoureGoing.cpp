@@ -4,6 +4,7 @@
 
 StaticLookWhereYoureGoing::StaticLookWhereYoureGoing(Mobile *character) {
         this->character = character;
+        this->dead      = false    ;
 }
 
 pair<bool, double> StaticLookWhereYoureGoing::getAng(unsigned int ticks) {

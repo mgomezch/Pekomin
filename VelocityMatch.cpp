@@ -4,8 +4,9 @@
 
 VelocityMatch::VelocityMatch(Mobile *character, Mobile *target, double maxSpeed) {
         this->character = character;
-        this->target    = target;
-        this->maxSpeed  = maxSpeed;
+        this->target    = target   ;
+        this->maxSpeed  = maxSpeed ;
+        this->dead      = false    ;
 }
 
 pair<bool, Triple> VelocityMatch::getVelIncr(unsigned int ticks) {

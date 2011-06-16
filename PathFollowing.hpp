@@ -5,6 +5,7 @@
 #include "DirectKinematicV.hpp"
 #include "Node.hpp"
 #include "Dijkstra.hpp"
+#include "game.hpp"
 
 using namespace std;
 
@@ -13,6 +14,7 @@ class Mobile;
 class PathFollowing : public DirectKinematicV {
         public:
                 Mobile *character;
+                Mobile *target;
                 vector<Node *> path;
                 Node *begin;
                 Node *end;
@@ -20,9 +22,7 @@ class PathFollowing : public DirectKinematicV {
                 double targetRadius;
                 double slowRadius;
 
-                PathFollowing(Mobile *character, double maxSpeed, double targetRadius, double slowRadius);
-
-                void add_Nodes(Node *begin, Node *end);
+                PathFollowing(Mobile *character, Mobile *target, double maxSpeed, double targetRadius, double slowRadius);
 
                 virtual pair<bool, Triple> getVel(unsigned int ticks);
 };
