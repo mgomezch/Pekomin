@@ -9,7 +9,7 @@
 
 using namespace std;
 
-class Actor : public Mobile {
+class Actor : public virtual Mobile {
         public:
                 unsigned int state;
                 vector<Behavior *> behaviors;

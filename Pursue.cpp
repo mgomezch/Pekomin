@@ -11,7 +11,7 @@ Pursue::Pursue(Mobile *character, Mobile *target, double maxSpeed) {
         this->character = character;
         this->target    = target   ;
         this->maxSpeed  = maxSpeed ;
-        this->dead      = false    ; 
+        this->dead      = false    ;
 }
 
 pair<bool, Triple> Pursue::getVel(unsigned int ticks) {
@@ -29,8 +29,8 @@ pair<bool, Triple> Pursue::getVel(unsigned int ticks) {
 
         direction = target->pos - character->pos;
         distance = direction.length();
- 
-        if (distance < targetRadius) { 
+
+        if (distance < targetRadius) {
                 steering.first = false;
 #ifdef DEBUG_PURSUE
                 cout << "Pursue : " << dynamic_cast<void *>(this) << "2 distancia : " << distance << " velocidad : " << endl; steering.second.print();
@@ -45,13 +45,12 @@ pair<bool, Triple> Pursue::getVel(unsigned int ticks) {
 
         steering.first = true;
         steering.second = target->pos + target->vel * prediction - character->pos;
-        steering.second.normalized();
 
 #ifdef DEBUG_PURSUE
         cout << "Pursue : " << dynamic_cast<void *>(this) << "3 distancia : " << distance << " velocidad : " << endl; steering.second.print();
 #endif
 
-        steering.second *= maxSpeed;
+        steering.second = steering.second.normalized() * maxSpeed;
 
         return steering;
 }

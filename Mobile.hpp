@@ -3,10 +3,12 @@
 
 #include "Ent.hpp"
 
-class Mobile : public Ent {
+class Mobile : public virtual Ent {
         public:
                 Triple vel;
                 double vrot;
 };
+
+double dist(Mobile *e1, Mobile *e2);
 
 #endif

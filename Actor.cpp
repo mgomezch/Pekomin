@@ -130,9 +130,8 @@ void Actor::update(unsigned int ticks) {
 #endif
 
         // roce; si se hace un salto, chequear que estés en el piso
-        // TODO: 
-        if (this->pos.z != 0) this->vel  += Triple(this->vel.x, this->vel.y, 0) * (-0.005) * static_cast<double>(ticks);
-        this->vrot += this->vrot                          * (-0.030) * static_cast<double>(ticks);
+        if (this->pos.z == 0) this->vel += Triple(this->vel.x, this->vel.y, 0) * (-0.005) * static_cast<double>(ticks);
+        this->vrot += this->vrot * (-0.030) * static_cast<double>(ticks);
 
         this->pos += this->vel  * static_cast<double>(ticks);
         this->ang += this->vrot * static_cast<double>(ticks);
