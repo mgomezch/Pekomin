@@ -23,10 +23,12 @@ pair<bool, double> Face::getAngVelIncr(unsigned int ticks) {
         pair<bool, double> steering;
         double rotation, rotationSize, targetRotation;
         Triple direction;
+        Triple cp, tp;
 
         steering.first = true;
 
-        direction = target->pos - character->pos;
+        tie(cp, tp) = points(this->character, this->target);
+        direction = tp - cp;
         rotation = mapToRange(atan2(direction.y, direction.x) - character->ang);
         //if (rotation > M_PI) rotation -= 2 * M_PI;
         rotationSize = abs(rotation);

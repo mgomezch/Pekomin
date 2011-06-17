@@ -21,6 +21,7 @@ pair<bool, Triple> Flock::getVelIncr(unsigned int ticks) {
         Triple direction;
         int tam = 0;
         double distance, targetSpeed;
+        Triple cp, tp;
 
         //if (this->accum == 0) {
                 for (unsigned int i = 0; i < boids.size(); i++) {
@@ -33,15 +34,16 @@ pair<bool, Triple> Flock::getVelIncr(unsigned int ticks) {
         //}
         //if (this->accum++ == 3000) this->accum = 0;
 
+        tie(cp, tp) = points(this->character, this->target);
         /*steering.first = true;
-        steering.second = target->pos - character->pos;
+        steering.second = tp - cp;
         if (steering.second.length() > 0.001) {
                 steering.second.normalized();
                 steering.second *= maxAcceleration;
         }*/
 
         // TODO: distance
-        direction = target->pos - character->pos;
+        direction = tp - cp;
         distance = direction.length();
 
         if (distance < targetRadius) {

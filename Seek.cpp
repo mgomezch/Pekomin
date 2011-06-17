@@ -10,9 +10,11 @@ Seek::Seek(Mobile *character, Mobile *target, double maxSpeed) {
 
 pair<bool, Triple> Seek::getVel(unsigned int ticks) {
         pair<bool, Triple> steering;
+        Triple cp, tp;
 
         steering.first = true;
-        steering.second = target->pos - character->pos;
+        tie(cp, tp) = points(this->character, this->target);
+        steering.second = tp - cp;
         steering.second.normalize();
         steering.second *= maxSpeed;
 

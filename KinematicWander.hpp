@@ -10,9 +10,10 @@ class KinematicWander : public DirectKinematicV {
                 Ent *character;
                 double maxSpeed;
                 double maxRotation;
+                double wanderTime;
                 int accum;
 
-                KinematicWander(Ent *character, double maxSpeed, double maxRotation);
+                KinematicWander(Ent *character, double maxSpeed, double maxRotation, double wanderTime);
 
                 virtual pair<bool, Triple> getVel(unsigned int ticks);
 };

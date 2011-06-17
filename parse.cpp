@@ -450,13 +450,14 @@ void parse(char *s) {
                                 continue;
                         }
 
-                        // KinematicWander(Ent *character, double maxSpeed, double maxRotation);
+                        // KinematicWander(Ent *character, double maxSpeed, double maxRotation, double wanderTime);
                         if (class_s == string("KinematicWander")) {
                                 SET_CHARACTER();
                                 SET_DOUBLE(maxSpeed);
                                 SET_DOUBLE(maxRotation);
+                                SET_DOUBLE(wanderTime);
 
-                                SET_P(new KinematicWander(character, maxSpeed, maxRotation));
+                                SET_P(new KinematicWander(character, maxSpeed, maxRotation, wanderTime));
                                 continue;
                         }
 
@@ -534,7 +535,7 @@ void parse(char *s) {
                                 continue;
                         }
 
-                        // PathFollowing(Mobile *character, double maxSpeed, double targetRadius, double slowRadius);
+                        // PathFollowing(Mobile *character, Mobile *target, double maxSpeed, double targetRadius, double slowRadius) {
                         if (class_s == string("PathFollowing")) {
                                 SET_CHARACTER();
                                 SET_TARGET();
@@ -542,7 +543,7 @@ void parse(char *s) {
                                 SET_DOUBLE(targetRadius);
                                 SET_DOUBLE(slowRadius);
 
-                                SET_P(new PathFollowing(character, maxSpeed, targetRadius, slowRadius));
+                                SET_P(new PathFollowing(character, target, maxSpeed, targetRadius, slowRadius));
                                 continue;
                         }
 

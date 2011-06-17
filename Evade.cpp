@@ -16,6 +16,7 @@ pair<bool, Triple> Evade::getVel(unsigned int ticks) {
         pair<bool, Triple> steering;
         Triple direction;
         double distance, targetRadius = 5.0, speed, prediction;
+        Triple cp, tp;
 
         if (character->vel.length() == 0) {
                 steering.first = false;
@@ -25,7 +26,8 @@ pair<bool, Triple> Evade::getVel(unsigned int ticks) {
                 return steering;
         }
 
-        direction = character->pos - target->pos;
+        tie(cp, tp) = points(this->character, this->target);
+        direction = cp - tp;
         distance = direction.length();
 
         if (distance < targetRadius) {
@@ -42,7 +44,7 @@ pair<bool, Triple> Evade::getVel(unsigned int ticks) {
         else                                     prediction = distance / speed;
 
         steering.first = true;
-        steering.second = character->pos - target->pos + target->vel * prediction;
+        steering.second = cp - tp + target->vel * prediction;
         steering.second.normalized();
 
 #ifdef DEBUG_EVADE

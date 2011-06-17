@@ -13,17 +13,19 @@ Arrive::Arrive(Mobile *character, Mobile *target, double maxSpeed, double target
         this->maxSpeed     = maxSpeed    ;
         this->targetRadius = targetRadius;
         this->slowRadius   = slowRadius  ;
-        this->dead         = false       ; 
+        this->dead         = false       ;
 }
 
 pair<bool, Triple> Arrive::getVel(unsigned int ticks) {
         pair<bool, Triple> steering;
         Triple direction, targetVelocity;
         double distance, targetSpeed;
+        Triple cp, tp;
 
         steering.first = true;
 
-        direction = target->pos - character->pos;
+        tie(cp, tp) = points(this->character, this->target);
+        direction = tp - cp;
         distance = direction.length();
         direction.normalize();
 
