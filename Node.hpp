@@ -12,21 +12,23 @@ using namespace std;
 
 class Node : public Mobile {
         public :
-                string id; 
+                string id;
                 //Triple pos;
                 bool check;
                 vector<tuple<Node*, bool, double> > adj;
 
                 Node();
-               
+
                 Node(Triple pos);
- 
+
                 Node(string id, Triple pos);
 
                 Triple get_Pos();
 
                 bool is_Visited();
-                
+
+                void set_Visited();
+
                 void add_adj(tuple<Node*, bool, double> node);
 
                 bool is_adj(Node *adj);
@@ -37,7 +39,7 @@ class Node : public Mobile {
 
                 virtual void draw();
 
-                virtual void update(unsigned int ticks);                 
+                virtual void update(unsigned int ticks);
 };
 
 #endif

@@ -38,6 +38,10 @@ bool Node::is_Visited() {
         return this->check;
 }
 
+void Node::set_Visited() {
+        this->check = true;
+}
+
 void Node::add_adj(tuple<Node*, bool, double> node) {
         adj.push_back(node);
 }

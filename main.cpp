@@ -192,6 +192,76 @@ void initJuego() {
                 dynamic_cast<Flock *>(fab->behaviors[7])->addBoid(dani);
                 ents.push_back(fab);
                 */
+
+                //Prueba PathFollowing
+                Node *A = new Node("A",Triple(  0,  0, 0));
+                Node *B = new Node("B",Triple( 10,  5, 0));
+                Node *C = new Node("C",Triple( 10, 20, 0));
+                Node *D = new Node("D",Triple( 20,  5, 0));
+                Node *E = new Node("E",Triple(-20,  3, 0));
+                Node *F = new Node("F",Triple(  0, 50, 0));
+                Node *G = new Node("G",Triple(-30,  6, 0));
+
+                tuple<Node*, bool, double> cosa;
+
+                get<0>(cosa) = B; get<1>(cosa) = false;
+                A->add_adj(cosa);
+                get<0>(cosa) = C; get<1>(cosa) = false;
+                A->add_adj(cosa);
+
+                get<0>(cosa) = A; get<1>(cosa) = false;
+                B->add_adj(cosa);
+                get<0>(cosa) = D; get<1>(cosa) = false;
+                B->add_adj(cosa);
+                get<0>(cosa) = F; get<1>(cosa) = false;
+                B->add_adj(cosa);
+
+                get<0>(cosa) = A; get<1>(cosa) = false;
+                C->add_adj(cosa);
+                get<0>(cosa) = D; get<1>(cosa) = false;
+                C->add_adj(cosa);
+                get<0>(cosa) = E; get<1>(cosa) = false;
+                C->add_adj(cosa);
+                get<0>(cosa) = G; get<1>(cosa) = false;
+                C->add_adj(cosa);
+
+                get<0>(cosa) = B; get<1>(cosa) = false;
+                D->add_adj(cosa);
+                get<0>(cosa) = C; get<1>(cosa) = false;
+                D->add_adj(cosa);
+                get<0>(cosa) = E; get<1>(cosa) = false;
+                D->add_adj(cosa);
+                get<0>(cosa) = G; get<1>(cosa) = false;
+                D->add_adj(cosa);
+
+                get<0>(cosa) = C; get<1>(cosa) = false;
+                E->add_adj(cosa);
+                get<0>(cosa) = D; get<1>(cosa) = false;
+                E->add_adj(cosa);
+
+                get<0>(cosa) = B; get<1>(cosa) = false;
+                F->add_adj(cosa);
+                get<0>(cosa) = G; get<1>(cosa) = false;
+                F->add_adj(cosa);
+
+                get<0>(cosa) = C; get<1>(cosa) = false;
+                G->add_adj(cosa);
+                get<0>(cosa) = D; get<1>(cosa) = false;
+                G->add_adj(cosa);
+                get<0>(cosa) = F; get<1>(cosa) = false;
+                G->add_adj(cosa);
+
+                graph.push_back(A);
+                graph.push_back(B);
+                graph.push_back(C);
+                graph.push_back(D);
+                graph.push_back(E);
+                graph.push_back(F);
+                graph.push_back(G);
+
+                for (unsigned int i = 0; i < graph.size(); i++)
+                        graph[i]->print_node();
+
                 {
                         char buf[BUFSIZE];
                         int pos = 0;
@@ -221,74 +291,6 @@ void initJuego() {
                                 player = new Player();
                                 ents.push_back(player);
                         }
-
-                //Prueba PathFollowing
-                Node *A = new Node("A",Triple(0, 0, 0));
-                Node *B = new Node("B",Triple(10, 5, 0));
-                Node *C = new Node("C",Triple(10, 20, 0));
-                Node *D = new Node("D",Triple(20, 5, 0));
-                Node *E = new Node("E",Triple(-20, 3, 0));
-                Node *F = new Node("F",Triple(0, 50, 0));
-                Node *G = new Node("G",Triple(-30, 6, 0));
-
-                tuple<Node*, bool, double> cosa;
-
-                get<0>(cosa) = B; get<1>(cosa) = false;
-                A->add_adj(cosa);
-                get<0>(cosa) = C; get<1>(cosa) = false;
-                A->add_adj(cosa);
-        
-                get<0>(cosa) = A; get<1>(cosa) = false;
-                B->add_adj(cosa);
-                get<0>(cosa) = D; get<1>(cosa) = false;
-                B->add_adj(cosa);
-                get<0>(cosa) = F; get<1>(cosa) = false;
-                B->add_adj(cosa);
-
-                get<0>(cosa) = A; get<1>(cosa) = false;
-                C->add_adj(cosa);
-                get<0>(cosa) = D; get<1>(cosa) = false;
-                C->add_adj(cosa);
-                get<0>(cosa) = E; get<1>(cosa) = false;
-                C->add_adj(cosa);        
-                get<0>(cosa) = G; get<1>(cosa) = false;
-                C->add_adj(cosa);        
-
-                get<0>(cosa) = B; get<1>(cosa) = false;
-                D->add_adj(cosa);
-                get<0>(cosa) = C; get<1>(cosa) = false;
-                D->add_adj(cosa);
-                get<0>(cosa) = E; get<1>(cosa) = false;
-                D->add_adj(cosa);
-                get<0>(cosa) = G; get<1>(cosa) = false;
-                D->add_adj(cosa);
-
-                get<0>(cosa) = C; get<1>(cosa) = false;
-                E->add_adj(cosa);
-                get<0>(cosa) = D; get<1>(cosa) = false;
-                E->add_adj(cosa);
-       
-                get<0>(cosa) = B; get<1>(cosa) = false;
-                F->add_adj(cosa);
-                get<0>(cosa) = G; get<1>(cosa) = false;
-                F->add_adj(cosa);
-
-                get<0>(cosa) = C; get<1>(cosa) = false;
-                G->add_adj(cosa);
-                get<0>(cosa) = D; get<1>(cosa) = false;
-                G->add_adj(cosa);
-                get<0>(cosa) = F; get<1>(cosa) = false;
-                G->add_adj(cosa);
-
-                graph.push_back(A);
-                graph.push_back(B);
-                graph.push_back(C);
-                graph.push_back(D);
-                graph.push_back(E);
-                graph.push_back(F);
-                graph.push_back(G);
-
-
                 }
         }
 }
@@ -392,6 +394,16 @@ void display() {
                                         ents[i]->draw();
                                 glPopMatrix();
                         }
+
+
+                        //Dibujar Nodos del Grafo
+                        for (unsigned int k = 0; k < graph.size(); k++) {
+                                glPushMatrix();
+                                        glTranslatef(graph[k]->pos.x, graph[k]->pos.y, graph[k]->pos.z);
+                                        graph[k]->draw();
+                                glPopMatrix();
+                        }
+
                 }
 
                 /* Balas del jugador */
