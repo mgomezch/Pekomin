@@ -18,20 +18,14 @@ Flee::Flee(Mobile *character, Mobile *target, double maxSpeed, double fleeRadius
 pair<bool, Triple> Flee::getVel(unsigned int ticks) {
         pair<bool, Triple> steering;
 
-//      steering.second = character->pos - target->pos;
-//      if (steering.second.length() < fleeRadius) {
-//              steering.first = true;
-//              steering.second.normalize();
-//              steering.second *= maxSpeed;
-//      }
-//      return steering;
+        Triple cp, tp;
+        tie(cp, tp) = points(character, target);
 
-#ifdef DEBUG_FLEE
-        cout << "Flee " << reinterpret_cast<int>(this) << ": dist == " << dist(character, target) << endl;
-#endif
-        steering.first = true;
-        if (dist(character, target) < fleeRadius) {
-                steering.second = (character->pos - target->pos).normalized() * maxSpeed;
+        steering.second = cp - tp;
+        if (steering.second.length() < fleeRadius) {
+                steering.first = true;
+                steering.second.normalize();
+                steering.second *= maxSpeed;
         }
         return steering;
 }

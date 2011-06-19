@@ -11,10 +11,12 @@ KinematicArrive::KinematicArrive(Ent *character, Ent *target, double maxSpeed, d
 
 pair<bool, Triple> KinematicArrive::getVel(unsigned int ticks) {
         pair<bool, Triple> steering;
+        Triple cp, tp;
 
         steering.first = false;
 
-        steering.second = target->pos - character->pos;
+        tie(cp, tp) = points(this->character, this->target);
+        steering.second = tp - cp;
 
         if (steering.second.length() > radius) {
                 steering.first = true;

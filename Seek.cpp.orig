@@ -28,11 +28,14 @@ pair<bool, Triple> Seek::getVel(unsigned int ticks) {
 #endif
 
         steering.first = true;
+<<<<<<< HEAD
+        steering.second = (character->pos - target->pos).normalized() * maxSpeed;
+=======
         tie(cp, tp) = points(this->character, this->target);
         steering.second = tp - cp;
         steering.second.normalize();
         steering.second *= maxSpeed;
-
+>>>>>>> d59dbe044e4e9968a9a2589746af4d109e530132
 
         return steering;
 }

@@ -11,7 +11,7 @@ VelocityMatch::VelocityMatch(Mobile *character, Mobile *target, double maxSpeed)
 
 pair<bool, Triple> VelocityMatch::getVelIncr(unsigned int ticks) {
         pair<bool, Triple> steering;
-        double targetVelocity;        
+        double targetVelocity;
 
         steering.first = true;
         steering.second = target->vel - character->vel;

@@ -24,7 +24,7 @@ pair<bool, double> Align::getAngVel(unsigned int ticks) {
         double rotation, rotationSize, targetRotation;
         Triple direction;
 
-        steering.first  = true;
+        steering.first = true;
 
         rotation = mapToRange(mapToRange(target->ang) - mapToRange(character->ang));
         rotationSize = abs(rotation);
@@ -53,7 +53,7 @@ pair<bool, double> Align::getAngVel(unsigned int ticks) {
         }
 #endif
 
-	//targetRotation *= map_atan(20000 * target->vrot);        
+        //targetRotation *= map_atan(20000 * target->vrot);
 
         steering.second = targetRotation * (rotation > 0 ? -1 : 1);
 

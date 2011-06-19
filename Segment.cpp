@@ -18,7 +18,7 @@ Triple Segment::v2() {
                       this->p2.z) + this->pos;
 }
 
-double dist(Segment *s, Ent *e) {
+tuple<Triple, Triple> points(Segment *s, Ent *e) {
         double l1, l2;
         Triple d, sv1, sv2, p;
 
@@ -30,29 +30,32 @@ double dist(Segment *s, Ent *e) {
         l2  = d.length();
         d  /= l2;
         l1 = (p - sv1).dot(d);
-        if (0 <= l1 && l1 <= l2) return (p - (sv1 + d * l1)).length();
+        if (0 <= l1 && l1 <= l2) return make_tuple(sv1 + d * l1, p);
 
         l1 = (p - sv1).length();
         l2 = (p - sv2).length();
-        if (l1 < l2) return l1;
-        return l2;
+        if (l1 < l2) return make_tuple(sv1, p);
+        return make_tuple(sv2, p);
 }
 
-double dist(Ent *e, Segment *s) {
-        return dist(s, e);
+tuple<Triple, Triple> points(Ent *e, Segment *s) {
+        Triple a, b;
+        tie(b, a) = points(s, e);
+        return make_tuple(a, b);
 }
 
-double dist(Mobile *e, Segment *s) {
-        return dist(s, static_cast<Ent *>(e));
+tuple<Triple, Triple> points(Mobile *e, Segment *s) {
+        return points(static_cast<Ent *>(e), s);
 }
 
-double dist(Segment *s, Mobile *e) {
-        return dist(s, static_cast<Ent *>(e));
+tuple<Triple, Triple> points(Segment *s, Mobile *e) {
+        return points(s, static_cast<Ent *>(e));
 }
 
-double dist(Segment *s1, Segment *s2) {
+tuple<Triple, Triple> points(Segment *s1, Segment *s2) {
         Triple d1, d2, dc, s1v1, s1v2, s2v1, s2v2, p1, p2, ps;
         double ndc2, t, s, l1, l2;
+        int i;
 
         s1v1 = s1->v1();
         s1v2 = s1->v2();
@@ -69,22 +72,29 @@ double dist(Segment *s1, Segment *s2) {
 
         if (ndc2 == 0) {
                 t = d1.dot(s2v1 - s1v1);
-                if (0 <= t && t <= l1) return (s2v1 - (s1v1 + d1 * t)).length();
+                if (0 <= t && t <= l1) return make_tuple(s1v1 + d1 * t, s2v1);
 
                 t = d1.dot(s2v2 - s1v1);
-                if (0 <= t && t <= l1) return (s2v2 - (s1v1 + d1 * t)).length();
+                if (0 <= t && t <= l1) return make_tuple(s1v1 + d1 * t, s2v2);
 
                 s = d2.dot(s1v1 - s2v1);
-                if (0 <= s && s <= l2) return (s1v1 - (s2v1 + d2 * s)).length();
+                if (0 <= s && s <= l2) return make_tuple(s1v1, s2v1 + d2 * s);
 
                 s = d2.dot(s1v2 - s2v1);
-                if (0 <= s && s <= l2) return (s1v2 - (s2v1 + d2 * s)).length();
+                if (0 <= s && s <= l2) return make_tuple(s1v2, s2v1 + d2 * s);
 
+                i = 0;
                 l1 = (s1v1 - s2v1).length();
-                if ((l2 = (s1v1 - s2v2).length()) < l1) l1 = l2;
-                if ((l2 = (s1v2 - s2v1).length()) < l1) l1 = l2;
-                if ((l2 = (s1v2 - s2v2).length()) < l1) l1 = l2;
-                return l1;
+                if ((l2 = (s1v1 - s2v2).length()) < l1) i = 1, l1 = l2;
+                if ((l2 = (s1v2 - s2v1).length()) < l1) i = 2, l1 = l2;
+                if ((l2 = (s1v2 - s2v2).length()) < l1) i = 3, l1 = l2;
+                switch (i) {
+                        default: // avoids warning
+                        case 0: return make_tuple(s1v1, s2v1);
+                        case 1: return make_tuple(s1v1, s2v2);
+                        case 2: return make_tuple(s1v2, s2v1);
+                        case 3: return make_tuple(s1v2, s2v2);
+                }
         } else {
                 ps = s2v1 - s1v1;
                 t  = ps.cross(d2).dot(dc)/ndc2;
@@ -93,35 +103,32 @@ double dist(Segment *s1, Segment *s2) {
                         p1 = s1v1 + d1 * t;
                         if (0 <= s && s <= l2) {
                                 p2 = s2v1 + d2 * s;
-                                return (p2 - p1).length();
+                                return make_tuple(p1, p2);
                         }
                         l1 = (p1 - s2v1).length();
                         l2 = (p1 - s2v2).length();
-                        if (l1 < l2) return l1;
-                        return l2;
+                        if (l1 < l2) return make_tuple(p1, s2v1);
+                        return make_tuple(p1, s2v2);
                 }
                 if (0 <= s && s <= l2) {
                         p2 = s2v1 + d2 * s;
-                        l1 = (p1 - s2v1).length();
-                        l2 = (p1 - s2v2).length();
-                        if (l1 < l2) return l1;
-                        return l2;
+                        l1 = (p2 - s1v1).length();
+                        l2 = (p2 - s1v2).length();
+                        if (l1 < l2) return make_tuple(s1v1, p2);
+                        return make_tuple(s1v2, p2);
                 }
+
+                i = 0;
                 l1 = (s1v1 - s2v1).length();
-                if ((l2 = (s1v1 - s2v2).length()) < l1) l1 = l2;
-                if ((l2 = (s1v2 - s2v1).length()) < l1) l1 = l2;
-                if ((l2 = (s1v2 - s2v2).length()) < l1) l1 = l2;
-                return l1;
+                if ((l2 = (s1v1 - s2v2).length()) < l1) i = 1, l1 = l2;
+                if ((l2 = (s1v2 - s2v1).length()) < l1) i = 2, l1 = l2;
+                if ((l2 = (s1v2 - s2v2).length()) < l1) i = 3, l1 = l2;
+                switch (i) {
+                        default: // avoids warning
+                        case 0: return make_tuple(s1v1, s2v1);
+                        case 1: return make_tuple(s1v1, s2v2);
+                        case 2: return make_tuple(s1v2, s2v1);
+                        case 3: return make_tuple(s1v2, s2v2);
+                }
         }
 }
-
-/*
-Triple project(Triple r1, Triple r2, Triple p) {
-        Triple dir = (r2 - r1).normalized();
-        return r1 + dir * (p - r1).dot(dir);
-}
-
-double line_point_distance(Triple r1, Triple r2, Triple p) {
-        return (p - project(r1, r2, p)).length();
-}
-*/
