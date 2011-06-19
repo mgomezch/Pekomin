@@ -6,6 +6,7 @@
 #include "Triple.hpp"
 
 class Segment;
+class Plane;
 
 class Ent {
         public:
@@ -14,9 +15,13 @@ class Ent {
 
                 virtual void draw()                     = 0;
                 virtual void update(unsigned int ticks) = 0;
+
                 Triple orientation();
 };
 
 tuple<Triple, Triple> points(Ent *e1, Ent *e2);
+
+tuple<Triple, Triple> points(Segment *s, Plane *p);
+tuple<Triple, Triple> points(Plane *p, Segment *s);
 
 #endif
