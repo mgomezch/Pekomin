@@ -1,6 +1,7 @@
 #include <utility>
 
 #include "Actor.hpp"
+#include "Player.hpp"
 #include "util.hpp"
 
 //#define DEBUG_ACTOR
@@ -32,6 +33,7 @@ using namespace std;
 
 void Actor::update(unsigned int ticks) {
         unsigned int i;
+        Triple vdir;
 
         DirectStaticV    *p_DirectStaticV   ;
         StaticV          *p_StaticV         ;
@@ -130,14 +132,22 @@ void Actor::update(unsigned int ticks) {
 #endif
 
         // roce; si se hace un salto, chequear que estés en el piso
-        if (this->pos.z == 0) this->vel += Triple(this->vel.x, this->vel.y, 0) * (-0.005) * static_cast<double>(ticks);
-        this->vrot += this->vrot * (-0.030) * static_cast<double>(ticks);
+        if (this->pos.z == 0) {
+                vdir = this->vel.normalized();
+                this->vel += Triple(this->vel.x, this->vel.y, 0) * (-0.005) * static_cast<double>(ticks);
+                if (vdir.dot(this->vel) < 0) this->vel = Triple(0, 0, 0);
+
+                if      (this->vrot > 0 && (this->vrot += this->vrot * (-0.030) * static_cast<double>(ticks)) < 0) this->vrot = 0;
+                else if (this->vrot < 0 && (this->vrot += this->vrot * (-0.030) * static_cast<double>(ticks)) > 0) this->vrot = 0;
+        }
 
         this->pos += this->vel  * static_cast<double>(ticks);
         this->ang += this->vrot * static_cast<double>(ticks);
         this->ang  = mapToRange(this->ang);
 
         // TODO: piratería para que el salto funcione
-        this->pos.z = 0;
-        this->vel.z = 0;
+        if (dynamic_cast<Player *>(this) == NULL) {
+                this->pos.z = 0;
+                this->vel.z = 0;
+        }
 }

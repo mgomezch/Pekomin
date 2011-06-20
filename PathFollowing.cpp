@@ -47,8 +47,7 @@ pair<bool, Triple> PathFollowing::getVel(unsigned int ticks) {
                 if (path.size() > 0) {
                         direction = path.front()->pos - character->pos;
                         distance = direction.length();
-                        if (distance < targetRadius) 
-                                path.erase(path.begin());
+                        if (distance < targetRadius) path.erase(path.begin());
                         steering.second = direction.normalized();
                         steering.second *= maxSpeed;
                 }
@@ -78,5 +77,5 @@ pair<bool, Triple> PathFollowing::getVel(unsigned int ticks) {
                 }
         }
 
-        return steering; 
+        return steering;
 }

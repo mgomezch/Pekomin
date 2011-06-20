@@ -12,7 +12,7 @@ class KinematicFlee : public KinematicV {
                 Ent *character;
                 Ent *target;
                 double maxSpeed;
-		double fleeRadius;
+                double fleeRadius;
 
                 KinematicFlee(Ent *character, Ent *target, double maxSpeed, double fleeRadius);
 

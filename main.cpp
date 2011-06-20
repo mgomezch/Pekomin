@@ -1,23 +1,25 @@
-#include <GL/glut.h>
 #include <iostream>
+#include <typeinfo>
+#include <vector>
+
+#include <GL/glut.h>
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <sysexits.h>
 #include <sys/time.h>
 
-#include <vector>
-
 #include "Behaviors.hpp"
+#include "Dijkstra.hpp"
 #include "game.hpp"
 #include "gl.hpp"
-#include "RuntimePekomin.hpp"
-#include "parse.hpp"
-#include "Player.hpp"
-#include "Phantom.hpp"
-#include "util.hpp"
 #include "Node.hpp"
-#include "Dijkstra.hpp"
+#include "parse.hpp"
+#include "Phantom.hpp"
+#include "Player.hpp"
+#include "RuntimePekomin.hpp"
+#include "RuntimeWall.hpp"
+#include "util.hpp"
 
 #define DEBUG_MAIN
 
@@ -39,6 +41,9 @@ int power(int b, unsigned int e) {
 }
 
 void initJuego() {
+#ifdef DEBUG_MAIN
+        cout << "starting initJuego" << endl;
+#endif
         nboom = 0;
         for (i = 0; i < N_BOOM_SETS; i++) {
                 boom[i].on = 0;
@@ -76,14 +81,23 @@ void initJuego() {
                 while (!ents.empty()) {
                         e = ents.back();
                         ents.pop_back();
+                        // TODO: hacer lo mismo pa otros tipos de runtime
                         if ((p = dynamic_cast<RuntimePekomin *>(e)) != NULL) {
                                 while (!p->behaviors.empty()) {
                                         b = p->behaviors.back();
                                         p->behaviors.pop_back();
+                                        // TODO: esto no debería funcionar por el mismo peo que daba con los ents. Pero funciona. D:
                                         delete b;
                                 }
                         }
-                        delete e;
+
+                        string type_name = typeid(e).name();
+                        if      (type_name == "RuntimePekomin") delete dynamic_cast<RuntimePekomin *>(e);
+                        else if (type_name == "RuntimeWall"   ) delete dynamic_cast<RuntimeWall    *>(e);
+                        else if (type_name == "Player"        ) delete dynamic_cast<Player         *>(e);
+                        else fprintf(stderr, "ERROR: cannot delete ent at %p; unknown type!\n", e);
+
+//                      delete e;
                 }
                 player = NULL;
 
@@ -218,79 +232,65 @@ void initJuego() {
 
                         if (player == NULL) {
                                 cerr << "warning: no player defined in game file; using default player." << endl;
-                                player = new Player();
+                                player = new Player("default player");
                                 ents.push_back(player);
                         }
 
-                //Prueba PathFollowing
-                Node *A = new Node("A",Triple(0, 0, 0));
-                Node *B = new Node("B",Triple(10, 5, 0));
-                Node *C = new Node("C",Triple(10, 20, 0));
-                Node *D = new Node("D",Triple(20, 5, 0));
-                Node *E = new Node("E",Triple(-20, 3, 0));
-                Node *F = new Node("F",Triple(0, 50, 0));
-                Node *G = new Node("G",Triple(-30, 6, 0));
+                        //Prueba PathFollowing
+                        while (!graph.empty()) {
+                                Node *n = graph.back();
+                                graph.pop_back();
+                                delete n;
+                        }
+                        Node *A = new Node("A", Triple(  0,  0, 0));
+                        Node *B = new Node("B", Triple( 10,  5, 0));
+                        Node *C = new Node("C", Triple( 10, 20, 0));
+                        Node *D = new Node("D", Triple( 20,  5, 0));
+                        Node *E = new Node("E", Triple(-20,  3, 0));
+                        Node *F = new Node("F", Triple(  0, 50, 0));
+                        Node *G = new Node("G", Triple(-30,  6, 0));
 
-                tuple<Node*, bool, double> cosa;
+                        tuple<Node *, bool, double> cosa;
 
-                get<0>(cosa) = B; get<1>(cosa) = false;
-                A->add_adj(cosa);
-                get<0>(cosa) = C; get<1>(cosa) = false;
-                A->add_adj(cosa);
-        
-                get<0>(cosa) = A; get<1>(cosa) = false;
-                B->add_adj(cosa);
-                get<0>(cosa) = D; get<1>(cosa) = false;
-                B->add_adj(cosa);
-                get<0>(cosa) = F; get<1>(cosa) = false;
-                B->add_adj(cosa);
+                        get<0>(cosa) = B; get<1>(cosa) = false; A->add_adj(cosa);
+                        get<0>(cosa) = C; get<1>(cosa) = false; A->add_adj(cosa);
 
-                get<0>(cosa) = A; get<1>(cosa) = false;
-                C->add_adj(cosa);
-                get<0>(cosa) = D; get<1>(cosa) = false;
-                C->add_adj(cosa);
-                get<0>(cosa) = E; get<1>(cosa) = false;
-                C->add_adj(cosa);        
-                get<0>(cosa) = G; get<1>(cosa) = false;
-                C->add_adj(cosa);        
+                        get<0>(cosa) = A; get<1>(cosa) = false; B->add_adj(cosa);
+                        get<0>(cosa) = D; get<1>(cosa) = false; B->add_adj(cosa);
+                        get<0>(cosa) = F; get<1>(cosa) = false; B->add_adj(cosa);
 
-                get<0>(cosa) = B; get<1>(cosa) = false;
-                D->add_adj(cosa);
-                get<0>(cosa) = C; get<1>(cosa) = false;
-                D->add_adj(cosa);
-                get<0>(cosa) = E; get<1>(cosa) = false;
-                D->add_adj(cosa);
-                get<0>(cosa) = G; get<1>(cosa) = false;
-                D->add_adj(cosa);
+                        get<0>(cosa) = A; get<1>(cosa) = false; C->add_adj(cosa);
+                        get<0>(cosa) = D; get<1>(cosa) = false; C->add_adj(cosa);
+                        get<0>(cosa) = E; get<1>(cosa) = false; C->add_adj(cosa);
+                        get<0>(cosa) = G; get<1>(cosa) = false; C->add_adj(cosa);
 
-                get<0>(cosa) = C; get<1>(cosa) = false;
-                E->add_adj(cosa);
-                get<0>(cosa) = D; get<1>(cosa) = false;
-                E->add_adj(cosa);
-       
-                get<0>(cosa) = B; get<1>(cosa) = false;
-                F->add_adj(cosa);
-                get<0>(cosa) = G; get<1>(cosa) = false;
-                F->add_adj(cosa);
+                        get<0>(cosa) = B; get<1>(cosa) = false; D->add_adj(cosa);
+                        get<0>(cosa) = C; get<1>(cosa) = false; D->add_adj(cosa);
+                        get<0>(cosa) = E; get<1>(cosa) = false; D->add_adj(cosa);
+                        get<0>(cosa) = G; get<1>(cosa) = false; D->add_adj(cosa);
 
-                get<0>(cosa) = C; get<1>(cosa) = false;
-                G->add_adj(cosa);
-                get<0>(cosa) = D; get<1>(cosa) = false;
-                G->add_adj(cosa);
-                get<0>(cosa) = F; get<1>(cosa) = false;
-                G->add_adj(cosa);
+                        get<0>(cosa) = C; get<1>(cosa) = false; E->add_adj(cosa);
+                        get<0>(cosa) = D; get<1>(cosa) = false; E->add_adj(cosa);
 
-                graph.push_back(A);
-                graph.push_back(B);
-                graph.push_back(C);
-                graph.push_back(D);
-                graph.push_back(E);
-                graph.push_back(F);
-                graph.push_back(G);
+                        get<0>(cosa) = B; get<1>(cosa) = false; F->add_adj(cosa);
+                        get<0>(cosa) = G; get<1>(cosa) = false; F->add_adj(cosa);
 
+                        get<0>(cosa) = C; get<1>(cosa) = false; G->add_adj(cosa);
+                        get<0>(cosa) = D; get<1>(cosa) = false; G->add_adj(cosa);
+                        get<0>(cosa) = F; get<1>(cosa) = false; G->add_adj(cosa);
 
+                        graph.push_back(A);
+                        graph.push_back(B);
+                        graph.push_back(C);
+                        graph.push_back(D);
+                        graph.push_back(E);
+                        graph.push_back(F);
+                        graph.push_back(G);
                 }
         }
+#ifdef DEBUG_MAIN
+        cout << "finished initJuego" << endl;
+#endif
 }
 
 void display() {
@@ -385,7 +385,7 @@ void display() {
                 }
 
                 if (pass == PASS_LAST) {
-                        for (i = 0; (unsigned int)i < ents.size(); i++) {
+                        for (i = 0; static_cast<unsigned int>(i) < ents.size(); i++) {
                                 glPushMatrix();
                                         glTranslatef(ents[i]->pos.x, ents[i]->pos.y, ents[i]->pos.z);
                                         glRotatef((ents[i]->ang * 180.0)/M_PI, 0, 0, 1);
@@ -705,10 +705,10 @@ void skeyup(int key, int mx, int my) {
 }
 
 void keyup(unsigned char key, int mx, int my) {
-        if      (key == key_fwd         ) keystate_fwd          = 0;
-        else if (key == key_back        ) keystate_back         = 0;
-        else if (key == key_left        ) keystate_left         = 0;
-        else if (key == key_right       ) keystate_right        = 0;
+        if      (key == key_fwd         ) keystate_fwd          = player->control_f     = 0;
+        else if (key == key_back        ) keystate_back         = player->control_b     = 0;
+        else if (key == key_left        ) keystate_left         = player->control_rot_l = 0;
+        else if (key == key_right       ) keystate_right        = player->control_rot_r = 0;
         else if (key == key_cam_up      ) keystate_cam_up       = 0;
         else if (key == key_cam_down    ) keystate_cam_down     = 0;
         else if (key == key_cam_left    ) keystate_cam_left     = 0;
@@ -720,30 +720,30 @@ void keyup(unsigned char key, int mx, int my) {
         else if (key == key_cam_rotleft ) keystate_cam_rotleft  = 0;
         else if (key == key_cam_rotright) keystate_cam_rotright = 0;
         else if (key == key_enter       ) keystate_enter        = 0;
-        else if (key == key_shoot       ) keystate_shoot        = 0;
+        else if (key == key_shoot       ) keystate_shoot        = player->control_shoot = 0;
         else if (key == key_reload      ) keystate_reload       = 0;
-        else if (key == key_jump        ) keystate_jump         = 0;
+        else if (key == key_jump        ) keystate_jump         = player->control_jump  = 0;
 }
 
 void keydown(unsigned char key, int mx, int my) {
-        if      (key == key_fwd         ) keystate_fwd           = 1;
-        else if (key == key_back        ) keystate_back          = 1;
-        else if (key == key_left        ) keystate_left          = 1;
-        else if (key == key_right       ) keystate_right         = 1;
-        else if (key == key_cam_up      ) keystate_cam_up        = 1;
-        else if (key == key_cam_down    ) keystate_cam_down      = 1;
-        else if (key == key_cam_left    ) keystate_cam_left      = 1;
-        else if (key == key_cam_right   ) keystate_cam_right     = 1;
-        else if (key == key_cam_fwd     ) keystate_cam_fwd       = 1;
-        else if (key == key_cam_back    ) keystate_cam_back      = 1;
-        else if (key == key_cam_rotup   ) keystate_cam_rotup     = 1;
-        else if (key == key_cam_rotdown ) keystate_cam_rotdown   = 1;
-        else if (key == key_cam_rotleft ) keystate_cam_rotleft   = 1;
-        else if (key == key_cam_rotright) keystate_cam_rotright  = 1;
-        else if (key == key_enter       ) keystate_enter         = 1;
-        else if (key == key_shoot       ) keystate_shoot         = 1;
-        else if (key == key_reload      ) keystate_reload        = 1;
-        else if (key == key_jump        ) keystate_jump          = 1;
+        if      (key == key_fwd         ) keystate_fwd          = player->control_f     = 1;
+        else if (key == key_back        ) keystate_back         = player->control_b     = 1;
+        else if (key == key_left        ) keystate_left         = player->control_rot_l = 1;
+        else if (key == key_right       ) keystate_right        = player->control_rot_r = 1;
+        else if (key == key_cam_up      ) keystate_cam_up       = 1;
+        else if (key == key_cam_down    ) keystate_cam_down     = 1;
+        else if (key == key_cam_left    ) keystate_cam_left     = 1;
+        else if (key == key_cam_right   ) keystate_cam_right    = 1;
+        else if (key == key_cam_fwd     ) keystate_cam_fwd      = 1;
+        else if (key == key_cam_back    ) keystate_cam_back     = 1;
+        else if (key == key_cam_rotup   ) keystate_cam_rotup    = 1;
+        else if (key == key_cam_rotdown ) keystate_cam_rotdown  = 1;
+        else if (key == key_cam_rotleft ) keystate_cam_rotleft  = 1;
+        else if (key == key_cam_rotright) keystate_cam_rotright = 1;
+        else if (key == key_enter       ) keystate_enter        = 1;
+        else if (key == key_shoot       ) keystate_shoot        = player->control_shoot = 1;
+        else if (key == key_reload      ) keystate_reload       = 1;
+        else if (key == key_jump        ) keystate_jump         = player->control_jump  = 1;
         else if (key == key_pause) {
                 frozen ^= 1;
 #ifdef DEBUG_MAIN
@@ -797,7 +797,6 @@ void juego(int v) {
                 if (keystate_l) if ((a_turret += delta / 20.0) > MAX_A_TURRET) a_turret = MAX_A_TURRET;
                 if (keystate_r) if ((a_turret -= delta / 20.0) < MIN_A_TURRET) a_turret = MIN_A_TURRET;
  */
-
                 if (keystate_jump && pz == 0 && pvz == 0) {
                         pvz = 0.04;
                 }
@@ -842,25 +841,6 @@ void juego(int v) {
                 player->ang  = mapToRange((prz  * M_PI) / 180.0);
                 player->vrot = (pvrz * M_PI) / 180.0;
 
-/*
-                if (px < -(W_TABLERO - mesh[MESH_TANK].size_x)/2) {
-                        px  = -(W_TABLERO - mesh[MESH_TANK].size_x)/2;
-                        pvx = 0;
-                }
-                if (px >  (W_TABLERO - mesh[MESH_TANK].size_x)/2) {
-                        px  =  (W_TABLERO - mesh[MESH_TANK].size_x)/2;
-                        pvx = 0;
-                }
-                if (py < -(H_TABLERO - mesh[MESH_TANK].size_z)/2) {
-                        py  = -(H_TABLERO - mesh[MESH_TANK].size_z)/2;
-                        pvy = 0;
-                }
-                if (py >  (H_TABLERO - mesh[MESH_TANK].size_z)/2) {
-                        py  =  (H_TABLERO - mesh[MESH_TANK].size_z)/2;
-                        pvy = 0;
-                }
- */
-
                 for (i = 0; (unsigned int)i < ents.size(); i++) {
                         ents[i]->update(delta);
                 }
@@ -874,75 +854,6 @@ void juego(int v) {
                                 pbl[pbi]  = level;
 
                                 // TODO: optimize
-        /*
-                                pbx[pbi]  = 0;
-                                pby[pbi]  = mesh[MESH_CANNON].zM + v_cannon;
-                                pbz[pbi]  = 0;
-                                npbx = pbx[pbi];
-                                npby = pby[pbi] * cos((a_cannon*M_PI)/180.0) - pbz[pbi] * sin((a_cannon*M_PI)/180.0);
-                                npbz = pby[pbi] * sin((a_cannon*M_PI)/180.0) + pbz[pbi] * cos((a_cannon*M_PI)/180.0);
-                                pbx[pbi]  = npbx;
-                                pby[pbi]  = npby;
-                                pbz[pbi]  = npbz;
-                                pbx[pbi] += 0;
-                                pby[pbi] += CANNON_Z - TURRET_Z;
-                                pbz[pbi] += CANNON_Y;
-                                npbx = pbx[pbi] * cos((a_turret*M_PI)/180.0) - pby[pbi] * sin((a_turret*M_PI)/180.0);
-                                npby = pbx[pbi] * sin((a_turret*M_PI)/180.0) + pby[pbi] * cos((a_turret*M_PI)/180.0);
-                                npbz = pbz[pbi];
-                                pbx[pbi]  = npbx;
-                                pby[pbi]  = npby;
-                                pbz[pbi]  = npbz;
-                                pbx[pbi] += 0;
-                                pby[pbi] += TURRET_Z;
-                                pbz[pbi] += 0;
-                                npbx = pbx[pbi] * cos((prz*M_PI)/180.0) - pby[pbi] * sin((prz*M_PI)/180.0);
-                                npby = pbx[pbi] * sin((prz*M_PI)/180.0) + pby[pbi] * cos((prz*M_PI)/180.0);
-                                npbz = pbz[pbi];
-                                pbx[pbi]  = npbx;
-                                pby[pbi]  = npby;
-                                pbz[pbi]  = npbz;
-                                pbx[pbi] += px;
-                                pby[pbi] += py;
-                                pbz[pbi] += pz;
-                                pbvx[pbi] = pbx[pbi];
-                                pbvy[pbi] = pby[pbi];
-                                pbvz[pbi] = pbz[pbi];
-
-                                pbx[pbi]  = 0;
-                                pby[pbi]  = mesh[MESH_CANNON].zM;
-                                pbz[pbi]  = 0;
-                                npbx = pbx[pbi];
-                                npby = pby[pbi] * cos((a_cannon*M_PI)/180.0) - pbz[pbi] * sin((a_cannon*M_PI)/180.0);
-                                npbz = pby[pbi] * sin((a_cannon*M_PI)/180.0) + pbz[pbi] * cos((a_cannon*M_PI)/180.0);
-                                pbx[pbi]  = npbx;
-                                pby[pbi]  = npby;
-                                pbz[pbi]  = npbz;
-                                pbx[pbi] += 0;
-                                pby[pbi] += CANNON_Z - TURRET_Z;
-                                pbz[pbi] += CANNON_Y;
-                                npbx = pbx[pbi] * cos((a_turret*M_PI)/180.0) - pby[pbi] * sin((a_turret*M_PI)/180.0);
-                                npby = pbx[pbi] * sin((a_turret*M_PI)/180.0) + pby[pbi] * cos((a_turret*M_PI)/180.0);
-                                npbz = pbz[pbi];
-                                pbx[pbi]  = npbx;
-                                pby[pbi]  = npby;
-                                pbz[pbi]  = npbz;
-                                pbx[pbi] += 0;
-                                pby[pbi] += TURRET_Z;
-                                pbz[pbi] += 0;
-                                npbx = pbx[pbi] * cos((prz*M_PI)/180.0) - pby[pbi] * sin((prz*M_PI)/180.0);
-                                npby = pbx[pbi] * sin((prz*M_PI)/180.0) + pby[pbi] * cos((prz*M_PI)/180.0);
-                                npbz = pbz[pbi];
-                                pbx[pbi]  = npbx;
-                                pby[pbi]  = npby;
-                                pbz[pbi]  = npbz;
-                                pbx[pbi] += px;
-                                pby[pbi] += py;
-                                pbz[pbi] += pz;
-                                pbvx[pbi] += pvx - pbx[pbi];
-                                pbvy[pbi] += pvy - pby[pbi];
-                                pbvz[pbi] += pvz - pbz[pbi];
-         */
                                 pbx[pbi]  = 0.55;
                                 pby[pbi]  = 0;
                                 pbz[pbi]  = 0;
@@ -955,15 +866,15 @@ void juego(int v) {
                                 pbx[pbi] += 0;
                                 pby[pbi] += 0;
                                 pbz[pbi] += 0.5;
-                                npbx = pbx[pbi] * cos((prz*M_PI)/180.0) - pby[pbi] * sin((prz*M_PI)/180.0);
-                                npby = pbx[pbi] * sin((prz*M_PI)/180.0) + pby[pbi] * cos((prz*M_PI)/180.0);
+                                npbx = pbx[pbi] * cos(player->ang) - pby[pbi] * sin(player->ang);
+                                npby = pbx[pbi] * sin(player->ang) + pby[pbi] * cos(player->ang);
                                 npbz = pbz[pbi];
                                 pbx[pbi]  = npbx;
                                 pby[pbi]  = npby;
                                 pbz[pbi]  = npbz;
-                                pbx[pbi] += px;
-                                pby[pbi] += py;
-                                pbz[pbi] += pz;
+                                pbx[pbi] += player->pos.x;
+                                pby[pbi] += player->pos.y;
+                                pbz[pbi] += player->pos.z;
                                 pbvx[pbi] = pbx[pbi];
                                 pbvy[pbi] = pby[pbi];
                                 pbvz[pbi] = pbz[pbi];
@@ -980,18 +891,18 @@ void juego(int v) {
                                 pbx[pbi] += 0;
                                 pby[pbi] += 0;
                                 pbz[pbi] += 0.5;
-                                npbx = pbx[pbi] * cos((prz*M_PI)/180.0) - pby[pbi] * sin((prz*M_PI)/180.0);
-                                npby = pbx[pbi] * sin((prz*M_PI)/180.0) + pby[pbi] * cos((prz*M_PI)/180.0);
+                                npbx = pbx[pbi] * cos(player->ang) - pby[pbi] * sin(player->ang);
+                                npby = pbx[pbi] * sin(player->ang) + pby[pbi] * cos(player->ang);
                                 npbz = pbz[pbi];
                                 pbx[pbi]  = npbx;
                                 pby[pbi]  = npby;
                                 pbz[pbi]  = npbz;
-                                pbx[pbi] += px;
-                                pby[pbi] += py;
-                                pbz[pbi] += pz;
-                                pbvx[pbi] += pvx - pbx[pbi];
-                                pbvy[pbi] += pvy - pby[pbi];
-                                pbvz[pbi] += pvz - pbz[pbi];
+                                pbx[pbi] += player->pos.x;
+                                pby[pbi] += player->pos.y;
+                                pbz[pbi] += player->pos.z;
+                                pbvx[pbi] += player->vel.x - pbx[pbi];
+                                pbvy[pbi] += player->vel.y - pby[pbi];
+                                pbvz[pbi] += player->vel.z - pbz[pbi];
                                 retract = 0;
                                 balas--;
 
@@ -1079,9 +990,9 @@ void juego(int v) {
                         break;
 
                 case CAM_OVERHEAD:
-                        cam_x = py;
+                        cam_x = player->pos.y;
                         cam_y = H_OVERHEAD;
-                        cam_z = px;
+                        cam_z = player->pos.x;
                         cam_rotx = 90;
                         cam_roty = 0;
                         break;
@@ -1101,22 +1012,22 @@ void juego(int v) {
                                 cam_x  = ncam_x;
                                 cam_y  = ncam_y;
                                 cam_z  = ncam_z;
-                                cam_x += px;
-                                cam_y += py;
-                                cam_z += pz;
+                                cam_x += player->pos.x;
+                                cam_y += player->pos.y;
+                                cam_z += player->pos.z;
                                 cam_vx = cam_x;
                                 cam_vy = cam_y;
                                 cam_vz = cam_z;
 
-                                ncam_vx = cam_vx - px;
-                                ncam_vy = cam_vy - py;
-                                ncam_vz = cam_vz - pz;
+                                ncam_vx = cam_vx - player->pos.x;
+                                ncam_vy = cam_vy - player->pos.y;
+                                ncam_vz = cam_vz - player->pos.z;
                                 cam_vx = ncam_vy;
                                 cam_vy = ncam_vz;
                                 cam_vz = ncam_vx;
-                                cam_x  = py;
-                                cam_y  = pz + 0.5;
-                                cam_z  = px;
+                                cam_x  = player->pos.y;
+                                cam_y  = player->pos.z + 0.5;
+                                cam_z  = player->pos.x;
 
                                 cam_roty = (180.0*atan2(cam_vz, cam_vx))/M_PI;
                                 cam_rotx = (-180.0*atan(cam_vy/sqrt(cam_vx*cam_vx + cam_vz*cam_vz)))/M_PI;
@@ -1124,11 +1035,11 @@ void juego(int v) {
                         break;
 
                 case CAM_TPS:
-                        cam_x = py - 12 * sin((prz*M_PI)/180.0);
-                        cam_y = pz + 5;
-                        cam_z = px - 12 * cos((prz*M_PI)/180.0);
+                        cam_x = player->pos.y - 12 * sin(player->ang);
+                        cam_y = player->pos.z + 5;
+                        cam_z = player->pos.x - 12 * cos(player->ang);
 
-                        cam_roty = 180.0-prz;
+                        cam_roty = 180.0-((player->ang * 180.0)/M_PI);
                         cam_rotx = 10;
                         break;
 

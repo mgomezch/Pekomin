@@ -1,15 +1,17 @@
 #ifndef _ENT_HPP
 #define _ENT_HPP
 
+#include <string>
 #include <tuple>
 
 #include "Triple.hpp"
 
 class Segment;
-class Plane;
+class SurfacePlane;
 
 class Ent {
         public:
+                string name;
                 Triple pos;
                 double ang;
 
@@ -21,7 +23,9 @@ class Ent {
 
 tuple<Triple, Triple> points(Ent *e1, Ent *e2);
 
-tuple<Triple, Triple> points(Segment *s, Plane *p);
-tuple<Triple, Triple> points(Plane *p, Segment *s);
+tuple<Triple, Triple> points(Segment      *s, SurfacePlane *p);
+tuple<Triple, Triple> points(SurfacePlane *p, Segment      *s);
+// TODO: VolumePlane
+// TODO: Box
 
 #endif

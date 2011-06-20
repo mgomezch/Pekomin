@@ -38,7 +38,7 @@ bool Node::is_Visited() {
         return this->check;
 }
 
-void Node::add_adj(tuple<Node*, bool, double> node) {
+void Node::add_adj(tuple<Node *, bool, double> node) {
         adj.push_back(node);
 }
 

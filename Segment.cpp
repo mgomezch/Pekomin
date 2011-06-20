@@ -7,15 +7,15 @@
 #endif
 
 Triple Segment::v1() {
-        return Triple(this->p1.x * cos(this->ang) - this->p1.y * sin(this->ang),
-                      this->p1.x * sin(this->ang) + this->p1.y * cos(this->ang),
-                      this->p1.z) + this->pos;
+        return this->pos + Triple(this->p1.x * cos(this->ang) - this->p1.y * sin(this->ang),
+                                  this->p1.x * sin(this->ang) + this->p1.y * cos(this->ang),
+                                  this->p1.z);
 }
 
 Triple Segment::v2() {
-        return Triple(this->p2.x * cos(this->ang) - this->p2.y * sin(this->ang),
-                      this->p2.x * sin(this->ang) + this->p2.y * cos(this->ang),
-                      this->p2.z) + this->pos;
+        return this->pos + Triple(this->p2.x * cos(this->ang) - this->p2.y * sin(this->ang),
+                                  this->p2.x * sin(this->ang) + this->p2.y * cos(this->ang),
+                                  this->p2.z);
 }
 
 tuple<Triple, Triple> points(Segment *s, Ent *e) {

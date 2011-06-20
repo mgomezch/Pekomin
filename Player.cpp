@@ -1,7 +1,11 @@
+#include <cmath>
+
 #include <GL/glut.h>
 
-#include "gl.hpp"
 #include "Player.hpp"
+
+#include "gl.hpp"
+#include "game.hpp"
 
 //#define DEBUG_PLAYER
 
@@ -9,15 +13,14 @@
 #include <iostream>
 #endif
 
-Player::~Player() {}
-
 Player::Player(const Player &p) {
+        this->name    = p.name         ;
         this->pos     = p.pos          ;
         this->ang     = p.ang          ;
         this->vel     = p.vel          ;
         this->vrot    = p.vrot         ;
-        control_u     = p.control_u    ;
-        control_d     = p.control_d    ;
+        control_f     = p.control_f    ;
+        control_b     = p.control_b    ;
         control_l     = p.control_l    ;
         control_r     = p.control_r    ;
         control_rot_l = p.control_rot_l;
@@ -26,13 +29,60 @@ Player::Player(const Player &p) {
         control_shoot = p.control_shoot;
 }
 
-Player::Player() {
+Player::Player(string name) {
+        this->name    = name;
         this->pos     = Triple(0, 0, 0);
         this->ang     = 0;
         this->vel     = Triple(0, 0, 0);
         this->vrot    = 0;
-        control_u     = false;
-        control_d     = false;
+        control_f     = false;
+        control_b     = false;
+        control_l     = false;
+        control_r     = false;
+        control_rot_l = false;
+        control_rot_r = false;
+        control_jump  = false;
+        control_shoot = false;
+}
+
+Player::Player(string name, Triple pos, double ang) {
+        this->name    = name;
+        this->pos     = pos;
+        this->ang     = ang;
+        this->vel     = Triple(0, 0, 0);
+        this->vrot    = 0;
+        control_f     = false;
+        control_b     = false;
+        control_l     = false;
+        control_r     = false;
+        control_rot_l = false;
+        control_rot_r = false;
+        control_jump  = false;
+        control_shoot = false;
+}
+
+Player::Player(string name, Triple pos, double ang, Triple vel, double vrot) {
+        this->name    = name;
+        this->vel     = vel;
+        this->vrot    = vrot;
+        control_f     = false;
+        control_b     = false;
+        control_l     = false;
+        control_r     = false;
+        control_rot_l = false;
+        control_rot_r = false;
+        control_jump  = false;
+        control_shoot = false;
+}
+
+Player::Player() {
+        this->name    = "";
+        this->pos     = Triple(0, 0, 0);
+        this->ang     = 0;
+        this->vel     = Triple(0, 0, 0);
+        this->vrot    = 0;
+        control_f     = false;
+        control_b     = false;
         control_l     = false;
         control_r     = false;
         control_rot_l = false;
@@ -42,19 +92,63 @@ Player::Player() {
 }
 
 Player::Player(Triple pos, double ang) {
-        Player();
-        this->pos = pos;
-        this->ang = ang;
+        this->name    = "";
+        this->pos     = pos;
+        this->ang     = ang;
+        this->vel     = Triple(0, 0, 0);
+        this->vrot    = 0;
+        control_f     = false;
+        control_b     = false;
+        control_l     = false;
+        control_r     = false;
+        control_rot_l = false;
+        control_rot_r = false;
+        control_jump  = false;
+        control_shoot = false;
 }
 
-Player::Player(Triple pos, double ang, Triple vel, double vang) {
-        Player(pos, ang);
-        this->vel  = vel;
-        this->vrot = vrot;
+Player::Player(Triple pos, double ang, Triple vel, double vrot) {
+        this->name    = "";
+        this->vel     = vel;
+        this->vrot    = vrot;
+        control_f     = false;
+        control_b     = false;
+        control_l     = false;
+        control_r     = false;
+        control_rot_l = false;
+        control_rot_r = false;
+        control_jump  = false;
+        control_shoot = false;
 }
 
 void Player::update(unsigned int ticks) {
-        // TODO: mover actualización de estado del jugador de main.cpp pacá
+        /*
+        double pv = 0;
+
+        if (this->control_jump && this->pos.z == 0 && this->vel.z == 0) {
+                // TODO: use #define
+                this->vel.z = 0.04;
+        }
+
+        // TODO: convertir en Behavior "Fall"
+        if (this->pos.z != 0 || this->vel.z != 0) {
+                this->vel.z += GRAVEDAD * ticks;
+                if (this->pos.z <= 0) {
+                        this->pos.z = 0;
+                        this->vel.z = 0;
+                }
+        } else {
+                if (control_f    ) pv          =  ticks / 10000.0;
+                if (control_b    ) pv          = -ticks / 10000.0;
+                if (control_rot_l) this->vrot +=  ticks / 5000.0;
+                if (control_rot_r) this->vrot -=  ticks / 5000.0;
+                // pv += -0.005 * pv * ticks;
+                this->vel.x += pv * cos(this->ang);
+                this->vel.y += pv * sin(this->ang);
+        }
+
+        this->Actor::update(ticks);
+        */
 }
 
 void Player::draw() {

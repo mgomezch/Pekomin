@@ -10,7 +10,8 @@
 #include <iostream>
 #endif
 
-RuntimeWall::RuntimeWall() {
+RuntimeWall::RuntimeWall(string name) {
+        this->name = name;
         this->pos  = Triple(0, 0, 0);
         this->ang  = 0;
         this->vel  = Triple(0, 0, 0);
@@ -18,7 +19,69 @@ RuntimeWall::RuntimeWall() {
         this->p1   = Triple(0, 0, 0);
         this->p2   = Triple(0, 0, 0);
 }
+
+RuntimeWall::RuntimeWall(string name, Triple p1, Triple p2) {
+        this->name = name;
+        this->pos  = Triple(0, 0, 0);
+        this->ang  = 0;
+        this->vel  = Triple(0, 0, 0);
+        this->vrot = 0;
+        this->p1   = p1;
+        this->p2   = p2;
+}
+
+RuntimeWall::RuntimeWall(string name, Triple pos, double ang) {
+        this->name = name;
+        this->pos  = pos;
+        this->ang  = ang;
+        this->vel  = Triple(0, 0, 0);
+        this->vrot = 0;
+        this->p1   = Triple(0, 0, 0);
+        this->p2   = Triple(0, 0, 0);
+}
+
+RuntimeWall::RuntimeWall(string name, Triple pos, double ang, Triple vel, double vrot) {
+        this->name = name;
+        this->pos  = pos;
+        this->ang  = ang;
+        this->vel  = vel;
+        this->vrot = vrot;
+        this->p1   = Triple(0, 0, 0);
+        this->p2   = Triple(0, 0, 0);
+}
+
+RuntimeWall::RuntimeWall(string name, Triple pos, double ang, Triple p1, Triple p2) {
+        this->name = name;
+        this->pos  = pos;
+        this->ang  = ang;
+        this->vel  = Triple(0, 0, 0);
+        this->vrot = 0;
+        this->p1   = p1;
+        this->p2   = p2;
+}
+
+RuntimeWall::RuntimeWall(string name, Triple pos, double ang, Triple vel, double vrot, Triple p1, Triple p2) {
+        this->name = name;
+        this->pos  = pos;
+        this->ang  = ang;
+        this->vel  = vel;
+        this->vrot = vrot;
+        this->p1   = p1;
+        this->p2   = p2;
+}
+
+RuntimeWall::RuntimeWall() {
+        this->name = "";
+        this->pos  = Triple(0, 0, 0);
+        this->ang  = 0;
+        this->vel  = Triple(0, 0, 0);
+        this->vrot = 0;
+        this->p1   = Triple(0, 0, 0);
+        this->p2   = Triple(0, 0, 0);
+}
+
 RuntimeWall::RuntimeWall(Triple p1, Triple p2) {
+        this->name = "";
         this->pos  = Triple(0, 0, 0);
         this->ang  = 0;
         this->vel  = Triple(0, 0, 0);
@@ -28,6 +91,7 @@ RuntimeWall::RuntimeWall(Triple p1, Triple p2) {
 }
 
 RuntimeWall::RuntimeWall(Triple pos, double ang) {
+        this->name = "";
         this->pos  = pos;
         this->ang  = ang;
         this->vel  = Triple(0, 0, 0);
@@ -36,7 +100,8 @@ RuntimeWall::RuntimeWall(Triple pos, double ang) {
         this->p2   = Triple(0, 0, 0);
 }
 
-RuntimeWall::RuntimeWall(Triple pos, double ang, Triple vel, double vang) {
+RuntimeWall::RuntimeWall(Triple pos, double ang, Triple vel, double vrot) {
+        this->name = "";
         this->pos  = pos;
         this->ang  = ang;
         this->vel  = vel;
@@ -46,6 +111,7 @@ RuntimeWall::RuntimeWall(Triple pos, double ang, Triple vel, double vang) {
 }
 
 RuntimeWall::RuntimeWall(Triple pos, double ang, Triple p1, Triple p2) {
+        this->name = "";
         this->pos  = pos;
         this->ang  = ang;
         this->vel  = Triple(0, 0, 0);
@@ -54,7 +120,8 @@ RuntimeWall::RuntimeWall(Triple pos, double ang, Triple p1, Triple p2) {
         this->p2   = p2;
 }
 
-RuntimeWall::RuntimeWall(Triple pos, double ang, Triple vel, double vang, Triple p1, Triple p2) {
+RuntimeWall::RuntimeWall(Triple pos, double ang, Triple vel, double vrot, Triple p1, Triple p2) {
+        this->name = "";
         this->pos  = pos;
         this->ang  = ang;
         this->vel  = vel;

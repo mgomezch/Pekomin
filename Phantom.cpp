@@ -17,7 +17,7 @@ Phantom::Phantom(Triple pos, double ang) {
         this->vrot = 0;
 }
 
-Phantom::Phantom(Triple pos, double ang, Triple vel, double vang) {
+Phantom::Phantom(Triple pos, double ang, Triple vel, double vrot) {
         this->pos  = pos;
         this->ang  = ang;
         this->vel  = vel;

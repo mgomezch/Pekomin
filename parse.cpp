@@ -20,76 +20,99 @@
 #define DEBUG_PARSE
 
 #ifdef DEBUG_PARSE
-        #define SET_ENT_FIELD_DOUBLE(FIELD)                               \
-                it = fields.find(string( #FIELD ));                       \
-                if (it != fields.end()) {                                 \
-                        cout << "parse: ent "                             \
-                             << name_s                                    \
-                             << " processing field "                      \
-                             << it->first                                 \
-                             << " with value "                            \
-                             << it->second                                \
-                             << endl;                                     \
-                        if (sscanf(it->second.c_str(), "%lf", &d) != 1) { \
-                                cerr << "parse error reading ent field "  \
-                                     << it->first                         \
-                                     << " == "                            \
-                                     << it->second                        \
-                                     << endl;                             \
-                                exit(EX_DATAERR);                         \
-                        }                                                 \
-                        ent-> FIELD = d;                                  \
+        #define SET_ENT_FIELD_STRING(FIELD)                 \
+                it = fields.find(string( #FIELD ));         \
+                if (it != fields.end()) {                   \
+                        cout << "parse: ent "               \
+                             << name_s                      \
+                             << " processing string field " \
+                             << it->first                   \
+                             << " with value \""            \
+                             << it->second                  \
+                             << "\""                        \
+                             << endl;                       \
+                        ent-> FIELD = it->second;           \
                 }
 #else
-        #define SET_ENT_FIELD_DOUBLE(FIELD)                               \
-                it = fields.find(string( #FIELD ));                       \
-                if (it != fields.end()) {                                 \
-                        if (sscanf(it->second.c_str(), "%lf", &d) != 1) { \
-                                cerr << "parse error reading ent field "  \
-                                     << it->first                         \
-                                     << " == "                            \
-                                     << it->second                        \
-                                     << endl;                             \
-                                exit(EX_DATAERR);                         \
-                        }                                                 \
-                        ent-> FIELD = d;                                  \
+        #define SET_ENT_FIELD_STRING(FIELD)                 \
+                it = fields.find(string( #FIELD ));         \
+                if (it != fields.end()) {                   \
+                        ent-> FIELD = it->second;           \
                 }
 #endif
 
 #ifdef DEBUG_PARSE
-        #define SET_WALL_FIELD_DOUBLE(FIELD)                              \
-                it = fields.find(string( #FIELD ));                       \
-                if (it != fields.end()) {                                 \
-                        cout << "parse: ent "                             \
-                             << name_s                                    \
-                             << " processing wall field "                 \
-                             << it->first                                 \
-                             << " with value "                            \
-                             << it->second                                \
-                             << endl;                                     \
-                        if (sscanf(it->second.c_str(), "%lf", &d) != 1) { \
-                                cerr << "parse error reading wall field " \
-                                     << it->first                         \
-                                     << " == "                            \
-                                     << it->second                        \
-                                     << endl;                             \
-                                exit(EX_DATAERR);                         \
-                        }                                                 \
-                        wall-> FIELD = d;                                 \
+        #define SET_ENT_FIELD_DOUBLE(FIELD)                                     \
+                it = fields.find(string( #FIELD ));                             \
+                if (it != fields.end()) {                                       \
+                        cout << "parse: ent "                                   \
+                             << name_s                                          \
+                             << " processing string field "                     \
+                             << it->first                                       \
+                             << " with value \""                                \
+                             << it->second                                      \
+                             << "\""                                            \
+                             << endl;                                           \
+                        if (sscanf(it->second.c_str(), "%lf", &d) != 1) {       \
+                                cerr << "parse error reading ent double field " \
+                                     << it->first                               \
+                                     << " == "                                  \
+                                     << it->second                              \
+                                     << endl;                                   \
+                                exit(EX_DATAERR);                               \
+                        }                                                       \
+                        ent-> FIELD = d;                                        \
                 }
 #else
-        #define SET_ENT_FIELD_DOUBLE(FIELD)                               \
-                it = fields.find(string( #FIELD ));                       \
-                if (it != fields.end()) {                                 \
-                        if (sscanf(it->second.c_str(), "%lf", &d) != 1) { \
-                                cerr << "parse error reading wall field " \
-                                     << it->first                         \
-                                     << " == "                            \
-                                     << it->second                        \
-                                     << endl;                             \
-                                exit(EX_DATAERR);                         \
-                        }                                                 \
-                        wall-> FIELD = d;                                 \
+        #define SET_ENT_FIELD_DOUBLE(FIELD)                                     \
+                it = fields.find(string( #FIELD ));                             \
+                if (it != fields.end()) {                                       \
+                        if (sscanf(it->second.c_str(), "%lf", &d) != 1) {       \
+                                cerr << "parse error reading ent double field " \
+                                     << it->first                               \
+                                     << " == "                                  \
+                                     << it->second                              \
+                                     << endl;                                   \
+                                exit(EX_DATAERR);                               \
+                        }                                                       \
+                        ent-> FIELD = d;                                        \
+                }
+#endif
+
+#ifdef DEBUG_PARSE
+        #define SET_WALL_FIELD_DOUBLE(FIELD)                                     \
+                it = fields.find(string( #FIELD ));                              \
+                if (it != fields.end()) {                                        \
+                        cout << "parse: ent "                                    \
+                             << name_s                                           \
+                             << " processing wall double field "                 \
+                             << it->first                                        \
+                             << " with value "                                   \
+                             << it->second                                       \
+                             << endl;                                            \
+                        if (sscanf(it->second.c_str(), "%lf", &d) != 1) {        \
+                                cerr << "parse error reading wall double field " \
+                                     << it->first                                \
+                                     << " == "                                   \
+                                     << it->second                               \
+                                     << endl;                                    \
+                                exit(EX_DATAERR);                                \
+                        }                                                        \
+                        wall-> FIELD = d;                                        \
+                }
+#else
+        #define SET_ENT_FIELD_DOUBLE(FIELD)                                      \
+                it = fields.find(string( #FIELD ));                              \
+                if (it != fields.end()) {                                        \
+                        if (sscanf(it->second.c_str(), "%lf", &d) != 1) {        \
+                                cerr << "parse error reading wall double field " \
+                                     << it->first                                \
+                                     << " == "                                   \
+                                     << it->second                               \
+                                     << endl;                                    \
+                                exit(EX_DATAERR);                                \
+                        }                                                        \
+                        wall-> FIELD = d;                                        \
                 }
 #endif
 
@@ -283,7 +306,7 @@ void parse_r(char *s, int chars) {
         }
         chars += nextchars;
 #ifdef DEBUG_PARSE
-                        cout << "parse: leaving ent " << name_s << endl;
+        cout << "parse: leaving ent " << name_s << endl;
 #endif
 
         it = fields.find(string("class"));
@@ -313,6 +336,8 @@ void parse_r(char *s, int chars) {
 
                 ents.push_back(ent);
         }
+
+        ent->name = name_s;
 
         SET_ENT_FIELD_DOUBLE(pos.x);
         SET_ENT_FIELD_DOUBLE(pos.y);
@@ -347,7 +372,6 @@ void parse(char *s) {
         parse_r(s, 0);
 
         for (it_e = behaviorses.begin(); it_e != behaviorses.end(); ++it_e) {
-                if (it_e->first == "player") continue;
                 for (it_b = it_e->second->begin(); it_b != it_e->second->end(); ++it_b) {
 #ifdef DEBUG_PARSE
                         cout << "parse: making behavior: " << it_b->first << " for ent " << it_e->first << endl;

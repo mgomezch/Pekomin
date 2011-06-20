@@ -9,7 +9,32 @@
 #include <iostream>
 #endif
 
+RuntimePekomin::RuntimePekomin(string name) {
+        this->name = name;
+        this->pos  = Triple(0, 0, 0);
+        this->ang  = 0;
+        this->vel  = Triple(0, 0, 0);
+        this->vrot = 0;
+}
+
+RuntimePekomin::RuntimePekomin(string name, Triple pos, double ang) {
+        this->name = name;
+        this->pos  = pos;
+        this->ang  = ang;
+        this->vel  = Triple(0, 0, 0);
+        this->vrot = 0;
+}
+
+RuntimePekomin::RuntimePekomin(string name, Triple pos, double ang, Triple vel, double vrot) {
+        this->name = name;
+        this->pos  = pos;
+        this->ang  = ang;
+        this->vel  = vel;
+        this->vrot = vrot;
+}
+
 RuntimePekomin::RuntimePekomin() {
+        this->name = "";
         this->pos  = Triple(0, 0, 0);
         this->ang  = 0;
         this->vel  = Triple(0, 0, 0);
@@ -17,13 +42,15 @@ RuntimePekomin::RuntimePekomin() {
 }
 
 RuntimePekomin::RuntimePekomin(Triple pos, double ang) {
+        this->name = "";
         this->pos  = pos;
         this->ang  = ang;
         this->vel  = Triple(0, 0, 0);
         this->vrot = 0;
 }
 
-RuntimePekomin::RuntimePekomin(Triple pos, double ang, Triple vel, double vang) {
+RuntimePekomin::RuntimePekomin(Triple pos, double ang, Triple vel, double vrot) {
+        this->name = "";
         this->pos  = pos;
         this->ang  = ang;
         this->vel  = vel;
