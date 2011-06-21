@@ -4,7 +4,10 @@
 #define DEBUG_FLEE
 
 #ifdef DEBUG_FLEE
-#include <iostream>
+#       include <iostream>
+#       define DEBUG_FLEE_PRINT(S) cout << "DEBUG: Flee " << reinterpret_cast<void *>(this) << ": " #S << " == " << S << endl;
+#else
+#       define DEBUG_FLEE_PRINT(S)
 #endif
 
 Flee::Flee(Mobile *character, Mobile *target, double maxSpeed, double fleeRadius) {
@@ -22,6 +25,7 @@ pair<bool, Triple> Flee::getVel(unsigned int ticks) {
         tie(cp, tp) = points(character, target);
 
         steering.second = cp - tp;
+        DEBUG_FLEE_PRINT((cp - tp).length());
         if (steering.second.length() < fleeRadius) {
                 steering.first = true;
                 steering.second.normalize();

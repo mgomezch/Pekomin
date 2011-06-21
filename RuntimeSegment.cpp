@@ -14,13 +14,6 @@ RuntimeSegment::RuntimeSegment(string name, Triple pos, double ang, Triple vel, 
         Segment(name, pos, ang, vel, vrot, p1, p2)
 {}
 
-void RuntimeSegment::addBehavior(Behavior *b) {
-        behaviors.push_back(b);
-#ifdef DEBUG_RUNTIMESEGMENT
-        cout << "RuntimeSegment " << static_cast<void *>(this) << ": adding behavior " << static_cast<void *>(b) << endl;
-#endif
-}
-
 void RuntimeSegment::draw() {
         Triple d = (p2 - p1);
         Triple c = (p1 + p2)/2.0;
@@ -36,6 +29,6 @@ void RuntimeSegment::draw() {
                 glTranslatef(c.x, c.y, c.z);
                 glRotatef((atan2(d.y, d.x)*180.0)/M_PI, 0, 0, 1);
                 glScalef(s, 0.2, 1);
-                glCallList(cubo);
+                glCallList(cubo_simple);
         glPopMatrix();
 }

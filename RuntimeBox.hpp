@@ -18,7 +18,6 @@ class RuntimeBox : public virtual RuntimePoint, public virtual Box {
                           );
                 // TODO: destructor!
 
-                void addBehavior(Behavior *);
                 virtual void draw();
 };
 

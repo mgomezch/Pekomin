@@ -16,6 +16,7 @@
 #include "Phantom.hpp"
 #include "RuntimePoint.hpp"
 #include "RuntimeSegment.hpp"
+#include "RuntimeBox.hpp"
 
 #define DEBUG_PARSE
 
@@ -80,39 +81,76 @@
 #endif
 
 #ifdef DEBUG_PARSE
-        #define SET_WALL_FIELD_DOUBLE(FIELD)                                               \
-                it = fields.find(string( #FIELD ));                                        \
-                if (it != fields.end()) {                                                  \
-                        cout << "parse: Ent "                                              \
-                             << name_s                                                     \
-                             << " processing RuntimeSegment double field "                 \
-                             << it->first                                                  \
-                             << " with value "                                             \
-                             << it->second                                                 \
-                             << endl;                                                      \
-                        if (sscanf(it->second.c_str(), "%lf", &d) != 1) {                  \
-                                cerr << "parse error reading RuntimeSegment double field " \
-                                     << it->first                                          \
-                                     << " == "                                             \
-                                     << it->second                                         \
-                                     << endl;                                              \
-                                exit(EX_DATAERR);                                          \
-                        }                                                                  \
-                        rs-> FIELD = d;                                                    \
+        #define SET_SEGMENT_FIELD_DOUBLE(FIELD)                                     \
+                it = fields.find(string( #FIELD ));                                 \
+                if (it != fields.end()) {                                           \
+                        cout << "parse: Ent "                                       \
+                             << name_s                                              \
+                             << " processing Segment double field "                 \
+                             << it->first                                           \
+                             << " with value "                                      \
+                             << it->second                                          \
+                             << endl;                                               \
+                        if (sscanf(it->second.c_str(), "%lf", &d) != 1) {           \
+                                cerr << "parse error reading Segment double field " \
+                                     << it->first                                   \
+                                     << " == "                                      \
+                                     << it->second                                  \
+                                     << endl;                                       \
+                                exit(EX_DATAERR);                                   \
+                        }                                                           \
+                        rs-> FIELD = d;                                             \
                 }
 #else
-        #define SET_RUNTIMESEGMENT_FIELD_DOUBLE(FIELD)                                     \
-                it = fields.find(string( #FIELD ));                                        \
-                if (it != fields.end()) {                                                  \
-                        if (sscanf(it->second.c_str(), "%lf", &d) != 1) {                  \
-                                cerr << "parse error reading RuntimeSegment double field " \
-                                     << it->first                                          \
-                                     << " == "                                             \
-                                     << it->second                                         \
-                                     << endl;                                              \
-                                exit(EX_DATAERR);                                          \
-                        }                                                                  \
-                        rs-> FIELD = d;                                                  \
+        #define SET_SEGMENT_FIELD_DOUBLE(FIELD)                                     \
+                it = fields.find(string( #FIELD ));                                 \
+                if (it != fields.end()) {                                           \
+                        if (sscanf(it->second.c_str(), "%lf", &d) != 1) {           \
+                                cerr << "parse error reading Segment double field " \
+                                     << it->first                                   \
+                                     << " == "                                      \
+                                     << it->second                                  \
+                                     << endl;                                       \
+                                exit(EX_DATAERR);                                   \
+                        }                                                           \
+                        rs-> FIELD = d;                                             \
+                }
+#endif
+
+#ifdef DEBUG_PARSE
+        #define SET_BOX_FIELD_DOUBLE(FIELD)                                     \
+                it = fields.find(string( #FIELD ));                             \
+                if (it != fields.end()) {                                       \
+                        cout << "parse: Ent "                                   \
+                             << name_s                                          \
+                             << " processing Box double field "                 \
+                             << it->first                                       \
+                             << " with value "                                  \
+                             << it->second                                      \
+                             << endl;                                           \
+                        if (sscanf(it->second.c_str(), "%lf", &d) != 1) {       \
+                                cerr << "parse error reading Box double field " \
+                                     << it->first                               \
+                                     << " == "                                  \
+                                     << it->second                              \
+                                     << endl;                                   \
+                                exit(EX_DATAERR);                               \
+                        }                                                       \
+                        rb-> FIELD = d;                                         \
+                }
+#else
+        #define SET_BOX_FIELD_DOUBLE(FIELD)                                     \
+                it = fields.find(string( #FIELD ));                             \
+                if (it != fields.end()) {                                       \
+                        if (sscanf(it->second.c_str(), "%lf", &d) != 1) {       \
+                                cerr << "parse error reading Box double field " \
+                                     << it->first                               \
+                                     << " == "                                  \
+                                     << it->second                              \
+                                     << endl;                                   \
+                                exit(EX_DATAERR);                               \
+                        }                                                       \
+                        rb-> FIELD = d;                                         \
                 }
 #endif
 
@@ -325,13 +363,23 @@ void parse_r(char *s, int chars) {
                 else if (it->second == string("RuntimePoint"  )) ent = new RuntimePoint();
                 else if (it->second == string("RuntimeSegment")) {
                         RuntimeSegment *rs = new RuntimeSegment();
-                        SET_WALL_FIELD_DOUBLE(p1.x);
-                        SET_WALL_FIELD_DOUBLE(p1.y);
-                        SET_WALL_FIELD_DOUBLE(p1.z);
-                        SET_WALL_FIELD_DOUBLE(p2.x);
-                        SET_WALL_FIELD_DOUBLE(p2.y);
-                        SET_WALL_FIELD_DOUBLE(p2.z);
+
+                        SET_SEGMENT_FIELD_DOUBLE(p1.x);
+                        SET_SEGMENT_FIELD_DOUBLE(p1.y);
+                        SET_SEGMENT_FIELD_DOUBLE(p1.z);
+                        SET_SEGMENT_FIELD_DOUBLE(p2.x);
+                        SET_SEGMENT_FIELD_DOUBLE(p2.y);
+                        SET_SEGMENT_FIELD_DOUBLE(p2.z);
+
                         ent = rs;
+                } else if (it->second == string("RuntimeBox")) {
+                        RuntimeBox *rb = new RuntimeBox();
+
+                        SET_BOX_FIELD_DOUBLE(sx);
+                        SET_BOX_FIELD_DOUBLE(sy);
+                        SET_BOX_FIELD_DOUBLE(sz);
+
+                        ent = rb;
                 } else {
                         cerr << "parse error reading Ent " << name_s << ": unknown class " << it->second << endl;
                         exit(EX_DATAERR);

@@ -24,7 +24,7 @@ void RuntimePoint::draw() {
         glPushMatrix();
                 glColor4ub(255, 0, 0, 255);
                 glTranslatef(0, 0, 0.5);
-                glCallList(cubo);
+                glCallList(cubo_simple);
                 glBegin(GL_LINES);
                         glVertex3f(0, 0, 0);
                         glVertex3f(2, 0, 0);

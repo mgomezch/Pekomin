@@ -21,7 +21,6 @@ class RuntimeSegment : public virtual RuntimePoint, public virtual Segment {
                               );
                 // TODO: destructor!
 
-                void addBehavior(Behavior *);
                 virtual void draw();
 };
 

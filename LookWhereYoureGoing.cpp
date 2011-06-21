@@ -4,7 +4,7 @@
 #include "Mobile.hpp"
 #include "util.hpp"
 
-#define DEBUG_LOOKWHEREYOUREGOING
+//#define DEBUG_LOOKWHEREYOUREGOING
 
 #ifdef DEBUG_LOOKWHEREYOUREGOING
 #include <iostream>

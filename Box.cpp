@@ -3,7 +3,10 @@
 //#define DEBUG_BOX
 
 #ifdef DEBUG_BOX
-#include <iostream>
+#       include <iostream>
+#       define DEBUG_BOX_PRINT(S) cout << "DEBUG: Box " << reinterpret_cast<void *>(this) << ": " #S << " == " << S << endl;
+#else
+#       define DEBUG_BOX_PRINT(S)
 #endif
 
 Box::Box(string name, Triple pos, double ang, Triple vel, double vrot, double sx, double sy, double sz):
@@ -20,30 +23,30 @@ tuple<Triple, Triple> points(Box *s, Ent *e) {
         dir  = Triple(cos(s->ang), sin(s->ang), 0);
         dist = d.dot(dir);
         size = s->sx;
-        if (-size < dist) dist = -size;
-        if ( dist < size) dist =  size;
+        if (dist < -size) dist = -size;
+        if (size <  dist) dist =  size;
         r += dir * dist;
 
         dir  = Triple(-sin(s->ang), cos(s->ang), 0);
         dist = d.dot(dir);
         size = s->sy;
-        if (-size < dist) dist = -size;
-        if ( dist < size) dist =  size;
+        if (dist < -size) dist = -size;
+        if (size <  dist) dist =  size;
         r += dir * dist;
 
         dir  = Triple(0, 0, 1);
         dist = d.dot(dir);
         size = s->sz;
-        if (-size < dist) dist = -size;
-        if ( dist < size) dist =  size;
+        if (dist < -size) dist = -size;
+        if (size <  dist) dist =  size;
         r += dir * dist;
 
         return make_tuple(r, p);
 }
 
-tuple<Triple, Triple> points(Ent *e, Box *s) {
+tuple<Triple, Triple> points(Ent *x, Box *y) {
         Triple a, b;
-        tie(b, a) = points(s, e);
+        tie(b, a) = points(y, x);
         return make_tuple(a, b);
 }
 
