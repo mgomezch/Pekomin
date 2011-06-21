@@ -23,9 +23,6 @@ pair<bool, Triple> Seek::getVel(unsigned int ticks) {
 //        steering.second.normalize();
 //        steering.second *= maxSpeed;
 
-#ifdef DEBUG_SEEK
-        cout << "Seek " << reinterpret_cast<int>(this) << ": dist == " << dist(character, target) << endl;
-#endif
 
         steering.first = true;
         tie(cp, tp) = points(this->character, this->target);

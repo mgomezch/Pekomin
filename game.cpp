@@ -56,6 +56,8 @@ int key_reload       =  'r';
 int key_jump         =  ' ';
 int key_pause        = '\\'; // STATELESS
 
+int key_mesh_switch  =  'm'; // STATELESS
+
 int keystate_fwd          = 0;
 int keystate_back         = 0;
 int keystate_left         = 0;
@@ -82,6 +84,7 @@ int keystate_d            = 0;
 int cosa = 0;
 int cam  = 0;
 int blur = 0;
+int mesh = 0;
 
 int deltas[N_DELTAS];
 int deltas_cur         = 0;

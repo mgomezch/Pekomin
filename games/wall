@@ -33,24 +33,194 @@ npc {
                 targetRadius    = 5     ;
                 slowRadius      = 10    ;
         }
+        flee_wleft {
+                class      = Flee;
+                target     = wall_left;
+                maxSpeed   = 0.025;
+                fleeRadius = 3;
+        }
+        flee_wright {
+                class      = Flee;
+                target     = wall_right;
+                maxSpeed   = 0.025;
+                fleeRadius = 3;
+        }
+        flee_wup {
+                class      = Flee;
+                target     = wall_up;
+                maxSpeed   = 0.025;
+                fleeRadius = 3;
+        }
+        flee_wdown {
+                class      = Flee;
+                target     = wall_down;
+                maxSpeed   = 0.025;
+                fleeRadius = 3;
+        }
+        flee_o1center {
+                class      = Flee;
+                target     = obstacle_center1;
+                maxSpeed   = 0.025;
+                fleeRadius = 5;
+        }
+        flee_o2center {
+                class      = Flee;
+                target     = obstacle_center2;
+                maxSpeed   = 0.025;
+                fleeRadius = 5;
+        }
 }
 
-wall {
-        class = RuntimeWall;
-        pos.x = 10 ;
-        pos.y = 10 ;
-        pos.z =  0 ;
-        p1.x  =  0 ;
-        p1.y  = -20;
-        p1.z  =  0 ;
-        p2.x  =  0 ;
-        p2.y  =  20;
-        p2.z  =  0 ;
+npc_2 {
+        class = RuntimePekomin;
+        pos.x = 30;
+        pos.y = 30;
+        pos.z =  0;
+        vel.x =  0;
+        vel.y =  0;
+        vel.z =  0;
 
-        huye {
-                class        = Flee;
-                target       = player;
-                maxSpeed     = 0.025;
-                fleeRadius   = 3;
+        angular {
+                class              = LookWhereYoureGoing;
+                maxAngularVelocity = 0.001 ;
+                targetRadius       = 0.0   ;
+                slowRadius         = 0.5   ;
         }
+        vectorial {
+                class           = Wander;
+                maxRotation     = 0.2;
+                targetRadius    = 0.25;
+                slowRadius      = 1;
+                wanderOffset    = 1;
+                wanderRadius    = 7;
+                wanderRate      = 3.1415;
+                wanderTime      = 600;
+                maxAcceleration = 0.02;
+        }
+        flee_wleft {
+                class      = Flee;
+                target     = wall_left;
+                maxSpeed   = 0.05;
+                fleeRadius = 3;
+        }
+        flee_wright {
+                class      = Flee;
+                target     = wall_right;
+                maxSpeed   = 0.05;
+                fleeRadius = 3;
+        }
+        flee_wup {
+                class      = Flee;
+                target     = wall_up;
+                maxSpeed   = 0.05;
+                fleeRadius = 3;
+        }
+        flee_wdown {
+                class      = Flee;
+                target     = wall_down;
+                maxSpeed   = 0.05;
+                fleeRadius = 3;
+        }
+        flee_o1center {
+                class      = Flee;
+                target     = obstacle_center1;
+                maxSpeed   = 0.05;
+                fleeRadius = 3;
+        }
+        flee_o2center {
+                class      = Flee;
+                target     = obstacle_center2;
+                maxSpeed   = 0.05;
+                fleeRadius = 3;
+        }
+}
+
+wall_left {
+        class = RuntimeWall;
+        pos.x  =   0;
+        pos.y  = -40;
+        pos.z  =   0;
+        p1.x   =  60;
+        p1.y   =   0;
+        p1.z   =   0;
+        p2.x   = -60;
+        p2.y   =   0;
+        p2.z   =   0;
+        width  =   2;
+        height =   5;
+}
+
+wall_right {
+        class = RuntimeWall;
+        pos.x  =   0;
+        pos.y  =  40;
+        pos.z  =   0;
+        p1.x   =  60;
+        p1.y   =   0;
+        p1.z   =   0;
+        p2.x   = -60;
+        p2.y   =   0;
+        p2.z   =   0;
+        width  =   2;
+        height =   5;
+}
+
+wall_up {
+        class = RuntimeWall;
+        pos.x  = -60;
+        pos.y  =   0;
+        pos.z  =   0;
+        p1.x   =   0;
+        p1.y   =  40;
+        p1.z   =   0;
+        p2.x   =   0;
+        p2.y   = -40;
+        p2.z   =   0;
+        width  =   2;
+        height =   5;
+}
+
+wall_down {
+        class = RuntimeWall;
+        pos.x  =  60;
+        pos.y  =   0;
+        pos.z  =   0;
+        p1.x   =   0;
+        p1.y   =  40;
+        p1.z   =   0;
+        p2.x   =   0;
+        p2.y   = -40;
+        p2.z   =   0;
+        width  =   2;
+        height =   5;
+}
+
+obstacle_center1 {
+        class = RuntimeWall;
+        pos.x  =   0;
+        pos.y  =   0;
+        pos.z  =   0;
+        p1.x   =  20;
+        p1.y   =   0;
+        p1.z   =   0;
+        p2.x   = -20;
+        p2.y   =   0;
+        p2.z   =   0;
+        width  =   5;
+        height =  10;
+}
+
+obstacle_center2 {
+        class = RuntimeWall;
+        pos.x  =   0;
+        pos.y  =   0;
+        pos.z  =   0;
+        p1.x   =   0;
+        p1.y   =  20;
+        p1.z   =   0;
+        p2.x   =   0;
+        p2.y   = -20;
+        p2.z   =   0;
+        width  =   5;
+        height =  10;
 }

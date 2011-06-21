@@ -47,6 +47,8 @@ void initJuego() {
         level      = START_LEVEL;
         cam_old_t  = 0;
         retract    = 1;
+        graph.clear();
+        mesh = 0;
 
         px   = 0;
         py   = 0;
@@ -192,72 +194,30 @@ void initJuego() {
                 dynamic_cast<Flock *>(fab->behaviors[7])->addBoid(dani);
                 ents.push_back(fab);
                 */
+                Triple pos = Triple(0, 0, 0);
+                Node *node;
+                
+                for (int i = -60; i <= 40; i = i + 20) {
+                        for (int j = -40; j <= 20; j = j + 20) {
+                                pos = (Triple(i,j,0) + Triple(i,j+20,0) + Triple(i+20,j,0)) / 3;
+                                node = new Node("",pos);
+                                graph.push_back(node);
+                                pos = (Triple(i+20,j+20,0) + Triple(i+20,j,0) + Triple(i,j+20,0)) / 3; 
+                                node = new Node("",pos);
+                                graph.push_back(node);
+                        }
+                }
 
-                //Prueba PathFollowing
-                Node *A = new Node("A",Triple(  0,  0, 0));
-                Node *B = new Node("B",Triple( 10,  5, 0));
-                Node *C = new Node("C",Triple( 10, 20, 0));
-                Node *D = new Node("D",Triple( 20,  5, 0));
-                Node *E = new Node("E",Triple(-20,  3, 0));
-                Node *F = new Node("F",Triple(  0, 50, 0));
-                Node *G = new Node("G",Triple(-30,  6, 0));
-
-                tuple<Node*, bool, double> cosa;
-
-                get<0>(cosa) = B; get<1>(cosa) = false;
-                A->add_adj(cosa);
-                get<0>(cosa) = C; get<1>(cosa) = false;
-                A->add_adj(cosa);
-
-                get<0>(cosa) = A; get<1>(cosa) = false;
-                B->add_adj(cosa);
-                get<0>(cosa) = D; get<1>(cosa) = false;
-                B->add_adj(cosa);
-                get<0>(cosa) = F; get<1>(cosa) = false;
-                B->add_adj(cosa);
-
-                get<0>(cosa) = A; get<1>(cosa) = false;
-                C->add_adj(cosa);
-                get<0>(cosa) = D; get<1>(cosa) = false;
-                C->add_adj(cosa);
-                get<0>(cosa) = E; get<1>(cosa) = false;
-                C->add_adj(cosa);
-                get<0>(cosa) = G; get<1>(cosa) = false;
-                C->add_adj(cosa);
-
-                get<0>(cosa) = B; get<1>(cosa) = false;
-                D->add_adj(cosa);
-                get<0>(cosa) = C; get<1>(cosa) = false;
-                D->add_adj(cosa);
-                get<0>(cosa) = E; get<1>(cosa) = false;
-                D->add_adj(cosa);
-                get<0>(cosa) = G; get<1>(cosa) = false;
-                D->add_adj(cosa);
-
-                get<0>(cosa) = C; get<1>(cosa) = false;
-                E->add_adj(cosa);
-                get<0>(cosa) = D; get<1>(cosa) = false;
-                E->add_adj(cosa);
-
-                get<0>(cosa) = B; get<1>(cosa) = false;
-                F->add_adj(cosa);
-                get<0>(cosa) = G; get<1>(cosa) = false;
-                F->add_adj(cosa);
-
-                get<0>(cosa) = C; get<1>(cosa) = false;
-                G->add_adj(cosa);
-                get<0>(cosa) = D; get<1>(cosa) = false;
-                G->add_adj(cosa);
-                get<0>(cosa) = F; get<1>(cosa) = false;
-                G->add_adj(cosa);
-
-                graph.push_back(A);
-                graph.push_back(B);
-                graph.push_back(C);
-                graph.push_back(D);
-                graph.push_back(E);
-                graph.push_back(F);
-                graph.push_back(G);
+                for (unsigned int i = 0; i < graph.size(); i++) {
+                        tuple<Node*, bool, double> cosa;
+                        for (unsigned int j = 0; j < graph.size(); j++) {
+                                if (graph[i] != graph[j] && (graph[j]->pos - graph[i]->pos).length() < 25) {
+                                        get<0>(cosa) = graph[j];
+                                        get<1>(cosa) = false;
+                                        graph[i]->add_adj(cosa);
+                                }
+                        }  
+                }
 
                 for (unsigned int i = 0; i < graph.size(); i++)
                         graph[i]->print_node();
@@ -293,6 +253,26 @@ void initJuego() {
                         }
                 }
         }
+}
+
+void drawMesh() {
+
+        //Dibujar Nodos del Grafo
+        for (unsigned int i = 0; i < graph.size(); i++) {
+                glPushMatrix();
+                        glTranslatef(graph[i]->pos.x, graph[i]->pos.y, graph[i]->pos.z);
+                        graph[i]->draw();
+                glPopMatrix();
+                glPushMatrix();
+                        for (unsigned int j = 0; j < graph[i]->adj.size(); j++) {
+                                glBegin(GL_LINES);
+                                        glVertex3f(graph[i]->pos.x, graph[i]->pos.y, 0);
+                                        glVertex3f(get<0>(graph[i]->adj[j])->pos.x, get<0>(graph[i]->adj[j])->pos.y, 0);
+                                glEnd();
+                        }
+                glPopMatrix();
+        }
+
 }
 
 void display() {
@@ -396,13 +376,43 @@ void display() {
                         }
 
 
-                        //Dibujar Nodos del Grafo
-                        for (unsigned int k = 0; k < graph.size(); k++) {
+                        //PINTAMESH
+                        if (mesh == 1) {
+                                //Triple pos = Triple(0, 0, 0);
                                 glPushMatrix();
-                                        glTranslatef(graph[k]->pos.x, graph[k]->pos.y, graph[k]->pos.z);
-                                        graph[k]->draw();
+                                        glColor4ub(255, 0, 255, 255);
+                                        glTranslatef(0, 0, 0.5);
+                                        for (int i = -60; i <= 40; i = i + 20) {
+                                                for (int j = -40; j <= 20; j = j + 20) {
+                                                glBegin(GL_LINE_LOOP);
+                                                        glLineWidth(100.0);
+                                                        glVertex3f(     i,      j, 0);//-60, -40, 0
+                                                        glVertex3f(     i, j + 20, 0);//-60, -20, 0 
+                                                        glVertex3f(i + 20,      j, 0);//-40, -40, 0
+                                                        //pos = (Triple(i,j,0) + Triple(i,j+20,0) + Triple(i+20,j,0)) / 3;
+                                                glEnd();
+                                                //glBegin(GL_POINTS);
+                                                //        glVertex3f(pos.x, pos.y, 0);
+                                                //glEnd();
+                                                
+                                                glBegin(GL_LINE_LOOP);
+                                                        glLineWidth(100.0);                                   
+                                                        glVertex3f(i + 20, j + 20, 0);//-40, -20, 0
+                                                        glVertex3f(i + 20,      j, 0);//-40, -40, 0
+                                                        glVertex3f(     i, j + 20, 0);//-60, -20, 0
+                                                        //pos = (Triple(i+20,j+20,0) + Triple(i+20,j,0) + Triple(i,j+20,0)) / 3; 
+                                                glEnd();
+                                                //glBegin(GL_POINTS);
+                                                //        glVertex3f(pos.x, pos.y, 0);
+                                                //glEnd();
+                                                }
+                                        }
+                                drawMesh();
                                 glPopMatrix();
+
                         }
+
+
 
                 }
 
@@ -666,6 +676,7 @@ void display() {
                                 glCallList(bala);
                         glPopMatrix();
                 }
+
                 //glDisable(GL_TEXTURE_2D);
         }
 
@@ -756,10 +767,17 @@ void keydown(unsigned char key, int mx, int my) {
         else if (key == key_shoot       ) keystate_shoot         = 1;
         else if (key == key_reload      ) keystate_reload        = 1;
         else if (key == key_jump        ) keystate_jump          = 1;
-        else if (key == key_pause) {
+        else if (key == key_pause       ) {
                 frozen ^= 1;
 #ifdef DEBUG_MAIN
                 cout << "toggling pause" << endl;
+#endif
+        }
+        else if (key == key_mesh_switch) {
+                if ((mesh += 1) >= 2) mesh = 0;
+
+#ifdef DEBUG_MAIN
+                cout << "Mesh value : " << mesh << endl;
 #endif
         }
         else if (key == key_cam_switch) {

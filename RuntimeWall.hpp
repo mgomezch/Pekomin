@@ -8,6 +8,9 @@ using namespace std;
 
 class RuntimeWall : public virtual Actor, public virtual Segment {
         public:
+                double width;
+                double height;
+                
                 RuntimeWall(Triple pos, double ang, Triple vel, double vang, Triple p1, Triple p2);
                 RuntimeWall(Triple pos, double ang,                          Triple p1, Triple p2);
                 RuntimeWall(                                                 Triple p1, Triple p2);

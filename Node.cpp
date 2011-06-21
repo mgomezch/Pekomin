@@ -57,7 +57,7 @@ bool Node::is_adj(Node *n) {
 }
 
 void Node::print_node() {
-        cout << "Node : " << this << " id : " << this->id << " Position : (" << this->pos.x << ", " << this->pos.y << ", "<< this->pos.z << ")" << endl;
+        cout << "Node : " << this << " id : " << this->id << " Position : (" << this->pos.x << ", " << this->pos.y << ", "<< this->pos.z << ") " << " Visitado : "<< (this->check > 0 ? 1 : 0) << endl;
 }
 
 void Node::print_adj() {
@@ -74,7 +74,7 @@ void Node::draw() {
         glPushMatrix();
                 glColor4ub(255, 255, 0, 255);
                 glTranslatef(0, 0, 0.5);
-                glCallList(cubo);
+                glutSolidSphere(0.5, 4, 4);
                 /*glBegin(GL_LINES);
                         glVertex3f(0, 0, 0);
                         glVertex3f(2, 0, 0);

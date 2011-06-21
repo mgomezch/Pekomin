@@ -76,7 +76,7 @@ void RuntimeWall::draw() {
         double s = d.length();
 
         glPushMatrix();
-                glColor4ub(255, 0, 0, 255);
+                glColor4ub(0, 126, 234, 128);
                 glTranslatef(0, 0, 0.5);
                 glBegin(GL_LINES);
                         glVertex3f(0, 0, 0);
@@ -84,7 +84,7 @@ void RuntimeWall::draw() {
                 glEnd();
                 glTranslatef(c.x, c.y, c.z);
                 glRotatef((atan2(d.y, d.x)*180.0)/M_PI, 0, 0, 1);
-                glScalef(s, 0.2, 1);
+                glScalef(s, width, height);
                 glCallList(cubo);
         glPopMatrix();
 }

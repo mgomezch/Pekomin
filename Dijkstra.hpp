@@ -1,7 +1,6 @@
 #ifndef _DIJKSTRA_HPP_
 #define _DIJKSTRA_HPP
 
-#include <stack>
 #include <vector>
 #include <tuple>
 #include <iostream>

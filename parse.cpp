@@ -159,23 +159,24 @@
                 exit(EX_DATAERR);                                      \
         }
 
-#define SET_P(BEHAVIOR)                                                       \
-        p = dynamic_cast<RuntimePekomin *>(character);                        \
-        if (p != NULL) p->addBehavior(BEHAVIOR);                              \
-        else {                                                                \
-                w = dynamic_cast<RuntimeWall *>(character);                   \
-                if (w != NULL) w->addBehavior(BEHAVIOR);                      \
-                else {                                                        \
-                        cerr << "parse error making ent '"                    \
-                             << it_e->first                                   \
-                             << "' behavior '"                                \
-                             << it_b->first                                   \
-                             << "': ent '"                                    \
-                             << it_e->first                                   \
-                             << "' is neither RuntimePekomin nor RuntimeWall" \
-                             << endl;                                         \
-                        exit(EX_SOFTWARE);                                    \
-                }                                                             \
+#define SET_P(BEHAVIOR)                                                          \
+        p = dynamic_cast<RuntimePekomin *>(character);                           \
+        if (p != NULL) p->addBehavior(BEHAVIOR);                                 \
+        else {                                                                   \
+                w = dynamic_cast<RuntimeWall *>(character);                      \
+                if (w != NULL) w->addBehavior(BEHAVIOR);                         \
+                else {                                                           \
+                                cerr << "parse error making ent '"               \
+                                << it_e->first                                   \
+                                << "' behavior '"                                \
+                                << it_b->first                                   \
+                                << "': ent '"                                    \
+                                << it_e->first                                   \
+                                << "' is neither RuntimePekomin nor RuntimeWall" \
+                                << endl;                                         \
+                                exit(EX_SOFTWARE);                               \
+                                                                                \
+                }                                                                \
         }
 
 using namespace std;
@@ -308,6 +309,8 @@ void parse_r(char *s, int chars) {
                         SET_WALL_FIELD_DOUBLE(p2.x);
                         SET_WALL_FIELD_DOUBLE(p2.y);
                         SET_WALL_FIELD_DOUBLE(p2.z);
+                        SET_WALL_FIELD_DOUBLE(width);
+                        SET_WALL_FIELD_DOUBLE(height);
                         ent = wall;
                 }
 
@@ -347,7 +350,7 @@ void parse(char *s) {
         parse_r(s, 0);
 
         for (it_e = behaviorses.begin(); it_e != behaviorses.end(); ++it_e) {
-                if (it_e->first == "player") continue;
+                //if (it_e->first == "player") continue;
                 for (it_b = it_e->second->begin(); it_b != it_e->second->end(); ++it_b) {
 #ifdef DEBUG_PARSE
                         cout << "parse: making behavior: " << it_b->first << " for ent " << it_e->first << endl;

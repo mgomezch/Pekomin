@@ -18,9 +18,10 @@ class Player : public Mobile {
                 Player(Triple pos, double ang);
                 Player(const Player &);
                 Player();
-                ~Player();
+                //~Player();
 
                 virtual void update(unsigned int ticks);
+                //void addBehavior(Behavior *b);
                 virtual void draw();
 };
 

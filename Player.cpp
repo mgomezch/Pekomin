@@ -9,7 +9,7 @@
 #include <iostream>
 #endif
 
-Player::~Player() {}
+//Player::~Player() {}
 
 Player::Player(const Player &p) {
         this->pos     = p.pos          ;
@@ -52,6 +52,10 @@ Player::Player(Triple pos, double ang, Triple vel, double vang) {
         this->vel  = vel;
         this->vrot = vrot;
 }
+
+//void Player::addBehavior(Behavior *b) {
+//        behaviors.push_back(b);
+//}
 
 void Player::update(unsigned int ticks) {
         // TODO: mover actualización de estado del jugador de main.cpp pacá

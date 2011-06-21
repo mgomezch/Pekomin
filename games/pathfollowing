@@ -12,7 +12,7 @@ player {
 
 quieto {
 	class = RuntimePekomin;
-	pos.x = 10;
+	pos.x = -60;
 	pos.y = 50;
 }
 
