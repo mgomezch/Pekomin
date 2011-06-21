@@ -4,11 +4,11 @@ Cambiar a puro SDL y quitar GLUT
 Arreglar las cámaras: faltan las de cada ent
 Decidir cómo va a ser el jugador y su modelo
 Agregar draws opcionales a cada Ent, Mobile y Actor mostrando vectores varios
+Agregar algo que dibuje vectores de vainas de comportamientos
 Hacer el parser con cosas serias de hacer parsers
 Hacer que el parser agarre comentarios
 Hacer que el parser lea cosas de apariencia de un Pekomin
 Hacer que el parser lea el grafo
-Poner límites al tablero y cuadrar la cámara overhead con ellos
 Usar un piso más bonito que el checker
 Hacer que los Player actualicen sus propios estados y no depender del código viejo de speisimbeyde
 Hacer todo lo que diga el archivo TODO

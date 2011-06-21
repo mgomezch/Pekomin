@@ -1,14 +1,14 @@
 Dependencias:
-ruby (para el script "configure" que genera el Makefile)
+Ruby (para el script "configure" que genera el Makefile)
 std::unordered_map en libstdc++
 GLUT
 
 Para compilar:
-./configure.rb
+./configure
 make
 
 Para jugar:
-Si se quiere usar el archivo de juego por defecto, "games/default.game", debe ejecutarse
+Si se quiere usar el archivo de juego por defecto, "games/default", debe ejecutarse
 ./pekomin
 Si se quiere usar otro archivo de juego, debe pasarse el camino completo del archivo así:
 ./pekomin game/group.game
