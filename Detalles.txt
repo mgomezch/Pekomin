@@ -20,19 +20,13 @@ Se implemento una clase Triple con la que se representan estas estructuras y tod
 
 Los entes estan modelados de la sig. manera:
 
-Entidad: Clase Ent, Superclase tipo abstracta para modelar cualquier agente dentro del juego. 
-
-	-Entidad Movil: Clase Mobile, tipo abstracta hija de Ent.
-
-	-Entidad Inmovil: Clase Inmobile, tipo abstracta hija de Ent.
-
-	-Entidad Actor: Clase Actor, hija de Mobile, se encarga de realizar las actualizaciones de las propiedades de los entes en el juego.
-
-	-Entidad Pekomin: Clase RuntimePekomin, hija de Mobile, se encarga de enlazar los cambios con la entidad pekomin modificados por el metodo de actualización.
-
-	-Entidad Fantasma: Clase Phantom, hija de Mobile, es una entidad ficticia utilizada para algunos comportamientos como el Wander, con el cual se define el punto aleatorio objetivo al cual se le hace Seek.
-
-	-Entidad Jugador: clase Player, hija de Mobile, se encarga de enlazar los cambios con la entidad jugador modificados por el usuario en la interacción. 
+Entidad: Clase Ent, Superclase tipo abstracta para modelar cualquier agente dentro del juego.
+        -Entidad Movil: Clase Mobile, tipo abstracta hija de Ent.
+        -Entidad Inmovil: Clase Inmobile, tipo abstracta hija de Ent.
+        -Entidad Actor: Clase Actor, hija de Mobile, se encarga de realizar las actualizaciones de las propiedades de los entes en el juego.
+        -Entidad Pekomin: Clase RuntimePekomin, hija de Mobile, se encarga de enlazar los cambios con la entidad pekomin modificados por el metodo de actualización.
+        -Entidad Fantasma: Clase Phantom, hija de Mobile, es una entidad ficticia utilizada para algunos comportamientos como el Wander, con el cual se define el punto aleatorio objetivo al cual se le hace Seek.
+        -Entidad Jugador: clase Player, hija de Mobile, se encarga de enlazar los cambios con la entidad jugador modificados por el usuario en la interacción.
 
 ###########################
 ######COMPORTAMIENTOS######
@@ -41,16 +35,11 @@ Entidad: Clase Ent, Superclase tipo abstracta para modelar cualquier agente dent
 Los comportamientos estan modelados de la sig. manera:
 
 Comportamiento: Clase Behavior, Superclase tipo abstracta para modelar todos los comportamientos.
-
-	-Estático: Clase Static, se encargar de realizar la actualización de posición en un ente vista como un incremento. 
-
-	-Estático Directo: Clase DirectStatic, se encarga de realizar asignación directa en relación a un cambio de posición en un ente.
-
-	-Cinemático: Clase Kinematic, se encarga de realizar la actualización de velocidad en un ente vista como un incremento.
-
-	-Cinemático Directo: Clase DirectKinematic, se encarga de realizar asignación directa en relación a un cambio de velocidad en un ente.
-
-	-Dinámico: Clase Dynamic, se encarga de realizar la actualización de aceleración en un ente vista como un incremento.
+        -Estático:           Clase Static, se encargar de realizar la actualización de posición en un ente vista como un incremento.
+        -Estático Directo:   Clase DirectStatic, se encarga de realizar asignación directa en relación a un cambio de posición en un ente.
+        -Cinemático:         Clase Kinematic, se encarga de realizar la actualización de velocidad en un ente vista como un incremento.
+        -Cinemático Directo: Clase DirectKinematic, se encarga de realizar asignación directa en relación a un cambio de velocidad en un ente.
+        -Dinámico:           Clase Dynamic, se encarga de realizar la actualización de aceleración en un ente vista como un incremento.
 
 #####################################
 ####COMPORTAMIENTOS IMPLEMENTADOS####
@@ -59,26 +48,17 @@ Comportamiento: Clase Behavior, Superclase tipo abstracta para modelar todos los
 Se implementaron comportamientos Cinemáticos y Cinemáticos Directos, sin embargo es posible añadir cualquier otro tipo de comportamineto pues la estructura lo permite.
 
 -Kinematic Seek
-
 -Kinematic Flee
-
 -Kinematic Arrive
-
 -Kinematic Wander
 
 -Seek
-
 -Flee
-
 -Arrive
-
--Wander (Implementado colocando al ente dentro de una circunferencia y variando las posición del ente ficticio al que se sigue) 
-
+-Wander (Implementado colocando al ente dentro de una circunferencia y variando las posición del ente ficticio al que se sigue)
 -Align
-
 -Face
-
--Look Where You're Going
+-Look where you're going
 
 ################################
 ####COMPORTAMIENTOS GRUPALES####
@@ -87,5 +67,4 @@ Se implementaron comportamientos Cinemáticos y Cinemáticos Directos, sin embar
 Se implemento una función de actualización de propiedades (Fusión) en los entes que se encarga de revisar que tipos de comportamientos poseen y a partir de los mismos realizar los cálculos necesarios para generar el comportamineto global. Paresto se calcula una suma vectorial entre los diferentes resultados de cada instancia de los comportaminetos que posee el ente.
 
 -Separation
-
--Leader Following
+-Follow the leader
