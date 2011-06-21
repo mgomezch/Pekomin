@@ -11,26 +11,26 @@ player {
 }
 
 arrivador {
-	class = RuntimePekomin;
-	pos.x = 10;
-	pos.y = 46;
-	arrive {
-		class        = Arrive;
-		target       = player;
-		maxSpeed     = 0.01;
-		targetRadius = 2;
-		slowRadius   = 5; 
-	}
-	flee {
-		class      = Flee;
-		target     = player;
-		maxSpeed   = 0.005;
-		fleeRadius = 5;
-	}
-	look {
-		class              = StaticLookWhereYoureGoing;
-		maxAngularVelocity = 0.005;
-		targetRadius       = 0.2;
-		slowRadius         = 0.5;
-	}
+        class = RuntimePoint;
+        pos.x = 10;
+        pos.y = 46;
+        arrive {
+                class        = Arrive;
+                target       = player;
+                maxSpeed     = 0.01;
+                targetRadius = 2;
+                slowRadius   = 5;
+        }
+        flee {
+                class      = Flee;
+                target     = player;
+                maxSpeed   = 0.005;
+                fleeRadius = 5;
+        }
+        look {
+                class              = StaticLookWhereYoureGoing;
+                maxAngularVelocity = 0.005;
+                targetRadius       = 0.2;
+                slowRadius         = 0.5;
+        }
 }

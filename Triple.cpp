@@ -149,14 +149,6 @@ double Triple::ang_xy() {
         return atan2(this->y, this->x);
 }
 
-//proyeccion ortogonal de t sobre this
-Triple Triple::proyection(Triple t) {
-	Triple r = *this;
-	double s = r.dot(t) / r.dot(r);
-	r = t * s;
-	return r;
-}
-
 void Triple::print() {
         printf("(%f, %f, %f)\n", x, y, z);
 }

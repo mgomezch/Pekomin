@@ -11,12 +11,12 @@ player {
 }
 
 vagueador {
-	class = RuntimePekomin;
-	pos.x = 10;
-	pos.y = 24;
-	kinematicWander {
-		class       = KinematicWander;
-		maxSpeed    = 0.005;
-		maxRotation = 6.2830;
-	}
+        class = RuntimePoint;
+        pos.x = 10;
+        pos.y = 24;
+        kinematicWander {
+                class       = KinematicWander;
+                maxSpeed    = 0.005;
+                maxRotation = 6.2830;
+        }
 }

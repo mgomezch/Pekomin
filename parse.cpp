@@ -14,8 +14,8 @@
 #include "parse.hpp"
 #include "Player.hpp"
 #include "Phantom.hpp"
-#include "RuntimePekomin.hpp"
-#include "RuntimeWall.hpp"
+#include "RuntimePoint.hpp"
+#include "RuntimeSegment.hpp"
 
 #define DEBUG_PARSE
 
@@ -23,7 +23,7 @@
         #define SET_ENT_FIELD_STRING(FIELD)                 \
                 it = fields.find(string( #FIELD ));         \
                 if (it != fields.end()) {                   \
-                        cout << "parse: ent "               \
+                        cout << "parse: Ent "               \
                              << name_s                      \
                              << " processing string field " \
                              << it->first                   \
@@ -45,7 +45,7 @@
         #define SET_ENT_FIELD_DOUBLE(FIELD)                                     \
                 it = fields.find(string( #FIELD ));                             \
                 if (it != fields.end()) {                                       \
-                        cout << "parse: ent "                                   \
+                        cout << "parse: Ent "                                   \
                              << name_s                                          \
                              << " processing string field "                     \
                              << it->first                                       \
@@ -54,7 +54,7 @@
                              << "\""                                            \
                              << endl;                                           \
                         if (sscanf(it->second.c_str(), "%lf", &d) != 1) {       \
-                                cerr << "parse error reading ent double field " \
+                                cerr << "parse error reading Ent double field " \
                                      << it->first                               \
                                      << " == "                                  \
                                      << it->second                              \
@@ -68,7 +68,7 @@
                 it = fields.find(string( #FIELD ));                             \
                 if (it != fields.end()) {                                       \
                         if (sscanf(it->second.c_str(), "%lf", &d) != 1) {       \
-                                cerr << "parse error reading ent double field " \
+                                cerr << "parse error reading Ent double field " \
                                      << it->first                               \
                                      << " == "                                  \
                                      << it->second                              \
@@ -80,39 +80,39 @@
 #endif
 
 #ifdef DEBUG_PARSE
-        #define SET_WALL_FIELD_DOUBLE(FIELD)                                     \
-                it = fields.find(string( #FIELD ));                              \
-                if (it != fields.end()) {                                        \
-                        cout << "parse: ent "                                    \
-                             << name_s                                           \
-                             << " processing wall double field "                 \
-                             << it->first                                        \
-                             << " with value "                                   \
-                             << it->second                                       \
-                             << endl;                                            \
-                        if (sscanf(it->second.c_str(), "%lf", &d) != 1) {        \
-                                cerr << "parse error reading wall double field " \
-                                     << it->first                                \
-                                     << " == "                                   \
-                                     << it->second                               \
-                                     << endl;                                    \
-                                exit(EX_DATAERR);                                \
-                        }                                                        \
-                        wall-> FIELD = d;                                        \
+        #define SET_WALL_FIELD_DOUBLE(FIELD)                                               \
+                it = fields.find(string( #FIELD ));                                        \
+                if (it != fields.end()) {                                                  \
+                        cout << "parse: Ent "                                              \
+                             << name_s                                                     \
+                             << " processing RuntimeSegment double field "                 \
+                             << it->first                                                  \
+                             << " with value "                                             \
+                             << it->second                                                 \
+                             << endl;                                                      \
+                        if (sscanf(it->second.c_str(), "%lf", &d) != 1) {                  \
+                                cerr << "parse error reading RuntimeSegment double field " \
+                                     << it->first                                          \
+                                     << " == "                                             \
+                                     << it->second                                         \
+                                     << endl;                                              \
+                                exit(EX_DATAERR);                                          \
+                        }                                                                  \
+                        rs-> FIELD = d;                                                    \
                 }
 #else
-        #define SET_ENT_FIELD_DOUBLE(FIELD)                                      \
-                it = fields.find(string( #FIELD ));                              \
-                if (it != fields.end()) {                                        \
-                        if (sscanf(it->second.c_str(), "%lf", &d) != 1) {        \
-                                cerr << "parse error reading wall double field " \
-                                     << it->first                                \
-                                     << " == "                                   \
-                                     << it->second                               \
-                                     << endl;                                    \
-                                exit(EX_DATAERR);                                \
-                        }                                                        \
-                        wall-> FIELD = d;                                        \
+        #define SET_RUNTIMESEGMENT_FIELD_DOUBLE(FIELD)                                     \
+                it = fields.find(string( #FIELD ));                                        \
+                if (it != fields.end()) {                                                  \
+                        if (sscanf(it->second.c_str(), "%lf", &d) != 1) {                  \
+                                cerr << "parse error reading RuntimeSegment double field " \
+                                     << it->first                                          \
+                                     << " == "                                             \
+                                     << it->second                                         \
+                                     << endl;                                              \
+                                exit(EX_DATAERR);                                          \
+                        }                                                                  \
+                        rs-> FIELD = d;                                                  \
                 }
 #endif
 
@@ -120,11 +120,11 @@
         Mobile *character;                         \
         it_entses = entses.find(it_e->first);      \
         if (it_entses == entses.end()) {           \
-                cerr << "parse error making ent '" \
+                cerr << "parse error making Ent '" \
                      << it_e->first                \
                      << "' behavior '"             \
                      << it_b->first                \
-                     << "': ent '"                 \
+                     << "': Ent '"                 \
                      << it_e->first                \
                      << "' not found"              \
                      << endl;                      \
@@ -136,7 +136,7 @@
         Mobile *target;                                            \
         it_fields = it_b->second->find(string("target"));          \
         if (it_fields == it_b->second->end()) {                    \
-                cerr << "parse error making ent '"                 \
+                cerr << "parse error making Ent '"                 \
                      << it_e->first                                \
                      << "' behavior '"                             \
                      << it_b->first                                \
@@ -146,13 +146,13 @@
         }                                                          \
         it_entses = entses.find(it_fields->second);                \
         if (it_entses == entses.end()) {                           \
-                cerr << "parse error making ent '"                 \
+                cerr << "parse error making Ent '"                 \
                      << it_e->first                                \
                      << "' behavior '"                             \
                      << it_b->first                                \
                      << "': field 'target' == '"                   \
                      << it_fields->second                          \
-                     << "': ent not found"                         \
+                     << "': Ent not found"                         \
                      << endl;                                      \
                 exit(EX_DATAERR);                                  \
         }                                                          \
@@ -162,7 +162,7 @@
         double FIELD ;                                                 \
         it_fields = it_b->second->find(string( #FIELD ));              \
         if (it_fields == it_b->second->end()) {                        \
-                cerr << "parse error making ent '"                     \
+                cerr << "parse error making Ent '"                     \
                      << it_e->first                                    \
                      << "' behavior '"                                 \
                      << it_b->first                                    \
@@ -171,7 +171,7 @@
                 exit(EX_DATAERR);                                      \
         }                                                              \
         if (sscanf(it_fields->second.c_str(), "%lf", & FIELD ) != 1) { \
-                cerr << "parse error making ent '"                     \
+                cerr << "parse error making Ent '"                     \
                      << it_e->first                                    \
                      << "' behavior '"                                 \
                      << it_b->first                                    \
@@ -182,23 +182,23 @@
                 exit(EX_DATAERR);                                      \
         }
 
-#define SET_P(BEHAVIOR)                                                       \
-        p = dynamic_cast<RuntimePekomin *>(character);                        \
-        if (p != NULL) p->addBehavior(BEHAVIOR);                              \
-        else {                                                                \
-                w = dynamic_cast<RuntimeWall *>(character);                   \
-                if (w != NULL) w->addBehavior(BEHAVIOR);                      \
-                else {                                                        \
-                        cerr << "parse error making ent '"                    \
-                             << it_e->first                                   \
-                             << "' behavior '"                                \
-                             << it_b->first                                   \
-                             << "': ent '"                                    \
-                             << it_e->first                                   \
-                             << "' is neither RuntimePekomin nor RuntimeWall" \
-                             << endl;                                         \
-                        exit(EX_SOFTWARE);                                    \
-                }                                                             \
+#define SET_P(BEHAVIOR)                                                        \
+        p = dynamic_cast<RuntimePoint *>(character);                           \
+        if (p != NULL) p->addBehavior(BEHAVIOR);                               \
+        else {                                                                 \
+                w = dynamic_cast<RuntimeSegment *>(character);                 \
+                if (w != NULL) w->addBehavior(BEHAVIOR);                       \
+                else {                                                         \
+                        cerr << "parse error making Ent '"                     \
+                             << it_e->first                                    \
+                             << "' behavior '"                                 \
+                             << it_b->first                                    \
+                             << "': Ent '"                                     \
+                             << it_e->first                                    \
+                             << "' is neither RuntimePoint nor RuntimeSegment" \
+                             << endl;                                          \
+                        exit(EX_SOFTWARE);                                     \
+                }                                                              \
         }
 
 using namespace std;
@@ -230,7 +230,7 @@ void parse_r(char *s, int chars) {
                         chars += nextchars;
         }
 #ifdef DEBUG_PARSE
-        cout << "parse: read ent name " << name_s << endl;
+        cout << "parse: read Ent name " << name_s << endl;
 #endif
         name_s = string(name);
         free(name);
@@ -240,14 +240,14 @@ void parse_r(char *s, int chars) {
                 case 0:
                 case EOF:
                         if (nextchars == -1) {
-                                cerr << "parse error reading ent " << name_s << ": expected '{'" << endl;
+                                cerr << "parse error reading Ent " << name_s << ": expected '{'" << endl;
                                 exit(EX_DATAERR);
                         }
                 default:
                         chars += nextchars;
         }
 #ifdef DEBUG_PARSE
-        cout << "parse: entering ent " << name_s << endl;
+        cout << "parse: entering Ent " << name_s << endl;
 #endif
 
         while (nextchars = -1, sscanf(s + chars, " } %n", &nextchars), nextchars == -1) {
@@ -260,7 +260,7 @@ void parse_r(char *s, int chars) {
                         value_s = string(value);
                         free(value);
 #ifdef DEBUG_PARSE
-                        cout << "        parse: ent " << name_s << ": found field: " << field_s << " = " << value_s << endl;
+                        cout << "        parse: Ent " << name_s << ": found field: " << field_s << " = " << value_s << endl;
 #endif
                         fields[field_s] = value_s;
                 }
@@ -271,7 +271,7 @@ void parse_r(char *s, int chars) {
                         type_s = string(type);
                         free(type);
 #ifdef DEBUG_PARSE
-                        cout << "        parse: ent " << name_s << ": found behavior: " << type_s << "; entering" << endl;
+                        cout << "        parse: Ent " << name_s << ": found behavior: " << type_s << "; entering" << endl;
 #endif
 
                         (*behaviors)[type_s] = new unordered_map<string, string>();
@@ -285,33 +285,33 @@ void parse_r(char *s, int chars) {
                                         free(value);
                                         (*((*behaviors)[type_s]))[field_s] = value_s;
 #ifdef DEBUG_PARSE
-                                        cout << "                parse: ent " << name_s << ": behavior " << type_s << ": found field: " << field_s << " = " << value_s << endl;
+                                        cout << "                parse: Ent " << name_s << ": behavior " << type_s << ": found field: " << field_s << " = " << value_s << endl;
 #endif
                                 } else {
-                                        cerr << "parse error reading ent " << name_s << ", behavior " << type_s << ": expected field or '}'" << endl;
+                                        cerr << "parse error reading Ent " << name_s << ", behavior " << type_s << ": expected field or '}'" << endl;
                                         exit(EX_DATAERR);
                                 }
                         }
                         chars += nextchars;
 #ifdef DEBUG_PARSE
-                        cout << "        parse: ent " << name_s << ": leaving behavior " << type_s << endl;
+                        cout << "        parse: Ent " << name_s << ": leaving behavior " << type_s << endl;
 #endif
                 }
 
                 // Error
                 else {
-                        cerr << "parse error reading ent " << name_s << ": expected field, behavior or '}'" << endl;
+                        cerr << "parse error reading Ent " << name_s << ": expected field, behavior or '}'" << endl;
                         exit(EX_DATAERR);
                 }
         }
         chars += nextchars;
 #ifdef DEBUG_PARSE
-        cout << "parse: leaving ent " << name_s << endl;
+        cout << "parse: leaving Ent " << name_s << endl;
 #endif
 
         it = fields.find(string("class"));
         if (it == fields.end()) {
-                cerr << "parse error reading ent " << name_s << ": class attribute not specified" << endl;
+                cerr << "parse error reading Ent " << name_s << ": class attribute not specified" << endl;
                 exit(EX_DATAERR);
         } else {
                 if (it->second == string("Player")) {
@@ -321,17 +321,20 @@ void parse_r(char *s, int chars) {
                         }
                         ent = player = new Player();
                 }
-                else if (it->second == string("Phantom"       )) ent = new Phantom()       ;
-                else if (it->second == string("RuntimePekomin")) ent = new RuntimePekomin();
-                else if (it->second == string("RuntimeWall"   )) {
-                        RuntimeWall *wall = new RuntimeWall();
+                else if (it->second == string("Phantom"       )) ent = new Phantom();
+                else if (it->second == string("RuntimePoint"  )) ent = new RuntimePoint();
+                else if (it->second == string("RuntimeSegment")) {
+                        RuntimeSegment *rs = new RuntimeSegment();
                         SET_WALL_FIELD_DOUBLE(p1.x);
                         SET_WALL_FIELD_DOUBLE(p1.y);
                         SET_WALL_FIELD_DOUBLE(p1.z);
                         SET_WALL_FIELD_DOUBLE(p2.x);
                         SET_WALL_FIELD_DOUBLE(p2.y);
                         SET_WALL_FIELD_DOUBLE(p2.z);
-                        ent = wall;
+                        ent = rs;
+                } else {
+                        cerr << "parse error reading Ent " << name_s << ": unknown class " << it->second << endl;
+                        exit(EX_DATAERR);
                 }
 
                 ents.push_back(ent);
@@ -348,7 +351,7 @@ void parse_r(char *s, int chars) {
         SET_ENT_FIELD_DOUBLE(vel.z);
         SET_ENT_FIELD_DOUBLE(vrot );
 
-        entses[name_s]      = ent      ;
+        entses[name_s] = ent;
         behaviorses[name_s] = behaviors;
 
         fields.erase(fields.begin(), fields.end());
@@ -366,22 +369,22 @@ void parse(char *s) {
         unordered_map<string, Mobile *                                                >::const_iterator it_entses;
         unordered_map<string, unordered_map<string, unordered_map<string, string> *> *>::const_iterator it_e;
                               unordered_map<string, unordered_map<string, string> *>   ::const_iterator it_b;
-        RuntimePekomin *p;
-        RuntimeWall    *w;
+        RuntimePoint   *p;
+        RuntimeSegment *w;
 
         parse_r(s, 0);
 
         for (it_e = behaviorses.begin(); it_e != behaviorses.end(); ++it_e) {
                 for (it_b = it_e->second->begin(); it_b != it_e->second->end(); ++it_b) {
 #ifdef DEBUG_PARSE
-                        cout << "parse: making behavior: " << it_b->first << " for ent " << it_e->first << endl;
+                        cout << "parse: making behavior: " << it_b->first << " for Ent " << it_e->first << endl;
 #endif
 
                         it_fields = it_b->second->find(string("class"));
                         if (it_fields != it_b->second->end()) {
                                 class_s = it_fields->second;
                         } else {
-                                cerr << "parse error making ent '" << it_e->first << "' behavior '" << it_b->first << "': required field 'class' not specified" << endl;
+                                cerr << "parse error making Ent '" << it_e->first << "' behavior '" << it_b->first << "': required field 'class' not specified" << endl;
                                 exit(EX_DATAERR);
                         }
 
@@ -571,7 +574,7 @@ void parse(char *s) {
                                 continue;
                         }
 
-                        cerr << "parse error making ent '" << it_e->first << "' behavior '" << it_b->first << "': field 'class' == '" << it_fields->second << "': class not found" << endl;
+                        cerr << "parse error making Ent '" << it_e->first << "' behavior '" << it_b->first << "': field 'class' == '" << it_fields->second << "': class not found" << endl;
                         exit(EX_DATAERR);
                 }
         }

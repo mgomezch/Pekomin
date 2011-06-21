@@ -31,6 +31,10 @@
 
 using namespace std;
 
+Actor::Actor(string name, Triple pos, double ang, Triple vel, double vrot):
+        Mobile(name, pos, ang, vel, vrot)
+{}
+
 void Actor::update(unsigned int ticks) {
         unsigned int i;
         Triple vdir;

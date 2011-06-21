@@ -1,6 +1,12 @@
 #include "Ent.hpp"
 #include "Mobile.hpp"
 
+Mobile::Mobile(string name, Triple pos, double ang, Triple vel, double vrot):
+        Ent(name, pos, ang),
+        vel(vel),
+        vrot(vrot)
+{}
+
 tuple<Triple, Triple> points(Ent *e, Mobile *m) {
         return points(e, static_cast<Ent *>(m));
 }

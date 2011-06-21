@@ -6,6 +6,12 @@
 #include <iostream>
 #endif
 
+Segment::Segment(string name, Triple pos, double ang, Triple vel, double vrot, Triple p1, Triple p2):
+        Mobile(name, pos, ang, vel, vrot),
+        p1(p1),
+        p2(p2)
+{}
+
 Triple Segment::v1() {
         return this->pos + Triple(this->p1.x * cos(this->ang) - this->p1.y * sin(this->ang),
                                   this->p1.x * sin(this->ang) + this->p1.y * cos(this->ang),

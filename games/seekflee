@@ -11,25 +11,25 @@ player {
 }
 
 buscador {
-	class = RuntimePekomin;
-	pos.x = 10;
-	pos.y = 24;
-	Seek {
-		class    = Seek;
-		target   = player;
-		maxSpeed = 0.05;	
-	}
+        class = RuntimePoint;
+        pos.x = 10;
+        pos.y = 24;
+        Seek {
+                class    = Seek;
+                target   = player;
+                maxSpeed = 0.05;
+        }
 }
 
 huidor {
-	class = RuntimePekomin;
-	pos.x = 10;
-	pos.y = 24;
-	Flee {
-		class      = Flee;
-		target     = player;
-		maxSpeed   = 0.025;
-		fleeRadius = 3;
-	}
+        class = RuntimePoint;
+        pos.x = 10;
+        pos.y = 24;
+        Flee {
+                class      = Flee;
+                target     = player;
+                maxSpeed   = 0.025;
+                fleeRadius = 3;
+        }
 }
 

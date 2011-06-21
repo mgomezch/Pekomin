@@ -11,9 +11,9 @@ player {
 }
 
 perseguidor {
-	class = RuntimePekomin;
-	pos.x = 10;
-	pos.y = 46;
+        class = RuntimePoint;
+        pos.x = 10;
+        pos.y = 46;
         Wander {
                 class           = Wander;
                 maxRotation     = 3.1415;
@@ -25,17 +25,17 @@ perseguidor {
                 wanderTime      = 100;
                 maxAcceleration = 0.01;
         }
-	Pursue {
-		class    = Pursue;
-		target   = player;
-		maxSpeed = 0.001;		
-	}
+        Pursue {
+                class    = Pursue;
+                target   = player;
+                maxSpeed = 0.001;
+        }
 }
 
 evadedor {
-	class = RuntimePekomin;
-	pos.x = 10;
-	pos.y = 0;
+        class = RuntimePoint;
+        pos.x = 10;
+        pos.y = 0;
         Wander {
                 class           = Wander;
                 maxRotation     = 3.1415;
@@ -47,9 +47,9 @@ evadedor {
                 wanderTime      = 100;
                 maxAcceleration = 0.01;
         }
-	Evade {
-		class    = Evade;
-		target   = player;
-		maxSpeed = 0.001;		
-	}
+        Evade {
+                class    = Evade;
+                target   = player;
+                maxSpeed = 0.001;
+        }
 }

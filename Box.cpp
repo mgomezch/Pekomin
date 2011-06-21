@@ -6,6 +6,11 @@
 #include <iostream>
 #endif
 
+Box::Box(string name, Triple pos, double ang, Triple vel, double vrot, double sx, double sy, double sz):
+        Mobile(name, pos, ang, vel, vrot),
+        sx(sx), sy(sy), sz(sz)
+{}
+
 tuple<Triple, Triple> points(Box *s, Ent *e) {
         double dist, size;
         Triple r = s->pos, p = e->pos;

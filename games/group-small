@@ -1,17 +1,17 @@
 player {
         class = Player;
-        pos.x = 0     ;
-        pos.y = 0     ;
-        pos.z = 0     ;
-        ang   = 0     ;
-        vel.x = 0     ;
-        vel.y = 0     ;
-        vel.z = 0     ;
-        vrot  = 0     ;
+        pos.x = 0;
+        pos.y = 0;
+        pos.z = 0;
+        ang   = 0;
+        vel.x = 0;
+        vel.y = 0;
+        vel.z = 0;
+        vrot  = 0;
 }
 
 doc {
-        class = RuntimePekomin;
+        class = RuntimePoint;
         pos.x = 10; pos.y = 1;
         LookWhereYoureGoing { class = LookWhereYoureGoing; maxAngularAcceleration = 0.1; maxRotation = 0.01; targetRadius = 5; slowRadius = 10; }
         Arrive              { class = Arrive             ; target = player ; maxAcceleration = 0.1; maxSpeed = 0.01; targetRadius = 5; slowRadius = 10; }
@@ -21,7 +21,7 @@ doc {
 }
 
 grumpy {
-        class = RuntimePekomin;
+        class = RuntimePoint;
         pos.x = 10; pos.y = 2;
         LookWhereYoureGoing { class = LookWhereYoureGoing; maxAngularAcceleration = 0.1; maxRotation = 0.01; targetRadius = 5; slowRadius = 10; }
         Arrive              { class = Arrive             ; target = player ; maxAcceleration = 0.1; maxSpeed = 0.01; targetRadius = 5; slowRadius = 10; }
@@ -31,7 +31,7 @@ grumpy {
 }
 
 happy {
-        class = RuntimePekomin;
+        class = RuntimePoint;
         pos.x = 10; pos.y = 3;
         LookWhereYoureGoing { class = LookWhereYoureGoing; maxAngularAcceleration = 0.1; maxRotation = 0.01; targetRadius = 5; slowRadius = 10; }
         Arrive              { class = Arrive             ; target = player ; maxAcceleration = 0.1; maxSpeed = 0.01; targetRadius = 5; slowRadius = 10; }

@@ -12,26 +12,26 @@ player {
 
 manuel {
         class = Phantom;
-        pos.x = 10; 
+        pos.x = 10;
         pos.y = 0 ;
-        Wander { 
-                class             = Wander         ; 
-                maxRotation       = 3.1415926535   ; 
-                targetRadius      = 1              ; 
-                slowRadius        = 2              ; 
-                wanderOffset      = 1              ; 
-                wanderRadius      = 5              ;         
-                wanderRate        = 1.2            ; 
-                wanderTime        = 100            ; 
-                maxAcceleration   = 0.05           ;
+        Wander {
+                class             = Wander      ;
+                maxRotation       = 3.1415926535;
+                targetRadius      = 1           ;
+                slowRadius        = 2           ;
+                wanderOffset      = 1           ;
+                wanderRadius      = 5           ;
+                wanderRate        = 1.2         ;
+                wanderTime        = 100         ;
+                maxAcceleration   = 0.05        ;
         }
 }
 
 clau {
-        class = RuntimePekomin;
+        class = RuntimePoint;
         pos.x = 10;
         pos.y = 4 ;
-        Seek        { class = Seek; target = manuel; maxSpeed = 0.01; }        
+        Seek        { class = Seek; target = manuel; maxSpeed = 0.01; }
         Flee_manuel { class = Flee; target = manuel; maxSpeed = 0.01; fleeRadius = 5; }
         Flee_sab    { class = Flee; target = sab   ; maxSpeed = 0.01; fleeRadius = 5; }
         Flee_mari   { class = Flee; target = mari  ; maxSpeed = 0.01; fleeRadius = 5; }
@@ -41,10 +41,10 @@ clau {
 }
 
 sab {
-        class = RuntimePekomin;
+        class = RuntimePoint;
         pos.x = 10;
         pos.y = 8 ;
-        Seek        { class = Seek; target = manuel; maxSpeed = 0.01; }      
+        Seek        { class = Seek; target = manuel; maxSpeed = 0.01; }
         Flee_manuel { class = Flee; target = manuel; maxSpeed = 0.01; fleeRadius = 5; }
         Flee_clau   { class = Flee; target = clau  ; maxSpeed = 0.01; fleeRadius = 5; }
         Flee_mari   { class = Flee; target = mari  ; maxSpeed = 0.01; fleeRadius = 5; }
@@ -54,10 +54,10 @@ sab {
 }
 
 mari {
-        class = RuntimePekomin;
+        class = RuntimePoint;
         pos.x = 10;
         pos.y = 12;
-        Seek        { class = Seek; target = manuel; maxSpeed = 0.01; }      
+        Seek        { class = Seek; target = manuel; maxSpeed = 0.01; }
         Flee_manuel { class = Flee; target = manuel; maxSpeed = 0.01; fleeRadius = 5; }
         Flee_clau   { class = Flee; target = clau  ; maxSpeed = 0.01; fleeRadius = 5; }
         Flee_sab    { class = Flee; target = sab   ; maxSpeed = 0.01; fleeRadius = 5; }
@@ -67,10 +67,10 @@ mari {
 }
 
 kris {
-        class = RuntimePekomin;
+        class = RuntimePoint;
         pos.x = 10;
         pos.y = 16;
-        Seek        { class = Seek; target = manuel; maxSpeed = 0.01; }      
+        Seek        { class = Seek; target = manuel; maxSpeed = 0.01; }
         Flee_manuel { class = Flee; target = manuel; maxSpeed = 0.01; fleeRadius = 5; }
         Flee_clau   { class = Flee; target = clau  ; maxSpeed = 0.01; fleeRadius = 5; }
         Flee_sab    { class = Flee; target = sab   ; maxSpeed = 0.01; fleeRadius = 5; }
@@ -80,10 +80,10 @@ kris {
 }
 
 dani {
-        class = RuntimePekomin;
+        class = RuntimePoint;
         pos.x = 10;
         pos.y = 20;
-        Seek        { class = Seek; target = manuel; maxSpeed = 0.01; }      
+        Seek        { class = Seek; target = manuel; maxSpeed = 0.01; }
         Flee_manuel { class = Flee; target = manuel; maxSpeed = 0.01; fleeRadius = 5; }
         Flee_clau   { class = Flee; target = clau  ; maxSpeed = 0.01; fleeRadius = 5; }
         Flee_sab    { class = Flee; target = sab   ; maxSpeed = 0.01; fleeRadius = 5; }
@@ -93,7 +93,7 @@ dani {
 }
 
 fab {
-        class = RuntimePekomin;
+        class = RuntimePoint;
         pos.x = 10;
         pos.y = 24;
         Seek        { class = Seek; target = manuel; maxSpeed = 0.01; }

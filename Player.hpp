@@ -3,9 +3,9 @@
 
 #include <string>
 
-#include "RuntimePekomin.hpp"
+#include "RuntimePoint.hpp"
 
-class Player : public RuntimePekomin {
+class Player : public RuntimePoint {
         public:
                 bool control_f,
                      control_b,

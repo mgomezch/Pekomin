@@ -11,24 +11,24 @@ player {
 }
 
 buscador {
-	class = RuntimePekomin;
-	pos.x = 10;
-	pos.y = 46;
-	kinematicSeek {
-		class    = KinematicSeek;
-		target   = player;
-		maxSpeed = 0.005;
-	}
+        class = RuntimePoint;
+        pos.x = 10;
+        pos.y = 46;
+        kinematicSeek {
+                class    = KinematicSeek;
+                target   = player;
+                maxSpeed = 0.005;
+        }
 }
 
 huidor {
-	class = RuntimePekomin;
-	pos.x = 10;
-	pos.y = 40;
-	kinematicFlee {
-		class      = KinematicFlee;
-		target     = player;
-		maxSpeed   = 0.0025;
-		fleeRadius = 5;
-	}
+        class = RuntimePoint;
+        pos.x = 10;
+        pos.y = 40;
+        kinematicFlee {
+                class      = KinematicFlee;
+                target     = player;
+                maxSpeed   = 0.0025;
+                fleeRadius = 5;
+        }
 }

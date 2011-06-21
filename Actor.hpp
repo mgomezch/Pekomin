@@ -11,8 +11,9 @@ using namespace std;
 
 class Actor : public virtual Mobile {
         public:
-                unsigned int state;
                 vector<Behavior *> behaviors;
+
+                Actor(string name = "", Triple pos = Triple(), double ang = 0, Triple vel = Triple(), double vrot = 0);
 
                 virtual void update(unsigned int ticks);
 };

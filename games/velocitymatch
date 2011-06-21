@@ -11,22 +11,22 @@ player {
 }
 
 velocitymatcheador {
-	class = RuntimePekomin;
-	pos.x = 10;
-	pos.y = 24;
-	VelocityMatch {
-		class           = VelocityMatch;
-		target          = player;
-		maxAcceleration = 0.01;
-	}
+        class = RuntimePoint;
+        pos.x = 10;
+        pos.y = 24;
+        VelocityMatch {
+                class           = VelocityMatch;
+                target          = player;
+                maxAcceleration = 0.01;
+        }
 }
 
 staticvelocitymatcheador {
-	class = RuntimePekomin;
-	pos.x = 10;
-	pos.y = 20;
-	StaticVelocityMatch {
-		class           = StaticVelocityMatch;
-		target          = player;
-	}
+        class = RuntimePoint;
+        pos.x = 10;
+        pos.y = 20;
+        StaticVelocityMatch {
+                class           = StaticVelocityMatch;
+                target          = player;
+        }
 }

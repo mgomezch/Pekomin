@@ -17,8 +17,8 @@
 #include "parse.hpp"
 #include "Phantom.hpp"
 #include "Player.hpp"
-#include "RuntimePekomin.hpp"
-#include "RuntimeWall.hpp"
+#include "RuntimePoint.hpp"
+#include "RuntimeSegment.hpp"
 #include "util.hpp"
 
 #define DEBUG_MAIN
@@ -76,13 +76,13 @@ void initJuego() {
         {
                 Ent            *e;
                 Behavior       *b;
-                RuntimePekomin *p;
+                RuntimePoint *p;
 
                 while (!ents.empty()) {
                         e = ents.back();
                         ents.pop_back();
                         // TODO: hacer lo mismo pa otros tipos de runtime
-                        if ((p = dynamic_cast<RuntimePekomin *>(e)) != NULL) {
+                        if ((p = dynamic_cast<RuntimePoint *>(e)) != NULL) {
                                 while (!p->behaviors.empty()) {
                                         b = p->behaviors.back();
                                         p->behaviors.pop_back();
@@ -92,8 +92,8 @@ void initJuego() {
                         }
 
                         string type_name = typeid(e).name();
-                        if      (type_name == "RuntimePekomin") delete dynamic_cast<RuntimePekomin *>(e);
-                        else if (type_name == "RuntimeWall"   ) delete dynamic_cast<RuntimeWall    *>(e);
+                        if      (type_name == "RuntimePoint"  ) delete dynamic_cast<RuntimePoint   *>(e);
+                        else if (type_name == "RuntimeSegment") delete dynamic_cast<RuntimeSegment *>(e);
                         else if (type_name == "Player"        ) delete dynamic_cast<Player         *>(e);
                         else fprintf(stderr, "ERROR: cannot delete ent at %p; unknown type!\n", e);
 
@@ -106,12 +106,12 @@ void initJuego() {
                 ents.push_back(player);
 
                 Phantom *manuel      = new Phantom(       Triple(10,  0, 0), 0);
-                RuntimePekomin *clau = new RuntimePekomin(Triple(10,  4, 0), 0);
-                RuntimePekomin *sab  = new RuntimePekomin(Triple(10,  8, 0), 0);
-                RuntimePekomin *mari = new RuntimePekomin(Triple(10, 12, 0), 0);
-                RuntimePekomin *kris = new RuntimePekomin(Triple(10, 16, 0), 0);
-                RuntimePekomin *dani = new RuntimePekomin(Triple(10, 20, 0), 0);
-                RuntimePekomin *fab  = new RuntimePekomin(Triple(10, 24, 0), 0);
+                RuntimePoint *clau = new RuntimePoint(Triple(10,  4, 0), 0);
+                RuntimePoint *sab  = new RuntimePoint(Triple(10,  8, 0), 0);
+                RuntimePoint *mari = new RuntimePoint(Triple(10, 12, 0), 0);
+                RuntimePoint *kris = new RuntimePoint(Triple(10, 16, 0), 0);
+                RuntimePoint *dani = new RuntimePoint(Triple(10, 20, 0), 0);
+                RuntimePoint *fab  = new RuntimePoint(Triple(10, 24, 0), 0);
 
                 manuel->addBehavior(new Wander(manuel, M_PI/3, 1, 2, 1, 5, 1.2, M_PI/3, 0.001));
                 ents.push_back(manuel);

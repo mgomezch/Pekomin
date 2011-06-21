@@ -11,14 +11,14 @@ player {
 }
 
 alineador {
-	class = RuntimePekomin;
-	pos.x = 10;
-	pos.y = 34;
-	align {
-		class              = Align;
-		target             = player;
-		maxAngularVelocity = 0.005;
-		targetRadius       = 0.5;
-		slowRadius         = 0.8;
-	}
+        class = RuntimePoint;
+        pos.x = 10;
+        pos.y = 34;
+        align {
+                class              = Align;
+                target             = player;
+                maxAngularVelocity = 0.005;
+                targetRadius       = 0.5;
+                slowRadius         = 0.8;
+        }
 }

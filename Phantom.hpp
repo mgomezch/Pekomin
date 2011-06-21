@@ -1,11 +1,11 @@
 #ifndef _PHANTOM_HPP
 #define _PHANTOM_HPP
 
-#include "RuntimePekomin.hpp"
+#include "RuntimePoint.hpp"
 
 using namespace std;
 
-class Phantom : public RuntimePekomin {
+class Phantom : public RuntimePoint {
         public:
                 virtual void draw();
 };

@@ -1,17 +1,17 @@
 player {
         class = Player;
-        pos.x = 0     ;
-        pos.y = 0     ;
-        pos.z = 0     ;
-        ang   = 0     ;
-        vel.x = 0     ;
-        vel.y = 0     ;
-        vel.z = 0     ;
-        vrot  = 0     ;
+        pos.x = 0;
+        pos.y = 0;
+        pos.z = 0;
+        ang   = 0;
+        vel.x = 0;
+        vel.y = 0;
+        vel.z = 0;
+        vrot  = 0;
 }
 
 fernando {
-        class = RuntimePekomin;
+        class = RuntimePoint;
         pos.x = 10;
         pos.y = 10;
         pos.z =  0;
@@ -36,7 +36,7 @@ fernando {
 }
 
 krisvely {
-        class = RuntimePekomin;
+        class = RuntimePoint;
         pos.x = 10;
         pos.y = 10;
         pos.z =  0;

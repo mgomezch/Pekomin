@@ -2,6 +2,7 @@
 
 #include "Phantom.hpp"
 #include "gl.hpp"
+
 /*
 Phantom::Phantom() {
         this->pos  = Triple(0, 0, 0);
@@ -28,6 +29,7 @@ void Phantom::addBehavior(Behavior *b) {
         behaviors.push_back(b);
 }
 */
+
 void Phantom::draw() {
         glColor3ub(255, 0, 255);
         glCallList(cubo);

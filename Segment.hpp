@@ -12,6 +12,16 @@ class Segment : public virtual Mobile {
         public:
                 Triple p1, p2;
 
+                Segment(
+                                string name = ""      ,
+                                Triple pos  = Triple(),
+                                double ang  = 0       ,
+                                Triple vel  = Triple(),
+                                double vrot = 0       ,
+                                Triple p1   = Triple(-1, 0, 0),
+                                Triple p2   = Triple( 1, 0, 0)
+                       );
+
                 Triple v1();
                 Triple v2();
 };

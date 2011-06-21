@@ -1,17 +1,17 @@
 player {
         class = Player;
-        pos.x = 0     ;
-        pos.y = 0     ;
-        pos.z = 0     ;
-        ang   = 0     ;
-        vel.x = 0     ;
-        vel.y = 0     ;
-        vel.z = 0     ;
-        vrot  = 0     ;
+        pos.x = 0;
+        pos.y = 0;
+        pos.z = 0;
+        ang   = 0;
+        vel.x = 0;
+        vel.y = 0;
+        vel.z = 0;
+        vrot  = 0;
 }
 
 doc {
-        class = RuntimePekomin;
+        class = RuntimePoint;
         pos.x = 10; pos.y = 1;
         LookWhereYoureGoing { class = LookWhereYoureGoing; maxAngularVelocity = 0.001; targetRadius = 0; slowRadius = 1; }
         Arrive              { class = Arrive             ; target = player ; maxSpeed = 0.02; targetRadius = 5; slowRadius = 10; }
@@ -25,7 +25,7 @@ doc {
 }
 
 grumpy {
-        class = RuntimePekomin;
+        class = RuntimePoint;
         pos.x = 10; pos.y = 2;
         LookWhereYoureGoing { class = LookWhereYoureGoing; maxAngularVelocity = 0.001; targetRadius = 0; slowRadius = 1; }
         Arrive              { class = Arrive             ; target = player ; maxSpeed = 0.02; targetRadius = 5; slowRadius = 10; }
@@ -39,7 +39,7 @@ grumpy {
 }
 
 happy {
-        class = RuntimePekomin;
+        class = RuntimePoint;
         pos.x = 10; pos.y = 3;
         LookWhereYoureGoing { class = LookWhereYoureGoing; maxAngularVelocity = 0.001; targetRadius = 0; slowRadius = 1; }
         Arrive              { class = Arrive             ; target = player ; maxSpeed = 0.02; targetRadius = 5; slowRadius = 10; }
@@ -53,7 +53,7 @@ happy {
 }
 
 sleepy {
-        class = RuntimePekomin;
+        class = RuntimePoint;
         pos.x = 10; pos.y = 4;
         LookWhereYoureGoing { class = LookWhereYoureGoing; maxAngularVelocity = 0.001; targetRadius = 0; slowRadius = 1; }
         Arrive              { class = Arrive             ; target = player ; maxSpeed = 0.02; targetRadius = 5; slowRadius = 10; }
@@ -67,7 +67,7 @@ sleepy {
 }
 
 bashful {
-        class = RuntimePekomin;
+        class = RuntimePoint;
         pos.x = 10; pos.y = 5;
         LookWhereYoureGoing { class = LookWhereYoureGoing; maxAngularVelocity = 0.001; targetRadius = 0; slowRadius = 1; }
         Arrive              { class = Arrive             ; target = player ; maxSpeed = 0.02; targetRadius = 5; slowRadius = 10; }
@@ -81,7 +81,7 @@ bashful {
 }
 
 sneezy {
-        class = RuntimePekomin;
+        class = RuntimePoint;
         pos.x = 10; pos.y = 6;
         LookWhereYoureGoing { class = LookWhereYoureGoing; maxAngularVelocity = 0.001; targetRadius = 0; slowRadius = 1; }
         Arrive              { class = Arrive             ; target = player ; maxSpeed = 0.02; targetRadius = 5; slowRadius = 10; }
@@ -95,7 +95,7 @@ sneezy {
 }
 
 dopey {
-        class = RuntimePekomin;
+        class = RuntimePoint;
         pos.x = 10; pos.y = 7;
         LookWhereYoureGoing { class = LookWhereYoureGoing; maxAngularVelocity = 0.001; targetRadius = 0; slowRadius = 1; }
         Arrive              { class = Arrive             ; target = player ; maxSpeed = 0.02; targetRadius = 5; slowRadius = 10; }
