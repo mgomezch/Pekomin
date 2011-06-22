@@ -19,8 +19,6 @@ void RuntimeBox::draw() {
 
         glPushMatrix();
                 glColor4ub(128, 255, 128, 255);
-                glTranslatef(c.x, c.y, c.z);
-                glRotatef((this->ang * 180.0)/M_PI, 0, 0, 1);
                 glScalef(this->sx, this->sy, this->sz);
                 glCallList(cubo_simple);
         glPopMatrix();

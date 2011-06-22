@@ -17,6 +17,7 @@
 #include "parse.hpp"
 #include "Phantom.hpp"
 #include "Player.hpp"
+#include "RuntimeBox.hpp"
 #include "RuntimePoint.hpp"
 #include "RuntimeSegment.hpp"
 #include "util.hpp"
@@ -41,9 +42,6 @@ int power(int b, unsigned int e) {
 }
 
 void initJuego() {
-#ifdef DEBUG_MAIN
-        cout << "starting initJuego" << endl;
-#endif
         nboom = 0;
         for (i = 0; i < N_BOOM_SETS; i++) {
                 boom[i].on = 0;
@@ -52,6 +50,7 @@ void initJuego() {
         level      = START_LEVEL;
         cam_old_t  = 0;
         retract    = 1;
+        mesh = 0;
 
         px   = 0;
         py   = 0;
@@ -94,10 +93,9 @@ void initJuego() {
                         string type_name = typeid(e).name();
                         if      (type_name == "RuntimePoint"  ) delete dynamic_cast<RuntimePoint   *>(e);
                         else if (type_name == "RuntimeSegment") delete dynamic_cast<RuntimeSegment *>(e);
+                        else if (type_name == "RuntimeBox"    ) delete dynamic_cast<RuntimeBox     *>(e);
                         else if (type_name == "Player"        ) delete dynamic_cast<Player         *>(e);
                         else fprintf(stderr, "ERROR: cannot delete ent at %p; unknown type!\n", e);
-
-//                      delete e;
                 }
                 player = NULL;
 
@@ -105,7 +103,7 @@ void initJuego() {
                 player = new Player(Triple(0, 0, 0), 0);
                 ents.push_back(player);
 
-                Phantom *manuel      = new Phantom(       Triple(10,  0, 0), 0);
+                Phantom *manuel    = new Phantom(       Triple(10,  0, 0), 0);
                 RuntimePoint *clau = new RuntimePoint(Triple(10,  4, 0), 0);
                 RuntimePoint *sab  = new RuntimePoint(Triple(10,  8, 0), 0);
                 RuntimePoint *mari = new RuntimePoint(Triple(10, 12, 0), 0);
@@ -206,6 +204,33 @@ void initJuego() {
                 dynamic_cast<Flock *>(fab->behaviors[7])->addBoid(dani);
                 ents.push_back(fab);
                 */
+
+                Triple pos = Triple();
+                Node *node;
+
+                for (int i = -60; i <= 40; i = i + 20) {
+                        for (int j = -40; j <= 20; j = j + 20) {
+                                pos = (Triple(i, j, 0) + Triple(i, j + 20, 0) + Triple(i + 20, j, 0))/3.0;
+                                node = new Node("", pos);
+                                graph.push_back(node);
+                                pos = (Triple(i + 20, j + 20, 0) + Triple(i + 20, j, 0) + Triple(i, j + 20, 0))/3.0;
+                                node = new Node("", pos);
+                                graph.push_back(node);
+                        }
+                }
+
+                for (unsigned int i = 0; i < graph.size(); i++) {
+                        for (unsigned int j = 0; j < graph.size(); j++) {
+                                if (graph[i] != graph[j] && (graph[j]->pos - graph[i]->pos).length() < 25) {
+                                        graph[i]->add_adj(make_tuple(graph[j], false, 0));
+                                }
+                        }  
+                }
+
+                for (unsigned int i = 0; i < graph.size(); i++) {
+                        graph[i]->print_node();
+                }
+
                 {
                         char buf[BUFSIZE];
                         int pos = 0;
@@ -235,62 +260,8 @@ void initJuego() {
                                 player = new Player("default player");
                                 ents.push_back(player);
                         }
-
-                        //Prueba PathFollowing
-                        while (!graph.empty()) {
-                                Node *n = graph.back();
-                                graph.pop_back();
-                                delete n;
-                        }
-                        Node *A = new Node("A", Triple(  0,  0, 0));
-                        Node *B = new Node("B", Triple( 10,  5, 0));
-                        Node *C = new Node("C", Triple( 10, 20, 0));
-                        Node *D = new Node("D", Triple( 20,  5, 0));
-                        Node *E = new Node("E", Triple(-20,  3, 0));
-                        Node *F = new Node("F", Triple(  0, 50, 0));
-                        Node *G = new Node("G", Triple(-30,  6, 0));
-
-                        tuple<Node *, bool, double> cosa;
-
-                        get<0>(cosa) = B; get<1>(cosa) = false; A->add_adj(cosa);
-                        get<0>(cosa) = C; get<1>(cosa) = false; A->add_adj(cosa);
-
-                        get<0>(cosa) = A; get<1>(cosa) = false; B->add_adj(cosa);
-                        get<0>(cosa) = D; get<1>(cosa) = false; B->add_adj(cosa);
-                        get<0>(cosa) = F; get<1>(cosa) = false; B->add_adj(cosa);
-
-                        get<0>(cosa) = A; get<1>(cosa) = false; C->add_adj(cosa);
-                        get<0>(cosa) = D; get<1>(cosa) = false; C->add_adj(cosa);
-                        get<0>(cosa) = E; get<1>(cosa) = false; C->add_adj(cosa);
-                        get<0>(cosa) = G; get<1>(cosa) = false; C->add_adj(cosa);
-
-                        get<0>(cosa) = B; get<1>(cosa) = false; D->add_adj(cosa);
-                        get<0>(cosa) = C; get<1>(cosa) = false; D->add_adj(cosa);
-                        get<0>(cosa) = E; get<1>(cosa) = false; D->add_adj(cosa);
-                        get<0>(cosa) = G; get<1>(cosa) = false; D->add_adj(cosa);
-
-                        get<0>(cosa) = C; get<1>(cosa) = false; E->add_adj(cosa);
-                        get<0>(cosa) = D; get<1>(cosa) = false; E->add_adj(cosa);
-
-                        get<0>(cosa) = B; get<1>(cosa) = false; F->add_adj(cosa);
-                        get<0>(cosa) = G; get<1>(cosa) = false; F->add_adj(cosa);
-
-                        get<0>(cosa) = C; get<1>(cosa) = false; G->add_adj(cosa);
-                        get<0>(cosa) = D; get<1>(cosa) = false; G->add_adj(cosa);
-                        get<0>(cosa) = F; get<1>(cosa) = false; G->add_adj(cosa);
-
-                        graph.push_back(A);
-                        graph.push_back(B);
-                        graph.push_back(C);
-                        graph.push_back(D);
-                        graph.push_back(E);
-                        graph.push_back(F);
-                        graph.push_back(G);
                 }
         }
-#ifdef DEBUG_MAIN
-        cout << "finished initJuego" << endl;
-#endif
 }
 
 void display() {
@@ -390,6 +361,51 @@ void display() {
                                         glTranslatef(ents[i]->pos.x, ents[i]->pos.y, ents[i]->pos.z);
                                         glRotatef((ents[i]->ang * 180.0)/M_PI, 0, 0, 1);
                                         ents[i]->draw();
+                                glPopMatrix();
+                        }
+
+                        if (mesh == 1) {
+                                //Triple pos = Triple(0, 0, 0);
+                                glPushMatrix();
+                                        glColor4ub(255, 0, 255, 255);
+                                        glTranslatef(0, 0, 0.5);
+                                        for (int i = -60; i <= 40; i = i + 20) {
+                                                for (int j = -40; j <= 20; j = j + 20) {
+                                                glBegin(GL_LINE_LOOP);
+                                                        glLineWidth(100.0);
+                                                        glVertex3f(     i,      j, 0); //-60, -40, 0
+                                                        glVertex3f(     i, j + 20, 0); //-60, -20, 0
+                                                        glVertex3f(i + 20,      j, 0); //-40, -40, 0
+//                                                      pos = (Triple(i, j, 0) + Triple(i, j + 20, 0) + Triple(i + 20, j, 0))/3.0;
+                                                glEnd();
+//                                              glBegin(GL_POINTS);
+//                                                      glVertex3f(pos.x, pos.y, 0);
+//                                              glEnd();
+
+                                                glBegin(GL_LINE_LOOP);
+                                                        glLineWidth(100.0);
+                                                        glVertex3f(i + 20, j + 20, 0); //-40, -20, 0
+                                                        glVertex3f(i + 20,      j, 0); //-40, -40, 0
+                                                        glVertex3f(     i, j + 20, 0); //-60, -20, 0
+//                                                      pos = (Triple(i + 20, j + 20, 0) + Triple(i + 20, j, 0) + Triple(i, j + 20, 0))/3.0;
+                                                glEnd();
+//                                              glBegin(GL_POINTS);
+//                                                      glVertex3f(pos.x, pos.y, 0);
+//                                              glEnd();
+                                                }
+                                        }
+                                        for (unsigned int i = 0; i < graph.size(); i++) {
+                                                for (unsigned int j = 0; j < graph[i]->adj.size(); j++) {
+                                                        glBegin(GL_LINES);
+                                                                glVertex3f(graph[i]->pos.x, graph[i]->pos.y, 0);
+                                                                glVertex3f(get<0>(graph[i]->adj[j])->pos.x, get<0>(graph[i]->adj[j])->pos.y, 0);
+                                                        glEnd();
+                                                }
+                                                glPushMatrix();
+                                                        glTranslatef(graph[i]->pos.x, graph[i]->pos.y, graph[i]->pos.z);
+                                                        graph[i]->draw();
+                                                glPopMatrix();
+                                        }
                                 glPopMatrix();
                         }
                 }
@@ -744,6 +760,7 @@ void keydown(unsigned char key, int mx, int my) {
         else if (key == key_shoot       ) keystate_shoot        = player->control_shoot = 1;
         else if (key == key_reload      ) keystate_reload       = 1;
         else if (key == key_jump        ) keystate_jump         = player->control_jump  = 1;
+        else if (key == key_mesh_switch) mesh ^= 1;
         else if (key == key_pause) {
                 frozen ^= 1;
 #ifdef DEBUG_MAIN
@@ -797,6 +814,7 @@ void juego(int v) {
                 if (keystate_l) if ((a_turret += delta / 20.0) > MAX_A_TURRET) a_turret = MAX_A_TURRET;
                 if (keystate_r) if ((a_turret -= delta / 20.0) < MIN_A_TURRET) a_turret = MIN_A_TURRET;
  */
+
                 if (keystate_jump && pz == 0 && pvz == 0) {
                         pvz = 0.04;
                 }
@@ -949,8 +967,8 @@ void juego(int v) {
                         pby[q]  += delta * pbvy[q] ;
                         pbz[q]  += delta * pbvz[q] ;
                         if (
-        //                      pbx[q] <= -W_TABLERO/2.0 || W_TABLERO/2.0 <= pbx[q] ||
-        //                      pby[q] <= -H_TABLERO/2.0 || H_TABLERO/2.0 <= pby[q] ||
+//                              pbx[q] <= -W_TABLERO/2.0 || W_TABLERO/2.0 <= pbx[q] ||
+//                              pby[q] <= -H_TABLERO/2.0 || H_TABLERO/2.0 <= pby[q] ||
                                 pbz[q] <= 0
                             ) {
                                 pb[q] = 0;
@@ -1039,16 +1057,16 @@ void juego(int v) {
                         cam_y = player->pos.z + 5;
                         cam_z = player->pos.x - 12 * cos(player->ang);
 
-                        cam_roty = 180.0-((player->ang * 180.0)/M_PI);
+                        cam_roty = 180.0 - ((player->ang * 180.0)/M_PI);
                         cam_rotx = 10;
                         break;
 
                 case CAM_MANUAL:
-                        if (keystate_cam_up)       cam_y    += delta / 100.0;
-                        if (keystate_cam_down)     cam_y    -= delta / 100.0;
-                        if (keystate_cam_rotup)    cam_rotx -= delta / 25.0;
-                        if (keystate_cam_rotdown)  cam_rotx += delta / 25.0;
-                        if (keystate_cam_rotleft)  cam_roty -= delta / 25.0;
+                        if (keystate_cam_up      ) cam_y    += delta / 100.0;
+                        if (keystate_cam_down    ) cam_y    -= delta / 100.0;
+                        if (keystate_cam_rotup   ) cam_rotx -= delta / 25.0;
+                        if (keystate_cam_rotdown ) cam_rotx += delta / 25.0;
+                        if (keystate_cam_rotleft ) cam_roty -= delta / 25.0;
                         if (keystate_cam_rotright) cam_roty += delta / 25.0;
                         if (keystate_cam_fwd) {
                                 cam_x += (delta * sin((cam_roty * M_PI)/180.0)) / 100.0;
@@ -1232,4 +1250,3 @@ int main(int argc, char **argv) {
 
         return EX_OK;
 }
-

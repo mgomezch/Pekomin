@@ -610,7 +610,7 @@ void parse(char *s) {
                                 continue;
                         }
 
-                        // PathFollowing(Mobile *character, Mobile *target, double maxSpeed, double targetRadius, double slowRadius) {
+                        // PathFollowing(Mobile *character, Mobile *target, double maxSpeed, double targetRadius, double slowRadius);
                         if (class_s == string("PathFollowing")) {
                                 SET_CHARACTER();
                                 SET_TARGET();

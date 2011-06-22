@@ -1,16 +1,16 @@
-#include <cmath>
+//#include <cmath>
 
 #include <GL/glut.h>
 
 #include "Player.hpp"
 
 #include "gl.hpp"
-#include "game.hpp"
+//#include "game.hpp"
 
 //#define DEBUG_PLAYER
 
 #ifdef DEBUG_PLAYER
-#include <iostream>
+#       include <iostream>
 #endif
 
 Player::Player(const Player &p) {

@@ -121,6 +121,8 @@ extern int key_reload      ;
 extern int key_jump        ;
 extern int key_pause       ; // STATELESS
 
+extern int key_mesh_switch ; // STATELESS
+
 extern int keystate_fwd         ;
 extern int keystate_back        ;
 extern int keystate_left        ;
@@ -147,6 +149,7 @@ extern int keystate_d           ;
 extern int cosa;
 extern int cam;
 extern int blur;
+extern int mesh;
 
 extern int deltas[N_DELTAS];
 extern int deltas_cur;

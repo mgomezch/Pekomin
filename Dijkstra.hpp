@@ -1,11 +1,10 @@
 #ifndef _DIJKSTRA_HPP_
-#define _DIJKSTRA_HPP
+#define _DIJKSTRA_HPP_
 
-#include <stack>
-#include <vector>
-#include <tuple>
 #include <iostream>
-#include "Triple.hpp"
+#include <tuple>
+#include <vector>
+
 #include "Node.hpp"
 
 vector<Node*> dijkstra(Node *begin, Node *end);
