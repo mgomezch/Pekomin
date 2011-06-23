@@ -1,5 +1,6 @@
-#include "StaticVelocityMatch.hpp"
 #include "Mobile.hpp"
+#include "StaticVelocityMatch.hpp"
+#include "Triple.hpp"
 
 StaticVelocityMatch::StaticVelocityMatch(Mobile *character, Mobile *target) {
         this->character = character;

@@ -2,6 +2,7 @@
 
 #include "Align.hpp"
 #include "Mobile.hpp"
+#include "Triple.hpp"
 #include "util.hpp"
 
 //#define DEBUG_ALIGN

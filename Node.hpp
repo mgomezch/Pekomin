@@ -1,18 +1,19 @@
 #ifndef _NODE_HPP
 #define _NODE_HPP
 
-#include <string>
 #include <iostream>
-#include <vector>
+#include <string>
 #include <tuple>
-#include "Triple.hpp"
+#include <vector>
+
 #include "Ent.hpp"
+#include "Triple.hpp"
 
 using namespace std;
 
 class Node : public Ent {
         public:
-                vector<tuple<Node*, bool, double> > adj;
+                vector<tuple<Node *, bool, double> > adj;
 
                 Node(string name = "", Triple pos = Triple());
 

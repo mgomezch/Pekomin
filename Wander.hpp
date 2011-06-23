@@ -2,7 +2,9 @@
 #define _WANDER_HPP
 
 #include "DirectKinematicV.hpp"
-#include "Mobile.hpp"
+#include "Triple.hpp"
+
+class Mobile;
 
 class Wander : public DirectKinematicV {
         public:

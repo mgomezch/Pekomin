@@ -50,7 +50,7 @@
 
 extern Player *player;
 extern vector<Ent *> ents;
-extern vector<Node *> graph;
+extern vector<Node *> nodes;
 
 enum cam_enum {
         CAM_STATIC_OVERHEAD = 0,
@@ -61,9 +61,9 @@ enum cam_enum {
 };
 #define N_CAMS 5
 
-extern int ww;
-extern int wh;
-extern int pass;
+extern unsigned int ww;
+extern unsigned int wh;
+extern unsigned int pass;
 
 enum passes {
         PASS_BLUR = 0,
@@ -72,7 +72,7 @@ enum passes {
 #define FIRST_PASS PASS_BLUR
 #define N_PASSES 2
 
-extern int level;
+extern unsigned int level;
 enum levels {
         LEVEL_DESERT = 0,
         LEVEL_SKY,
@@ -96,8 +96,8 @@ extern double cam_old_y;
 extern double cam_old_z;
 extern double cam_old_rotx;
 extern double cam_old_roty;
-extern int cam_old_t;
-extern int cam_old_adj;
+extern int    cam_old_t;
+extern bool   cam_old_adj;
 extern double retract;
 
 extern int key_fwd         ;
@@ -120,49 +120,48 @@ extern int key_shoot       ;
 extern int key_reload      ;
 extern int key_jump        ;
 extern int key_pause       ; // STATELESS
+extern int key_mesh        ; // STATELESS
 
-extern int key_mesh_switch ; // STATELESS
+extern bool keystate_fwd         ;
+extern bool keystate_back        ;
+extern bool keystate_left        ;
+extern bool keystate_right       ;
+extern bool keystate_cam_up      ;
+extern bool keystate_cam_down    ;
+extern bool keystate_cam_left    ;
+extern bool keystate_cam_right   ;
+extern bool keystate_cam_fwd     ;
+extern bool keystate_cam_back    ;
+extern bool keystate_cam_rotup   ;
+extern bool keystate_cam_rotdown ;
+extern bool keystate_cam_rotleft ;
+extern bool keystate_cam_rotright;
+extern bool keystate_enter       ;
+extern bool keystate_shoot       ;
+extern bool keystate_reload      ;
+extern bool keystate_jump        ;
+extern bool keystate_l           ;
+extern bool keystate_r           ;
+extern bool keystate_u           ;
+extern bool keystate_d           ;
 
-extern int keystate_fwd         ;
-extern int keystate_back        ;
-extern int keystate_left        ;
-extern int keystate_right       ;
-extern int keystate_cam_up      ;
-extern int keystate_cam_down    ;
-extern int keystate_cam_left    ;
-extern int keystate_cam_right   ;
-extern int keystate_cam_fwd     ;
-extern int keystate_cam_back    ;
-extern int keystate_cam_rotup   ;
-extern int keystate_cam_rotdown ;
-extern int keystate_cam_rotleft ;
-extern int keystate_cam_rotright;
-extern int keystate_enter       ;
-extern int keystate_shoot       ;
-extern int keystate_reload      ;
-extern int keystate_jump        ;
-extern int keystate_l           ;
-extern int keystate_r           ;
-extern int keystate_u           ;
-extern int keystate_d           ;
+extern unsigned int cosa;
+extern unsigned int cam;
+extern bool blur;
+extern bool mesh;
 
-extern int cosa;
-extern int cam;
-extern int blur;
-extern int mesh;
-
-extern int deltas[N_DELTAS];
-extern int deltas_cur;
-extern int deltas_sum;
+extern unsigned int deltas[N_DELTAS];
+extern unsigned int deltas_cur;
+extern unsigned int deltas_sum;
 extern double max_frame_delay;
 extern double frame_delay;
 
 extern unsigned int delta;
-extern int delay;
-extern int new_time;
-extern int old_time;
-extern int frozen;
-extern int old_cam;
+extern unsigned int delay;
+extern unsigned int new_time;
+extern unsigned int old_time;
+extern unsigned int old_cam;
+extern bool         frozen;
 
 struct boom_data {
         double  x[N_BOOMS];
@@ -181,20 +180,20 @@ struct boom_data {
         double  g[N_BOOMS];
         double  b[N_BOOMS];
         int on;
-        int level;
+        unsigned int level;
 };
 extern struct boom_data boom[N_BOOM_SETS];
-extern int nboom;
+extern unsigned int nboom;
 
 extern double px, py, pz, prz, pv, pvx, pvy, pvz, pvrz, pa, pav;
-extern int pb[N_PBALAS];
-extern int pbl[N_PBALAS];
+extern bool pb[N_PBALAS];
+extern unsigned int pbl[N_PBALAS];
 extern double pbx[N_PBALAS], pby[N_PBALAS], pbz[N_PBALAS], pbvx[N_PBALAS], pbvy[N_PBALAS], pbvz[N_PBALAS];
 extern double pbv[N_PBALAS];
-extern int pbi, pbn;
+extern unsigned int pbi, pbn;
 extern int pts;
-extern int i, j, k;
-extern int lives;
-extern int balas;
+extern unsigned int lives;
+extern unsigned int balas;
+extern unsigned int i, j, k;
 
 #endif

@@ -2,6 +2,7 @@
 #define _KINEMATICWANDER_HPP
 
 #include "DirectKinematicV.hpp"
+#include "Triple.hpp"
 
 class Ent;
 

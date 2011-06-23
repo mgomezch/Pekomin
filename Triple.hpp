@@ -1,8 +1,7 @@
 #ifndef _TRIPLE_HPP
 #define _TRIPLE_HPP
 
-#include <math.h>
-#include <stdio.h>
+#include <string>
 
 using namespace std;
 
@@ -35,10 +34,7 @@ class Triple {
                 double length_2();
                 Triple normalized();
                 double ang_xy();
-                void print();
+                string to_string();
 };
-
-typedef Triple Vector;
-typedef Triple Punto;
 
 #endif

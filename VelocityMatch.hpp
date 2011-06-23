@@ -1,7 +1,10 @@
 #ifndef _VELOCITYMATCH_HPP
 #define _VELOCITYMATCH_HPP
 
+#include <utility>
+
 #include "KinematicV.hpp"
+#include "Triple.hpp"
 
 using namespace std;
 

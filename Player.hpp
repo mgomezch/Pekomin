@@ -4,8 +4,9 @@
 #include <string>
 
 #include "RuntimePoint.hpp"
+#include "Triple.hpp"
 
-class Player : public RuntimePoint {
+class Player : public virtual RuntimePoint {
         public:
                 bool control_f,
                      control_b,
@@ -18,12 +19,11 @@ class Player : public RuntimePoint {
 
                 Player(const Player &);
 
-                Player(string name, Triple pos, double ang, Triple vel, double vrot);
-                Player(string name, Triple pos, double ang                         );
-                Player(string name                                                 );
-                Player(Triple pos, double ang, Triple vel, double vrot             );
-                Player(Triple pos, double ang                                      );
-                Player(                                                            );
+                Player(
+                                string name = "",
+                                Triple pos = Triple(), double ang = 0,
+                                Triple vel = Triple(), double vrot = 0
+                      );
                 // TODO: destructor!
 
                 virtual void update(unsigned int ticks);

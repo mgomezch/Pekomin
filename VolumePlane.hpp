@@ -8,7 +8,15 @@
 
 using namespace std;
 
-class VolumePlane : public virtual Plane {};
+class VolumePlane : public virtual Plane {
+        public:
+                VolumePlane(
+                                string name = "",
+                                Triple pos = Triple(), double ang  = 0,
+                                Triple vel = Triple(), double vrot = 0,
+                                Triple pp = Triple(), Triple n = Triple(0, 0, 1)
+                     );
+};
 
 tuple<Triple, Triple> points(VolumePlane *, Ent         *);
 tuple<Triple, Triple> points(Ent         *, VolumePlane *);

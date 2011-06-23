@@ -1,9 +1,12 @@
+#include <cmath>
+
 #include "Segment.hpp"
+#include "Triple.hpp"
 
 //#define DEBUG_SEGMENT
 
 #ifdef DEBUG_SEGMENT
-#include <iostream>
+#       include <iostream>
 #endif
 
 Segment::Segment(string name, Triple pos, double ang, Triple vel, double vrot, Triple p1, Triple p2):

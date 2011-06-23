@@ -1,17 +1,22 @@
-#include "Wander.hpp"
-#include "Mobile.hpp"
-#include "util.hpp"
-#include "Phantom.hpp"
+#include <cmath>
 
-Wander::Wander(Mobile *character  ,
-               double maxRotation ,
-               double targetRadius,
-               double slowRadius  ,
-               double wanderOffset,
-               double wanderRadius,
-               double wanderRate  ,
-               double wanderTime  ,
-               double maxSpeed    ) {
+#include "Mobile.hpp"
+#include "Phantom.hpp"
+#include "Triple.hpp"
+#include "util.hpp"
+#include "Wander.hpp"
+
+Wander::Wander(
+                Mobile *character,
+                double maxRotation,
+                double targetRadius,
+                double slowRadius,
+                double wanderOffset,
+                double wanderRadius,
+                double wanderRate,
+                double wanderTime,
+                double maxSpeed
+              ) {
         this->character    = character    ;
         this->target       = new Phantom();
         this->maxRotation  = maxRotation  ;

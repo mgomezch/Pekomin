@@ -2,6 +2,7 @@
 #define _KINEMATICSEEK_HPP
 
 #include "KinematicV.hpp"
+#include "Triple.hpp"
 
 using namespace std;
 

@@ -3,8 +3,8 @@
 
 #include <tuple>
 
-#include "Triple.hpp"
 #include "Mobile.hpp"
+#include "Triple.hpp"
 
 using namespace std;
 
@@ -13,13 +13,11 @@ class Segment : public virtual Mobile {
                 Triple p1, p2;
 
                 Segment(
-                                string name = ""      ,
-                                Triple pos  = Triple(),
-                                double ang  = 0       ,
-                                Triple vel  = Triple(),
-                                double vrot = 0       ,
-                                Triple p1   = Triple(-1, 0, 0),
-                                Triple p2   = Triple( 1, 0, 0)
+                                string name = "",
+                                Triple pos = Triple(), double ang  = 0,
+                                Triple vel = Triple(), double vrot = 0,
+                                Triple p1 = Triple(-1, 0, 0),
+                                Triple p2 = Triple( 1, 0, 0)
                        );
 
                 Triple v1();

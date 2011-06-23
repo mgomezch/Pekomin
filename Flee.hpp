@@ -2,6 +2,7 @@
 #define _FLEE_HPP
 
 #include "DirectKinematicV.hpp"
+#include "Triple.hpp"
 
 using namespace std;
 

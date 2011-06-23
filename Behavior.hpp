@@ -10,9 +10,10 @@ class Behavior {
                 string name;
                 bool dead;
 
+                Behavior(string name = "");
+
                 virtual ~Behavior() = 0;
 };
 
-inline Behavior::~Behavior() {}
 
 #endif

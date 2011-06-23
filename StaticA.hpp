@@ -4,7 +4,6 @@
 #include <utility>
 
 #include "Behavior.hpp"
-#include "Triple.hpp"
 
 using namespace std;
 

@@ -1,5 +1,6 @@
 #include "Flee.hpp"
 #include "Mobile.hpp"
+#include "Triple.hpp"
 
 #define DEBUG_FLEE
 

@@ -3,12 +3,22 @@
 
 #include <tuple>
 
-#include "Triple.hpp"
+#include "Ent.hpp"
+#include "Mobile.hpp"
 #include "Plane.hpp"
+#include "Triple.hpp"
 
 using namespace std;
 
-class SurfacePlane : public virtual Plane {};
+class SurfacePlane : public virtual Plane {
+        public:
+                SurfacePlane(
+                                string name = "",
+                                Triple pos = Triple(), double ang  = 0,
+                                Triple vel = Triple(), double vrot = 0,
+                                Triple pp = Triple(), Triple n = Triple(0, 0, 1)
+                     );
+};
 
 tuple<Triple, Triple> points(SurfacePlane  *, Ent           *);
 tuple<Triple, Triple> points(Ent           *, SurfacePlane  *);

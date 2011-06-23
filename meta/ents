@@ -1,1 +1,18 @@
-Ent Immobile Mobile Actor Player
+Ent:
+Mobile: Ent
+Actor: Mobile
+RuntimePoint: Actor
+Phantom: RuntimePoint
+Player: RuntimePoint
+
+Plane: Mobile
+SurfacePlane: Plane
+VolumePlane: Plane
+
+Segment: Mobile
+RuntimeSegment: RuntimePoint Segment
+
+Box: Mobile
+RuntimeBox: RuntimePoint Box
+
+Node: Ent

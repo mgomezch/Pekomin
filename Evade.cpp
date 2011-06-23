@@ -1,8 +1,9 @@
 #include "Evade.hpp"
 #include "Mobile.hpp"
+#include "Triple.hpp"
 
 #ifdef DEBUG_EVADE
-#include <iostream>
+#       include <iostream>
 #endif
 
 Evade::Evade(Mobile *character, Mobile *target, double maxSpeed) {
@@ -41,14 +42,14 @@ pair<bool, Triple> Evade::getVel(unsigned int ticks) {
         speed = character->vel.length();
 
         if (speed <= (distance / maxPrediction)) prediction = maxPrediction;
-        else                                     prediction = distance / speed;
+        else prediction = distance / speed;
 
         steering.first = true;
         steering.second = cp - tp + target->vel * prediction;
         steering.second.normalized();
 
 #ifdef DEBUG_EVADE
-                cout << "Evade : " << dynamic_cast<void *>(this) << "3 distancia : " << distance << " velocidad : " << endl; steering.second.print();
+        cout << "Evade : " << dynamic_cast<void *>(this) << "3 distancia : " << distance << " velocidad : " << endl; steering.second.print();
 #endif
 
         steering.second *= maxSpeed;

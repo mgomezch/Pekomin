@@ -1,13 +1,14 @@
-#include <GL/glut.h>
 #include <cmath>
+#include <GL/glut.h>
 
-#include "RuntimeSegment.hpp"
 #include "gl.hpp"
+#include "RuntimeSegment.hpp"
+#include "Triple.hpp"
 
 //#define DEBUG_RUNTIMESEGMENT
 
 #ifdef DEBUG_RUNTIMESEGMENT
-#include <iostream>
+#       include <iostream>
 #endif
 
 RuntimeSegment::RuntimeSegment(string name, Triple pos, double ang, Triple vel, double vrot, Triple p1, Triple p2):

@@ -1,4 +1,14 @@
+#include <cmath>
+#include <iostream>
+#include <string>
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <sysexits.h>
+
 #include "Triple.hpp"
+
+using namespace std;
 
 Triple Triple::operator+(Triple t) {
         Triple r = *this;
@@ -87,6 +97,7 @@ Triple& Triple::operator+=(double f) {
 
 Triple& Triple::operator-=(const Triple &t) {
         this->x -= t.x;
+
         this->y -= t.y;
         this->z -= t.z;
         return *this;
@@ -149,6 +160,16 @@ double Triple::ang_xy() {
         return atan2(this->y, this->x);
 }
 
-void Triple::print() {
-        printf("(%f, %f, %f)\n", x, y, z);
+string Triple::to_string() {
+        char *s;
+        string r;
+
+        if (asprintf(&s, "(%f, %f, %f)", x, y, z) != 3) {
+                cerr << "ERROR: Triple::to_string(): cannot allocate output string." << endl;
+                exit(EX_OSERR);
+        }
+        r = string(s);
+        free(s);
+
+        return r;
 }

@@ -1,19 +1,19 @@
-#include "game.hpp"
-#include "Player.hpp"
-#include "Ent.hpp"
-#include "Node.hpp"
-
 #include <GL/glut.h>
 
-vector<Node *> graph;
-Player *player = 0;
+#include "Ent.hpp"
+#include "game.hpp"
+#include "Node.hpp"
+#include "Player.hpp"
+
+vector<Node *> nodes;
 vector<Ent *> ents;
+Player *player = NULL;
 
-int ww = 512;
-int wh = 384;
-int pass = 0;
+unsigned int ww   = 512;
+unsigned int wh   = 384;
+unsigned int pass = 0;
 
-int level = 0;
+unsigned int level = 0;
 
 double aspectratio = 4.0/3.0;
 double fov         =    60.0;
@@ -25,15 +25,14 @@ double cam_z       =     0.0;
 double cam_rotx    =     0.0;
 double cam_roty    =     0.0;
 
-double cam_old_x    = 0;
-double cam_old_y    = 0;
-double cam_old_z    = 0;
-double cam_old_rotx = 0;
-double cam_old_roty = 0;
-int old_cam         = 0;
-int cam_old_t       = 0;
-int cam_old_adj     = 0;
-double retract      = 0;
+double retract       = 0;
+double cam_old_x     = 0;
+double cam_old_y     = 0;
+double cam_old_z     = 0;
+double cam_old_rotx  = 0;
+double cam_old_roty  = 0;
+int    cam_old_t     = 0;
+bool   cam_old_adj   = false;
 
 int key_fwd          =  'w';
 int key_back         =  's';
@@ -55,50 +54,49 @@ int key_shoot        =  'z';
 int key_reload       =  'r';
 int key_jump         =  ' ';
 int key_pause        = '\\'; // STATELESS
+int key_mesh         =  'm'; // STATELESS
 
-int key_mesh_switch  =  'm'; // STATELESS
+bool keystate_fwd          = false;
+bool keystate_back         = false;
+bool keystate_left         = false;
+bool keystate_right        = false;
+bool keystate_cam_up       = false;
+bool keystate_cam_down     = false;
+bool keystate_cam_left     = false;
+bool keystate_cam_right    = false;
+bool keystate_cam_fwd      = false;
+bool keystate_cam_back     = false;
+bool keystate_cam_rotup    = false;
+bool keystate_cam_rotdown  = false;
+bool keystate_cam_rotleft  = false;
+bool keystate_cam_rotright = false;
+bool keystate_enter        = false;
+bool keystate_shoot        = false;
+bool keystate_reload       = false;
+bool keystate_jump         = false;
+bool keystate_l            = false;
+bool keystate_r            = false;
+bool keystate_u            = false;
+bool keystate_d            = false;
 
-int keystate_fwd          = 0;
-int keystate_back         = 0;
-int keystate_left         = 0;
-int keystate_right        = 0;
-int keystate_cam_up       = 0;
-int keystate_cam_down     = 0;
-int keystate_cam_left     = 0;
-int keystate_cam_right    = 0;
-int keystate_cam_fwd      = 0;
-int keystate_cam_back     = 0;
-int keystate_cam_rotup    = 0;
-int keystate_cam_rotdown  = 0;
-int keystate_cam_rotleft  = 0;
-int keystate_cam_rotright = 0;
-int keystate_enter        = 0;
-int keystate_shoot        = 0;
-int keystate_reload       = 0;
-int keystate_jump         = 0;
-int keystate_l            = 0;
-int keystate_r            = 0;
-int keystate_u            = 0;
-int keystate_d            = 0;
+unsigned int cosa = 0;
+unsigned int cam  = 0;
+bool         blur = 0;
+bool         mesh = 0;
 
-int cosa = 0;
-int cam  = 0;
-int blur = 0;
-int mesh = 0;
-
-int deltas[N_DELTAS];
-int deltas_cur         = 0;
-int deltas_sum         = 0;
-unsigned int delta     = 0;
-int delay              = 0;
-int new_time           = 0;
-int old_time           = 0;
-double max_frame_delay = 0;
-double frame_delay     = 0;
-int frozen             = 0;
+unsigned int deltas[N_DELTAS];
+unsigned int deltas_cur      = 0;
+unsigned int deltas_sum      = 0;
+unsigned int delta           = 0;
+unsigned int delay           = 0;
+unsigned int new_time        = 0;
+unsigned int old_time        = 0;
+double       max_frame_delay = 0;
+double       frame_delay     = 0;
+bool         frozen          = false;
 
 struct boom_data boom[N_BOOM_SETS];
-int nboom = 0;
+unsigned int nboom = 0;
 
 double px   = 0,
        py   = 0,
@@ -111,17 +109,16 @@ double px   = 0,
        pvrz = 0,
        pa   = 0,
        pav  = 0;
-int pb[N_PBALAS];
-int pbl[N_PBALAS];
+bool pb[N_PBALAS];
+unsigned int pbl[N_PBALAS];
 double pbx[N_PBALAS], pby[N_PBALAS], pbz[N_PBALAS], pbvx[N_PBALAS], pbvy[N_PBALAS], pbvz[N_PBALAS];
 double pbv[N_PBALAS];
-int pbi = 0,
-    pbn = 0;
-int balas = 0;
-int lives = 0;
+unsigned int pbi = 0,
+             pbn = 0;
+unsigned int balas = 0;
+unsigned int lives = 0;
 int pts = 0;
 
-int i = 0,
-    j = 0,
-    k = 0;
-
+unsigned int i = 0,
+             j = 0,
+             k = 0;

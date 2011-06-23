@@ -1,10 +1,11 @@
 #include "Arrive.hpp"
 #include "Mobile.hpp"
+#include "Triple.hpp"
 
 //#define DEBUG_ARRIVE
 
 #ifdef DEBUG_ARRIVE
-#include <stdio.h>
+#include <iostream>
 #endif
 
 Arrive::Arrive(Mobile *character, Mobile *target, double maxSpeed, double targetRadius, double slowRadius) {

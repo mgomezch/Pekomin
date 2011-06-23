@@ -1,8 +1,9 @@
-#include "gl.hpp"
-#include "game.hpp"
 #include <png.h>
-#include <sysexits.h>
 #include <stdlib.h>
+#include <sysexits.h>
+
+#include "game.hpp"
+#include "gl.hpp"
 
 int cuadrado        = -1,
     cuadrado_hd     = -1,

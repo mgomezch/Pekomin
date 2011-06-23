@@ -1,7 +1,10 @@
 #include <utility>
 
 #include "Actor.hpp"
-#include "Player.hpp"
+#include "Families.hpp"
+#include "Mobile.hpp"
+#include "Player.hpp" // TODO: quitar esto y quitar la piratería del salto
+#include "Triple.hpp"
 #include "util.hpp"
 
 //#define DEBUG_ACTOR
@@ -130,12 +133,10 @@ void Actor::update(unsigned int ticks) {
         if (n_StaticA         ) this->ang  += sum_StaticA;
 
 #ifdef DEBUG_ACTOR
-        printf("actor %p: final vel = ", this);
-        this->vel.print();
-        printf(", vrot = %f>\n", this->vrot);
+        cout << "actor " << this->name << ": final vel == " << this->vel.to_string() << ", vrot == " << this->vrot << endl;
 #endif
 
-        // roce; si se hace un salto, chequear que estés en el piso
+        // TODO: chequear que estés en el piso antes de calcular roce
         if (this->pos.z == 0) {
                 vdir = this->vel.normalized();
                 this->vel += Triple(this->vel.x, this->vel.y, 0) * (-0.005) * static_cast<double>(ticks);
@@ -150,6 +151,7 @@ void Actor::update(unsigned int ticks) {
         this->ang  = mapToRange(this->ang);
 
         // TODO: piratería para que el salto funcione
+        // BUG: esto hace que la diferencia de posición vertical produzca distancias grandes en los comportamientos a pesar de que el movimiento se hace solo en un plano... las distancias deberían, en cambio, calcularse en base al plano!
         if (dynamic_cast<Player *>(this) == NULL) {
                 this->pos.z = 0;
                 this->vel.z = 0;

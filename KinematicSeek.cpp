@@ -1,5 +1,6 @@
-#include "KinematicSeek.hpp"
 #include "Ent.hpp"
+#include "KinematicSeek.hpp"
+#include "Triple.hpp"
 
 KinematicSeek::KinematicSeek(Ent *character, Ent *target, double maxSpeed) {
         this->character = character;

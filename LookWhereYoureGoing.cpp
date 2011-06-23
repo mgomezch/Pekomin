@@ -2,12 +2,13 @@
 
 #include "LookWhereYoureGoing.hpp"
 #include "Mobile.hpp"
+#include "Triple.hpp"
 #include "util.hpp"
 
 //#define DEBUG_LOOKWHEREYOUREGOING
 
 #ifdef DEBUG_LOOKWHEREYOUREGOING
-#include <iostream>
+#       include <iostream>
 #endif
 
 LookWhereYoureGoing::LookWhereYoureGoing(Mobile *character, double maxAngularVelocity, double targetRadius, double slowRadius) {

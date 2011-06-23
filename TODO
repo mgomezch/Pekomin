@@ -1,3 +1,4 @@
+Hacer constructores de familias y delegar de constructores de todos los comportamientos
 Segfault si no se define un player!!!!!!
 Leer imagenes y hacer displays
 Cambiar a puro SDL y quitar GLUT

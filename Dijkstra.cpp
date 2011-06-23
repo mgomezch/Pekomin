@@ -1,3 +1,7 @@
+#include <tuple>
+#include <vector>
+
+#include "Node.hpp"
 #include "Dijkstra.hpp"
 
 vector<Node *> dijkstra(Node *begin, Node *end) {

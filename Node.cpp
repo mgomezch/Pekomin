@@ -7,7 +7,7 @@ Node::Node(string name, Triple pos):
         Ent(name, pos, 0)
 {}
 
-void Node::add_adj(tuple<Node*, bool, double> node) {
+void Node::add_adj(tuple<Node *, bool, double> node) {
         adj.push_back(node);
 }
 

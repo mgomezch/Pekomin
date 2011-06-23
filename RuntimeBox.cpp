@@ -1,13 +1,14 @@
-#include <GL/glut.h>
 #include <cmath>
+#include <GL/glut.h>
 
-#include "RuntimeBox.hpp"
 #include "gl.hpp"
+#include "RuntimeBox.hpp"
+#include "Triple.hpp"
 
 //#define DEBUG_RUNTIMEBOX
 
 #ifdef DEBUG_RUNTIMEBOX
-#include <iostream>
+#       include <iostream>
 #endif
 
 RuntimeBox::RuntimeBox(string name, Triple pos, double ang, Triple vel, double vrot, double sx, double sy, double sz):

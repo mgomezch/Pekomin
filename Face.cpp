@@ -2,6 +2,7 @@
 
 #include "Face.hpp"
 #include "Mobile.hpp"
+#include "Triple.hpp"
 #include "util.hpp"
 
 //#define DEBUG_FACE
@@ -11,12 +12,12 @@
 #endif
 
 Face::Face(Mobile *character, Mobile *target, double maxAngularVelocity, double targetRadius, double slowRadius) {
-        this->character          = character         ;
-        this->target             = target            ;
+        this->character          = character;
+        this->target             = target;
         this->maxAngularVelocity = maxAngularVelocity;
-        this->targetRadius       = targetRadius      ;
-        this->slowRadius         = slowRadius        ;
-        this->dead               = false             ;
+        this->targetRadius       = targetRadius;
+        this->slowRadius         = slowRadius;
+        this->dead               = false;
 }
 
 pair<bool, double> Face::getAngVelIncr(unsigned int ticks) {
@@ -44,7 +45,7 @@ pair<bool, double> Face::getAngVelIncr(unsigned int ticks) {
                 return steering;
         }
 
-        targetRotation = maxAngularVelocity;// - target->vrot;
+        targetRotation = maxAngularVelocity; // - target->vrot;
         if (rotationSize < slowRadius) {
 #ifdef DEBUG_FACE
                 cout << "Face " << static_cast<void *>(this) << ": entre targetRadius y slowRadius" << endl;

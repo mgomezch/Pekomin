@@ -1,36 +1,15 @@
-#include <GL/glut.h>
-
-#include "Phantom.hpp"
 #include "gl.hpp"
+#include "Phantom.hpp"
 
-/*
-Phantom::Phantom() {
-        this->pos  = Triple(0, 0, 0);
-        this->ang  = 0;
-        this->vel  = Triple(0, 0, 0);
-        this->vrot = 0;
-}
+#define DEBUG_PHANTOM
 
-Phantom::Phantom(Triple pos, double ang) {
-        this->pos  = pos;
-        this->ang  = ang;
-        this->vel  = Triple(0, 0, 0);
-        this->vrot = 0;
-}
-
-Phantom::Phantom(Triple pos, double ang, Triple vel, double vrot) {
-        this->pos  = pos;
-        this->ang  = ang;
-        this->vel  = vel;
-        this->vrot = vrot;
-}
-
-void Phantom::addBehavior(Behavior *b) {
-        behaviors.push_back(b);
-}
-*/
+#ifdef DEBUG_PHANTOM
+#       include <GL/glut.h>
+#endif
 
 void Phantom::draw() {
+#ifdef DEBUG_PHANTOM
         glColor3ub(255, 0, 255);
         glCallList(cubo);
+#endif
 }

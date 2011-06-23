@@ -1,5 +1,6 @@
-#include "KinematicFlee.hpp"
 #include "Ent.hpp"
+#include "KinematicFlee.hpp"
+#include "Triple.hpp"
 
 KinematicFlee::KinematicFlee(Ent *character, Ent *target, double maxSpeed, double fleeRadius) {
         this->character  = character ;

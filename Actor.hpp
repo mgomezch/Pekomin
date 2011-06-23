@@ -1,11 +1,11 @@
 #ifndef _ACTOR_HPP
 #define _ACTOR_HPP
 
-#include "Mobile.hpp"
-#include "Behavior.hpp"
-#include "Families.hpp"
-
 #include <vector>
+
+#include "Behavior.hpp"
+#include "Mobile.hpp"
+#include "Triple.hpp"
 
 using namespace std;
 

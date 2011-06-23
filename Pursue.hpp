@@ -2,12 +2,13 @@
 #define _PURSUE_HPP
 
 #include "DirectKinematicV.hpp"
+#include "Triple.hpp"
 
 using namespace std;
 
 class Mobile;
 
-class Pursue : public DirectKinematicV {
+class Pursue : public virtual DirectKinematicV {
         public:
                 Mobile *character;
                 Mobile *target;

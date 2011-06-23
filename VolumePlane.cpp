@@ -1,5 +1,6 @@
 #include <cmath>
 
+#include "Triple.hpp"
 #include "VolumePlane.hpp"
 
 //#define DEBUG_VOLUMEPLANE
@@ -7,6 +8,10 @@
 #ifdef DEBUG_VOLUMEPLANE
 #include <iostream>
 #endif
+
+VolumePlane::VolumePlane(string name, Triple pos, double ang, Triple vel, double vrot, Triple pp, Triple n):
+        Plane(name, pos, ang, vel, vrot, pp, n)
+{}
 
 tuple<Triple, Triple> points(VolumePlane *p, Ent *e) {
         Triple ep = e->pos, pn = p->normal();

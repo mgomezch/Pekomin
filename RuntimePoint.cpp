@@ -1,12 +1,13 @@
-#include "RuntimePoint.hpp"
+#include <GL/glut.h>
 
 #include "gl.hpp"
-#include <GL/glut.h>
+#include "RuntimePoint.hpp"
+#include "Triple.hpp"
 
 //#define DEBUG_RUNTIMEPOINT
 
 #ifdef DEBUG_RUNTIMEPOINT
-#include <iostream>
+#       include <iostream>
 #endif
 
 RuntimePoint::RuntimePoint(string name, Triple pos, double ang, Triple vel, double vrot):

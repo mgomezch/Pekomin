@@ -2,10 +2,10 @@
 #define _PATHFOLLOWING_HPP
 
 #include <vector>
+
 #include "DirectKinematicV.hpp"
 #include "Node.hpp"
-#include "Dijkstra.hpp"
-#include "game.hpp"
+#include "Triple.hpp"
 
 using namespace std;
 

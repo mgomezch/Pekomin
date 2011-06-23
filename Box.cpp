@@ -1,4 +1,9 @@
+#include <cmath>
+#include <string>
+
 #include "Box.hpp"
+#include "Mobile.hpp"
+#include "Triple.hpp"
 
 //#define DEBUG_BOX
 

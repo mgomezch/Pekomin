@@ -1,11 +1,15 @@
 #include "Flock.hpp"
+#include "Mobile.hpp"
 #include "Phantom.hpp"
+#include "Triple.hpp"
 
-Flock::Flock(Mobile *character     ,
-             double targetRadius   ,
-             double slowRadius     ,
-             double flockRadius    ,
-             double maxAcceleration) {
+Flock::Flock(
+                Mobile *character,
+                double targetRadius,
+                double slowRadius,
+                double flockRadius,
+                double maxAcceleration
+            ) {
         this->character       = character      ;
         this->target          = new Phantom()  ;
         this->targetRadius    = targetRadius   ;

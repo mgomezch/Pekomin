@@ -19,6 +19,10 @@ until open.empty? do
         closed.push(cur)
 end
 
+if (ARGV.size == 1 && ARGV[0] == "-d") then
+        directdeps.each { |k, v| puts k + ": " + v.join(" ") }
+end
+
 ostr = compilables.map { |c| c.sub(/\.c(pp)?/, ".o") }.join(" ")
 
 out += "\n\nall: " + MAIN_NAME + "\n\ndistclean:\n\trm -f *.gch *.o *~ Makefile tags " + MAIN_NAME + "\n\nclean:\n\trm -f *.gch " + ostr + " " + MAIN_NAME + "\n\n" + MAIN_NAME + ": " + ostr + "\n\t$(CXX) $(CXXOPTS) -o " + MAIN_NAME + " " + ostr + " $(LDLIBS)\n\n"
@@ -28,11 +32,15 @@ compilables.each do |c|
         deps[c] = directdeps[c]
         while true do
                 newdeps = deps[c].map { |d| directdeps[d] }.flatten.uniq
-                if newdeps.all? { |d| deps[c].member? d } then break end
+                break if newdeps.all? { |d| deps[c].member? d }
                 deps[c] = (deps[c] + newdeps).uniq
         end
 
         out += c.sub(/\.c(pp)?/, ".o") + ": " + c + " " + deps[c].join(" ") + "\n\t$(CXX) $(CXXOPTS) -c " + c + "\n\n"
+end
+
+if (ARGV.size == 1 && ARGV[0] == "-a") then
+        deps.each { |k, v| puts k + ": " + v.join(" ") }
 end
 
 f = File::new("Makefile", "w")

@@ -9,6 +9,7 @@
 #include <sysexits.h>
 #include <sys/time.h>
 
+#include "Behavior.hpp"
 #include "Behaviors.hpp"
 #include "Dijkstra.hpp"
 #include "game.hpp"
@@ -20,6 +21,7 @@
 #include "RuntimeBox.hpp"
 #include "RuntimePoint.hpp"
 #include "RuntimeSegment.hpp"
+#include "Triple.hpp"
 #include "util.hpp"
 
 #define DEBUG_MAIN
@@ -46,11 +48,12 @@ void initJuego() {
         for (i = 0; i < N_BOOM_SETS; i++) {
                 boom[i].on = 0;
         }
-        frozen     = 0;
-        level      = START_LEVEL;
-        cam_old_t  = 0;
-        retract    = 1;
-        mesh = 0;
+
+        frozen    = 0;
+        level     = START_LEVEL;
+        cam_old_t = 0;
+        retract   = 1;
+        mesh      = false;
 
         px   = 0;
         py   = 0;
@@ -212,23 +215,23 @@ void initJuego() {
                         for (int j = -40; j <= 20; j = j + 20) {
                                 pos = (Triple(i, j, 0) + Triple(i, j + 20, 0) + Triple(i + 20, j, 0))/3.0;
                                 node = new Node("", pos);
-                                graph.push_back(node);
+                                nodes.push_back(node);
                                 pos = (Triple(i + 20, j + 20, 0) + Triple(i + 20, j, 0) + Triple(i, j + 20, 0))/3.0;
                                 node = new Node("", pos);
-                                graph.push_back(node);
+                                nodes.push_back(node);
                         }
                 }
 
-                for (unsigned int i = 0; i < graph.size(); i++) {
-                        for (unsigned int j = 0; j < graph.size(); j++) {
-                                if (graph[i] != graph[j] && (graph[j]->pos - graph[i]->pos).length() < 25) {
-                                        graph[i]->add_adj(make_tuple(graph[j], false, 0));
+                for (unsigned int i = 0; i < nodes.size(); i++) {
+                        for (unsigned int j = 0; j < nodes.size(); j++) {
+                                if (nodes[i] != nodes[j] && (nodes[j]->pos - nodes[i]->pos).length() < 25) {
+                                        nodes[i]->add_adj(make_tuple(nodes[j], false, 0));
                                 }
                         }  
                 }
 
-                for (unsigned int i = 0; i < graph.size(); i++) {
-                        graph[i]->print_node();
+                for (unsigned int i = 0; i < nodes.size(); i++) {
+                        nodes[i]->print_node();
                 }
 
                 {
@@ -364,7 +367,7 @@ void display() {
                                 glPopMatrix();
                         }
 
-                        if (mesh == 1) {
+                        if (mesh) {
                                 //Triple pos = Triple(0, 0, 0);
                                 glPushMatrix();
                                         glColor4ub(255, 0, 255, 255);
@@ -385,8 +388,8 @@ void display() {
                                                 glBegin(GL_LINE_LOOP);
                                                         glLineWidth(100.0);
                                                         glVertex3f(i + 20, j + 20, 0); //-40, -20, 0
-                                                        glVertex3f(i + 20,      j, 0); //-40, -40, 0
-                                                        glVertex3f(     i, j + 20, 0); //-60, -20, 0
+                                                        glVertex3f(i + 20, j     , 0); //-40, -40, 0
+                                                        glVertex3f(i     , j + 20, 0); //-60, -20, 0
 //                                                      pos = (Triple(i + 20, j + 20, 0) + Triple(i + 20, j, 0) + Triple(i, j + 20, 0))/3.0;
                                                 glEnd();
 //                                              glBegin(GL_POINTS);
@@ -394,16 +397,16 @@ void display() {
 //                                              glEnd();
                                                 }
                                         }
-                                        for (unsigned int i = 0; i < graph.size(); i++) {
-                                                for (unsigned int j = 0; j < graph[i]->adj.size(); j++) {
+                                        for (unsigned int i = 0; i < nodes.size(); i++) {
+                                                for (unsigned int j = 0; j < nodes[i]->adj.size(); j++) {
                                                         glBegin(GL_LINES);
-                                                                glVertex3f(graph[i]->pos.x, graph[i]->pos.y, 0);
-                                                                glVertex3f(get<0>(graph[i]->adj[j])->pos.x, get<0>(graph[i]->adj[j])->pos.y, 0);
+                                                                glVertex3f(nodes[i]->pos.x, nodes[i]->pos.y, 0);
+                                                                glVertex3f(get<0>(nodes[i]->adj[j])->pos.x, get<0>(nodes[i]->adj[j])->pos.y, 0);
                                                         glEnd();
                                                 }
                                                 glPushMatrix();
-                                                        glTranslatef(graph[i]->pos.x, graph[i]->pos.y, graph[i]->pos.z);
-                                                        graph[i]->draw();
+                                                        glTranslatef(nodes[i]->pos.x, nodes[i]->pos.y, nodes[i]->pos.z);
+                                                        nodes[i]->draw();
                                                 glPopMatrix();
                                         }
                                 glPopMatrix();
@@ -629,7 +632,7 @@ void display() {
 
                 glMatrixMode(GL_PROJECTION);
                 glLoadIdentity();
-                if (ww<=wh) {
+                if (ww <= wh) {
                         glOrtho(-10.0, 10.0, -10.0 / aspectratio, 10.0 / aspectratio, 1.0, -1.0);
                 } else {
                         glOrtho(-10.0 * aspectratio, 10.0 * aspectratio, -10.0, 10.0, 1.0, -1.0);
@@ -706,61 +709,61 @@ void reshape(int w, int h){
 }
 
 void skeydown(int key, int mx, int my) {
-        if      (key == GLUT_KEY_LEFT)  keystate_l = 1;
-        else if (key == GLUT_KEY_RIGHT) keystate_r = 1;
-        else if (key == GLUT_KEY_UP)    keystate_u = 1;
-        else if (key == GLUT_KEY_DOWN)  keystate_d = 1;
+        if      (key == GLUT_KEY_LEFT)  keystate_l = true;
+        else if (key == GLUT_KEY_RIGHT) keystate_r = true;
+        else if (key == GLUT_KEY_UP)    keystate_u = true;
+        else if (key == GLUT_KEY_DOWN)  keystate_d = true;
         else if (key == GLUT_KEY_F2)    initJuego();
 }
 
 void skeyup(int key, int mx, int my) {
-        if      (key == GLUT_KEY_LEFT)  keystate_l = 0;
-        else if (key == GLUT_KEY_RIGHT) keystate_r = 0;
-        else if (key == GLUT_KEY_UP)    keystate_u = 0;
-        else if (key == GLUT_KEY_DOWN)  keystate_d = 0;
+        if      (key == GLUT_KEY_LEFT)  keystate_l = false;
+        else if (key == GLUT_KEY_RIGHT) keystate_r = false;
+        else if (key == GLUT_KEY_UP)    keystate_u = false;
+        else if (key == GLUT_KEY_DOWN)  keystate_d = false;
 }
 
 void keyup(unsigned char key, int mx, int my) {
-        if      (key == key_fwd         ) keystate_fwd          = player->control_f     = 0;
-        else if (key == key_back        ) keystate_back         = player->control_b     = 0;
-        else if (key == key_left        ) keystate_left         = player->control_rot_l = 0;
-        else if (key == key_right       ) keystate_right        = player->control_rot_r = 0;
-        else if (key == key_cam_up      ) keystate_cam_up       = 0;
-        else if (key == key_cam_down    ) keystate_cam_down     = 0;
-        else if (key == key_cam_left    ) keystate_cam_left     = 0;
-        else if (key == key_cam_right   ) keystate_cam_right    = 0;
-        else if (key == key_cam_fwd     ) keystate_cam_fwd      = 0;
-        else if (key == key_cam_back    ) keystate_cam_back     = 0;
-        else if (key == key_cam_rotup   ) keystate_cam_rotup    = 0;
-        else if (key == key_cam_rotdown ) keystate_cam_rotdown  = 0;
-        else if (key == key_cam_rotleft ) keystate_cam_rotleft  = 0;
-        else if (key == key_cam_rotright) keystate_cam_rotright = 0;
-        else if (key == key_enter       ) keystate_enter        = 0;
-        else if (key == key_shoot       ) keystate_shoot        = player->control_shoot = 0;
-        else if (key == key_reload      ) keystate_reload       = 0;
-        else if (key == key_jump        ) keystate_jump         = player->control_jump  = 0;
+        if      (key == key_fwd         ) keystate_fwd          = player->control_f     = false;
+        else if (key == key_back        ) keystate_back         = player->control_b     = false;
+        else if (key == key_left        ) keystate_left         = player->control_rot_l = false;
+        else if (key == key_right       ) keystate_right        = player->control_rot_r = false;
+        else if (key == key_cam_up      ) keystate_cam_up       = false;
+        else if (key == key_cam_down    ) keystate_cam_down     = false;
+        else if (key == key_cam_left    ) keystate_cam_left     = false;
+        else if (key == key_cam_right   ) keystate_cam_right    = false;
+        else if (key == key_cam_fwd     ) keystate_cam_fwd      = false;
+        else if (key == key_cam_back    ) keystate_cam_back     = false;
+        else if (key == key_cam_rotup   ) keystate_cam_rotup    = false;
+        else if (key == key_cam_rotdown ) keystate_cam_rotdown  = false;
+        else if (key == key_cam_rotleft ) keystate_cam_rotleft  = false;
+        else if (key == key_cam_rotright) keystate_cam_rotright = false;
+        else if (key == key_enter       ) keystate_enter        = false;
+        else if (key == key_shoot       ) keystate_shoot        = player->control_shoot = false;
+        else if (key == key_reload      ) keystate_reload       = false;
+        else if (key == key_jump        ) keystate_jump         = player->control_jump  = false;
 }
 
 void keydown(unsigned char key, int mx, int my) {
-        if      (key == key_fwd         ) keystate_fwd          = player->control_f     = 1;
-        else if (key == key_back        ) keystate_back         = player->control_b     = 1;
-        else if (key == key_left        ) keystate_left         = player->control_rot_l = 1;
-        else if (key == key_right       ) keystate_right        = player->control_rot_r = 1;
-        else if (key == key_cam_up      ) keystate_cam_up       = 1;
-        else if (key == key_cam_down    ) keystate_cam_down     = 1;
-        else if (key == key_cam_left    ) keystate_cam_left     = 1;
-        else if (key == key_cam_right   ) keystate_cam_right    = 1;
-        else if (key == key_cam_fwd     ) keystate_cam_fwd      = 1;
-        else if (key == key_cam_back    ) keystate_cam_back     = 1;
-        else if (key == key_cam_rotup   ) keystate_cam_rotup    = 1;
-        else if (key == key_cam_rotdown ) keystate_cam_rotdown  = 1;
-        else if (key == key_cam_rotleft ) keystate_cam_rotleft  = 1;
-        else if (key == key_cam_rotright) keystate_cam_rotright = 1;
-        else if (key == key_enter       ) keystate_enter        = 1;
-        else if (key == key_shoot       ) keystate_shoot        = player->control_shoot = 1;
-        else if (key == key_reload      ) keystate_reload       = 1;
-        else if (key == key_jump        ) keystate_jump         = player->control_jump  = 1;
-        else if (key == key_mesh_switch) mesh ^= 1;
+        if      (key == key_fwd         ) keystate_fwd          = player->control_f     = true;
+        else if (key == key_back        ) keystate_back         = player->control_b     = true;
+        else if (key == key_left        ) keystate_left         = player->control_rot_l = true;
+        else if (key == key_right       ) keystate_right        = player->control_rot_r = true;
+        else if (key == key_cam_up      ) keystate_cam_up       = true;
+        else if (key == key_cam_down    ) keystate_cam_down     = true;
+        else if (key == key_cam_left    ) keystate_cam_left     = true;
+        else if (key == key_cam_right   ) keystate_cam_right    = true;
+        else if (key == key_cam_fwd     ) keystate_cam_fwd      = true;
+        else if (key == key_cam_back    ) keystate_cam_back     = true;
+        else if (key == key_cam_rotup   ) keystate_cam_rotup    = true;
+        else if (key == key_cam_rotdown ) keystate_cam_rotdown  = true;
+        else if (key == key_cam_rotleft ) keystate_cam_rotleft  = true;
+        else if (key == key_cam_rotright) keystate_cam_rotright = true;
+        else if (key == key_enter       ) keystate_enter        = true;
+        else if (key == key_shoot       ) keystate_shoot        = player->control_shoot = true;
+        else if (key == key_reload      ) keystate_reload       = true;
+        else if (key == key_jump        ) keystate_jump         = player->control_jump  = true;
+        else if (key == key_mesh) mesh ^= 1;
         else if (key == key_pause) {
                 frozen ^= 1;
 #ifdef DEBUG_MAIN
@@ -794,7 +797,7 @@ void keydown(unsigned char key, int mx, int my) {
                 cam_old_rotx = cam_rotx;
                 cam_old_roty = cam_roty;
                 cam_old_t    = T_CAM_OLD;
-                cam_old_adj  = 1;
+                cam_old_adj  = true;
         }
         else if (key == 27) exit(EX_OK);
 }
@@ -868,7 +871,7 @@ void juego(int v) {
                                 double npbx, npby, npbz;
                                 pbn++;
                                 if ((++pbi) == N_PBALAS) pbi = 0;
-                                pb[pbi]   = 1;
+                                pb[pbi]   = true;
                                 pbl[pbi]  = level;
 
                                 // TODO: optimize
@@ -971,7 +974,7 @@ void juego(int v) {
 //                              pby[q] <= -H_TABLERO/2.0 || H_TABLERO/2.0 <= pby[q] ||
                                 pbz[q] <= 0
                             ) {
-                                pb[q] = 0;
+                                pb[q] = false;
                                 pbn--;
                                 boom[nboom].on = T_BOOM;
                                 for (k = 0; k < N_BOOMS; k++) {
@@ -1101,7 +1104,7 @@ void juego(int v) {
                                 if ((cam_rotx - cam_old_rotx) > 180) cam_old_rotx += 360;
                                 cam_old_roty += (((int)(cam_roty - cam_old_roty))/360)*360;
                                 if ((cam_roty - cam_old_roty) > 180) cam_old_roty += 360;
-                                cam_old_adj = 0;
+                                cam_old_adj = false;
                         }
                         double t = ((double)(T_CAM_OLD - cam_old_t))/T_CAM_OLD;
                         t = t*t*(t - 2)*(t - 2);
@@ -1235,7 +1238,7 @@ int main(int argc, char **argv) {
         }
         initJuego();
 
-        blur = 0;
+        blur = false;
         glutDisplayFunc(realDisplay);
         glutReshapeFunc(reshape);
         glutKeyboardFunc(keydown);

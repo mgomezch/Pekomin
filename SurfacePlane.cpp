@@ -1,12 +1,17 @@
 #include <cmath>
 
 #include "SurfacePlane.hpp"
+#include "Triple.hpp"
 
 //#define DEBUG_SURFACEPLANE
 
 #ifdef DEBUG_SURFACEPLANE
 #include <iostream>
 #endif
+
+SurfacePlane::SurfacePlane(string name, Triple pos, double ang, Triple vel, double vrot, Triple pp, Triple n):
+        Plane(name, pos, ang, vel, vrot, pp, n)
+{}
 
 tuple<Triple, Triple> points(SurfacePlane *p, Ent *e) {
         Triple ep = e->pos, pn = p->normal();

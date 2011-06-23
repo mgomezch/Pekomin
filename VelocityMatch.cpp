@@ -1,6 +1,7 @@
-#include "VelocityMatch.hpp"
 #include "Mobile.hpp"
+#include "Triple.hpp"
 #include "util.hpp"
+#include "VelocityMatch.hpp"
 
 VelocityMatch::VelocityMatch(Mobile *character, Mobile *target, double maxSpeed) {
         this->character = character;

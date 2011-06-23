@@ -1,5 +1,6 @@
-#include "Pursue.hpp"
 #include "Mobile.hpp"
+#include "Pursue.hpp"
+#include "Triple.hpp"
 
 //#define DEBUG_PURSUE
 

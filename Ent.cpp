@@ -1,8 +1,11 @@
+#include <cmath>
+
+#include "Box.hpp"
 #include "Ent.hpp"
 #include "Segment.hpp"
 #include "SurfacePlane.hpp"
+#include "Triple.hpp"
 #include "VolumePlane.hpp"
-#include "Box.hpp"
 
 #define DEBUG_ENT
 
@@ -33,8 +36,7 @@ Triple Ent::orientation() {
 }
 
 tuple<Triple, Triple> points(Ent *e1, Ent *e2) {
-        // TODO: VolumePlane
-        // TODO: Box
+        // TODO: los comportamientos deberían ser templates para que no haga falta todo esto
         Segment      *s1, *s2;
         Box          *b1, *b2;
         SurfacePlane *f1, *f2;

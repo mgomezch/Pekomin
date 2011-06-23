@@ -5,7 +5,8 @@
 #include <utility>
 
 #include "KinematicV.hpp"
-#include "Mobile.hpp"
+
+class Mobile;
 
 class Flock : public KinematicV {
         public:

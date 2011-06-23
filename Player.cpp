@@ -1,11 +1,10 @@
 //#include <cmath>
-
 #include <GL/glut.h>
 
-#include "Player.hpp"
-
-#include "gl.hpp"
 //#include "game.hpp"
+#include "gl.hpp"
+#include "Player.hpp"
+#include "Triple.hpp"
 
 //#define DEBUG_PLAYER
 
@@ -29,97 +28,17 @@ Player::Player(const Player &p) {
         control_shoot = p.control_shoot;
 }
 
-Player::Player(string name) {
-        this->name    = name;
-        this->pos     = Triple(0, 0, 0);
-        this->ang     = 0;
-        this->vel     = Triple(0, 0, 0);
-        this->vrot    = 0;
-        control_f     = false;
-        control_b     = false;
-        control_l     = false;
-        control_r     = false;
-        control_rot_l = false;
-        control_rot_r = false;
-        control_jump  = false;
-        control_shoot = false;
-}
-
-Player::Player(string name, Triple pos, double ang) {
-        this->name    = name;
-        this->pos     = pos;
-        this->ang     = ang;
-        this->vel     = Triple(0, 0, 0);
-        this->vrot    = 0;
-        control_f     = false;
-        control_b     = false;
-        control_l     = false;
-        control_r     = false;
-        control_rot_l = false;
-        control_rot_r = false;
-        control_jump  = false;
-        control_shoot = false;
-}
-
-Player::Player(string name, Triple pos, double ang, Triple vel, double vrot) {
-        this->name    = name;
-        this->vel     = vel;
-        this->vrot    = vrot;
-        control_f     = false;
-        control_b     = false;
-        control_l     = false;
-        control_r     = false;
-        control_rot_l = false;
-        control_rot_r = false;
-        control_jump  = false;
-        control_shoot = false;
-}
-
-Player::Player() {
-        this->name    = "";
-        this->pos     = Triple(0, 0, 0);
-        this->ang     = 0;
-        this->vel     = Triple(0, 0, 0);
-        this->vrot    = 0;
-        control_f     = false;
-        control_b     = false;
-        control_l     = false;
-        control_r     = false;
-        control_rot_l = false;
-        control_rot_r = false;
-        control_jump  = false;
-        control_shoot = false;
-}
-
-Player::Player(Triple pos, double ang) {
-        this->name    = "";
-        this->pos     = pos;
-        this->ang     = ang;
-        this->vel     = Triple(0, 0, 0);
-        this->vrot    = 0;
-        control_f     = false;
-        control_b     = false;
-        control_l     = false;
-        control_r     = false;
-        control_rot_l = false;
-        control_rot_r = false;
-        control_jump  = false;
-        control_shoot = false;
-}
-
-Player::Player(Triple pos, double ang, Triple vel, double vrot) {
-        this->name    = "";
-        this->vel     = vel;
-        this->vrot    = vrot;
-        control_f     = false;
-        control_b     = false;
-        control_l     = false;
-        control_r     = false;
-        control_rot_l = false;
-        control_rot_r = false;
-        control_jump  = false;
-        control_shoot = false;
-}
+Player::Player(string name, Triple pos, double ang, Triple vel, double vrot):
+        RuntimePoint(name, pos, ang, vel, vrot),
+        control_f(false),
+        control_b(false),
+        control_l(false),
+        control_r(false),
+        control_rot_l(false),
+        control_rot_r(false),
+        control_jump(false),
+        control_shoot(false)
+{}
 
 void Player::update(unsigned int ticks) {
         /*
