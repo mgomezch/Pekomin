@@ -3,7 +3,6 @@
 
 #include <iostream>
 #include <string>
-#include <tuple>
 #include <vector>
 
 #include "Ent.hpp"
@@ -13,11 +12,11 @@ using namespace std;
 
 class Node : public Ent {
         public:
-                vector<tuple<Node *, bool, double> > adj;
+                vector<Node*> adj;
 
                 Node(string name = "", Triple pos = Triple());
 
-                void add_adj(tuple<Node*, bool, double> node);
+                void add_adj(Node *node);
                 bool is_adj(Node *adj);
                 void print_node();
                 void print_adj();

@@ -49,7 +49,7 @@ void initJuego() {
                 boom[i].on = 0;
         }
 
-        frozen    = 0;
+        frozen    = false;
         level     = START_LEVEL;
         cam_old_t = 0;
         retract   = 1;
@@ -225,7 +225,8 @@ void initJuego() {
                 for (unsigned int i = 0; i < nodes.size(); i++) {
                         for (unsigned int j = 0; j < nodes.size(); j++) {
                                 if (nodes[i] != nodes[j] && (nodes[j]->pos - nodes[i]->pos).length() < 25) {
-                                        nodes[i]->add_adj(make_tuple(nodes[j], false, 0));
+//                                      nodes[i]->add_adj(make_tuple(nodes[j], false, 0));
+                                        nodes[i]->add_adj(nodes[j]);
                                 }
                         }  
                 }
@@ -401,7 +402,8 @@ void display() {
                                                 for (unsigned int j = 0; j < nodes[i]->adj.size(); j++) {
                                                         glBegin(GL_LINES);
                                                                 glVertex3f(nodes[i]->pos.x, nodes[i]->pos.y, 0);
-                                                                glVertex3f(get<0>(nodes[i]->adj[j])->pos.x, get<0>(nodes[i]->adj[j])->pos.y, 0);
+//                                                              glVertex3f(get<0>(nodes[i]->adj[j])->pos.x, get<0>(nodes[i]->adj[j])->pos.y, 0);
+                                                                glVertex3f(nodes[i]->adj[j]->pos.x, nodes[i]->adj[j]->pos.y, 0);
                                                         glEnd();
                                                 }
                                                 glPushMatrix();

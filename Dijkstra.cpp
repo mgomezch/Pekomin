@@ -9,7 +9,6 @@ vector<Node *> dijkstra(Node *begin, Node *end) {
         vector<tuple<vector<Node *>, double> > open;
         vector<tuple<vector<Node *>, double> > close;
         vector<Node *> nodes_temp, out;
-        tuple<Node *, bool, double> adj_temp;
         Node *suc;
         bool ready;
 
@@ -22,7 +21,7 @@ vector<Node *> dijkstra(Node *begin, Node *end) {
                 open.erase(open.begin());
                 close.push_back(path);
                 for (unsigned int i = 0; i < (get<0>(path).back())->adj.size(); i++) {
-                        suc = get<0>(get<0>(path).back()->adj[i]);
+                        suc = get<0>(path).back()->adj[i];
                         ready = false;
                         for (unsigned int j = 0; j < close.size(); j++) {
                                 if (suc == get<0>(close[j]).back()) {
@@ -34,8 +33,7 @@ vector<Node *> dijkstra(Node *begin, Node *end) {
                                 nodes_temp = get<0>(path);
                                 nodes_temp.push_back(suc);
                                 get<0>(path_temp) = nodes_temp;
-                                adj_temp = (get<0>(path).back())->adj[i];
-                                get<1>(path_temp) += distanceNode(get<0>(path).back(), get<0>(adj_temp));
+                                get<1>(path_temp) += distanceNode(get<0>(path).back(), suc);
                                 open.push_back(path_temp);
                         }
                 }
