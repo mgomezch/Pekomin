@@ -7,15 +7,15 @@ Node::Node(string name, Triple pos):
         Ent(name, pos, 0)
 {}
 
-void Node::add_adj(tuple<Node*, bool, double> node) {
+void Node::add_adj(Node *node) {
         adj.push_back(node);
 }
 
-bool Node::is_adj(Node *n) {
-        tuple<Node*, bool, double> node;
+bool Node::is_adj(Node *node) {
+        Node *n;
         for (unsigned int i = 0; i < adj.size(); i++) {
-                node = adj[i];
-                if (get<0>(node) == n) return true;
+                n = adj[i];
+                if (n == node) return true;
         }
         return false;
 }
@@ -27,10 +27,10 @@ void Node::print_node() {
 void Node::print_adj() {
         this->print_node();
         cout << "\tAdjacency nodes:" << endl;
-        tuple <Node*, bool, double> node;
+        Node *node;
         for (unsigned int i = 0; i < adj.size(); i++) {
                 node = adj[i];
-                cout << "\tNode " << static_cast<void *>(get<0>(node)) << ": name == " << get<0>(node)->name << "; pos == (" << get<0>(node)->pos.x << ", " << get<0>(node)->pos.y << ", " << get<0>(node)->pos.z << ")" << " distance == " << get<2>(node) << endl;
+                cout << "\tNode " << static_cast<void *>(node) << ": name == " << node->name << "; pos == (" << node->pos.x << ", " << node->pos.y << ", " << node->pos.z << ")" << endl;
         }
 }
 

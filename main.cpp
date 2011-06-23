@@ -222,7 +222,7 @@ void initJuego() {
                 for (unsigned int i = 0; i < graph.size(); i++) {
                         for (unsigned int j = 0; j < graph.size(); j++) {
                                 if (graph[i] != graph[j] && (graph[j]->pos - graph[i]->pos).length() < 25) {
-                                        graph[i]->add_adj(make_tuple(graph[j], false, 0));
+                                        graph[i]->add_adj(graph[j]);
                                 }
                         }  
                 }
@@ -398,7 +398,7 @@ void display() {
                                                 for (unsigned int j = 0; j < graph[i]->adj.size(); j++) {
                                                         glBegin(GL_LINES);
                                                                 glVertex3f(graph[i]->pos.x, graph[i]->pos.y, 0);
-                                                                glVertex3f(get<0>(graph[i]->adj[j])->pos.x, get<0>(graph[i]->adj[j])->pos.y, 0);
+                                                                glVertex3f(graph[i]->adj[j]->pos.x, graph[i]->adj[j]->pos.y, 0);
                                                         glEnd();
                                                 }
                                                 glPushMatrix();
