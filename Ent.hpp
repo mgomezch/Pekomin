@@ -19,10 +19,15 @@ class Ent {
 
                 Ent(string name = "", Triple pos = Triple(), double ang = 0);
 
-                virtual void draw()                     = 0;
-                virtual void update(unsigned int ticks) = 0;
+                virtual void draw()                    = 0;
+                virtual void steer(unsigned int ticks) = 0;
+                virtual void update()                  = 0;
 
                 Triple orientation();
+
+        protected:
+                Triple new_pos;
+                double new_ang;
 };
 
 tuple<Triple, Triple> points(Ent *e1, Ent *e2);

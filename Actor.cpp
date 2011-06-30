@@ -38,7 +38,7 @@ Actor::Actor(string name, Triple pos, double ang, Triple vel, double vrot):
         Mobile(name, pos, ang, vel, vrot)
 {}
 
-void Actor::update(unsigned int ticks) {
+void Actor::steer(unsigned int ticks) {
         unsigned int i;
         Triple vdir;
 
@@ -120,40 +120,52 @@ void Actor::update(unsigned int ticks) {
         for (i = 0; i < n_KinematicA      ; i++) sum_KinematicA       += v_KinematicA[i];
         for (i = 0; i < n_StaticA         ; i++) sum_StaticA          += v_StaticA[i];
 
-        if (n_DirectStaticV   ) this->pos   = sum_DirectStaticV / n_DirectStaticV;
-        if (n_DirectKinematicV) this->vel   = sum_DirectKinematicV;
-        if (n_DynamicV        ) this->vel  += sum_DynamicV * (double)ticks; // TODO: divide by mass
-        if (n_KinematicV      ) this->vel  += sum_KinematicV;
-        if (n_StaticV         ) this->pos  += sum_StaticV;
+        this->new_pos  = this->pos;
+        this->new_ang  = this->ang;
+        this->new_vel  = this->vel;
+        this->new_vrot = this->vrot;
 
-        if (n_DirectStaticA   ) this->ang   = sum_DirectStaticA / n_DirectStaticA;
-        if (n_DirectKinematicA) this->vrot  = sum_DirectKinematicA;
-        if (n_DynamicA        ) this->vrot += sum_DynamicA * ticks; // TODO: divide by inertia
-        if (n_KinematicA      ) this->vrot += sum_KinematicA;
-        if (n_StaticA         ) this->ang  += sum_StaticA;
+        if (n_DirectStaticV   ) this->new_pos   = sum_DirectStaticV / n_DirectStaticV;
+        if (n_DirectKinematicV) this->new_vel   = sum_DirectKinematicV;
+        if (n_DynamicV        ) this->new_vel  += sum_DynamicV * (double)ticks; // TODO: divide by mass
+        if (n_KinematicV      ) this->new_vel  += sum_KinematicV;
+        if (n_StaticV         ) this->new_pos  += sum_StaticV;
+
+        if (n_DirectStaticA   ) this->new_ang   = sum_DirectStaticA / n_DirectStaticA;
+        if (n_DirectKinematicA) this->new_vrot  = sum_DirectKinematicA;
+        if (n_DynamicA        ) this->new_vrot += sum_DynamicA * ticks; // TODO: divide by inertia
+        if (n_KinematicA      ) this->new_vrot += sum_KinematicA;
+        if (n_StaticA         ) this->new_ang  += sum_StaticA;
 
 #ifdef DEBUG_ACTOR
-        cout << "actor " << this->name << ": final vel == " << this->vel.to_string() << ", vrot == " << this->vrot << endl;
+        cout << "actor " << this->name << ": final vel == " << this->new_vel.to_string() << ", vrot == " << this->new_vrot << endl;
 #endif
 
         // TODO: chequear que estés en el piso antes de calcular roce
-        if (this->pos.z == 0) {
-                vdir = this->vel.normalized();
-                this->vel += Triple(this->vel.x, this->vel.y, 0) * (-0.005) * static_cast<double>(ticks);
-                if (vdir.dot(this->vel) < 0) this->vel = Triple(0, 0, 0);
+        if (this->new_pos.z == 0) {
+                vdir = this->new_vel.normalized();
+                this->new_vel += Triple(this->new_vel.x, this->new_vel.y, 0) * (-0.005) * static_cast<double>(ticks);
+                if (vdir.dot(this->new_vel) < 0) this->new_vel = Triple(0, 0, 0);
 
-                if      (this->vrot > 0 && (this->vrot += this->vrot * (-0.030) * static_cast<double>(ticks)) < 0) this->vrot = 0;
-                else if (this->vrot < 0 && (this->vrot += this->vrot * (-0.030) * static_cast<double>(ticks)) > 0) this->vrot = 0;
+                if      (this->new_vrot > 0 && (this->new_vrot += this->new_vrot * (-0.030) * static_cast<double>(ticks)) < 0) this->new_vrot = 0;
+                else if (this->new_vrot < 0 && (this->new_vrot += this->new_vrot * (-0.030) * static_cast<double>(ticks)) > 0) this->new_vrot = 0;
         }
 
-        this->pos += this->vel  * static_cast<double>(ticks);
-        this->ang += this->vrot * static_cast<double>(ticks);
-        this->ang  = mapToRange(this->ang);
+        this->new_pos += this->new_vel  * static_cast<double>(ticks);
+        this->new_ang += this->new_vrot * static_cast<double>(ticks);
+        this->new_ang  = mapToRange(this->new_ang);
 
         // TODO: piratería para que el salto funcione
         // BUG: esto hace que la diferencia de posición vertical produzca distancias grandes en los comportamientos a pesar de que el movimiento se hace solo en un plano... las distancias deberían, en cambio, calcularse en base al plano!
         if (dynamic_cast<Player *>(this) == NULL) {
-                this->pos.z = 0;
-                this->vel.z = 0;
+                this->new_pos.z = 0;
+                this->new_vel.z = 0;
         }
+}
+
+void Actor::update() {
+        this->pos  = this->new_pos;
+        this->ang  = this->new_ang;
+        this->vel  = this->new_vel;
+        this->vrot = this->new_vrot;
 }

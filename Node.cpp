@@ -49,4 +49,6 @@ void Node::draw() {
         glPopMatrix();
 }
 
-void Node::update(unsigned int ticks) {}
+void Node::steer(unsigned int ticks) {}
+
+void Node::update() {}

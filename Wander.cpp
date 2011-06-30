@@ -42,19 +42,22 @@ pair<bool, Triple> Wander::getVel(unsigned int ticks) {
 
         steering.first = true;
 
-        direction = target->pos - character->pos;
+        Triple cp, tp;
+        tie(cp, tp) = points(character, target);
+
+        direction = tp - cp;
         distance = direction.length();
 
         if ((accum += ticks) > wanderTime) accum = wanderTime;
 
-        if (distance < targetRadius) {
-                if (accum == wanderTime) {
-                        wanderOrientation += RandBin(-1, 1) * wanderRate;
-                        target->ang = character->ang + wanderOrientation;
-                        target->pos = character->pos + target->orientation() * wanderRadius;
-                        accum = 0;
-                }
+        if (accum == wanderTime) {
+                wanderOrientation += RandBin(-1, 1) * wanderRate;
+                target->ang = character->ang + wanderOrientation;
+                target->pos = cp + target->orientation() * wanderRadius;
+                accum = 0;
+        }
 
+        if (distance < targetRadius) {
                 steering.second = target->vel - character->vel;
                 if (steering.second.length() > maxSpeed) {
                         steering.second.normalized();
@@ -63,13 +66,13 @@ pair<bool, Triple> Wander::getVel(unsigned int ticks) {
                 return steering;
         }
 
-        targetSpeed = maxSpeed - character->vel.dot(direction.normalized());
+        targetSpeed = maxSpeed - character->vel.dot(direction / distance);
         if (distance < slowRadius) {
                 targetSpeed *= (distance - targetRadius) / (slowRadius - targetRadius);
         }
         if (targetSpeed < 0) targetSpeed = 0;
         if (targetSpeed > maxSpeed) targetSpeed = maxSpeed;
 
-        steering.second = direction.normalized() * targetSpeed;
+        steering.second = (direction * targetSpeed)/distance;
         return steering;
 }

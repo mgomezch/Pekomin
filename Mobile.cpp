@@ -7,6 +7,12 @@ Mobile::Mobile(string name, Triple pos, double ang, Triple vel, double vrot):
         vrot(vrot)
 {}
 
+void Mobile::update() {
+        this->Ent::update();
+        this->vel  = this->new_vel;
+        this->vrot = this->new_vrot;
+}
+
 tuple<Triple, Triple> points(Ent *e, Mobile *m) {
         return points(e, static_cast<Ent *>(m));
 }

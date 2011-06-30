@@ -26,8 +26,9 @@ class Player : public virtual RuntimePoint {
                       );
                 // TODO: destructor!
 
-                virtual void update(unsigned int ticks);
                 virtual void draw();
+                virtual void steer(unsigned int ticks);
+                virtual void update();
 };
 
 #endif

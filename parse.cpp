@@ -34,12 +34,26 @@
                              << endl;                       \
                         ent-> FIELD = it->second;           \
                 }
+        #define SET_ENT_FIELD_STRING_D(FIELD, DEFAULT)      \
+                SET_ENT_FIELD_STRING(FIELD)                 \
+                else ent-> FIELD = DEFAULT;                 \
+                cout << "parse: Ent "                       \
+                     << name_s                              \
+                     << " processing string field "         \
+                     << it->first                           \
+                     << " with default value \""            \
+                     << DEFAULT                             \
+                     << "\""                                \
+                     << endl;
 #else
         #define SET_ENT_FIELD_STRING(FIELD)                 \
                 it = fields.find(string( #FIELD ));         \
                 if (it != fields.end()) {                   \
                         ent-> FIELD = it->second;           \
                 }
+        #define SET_ENT_FIELD_STRING_D(FIELD, DEFAULT)      \
+                SET_ENT_FIELD_STRING(FIELD)                 \
+                else ent-> FIELD = DEFAULT;
 #endif
 
 #ifdef DEBUG_PARSE
@@ -64,6 +78,17 @@
                         }                                                       \
                         ent-> FIELD = d;                                        \
                 }
+        #define SET_ENT_FIELD_DOUBLE_D(FIELD, DEFAULT)                          \
+                SET_ENT_FIELD_DOUBLE(FIELD)                                     \
+                else ent-> FIELD = DEFAULT;                                     \
+                cout << "parse: Ent "                                           \
+                     << name_s                                                  \
+                     << " processing string field "                             \
+                     << it->first                                               \
+                     << " with default value \""                                \
+                     << DEFAULT                                                 \
+                     << "\""                                                    \
+                     << endl;
 #else
         #define SET_ENT_FIELD_DOUBLE(FIELD)                                     \
                 it = fields.find(string( #FIELD ));                             \
@@ -78,6 +103,9 @@
                         }                                                       \
                         ent-> FIELD = d;                                        \
                 }
+        #define SET_ENT_FIELD_DOUBLE_D(FIELD, DEFAULT)                          \
+                SET_ENT_FIELD_DOUBLE(FIELD)                                     \
+                else ent-> FIELD = DEFAULT;
 #endif
 
 #ifdef DEBUG_PARSE
@@ -101,6 +129,16 @@
                         }                                                           \
                         rs-> FIELD = d;                                             \
                 }
+        #define SET_SEGMENT_FIELD_DOUBLE_D(FIELD, DEFAULT)                          \
+                SET_SEGMENT_FIELD_DOUBLE(FIELD)                                     \
+                else rs-> FIELD = DEFAULT;                                          \
+                cout << "parse: Ent "                                               \
+                     << name_s                                                      \
+                     << " processing Segment double field "                         \
+                     << it->first                                                   \
+                     << " with default value "                                      \
+                     << DEFAULT                                                     \
+                     << endl;
 #else
         #define SET_SEGMENT_FIELD_DOUBLE(FIELD)                                     \
                 it = fields.find(string( #FIELD ));                                 \
@@ -115,10 +153,13 @@
                         }                                                           \
                         rs-> FIELD = d;                                             \
                 }
+        #define SET_SEGMENT_FIELD_DOUBLE_D(FIELD, DEFAULT)                          \
+                SET_SEGMENT_FIELD_DOUBLE(FIELD)                                     \
+                else rs-> FIELD = DEFAULT;
 #endif
 
 #ifdef DEBUG_PARSE
-        #define SET_BOX_FIELD_DOUBLE(FIELD)                                     \
+#       define SET_BOX_FIELD_DOUBLE(FIELD)                                      \
                 it = fields.find(string( #FIELD ));                             \
                 if (it != fields.end()) {                                       \
                         cout << "parse: Ent "                                   \
@@ -138,8 +179,18 @@
                         }                                                       \
                         rb-> FIELD = d;                                         \
                 }
+#       define SET_BOX_FIELD_DOUBLE_D(FIELD, DEFAULT)                           \
+                SET_BOX_FIELD_DOUBLE(FIELD)                                     \
+                else rb-> FIELD = DEFAULT;                                      \
+                cout << "parse: Ent "                                           \
+                     << name_s                                                  \
+                     << " processing Box double field "                         \
+                     << it->first                                               \
+                     << " with default value "                                  \
+                     << DEFAULT                                                 \
+                     << endl;
 #else
-        #define SET_BOX_FIELD_DOUBLE(FIELD)                                     \
+#       define SET_BOX_FIELD_DOUBLE(FIELD)                                      \
                 it = fields.find(string( #FIELD ));                             \
                 if (it != fields.end()) {                                       \
                         if (sscanf(it->second.c_str(), "%lf", &d) != 1) {       \
@@ -152,6 +203,9 @@
                         }                                                       \
                         rb-> FIELD = d;                                         \
                 }
+#       define SET_BOX_FIELD_DOUBLE_D(FIELD, DEFAULT)                           \
+                SET_BOX_FIELD_DOUBLE(FIELD)                                     \
+                else rb-> FIELD = DEFAULT;
 #endif
 
 #define SET_CHARACTER()                            \
@@ -196,47 +250,117 @@
         }                                                          \
         target = it_entses->second;
 
-#define SET_DOUBLE(FIELD)                                              \
-        double FIELD ;                                                 \
-        it_fields = it_b->second->find(string( #FIELD ));              \
-        if (it_fields == it_b->second->end()) {                        \
-                cerr << "parse error making Ent '"                     \
-                     << it_e->first                                    \
-                     << "' behavior '"                                 \
-                     << it_b->first                                    \
-                     << "': required field '" #FIELD "' not specified" \
-                     << endl;                                          \
-                exit(EX_DATAERR);                                      \
-        }                                                              \
-        if (sscanf(it_fields->second.c_str(), "%lf", & FIELD ) != 1) { \
-                cerr << "parse error making Ent '"                     \
-                     << it_e->first                                    \
-                     << "' behavior '"                                 \
-                     << it_b->first                                    \
-                     << "': required field '" #FIELD "' == '"          \
-                     << it_fields->second                              \
-                     << "' not a floating-point number"                \
-                     << endl;                                          \
-                exit(EX_DATAERR);                                      \
-        }
-
-#define SET_P(BEHAVIOR)                                                        \
-        p = dynamic_cast<RuntimePoint *>(character);                           \
-        if (p != NULL) p->addBehavior(BEHAVIOR);                               \
-        else {                                                                 \
-                w = dynamic_cast<RuntimeSegment *>(character);                 \
-                if (w != NULL) w->addBehavior(BEHAVIOR);                       \
-                else {                                                         \
+#ifdef DEBUG_PARSE
+#       define SET_DOUBLE_D(FIELD, DEFAULT)                                                 \
+                double FIELD ;                                                              \
+                it_fields = it_b->second->find(string( #FIELD ));                           \
+                if (it_fields == it_b->second->end()) {                                     \
+                        cout << "parse: Ent '"                                              \
+                             << it_e->first                                                 \
+                             << "' behavior '"                                              \
+                             << it_b->first                                                 \
+                             << "': processing double field " #FIELD " with default value " \
+                             << DEFAULT                                                     \
+                             << endl;                                                       \
+                        FIELD = DEFAULT;                                                    \
+                }                                                                           \
+                if (sscanf(it_fields->second.c_str(), "%lf", & FIELD ) != 1) {              \
+                        cerr << "parse error making Ent '"                                  \
+                             << it_e->first                                                 \
+                             << "' behavior '"                                              \
+                             << it_b->first                                                 \
+                             << "': specified field '" #FIELD "' == '"                      \
+                             << it_fields->second                                           \
+                             << "' not a floating-point number"                             \
+                             << endl;                                                       \
+                        exit(EX_DATAERR);                                                   \
+                }
+#       define SET_DOUBLE(FIELD)                                               \
+                double FIELD ;                                                 \
+                it_fields = it_b->second->find(string( #FIELD ));              \
+                if (it_fields == it_b->second->end()) {                        \
                         cerr << "parse error making Ent '"                     \
                              << it_e->first                                    \
                              << "' behavior '"                                 \
                              << it_b->first                                    \
-                             << "': Ent '"                                     \
-                             << it_e->first                                    \
-                             << "' is neither RuntimePoint nor RuntimeSegment" \
+                             << "': required field '" #FIELD "' not specified" \
                              << endl;                                          \
-                        exit(EX_SOFTWARE);                                     \
+                        exit(EX_DATAERR);                                      \
                 }                                                              \
+                if (sscanf(it_fields->second.c_str(), "%lf", & FIELD ) != 1) { \
+                        cerr << "parse error making Ent '"                     \
+                             << it_e->first                                    \
+                             << "' behavior '"                                 \
+                             << it_b->first                                    \
+                             << "': specified field '" #FIELD "' == '"         \
+                             << it_fields->second                              \
+                             << "' not a floating-point number"                \
+                             << endl;                                          \
+                        exit(EX_DATAERR);                                      \
+                }                                                              \
+                cout << "parse: Ent '"                                         \
+                     << it_e->first                                            \
+                     << "' behavior '"                                         \
+                     << it_b->first                                            \
+                     << "': processing double field " #FIELD " with value "    \
+                     << FIELD                                                  \
+                     << endl;
+#else
+#       define SET_DOUBLE_D(FIELD, DEFAULT)                                    \
+                double FIELD ;                                                 \
+                it_fields = it_b->second->find(string( #FIELD ));              \
+                if (it_fields == it_b->second->end()) {                        \
+                        FIELD = DEFAULT;                                       \
+                }                                                              \
+                if (sscanf(it_fields->second.c_str(), "%lf", & FIELD ) != 1) { \
+                        cerr << "parse error making Ent '"                     \
+                             << it_e->first                                    \
+                             << "' behavior '"                                 \
+                             << it_b->first                                    \
+                             << "': specified field '" #FIELD "' == '"         \
+                             << it_fields->second                              \
+                             << "' not a floating-point number"                \
+                             << endl;                                          \
+                        exit(EX_DATAERR);                                      \
+                }
+#       define SET_DOUBLE(FIELD)                                               \
+                double FIELD ;                                                 \
+                it_fields = it_b->second->find(string( #FIELD ));              \
+                if (it_fields == it_b->second->end()) {                        \
+                        cerr << "parse error making Ent '"                     \
+                             << it_e->first                                    \
+                             << "' behavior '"                                 \
+                             << it_b->first                                    \
+                             << "': required field '" #FIELD "' not specified" \
+                             << endl;                                          \
+                        exit(EX_DATAERR);                                      \
+                }                                                              \
+                if (sscanf(it_fields->second.c_str(), "%lf", & FIELD ) != 1) { \
+                        cerr << "parse error making Ent '"                     \
+                             << it_e->first                                    \
+                             << "' behavior '"                                 \
+                             << it_b->first                                    \
+                             << "': specified field '" #FIELD "' == '"         \
+                             << it_fields->second                              \
+                             << "' not a floating-point number"                \
+                             << endl;                                          \
+                        exit(EX_DATAERR);                                      \
+                }
+#endif
+
+#define SET_P(BEHAVIOR)                              \
+        p = dynamic_cast<RuntimePoint *>(character); \
+        if (p != NULL) p->addBehavior(BEHAVIOR);     \
+        else {                                       \
+                cerr << "parse error making Ent '"   \
+                     << it_e->first                  \
+                     << "' behavior '"               \
+                     << it_b->first                  \
+                     << "': Ent '"                   \
+                     << it_e->first                  \
+                     << "' is not a RuntimePoint"    \
+                     << endl;                        \
+                exit(EX_SOFTWARE);                   \
         }
 
 using namespace std;
@@ -418,7 +542,6 @@ void parse(char *s) {
         unordered_map<string, unordered_map<string, unordered_map<string, string> *> *>::const_iterator it_e;
                               unordered_map<string, unordered_map<string, string> *>   ::const_iterator it_b;
         RuntimePoint   *p;
-        RuntimeSegment *w;
 
         parse_r(s, 0);
 

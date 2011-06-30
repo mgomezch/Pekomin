@@ -865,7 +865,10 @@ void juego(int v) {
                 player->vrot = (pvrz * M_PI) / 180.0;
 
                 for (i = 0; (unsigned int)i < ents.size(); i++) {
-                        ents[i]->update(delta);
+                        ents[i]->steer(delta);
+                }
+                for (i = 0; (unsigned int)i < ents.size(); i++) {
+                        ents[i]->update();
                 }
 
                 if (pbn < N_PBALAS) {

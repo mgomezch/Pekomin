@@ -15,7 +15,8 @@ class Actor : public virtual Mobile {
 
                 Actor(string name = "", Triple pos = Triple(), double ang = 0, Triple vel = Triple(), double vrot = 0);
 
-                virtual void update(unsigned int ticks);
+                virtual void steer(unsigned int ticks);
+                virtual void update();
 };
 
 #endif

@@ -40,7 +40,7 @@ Player::Player(string name, Triple pos, double ang, Triple vel, double vrot):
         control_shoot(false)
 {}
 
-void Player::update(unsigned int ticks) {
+void Player::steer(unsigned int ticks) {
         /*
         double pv = 0;
 
@@ -66,9 +66,11 @@ void Player::update(unsigned int ticks) {
                 this->vel.y += pv * sin(this->ang);
         }
 
-        this->Actor::update(ticks);
+        this->Actor::steer(ticks);
         */
 }
+
+void Player::update() {}
 
 void Player::draw() {
         glPushMatrix();

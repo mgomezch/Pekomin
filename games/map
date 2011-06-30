@@ -1,13 +1,13 @@
 player {
         class = Player;
-        pos.x = 0     ;
-        pos.y = 0     ;
-        pos.z = 0     ;
-        ang   = 0     ;
-        vel.x = 0     ;
-        vel.y = 0     ;
-        vel.z = 0     ;
-        vrot  = 0     ;
+        pos.x = 0;
+        pos.y = 0;
+        pos.z = 0;
+        ang   = 0;
+        vel.x = 0;
+        vel.y = 0;
+        vel.z = 0;
+        vrot  = 0;
 }
 
 npc {
@@ -82,9 +82,9 @@ npc_2 {
 
         angular {
                 class              = LookWhereYoureGoing;
-                maxAngularVelocity = 0.001 ;
-                targetRadius       = 0.0   ;
-                slowRadius         = 0.5   ;
+                maxAngularVelocity = 0.001;
+                targetRadius       = 0.0  ;
+                slowRadius         = 0.5  ;
         }
         vectorial {
                 class           = Wander;
@@ -94,43 +94,43 @@ npc_2 {
                 wanderOffset    = 1;
                 wanderRadius    = 7;
                 wanderRate      = 3.1415;
-                wanderTime      = 600;
+                wanderTime      = 1000;
                 maxAcceleration = 0.02;
         }
         flee_wleft {
                 class      = Flee;
                 target     = wall_left;
-                maxSpeed   = 0.05;
+                maxSpeed   = 0.025;
                 fleeRadius = 3;
         }
         flee_wright {
                 class      = Flee;
                 target     = wall_right;
-                maxSpeed   = 0.05;
+                maxSpeed   = 0.025;
                 fleeRadius = 3;
         }
         flee_wup {
                 class      = Flee;
                 target     = wall_up;
-                maxSpeed   = 0.05;
+                maxSpeed   = 0.025;
                 fleeRadius = 3;
         }
         flee_wdown {
                 class      = Flee;
                 target     = wall_down;
-                maxSpeed   = 0.05;
+                maxSpeed   = 0.025;
                 fleeRadius = 3;
         }
         flee_o1center {
                 class      = Flee;
                 target     = obstacle_center1;
-                maxSpeed   = 0.05;
+                maxSpeed   = 0.025;
                 fleeRadius = 3;
         }
         flee_o2center {
                 class      = Flee;
                 target     = obstacle_center2;
-                maxSpeed   = 0.05;
+                maxSpeed   = 0.025;
                 fleeRadius = 3;
         }
 }

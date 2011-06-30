@@ -31,6 +31,11 @@ Ent::Ent(string name, Triple pos, double ang):
         ang(ang)
 {}
 
+void Ent::update() {
+        this->new_pos = this->pos;
+        this->new_ang = this->ang;
+}
+
 Triple Ent::orientation() {
         return Triple(cos(ang), sin(ang), 0);
 }
