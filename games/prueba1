@@ -53,7 +53,7 @@ krisvely {
         }
 
         asco {
-                class           = Flee    ;
+                class           = Separation    ;
                 target          = fernando;
                 maxAcceleration = 0.1     ;
         }

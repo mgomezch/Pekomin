@@ -28,13 +28,13 @@ doc {
         pos.x = 10; pos.y = 1;
         LookWhereYoureGoing { class = LookWhereYoureGoing; target = Wanderer; maxAngularVelocity = 0.001; targetRadius = 0; slowRadius = 1; }
         Arrive              { class = Arrive             ; target = Wanderer; maxSpeed = 0.02; targetRadius = 5; slowRadius = 10; }
-        Flee_Wanderer       { class = Flee               ; target = Wanderer; maxSpeed = 0.01; fleeRadius = 3; }
-        Flee_grumpy         { class = Flee               ; target = grumpy  ; maxSpeed = 0.01; fleeRadius = 3; }
-        Flee_happy          { class = Flee               ; target = happy   ; maxSpeed = 0.01; fleeRadius = 3; }
-        Flee_sleepy         { class = Flee               ; target = sleepy  ; maxSpeed = 0.01; fleeRadius = 3; }
-        Flee_bashful        { class = Flee               ; target = bashful ; maxSpeed = 0.01; fleeRadius = 3; }
-        Flee_sneezy         { class = Flee               ; target = sneezy ; maxSpeed = 0.01; fleeRadius = 3; }
-        Flee_dopey          { class = Flee               ; target = dopey  ; maxSpeed = 0.01; fleeRadius = 3; }
+        Separation_Wanderer       { class = Separation               ; target = Wanderer; maxSpeed = 0.01; separationRadius = 3; }
+        Separation_grumpy         { class = Separation               ; target = grumpy  ; maxSpeed = 0.01; separationRadius = 3; }
+        Separation_happy          { class = Separation               ; target = happy   ; maxSpeed = 0.01; separationRadius = 3; }
+        Separation_sleepy         { class = Separation               ; target = sleepy  ; maxSpeed = 0.01; separationRadius = 3; }
+        Separation_bashful        { class = Separation               ; target = bashful ; maxSpeed = 0.01; separationRadius = 3; }
+        Separation_sneezy         { class = Separation               ; target = sneezy ; maxSpeed = 0.01; separationRadius = 3; }
+        Separation_dopey          { class = Separation               ; target = dopey  ; maxSpeed = 0.01; separationRadius = 3; }
 }
 
 grumpy {
@@ -42,13 +42,13 @@ grumpy {
         pos.x = 10; pos.y = 2;
         LookWhereYoureGoing { class = LookWhereYoureGoing; target = Wanderer ; maxAngularVelocity = 0.001; targetRadius = 0; slowRadius = 1; }
         Arrive              { class = Arrive             ; target = Wanderer ; maxSpeed = 0.02; targetRadius = 5; slowRadius = 10; }
-        Flee_Wanderer         { class = Flee               ; target = Wanderer ; maxSpeed = 0.01; fleeRadius = 3; }
-        Flee_doc            { class = Flee               ; target = doc    ; maxSpeed = 0.01; fleeRadius = 3; }
-        Flee_happy          { class = Flee               ; target = happy  ; maxSpeed = 0.01; fleeRadius = 3; }
-        Flee_sleepy         { class = Flee               ; target = sleepy ; maxSpeed = 0.01; fleeRadius = 3; }
-        Flee_bashful        { class = Flee               ; target = bashful; maxSpeed = 0.01; fleeRadius = 3; }
-        Flee_sneezy         { class = Flee               ; target = sneezy ; maxSpeed = 0.01; fleeRadius = 3; }
-        Flee_dopey          { class = Flee               ; target = dopey  ; maxSpeed = 0.01; fleeRadius = 3; }
+        Separation_Wanderer         { class = Separation               ; target = Wanderer ; maxSpeed = 0.01; separationRadius = 3; }
+        Separation_doc            { class = Separation               ; target = doc    ; maxSpeed = 0.01; separationRadius = 3; }
+        Separation_happy          { class = Separation               ; target = happy  ; maxSpeed = 0.01; separationRadius = 3; }
+        Separation_sleepy         { class = Separation               ; target = sleepy ; maxSpeed = 0.01; separationRadius = 3; }
+        Separation_bashful        { class = Separation               ; target = bashful; maxSpeed = 0.01; separationRadius = 3; }
+        Separation_sneezy         { class = Separation               ; target = sneezy ; maxSpeed = 0.01; separationRadius = 3; }
+        Separation_dopey          { class = Separation               ; target = dopey  ; maxSpeed = 0.01; separationRadius = 3; }
 }
 
 happy {
@@ -56,13 +56,13 @@ happy {
         pos.x = 10; pos.y = 3;
         LookWhereYoureGoing { class = LookWhereYoureGoing; target = Wanderer ; maxAngularVelocity = 0.001; targetRadius = 0; slowRadius = 1; }
         Arrive              { class = Arrive             ; target = Wanderer ; maxSpeed = 0.02; targetRadius = 5; slowRadius = 10; }
-        Flee_Wanderer         { class = Flee               ; target = Wanderer ; maxSpeed = 0.01; fleeRadius = 3; }
-        Flee_doc            { class = Flee               ; target = doc    ; maxSpeed = 0.01; fleeRadius = 3; }
-        Flee_grumpy         { class = Flee               ; target = grumpy ; maxSpeed = 0.01; fleeRadius = 3; }
-        Flee_sleepy         { class = Flee               ; target = sleepy ; maxSpeed = 0.01; fleeRadius = 3; }
-        Flee_bashful        { class = Flee               ; target = bashful; maxSpeed = 0.01; fleeRadius = 3; }
-        Flee_sneezy         { class = Flee               ; target = sneezy ; maxSpeed = 0.01; fleeRadius = 3; }
-        Flee_dopey          { class = Flee               ; target = dopey  ; maxSpeed = 0.01; fleeRadius = 3; }
+        Separation_Wanderer         { class = Separation               ; target = Wanderer ; maxSpeed = 0.01; separationRadius = 3; }
+        Separation_doc            { class = Separation               ; target = doc    ; maxSpeed = 0.01; separationRadius = 3; }
+        Separation_grumpy         { class = Separation               ; target = grumpy ; maxSpeed = 0.01; separationRadius = 3; }
+        Separation_sleepy         { class = Separation               ; target = sleepy ; maxSpeed = 0.01; separationRadius = 3; }
+        Separation_bashful        { class = Separation               ; target = bashful; maxSpeed = 0.01; separationRadius = 3; }
+        Separation_sneezy         { class = Separation               ; target = sneezy ; maxSpeed = 0.01; separationRadius = 3; }
+        Separation_dopey          { class = Separation               ; target = dopey  ; maxSpeed = 0.01; separationRadius = 3; }
 }
 
 sleepy {
@@ -70,13 +70,13 @@ sleepy {
         pos.x = 10; pos.y = 4;
         LookWhereYoureGoing { class = LookWhereYoureGoing; target = Wanderer ; maxAngularVelocity = 0.001; targetRadius = 0; slowRadius = 1; }
         Arrive              { class = Arrive             ; target = Wanderer ; maxSpeed = 0.02; targetRadius = 5; slowRadius = 10; }
-        Flee_Wanderer         { class = Flee               ; target = Wanderer ; maxSpeed = 0.01; fleeRadius = 3; }
-        Flee_doc            { class = Flee               ; target = doc    ; maxSpeed = 0.01; fleeRadius = 3; }
-        Flee_grumpy         { class = Flee               ; target = grumpy ; maxSpeed = 0.01; fleeRadius = 3; }
-        Flee_happy          { class = Flee               ; target = happy  ; maxSpeed = 0.01; fleeRadius = 3; }
-        Flee_bashful        { class = Flee               ; target = bashful; maxSpeed = 0.01; fleeRadius = 3; }
-        Flee_sneezy         { class = Flee               ; target = sneezy ; maxSpeed = 0.01; fleeRadius = 3; }
-        Flee_dopey          { class = Flee               ; target = dopey  ; maxSpeed = 0.01; fleeRadius = 3; }
+        Separation_Wanderer         { class = Separation               ; target = Wanderer ; maxSpeed = 0.01; separationRadius = 3; }
+        Separation_doc            { class = Separation               ; target = doc    ; maxSpeed = 0.01; separationRadius = 3; }
+        Separation_grumpy         { class = Separation               ; target = grumpy ; maxSpeed = 0.01; separationRadius = 3; }
+        Separation_happy          { class = Separation               ; target = happy  ; maxSpeed = 0.01; separationRadius = 3; }
+        Separation_bashful        { class = Separation               ; target = bashful; maxSpeed = 0.01; separationRadius = 3; }
+        Separation_sneezy         { class = Separation               ; target = sneezy ; maxSpeed = 0.01; separationRadius = 3; }
+        Separation_dopey          { class = Separation               ; target = dopey  ; maxSpeed = 0.01; separationRadius = 3; }
 }
 
 bashful {
@@ -84,13 +84,13 @@ bashful {
         pos.x = 10; pos.y = 5;
         LookWhereYoureGoing { class = LookWhereYoureGoing; target = Wanderer ; maxAngularVelocity = 0.001; targetRadius = 0; slowRadius = 1; }
         Arrive              { class = Arrive             ; target = Wanderer ; maxSpeed = 0.02; targetRadius = 5; slowRadius = 10; }
-        Flee_Wanderer         { class = Flee               ; target = Wanderer ; maxSpeed = 0.01; fleeRadius = 3; }
-        Flee_doc            { class = Flee               ; target = doc    ; maxSpeed = 0.01; fleeRadius = 3; }
-        Flee_grumpy         { class = Flee               ; target = grumpy ; maxSpeed = 0.01; fleeRadius = 3; }
-        Flee_happy          { class = Flee               ; target = happy  ; maxSpeed = 0.01; fleeRadius = 3; }
-        Flee_sleepy         { class = Flee               ; target = sleepy ; maxSpeed = 0.01; fleeRadius = 3; }
-        Flee_sneezy         { class = Flee               ; target = sneezy ; maxSpeed = 0.01; fleeRadius = 3; }
-        Flee_dopey          { class = Flee               ; target = dopey  ; maxSpeed = 0.01; fleeRadius = 3; }
+        Separation_Wanderer         { class = Separation               ; target = Wanderer ; maxSpeed = 0.01; separationRadius = 3; }
+        Separation_doc            { class = Separation               ; target = doc    ; maxSpeed = 0.01; separationRadius = 3; }
+        Separation_grumpy         { class = Separation               ; target = grumpy ; maxSpeed = 0.01; separationRadius = 3; }
+        Separation_happy          { class = Separation               ; target = happy  ; maxSpeed = 0.01; separationRadius = 3; }
+        Separation_sleepy         { class = Separation               ; target = sleepy ; maxSpeed = 0.01; separationRadius = 3; }
+        Separation_sneezy         { class = Separation               ; target = sneezy ; maxSpeed = 0.01; separationRadius = 3; }
+        Separation_dopey          { class = Separation               ; target = dopey  ; maxSpeed = 0.01; separationRadius = 3; }
 }
 
 sneezy {
@@ -98,13 +98,13 @@ sneezy {
         pos.x = 10; pos.y = 6;
         LookWhereYoureGoing { class = LookWhereYoureGoing; target = Wanderer ; maxAngularVelocity = 0.001; targetRadius = 0; slowRadius = 1; }
         Arrive              { class = Arrive             ; target = Wanderer ; maxSpeed = 0.02; targetRadius = 5; slowRadius = 10; }
-        Flee_Wanderer         { class = Flee               ; target = Wanderer ; maxSpeed = 0.01; fleeRadius = 3; }
-        Flee_doc            { class = Flee               ; target = doc    ; maxSpeed = 0.01; fleeRadius = 3; }
-        Flee_grumpy         { class = Flee               ; target = grumpy ; maxSpeed = 0.01; fleeRadius = 3; }
-        Flee_happy          { class = Flee               ; target = happy  ; maxSpeed = 0.01; fleeRadius = 3; }
-        Flee_sleepy         { class = Flee               ; target = sleepy ; maxSpeed = 0.01; fleeRadius = 3; }
-        Flee_bashful        { class = Flee               ; target = bashful; maxSpeed = 0.01; fleeRadius = 3; }
-        Flee_dopey          { class = Flee               ; target = dopey  ; maxSpeed = 0.01; fleeRadius = 3; }
+        Separation_Wanderer         { class = Separation               ; target = Wanderer ; maxSpeed = 0.01; separationRadius = 3; }
+        Separation_doc            { class = Separation               ; target = doc    ; maxSpeed = 0.01; separationRadius = 3; }
+        Separation_grumpy         { class = Separation               ; target = grumpy ; maxSpeed = 0.01; separationRadius = 3; }
+        Separation_happy          { class = Separation               ; target = happy  ; maxSpeed = 0.01; separationRadius = 3; }
+        Separation_sleepy         { class = Separation               ; target = sleepy ; maxSpeed = 0.01; separationRadius = 3; }
+        Separation_bashful        { class = Separation               ; target = bashful; maxSpeed = 0.01; separationRadius = 3; }
+        Separation_dopey          { class = Separation               ; target = dopey  ; maxSpeed = 0.01; separationRadius = 3; }
 }
 
 dopey {
@@ -112,11 +112,11 @@ dopey {
         pos.x = 10; pos.y = 7;
         LookWhereYoureGoing { class = LookWhereYoureGoing; target = Wanderer ; maxAngularVelocity = 0.001; targetRadius = 0; slowRadius = 1; }
         Arrive              { class = Arrive             ; target = Wanderer ; maxSpeed = 0.02; targetRadius = 5; slowRadius = 10; }
-        Flee_Wanderer         { class = Flee               ; target = Wanderer ; maxSpeed = 0.01; fleeRadius = 3; }
-        Flee_doc            { class = Flee               ; target = doc    ; maxSpeed = 0.01; fleeRadius = 3; }
-        Flee_grumpy         { class = Flee               ; target = grumpy ; maxSpeed = 0.01; fleeRadius = 3; }
-        Flee_happy          { class = Flee               ; target = happy  ; maxSpeed = 0.01; fleeRadius = 3; }
-        Flee_sleepy         { class = Flee               ; target = sleepy ; maxSpeed = 0.01; fleeRadius = 3; }
-        Flee_bashful        { class = Flee               ; target = bashful; maxSpeed = 0.01; fleeRadius = 3; }
-        Flee_sneezy         { class = Flee               ; target = sneezy ; maxSpeed = 0.01; fleeRadius = 3; }
+        Separation_Wanderer         { class = Separation               ; target = Wanderer ; maxSpeed = 0.01; separationRadius = 3; }
+        Separation_doc            { class = Separation               ; target = doc    ; maxSpeed = 0.01; separationRadius = 3; }
+        Separation_grumpy         { class = Separation               ; target = grumpy ; maxSpeed = 0.01; separationRadius = 3; }
+        Separation_happy          { class = Separation               ; target = happy  ; maxSpeed = 0.01; separationRadius = 3; }
+        Separation_sleepy         { class = Separation               ; target = sleepy ; maxSpeed = 0.01; separationRadius = 3; }
+        Separation_bashful        { class = Separation               ; target = bashful; maxSpeed = 0.01; separationRadius = 3; }
+        Separation_sneezy         { class = Separation               ; target = sneezy ; maxSpeed = 0.01; separationRadius = 3; }
 }

@@ -13,7 +13,13 @@ class Actor : public virtual Mobile {
         public:
                 vector<Behavior *> behaviors;
 
-                Actor(string name = "", Triple pos = Triple(), double ang = 0, Triple vel = Triple(), double vrot = 0);
+                Actor(
+                                string name = "",
+                                Triple pos = Triple(),
+                                double ang = 0,
+                                Triple vel = Triple(),
+                                double vrot = 0
+                     );
 
                 virtual void steer(unsigned int ticks);
                 virtual void update();

@@ -45,9 +45,9 @@ wall {
         sz    =  8;
 
         huye {
-                class        = Flee;
+                class        = Separation;
                 target       = player;
                 maxSpeed     = 0.025;
-                fleeRadius   = 1;
+                separationRadius   = 1;
         }
 }

@@ -8,7 +8,7 @@
 
 using namespace std;
 
-class DynamicA : public Behavior {
+class DynamicA : public virtual Behavior {
         public:
                 virtual pair<bool, double> getTorque(unsigned int ticks) = 0;
 };

@@ -32,12 +32,12 @@ clau {
         pos.x = 10;
         pos.y = 4 ;
         Seek        { class = Seek; target = manuel; maxSpeed = 0.01; }
-        Flee_manuel { class = Flee; target = manuel; maxSpeed = 0.01; fleeRadius = 5; }
-        Flee_sab    { class = Flee; target = sab   ; maxSpeed = 0.01; fleeRadius = 5; }
-        Flee_mari   { class = Flee; target = mari  ; maxSpeed = 0.01; fleeRadius = 5; }
-        Flee_kris   { class = Flee; target = kris  ; maxSpeed = 0.01; fleeRadius = 5; }
-        Flee_dani   { class = Flee; target = dani  ; maxSpeed = 0.01; fleeRadius = 5; }
-        Flee_fab    { class = Flee; target = fab   ; maxSpeed = 0.01; fleeRadius = 5; }
+        Separation_manuel { class = Separation; target = manuel; maxSpeed = 0.01; separationRadius = 5; }
+        Separation_sab    { class = Separation; target = sab   ; maxSpeed = 0.01; separationRadius = 5; }
+        Separation_mari   { class = Separation; target = mari  ; maxSpeed = 0.01; separationRadius = 5; }
+        Separation_kris   { class = Separation; target = kris  ; maxSpeed = 0.01; separationRadius = 5; }
+        Separation_dani   { class = Separation; target = dani  ; maxSpeed = 0.01; separationRadius = 5; }
+        Separation_fab    { class = Separation; target = fab   ; maxSpeed = 0.01; separationRadius = 5; }
 }
 
 sab {
@@ -45,12 +45,12 @@ sab {
         pos.x = 10;
         pos.y = 8 ;
         Seek        { class = Seek; target = manuel; maxSpeed = 0.01; }
-        Flee_manuel { class = Flee; target = manuel; maxSpeed = 0.01; fleeRadius = 5; }
-        Flee_clau   { class = Flee; target = clau  ; maxSpeed = 0.01; fleeRadius = 5; }
-        Flee_mari   { class = Flee; target = mari  ; maxSpeed = 0.01; fleeRadius = 5; }
-        Flee_kris   { class = Flee; target = kris  ; maxSpeed = 0.01; fleeRadius = 5; }
-        Flee_dani   { class = Flee; target = dani  ; maxSpeed = 0.01; fleeRadius = 5; }
-        Flee_fab    { class = Flee; target = fab   ; maxSpeed = 0.01; fleeRadius = 5; }
+        Separation_manuel { class = Separation; target = manuel; maxSpeed = 0.01; separationRadius = 5; }
+        Separation_clau   { class = Separation; target = clau  ; maxSpeed = 0.01; separationRadius = 5; }
+        Separation_mari   { class = Separation; target = mari  ; maxSpeed = 0.01; separationRadius = 5; }
+        Separation_kris   { class = Separation; target = kris  ; maxSpeed = 0.01; separationRadius = 5; }
+        Separation_dani   { class = Separation; target = dani  ; maxSpeed = 0.01; separationRadius = 5; }
+        Separation_fab    { class = Separation; target = fab   ; maxSpeed = 0.01; separationRadius = 5; }
 }
 
 mari {
@@ -58,12 +58,12 @@ mari {
         pos.x = 10;
         pos.y = 12;
         Seek        { class = Seek; target = manuel; maxSpeed = 0.01; }
-        Flee_manuel { class = Flee; target = manuel; maxSpeed = 0.01; fleeRadius = 5; }
-        Flee_clau   { class = Flee; target = clau  ; maxSpeed = 0.01; fleeRadius = 5; }
-        Flee_sab    { class = Flee; target = sab   ; maxSpeed = 0.01; fleeRadius = 5; }
-        Flee_kris   { class = Flee; target = kris  ; maxSpeed = 0.01; fleeRadius = 5; }
-        Flee_dani   { class = Flee; target = dani  ; maxSpeed = 0.01; fleeRadius = 5; }
-        Flee_fab    { class = Flee; target = fab   ; maxSpeed = 0.01; fleeRadius = 5; }
+        Separation_manuel { class = Separation; target = manuel; maxSpeed = 0.01; separationRadius = 5; }
+        Separation_clau   { class = Separation; target = clau  ; maxSpeed = 0.01; separationRadius = 5; }
+        Separation_sab    { class = Separation; target = sab   ; maxSpeed = 0.01; separationRadius = 5; }
+        Separation_kris   { class = Separation; target = kris  ; maxSpeed = 0.01; separationRadius = 5; }
+        Separation_dani   { class = Separation; target = dani  ; maxSpeed = 0.01; separationRadius = 5; }
+        Separation_fab    { class = Separation; target = fab   ; maxSpeed = 0.01; separationRadius = 5; }
 }
 
 kris {
@@ -71,12 +71,12 @@ kris {
         pos.x = 10;
         pos.y = 16;
         Seek        { class = Seek; target = manuel; maxSpeed = 0.01; }
-        Flee_manuel { class = Flee; target = manuel; maxSpeed = 0.01; fleeRadius = 5; }
-        Flee_clau   { class = Flee; target = clau  ; maxSpeed = 0.01; fleeRadius = 5; }
-        Flee_sab    { class = Flee; target = sab   ; maxSpeed = 0.01; fleeRadius = 5; }
-        Flee_mari   { class = Flee; target = mari  ; maxSpeed = 0.01; fleeRadius = 5; }
-        Flee_dani   { class = Flee; target = dani  ; maxSpeed = 0.01; fleeRadius = 5; }
-        Flee_fab    { class = Flee; target = fab   ; maxSpeed = 0.01; fleeRadius = 5; }
+        Separation_manuel { class = Separation; target = manuel; maxSpeed = 0.01; separationRadius = 5; }
+        Separation_clau   { class = Separation; target = clau  ; maxSpeed = 0.01; separationRadius = 5; }
+        Separation_sab    { class = Separation; target = sab   ; maxSpeed = 0.01; separationRadius = 5; }
+        Separation_mari   { class = Separation; target = mari  ; maxSpeed = 0.01; separationRadius = 5; }
+        Separation_dani   { class = Separation; target = dani  ; maxSpeed = 0.01; separationRadius = 5; }
+        Separation_fab    { class = Separation; target = fab   ; maxSpeed = 0.01; separationRadius = 5; }
 }
 
 dani {
@@ -84,12 +84,12 @@ dani {
         pos.x = 10;
         pos.y = 20;
         Seek        { class = Seek; target = manuel; maxSpeed = 0.01; }
-        Flee_manuel { class = Flee; target = manuel; maxSpeed = 0.01; fleeRadius = 5; }
-        Flee_clau   { class = Flee; target = clau  ; maxSpeed = 0.01; fleeRadius = 5; }
-        Flee_sab    { class = Flee; target = sab   ; maxSpeed = 0.01; fleeRadius = 5; }
-        Flee_mari   { class = Flee; target = mari  ; maxSpeed = 0.01; fleeRadius = 5; }
-        Flee_kris   { class = Flee; target = kris  ; maxSpeed = 0.01; fleeRadius = 5; }
-        Flee_fab    { class = Flee; target = fab   ; maxSpeed = 0.01; fleeRadius = 5; }
+        Separation_manuel { class = Separation; target = manuel; maxSpeed = 0.01; separationRadius = 5; }
+        Separation_clau   { class = Separation; target = clau  ; maxSpeed = 0.01; separationRadius = 5; }
+        Separation_sab    { class = Separation; target = sab   ; maxSpeed = 0.01; separationRadius = 5; }
+        Separation_mari   { class = Separation; target = mari  ; maxSpeed = 0.01; separationRadius = 5; }
+        Separation_kris   { class = Separation; target = kris  ; maxSpeed = 0.01; separationRadius = 5; }
+        Separation_fab    { class = Separation; target = fab   ; maxSpeed = 0.01; separationRadius = 5; }
 }
 
 fab {
@@ -97,10 +97,10 @@ fab {
         pos.x = 10;
         pos.y = 24;
         Seek        { class = Seek; target = manuel; maxSpeed = 0.01; }
-        Flee_manuel { class = Flee; target = manuel; maxSpeed = 0.01; fleeRadius = 5; }
-        Flee_clau   { class = Flee; target = clau  ; maxSpeed = 0.01; fleeRadius = 5; }
-        Flee_sab    { class = Flee; target = sab   ; maxSpeed = 0.01; fleeRadius = 5; }
-        Flee_mari   { class = Flee; target = mari  ; maxSpeed = 0.01; fleeRadius = 5; }
-        Flee_dani   { class = Flee; target = dani  ; maxSpeed = 0.01; fleeRadius = 5; }
-        Flee_kris   { class = Flee; target = kris  ; maxSpeed = 0.01; fleeRadius = 5; }
+        Separation_manuel { class = Separation; target = manuel; maxSpeed = 0.01; separationRadius = 5; }
+        Separation_clau   { class = Separation; target = clau  ; maxSpeed = 0.01; separationRadius = 5; }
+        Separation_sab    { class = Separation; target = sab   ; maxSpeed = 0.01; separationRadius = 5; }
+        Separation_mari   { class = Separation; target = mari  ; maxSpeed = 0.01; separationRadius = 5; }
+        Separation_dani   { class = Separation; target = dani  ; maxSpeed = 0.01; separationRadius = 5; }
+        Separation_kris   { class = Separation; target = kris  ; maxSpeed = 0.01; separationRadius = 5; }
 }

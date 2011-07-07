@@ -7,7 +7,7 @@
 
 using namespace std;
 
-class StaticA : public Behavior {
+class StaticA : public virtual Behavior {
         public:
                 virtual pair<bool, double> getAngIncr(unsigned int ticks) = 0;
 };

@@ -118,12 +118,12 @@ void initJuego() {
                 ents.push_back(manuel);
 
                 clau->addBehavior(new Seek(clau, manuel, 0.001   ));
-                clau->addBehavior(new Flee(clau, manuel, 0.001, 5));
-                clau->addBehavior(new Flee(clau, sab   , 0.001, 5));
-                clau->addBehavior(new Flee(clau, mari  , 0.001, 5));
-                clau->addBehavior(new Flee(clau, kris  , 0.001, 5));
-                clau->addBehavior(new Flee(clau, dani  , 0.001, 5));
-                clau->addBehavior(new Flee(clau, fab   , 0.001, 5));
+                clau->addBehavior(new Separation(clau, manuel, 0.001, 5));
+                clau->addBehavior(new Separation(clau, sab   , 0.001, 5));
+                clau->addBehavior(new Separation(clau, mari  , 0.001, 5));
+                clau->addBehavior(new Separation(clau, kris  , 0.001, 5));
+                clau->addBehavior(new Separation(clau, dani  , 0.001, 5));
+                clau->addBehavior(new Separation(clau, fab   , 0.001, 5));
                 clau->addBehavior(new Flock(clau, 2, 3, 3, 0.001));
                 dynamic_cast<Flock *>(clau->behaviors[7])->addBoid(sab);
                 dynamic_cast<Flock *>(clau->behaviors[7])->addBoid(mari);
@@ -133,12 +133,12 @@ void initJuego() {
                 ents.push_back(clau);
 
                 sab->addBehavior(new Seek(sab, manuel, 0.001   ));
-                sab->addBehavior(new Flee(sab, manuel, 0.001, 5));
-                sab->addBehavior(new Flee(sab, clau  , 0.001, 5));
-                sab->addBehavior(new Flee(sab, mari  , 0.001, 5));
-                sab->addBehavior(new Flee(sab, kris  , 0.001, 5));
-                sab->addBehavior(new Flee(sab, dani  , 0.001, 5));
-                sab->addBehavior(new Flee(sab, fab   , 0.001, 5));
+                sab->addBehavior(new Separation(sab, manuel, 0.001, 5));
+                sab->addBehavior(new Separation(sab, clau  , 0.001, 5));
+                sab->addBehavior(new Separation(sab, mari  , 0.001, 5));
+                sab->addBehavior(new Separation(sab, kris  , 0.001, 5));
+                sab->addBehavior(new Separation(sab, dani  , 0.001, 5));
+                sab->addBehavior(new Separation(sab, fab   , 0.001, 5));
                 sab->addBehavior(new Flock(sab, 2, 3, 3, 0.001));
                 dynamic_cast<Flock *>(sab->behaviors[7])->addBoid(clau);
                 dynamic_cast<Flock *>(sab->behaviors[7])->addBoid(mari);
@@ -148,12 +148,12 @@ void initJuego() {
                 ents.push_back(sab);
 
                 mari->addBehavior(new Seek(mari, manuel, 0.001   ));
-                mari->addBehavior(new Flee(mari, manuel, 0.001, 5));
-                mari->addBehavior(new Flee(mari, clau  , 0.001, 5));
-                mari->addBehavior(new Flee(mari, sab   , 0.001, 5));
-                mari->addBehavior(new Flee(mari, kris  , 0.001, 5));
-                mari->addBehavior(new Flee(mari, dani  , 0.001, 5));
-                mari->addBehavior(new Flee(mari, fab   , 0.001, 5));
+                mari->addBehavior(new Separation(mari, manuel, 0.001, 5));
+                mari->addBehavior(new Separation(mari, clau  , 0.001, 5));
+                mari->addBehavior(new Separation(mari, sab   , 0.001, 5));
+                mari->addBehavior(new Separation(mari, kris  , 0.001, 5));
+                mari->addBehavior(new Separation(mari, dani  , 0.001, 5));
+                mari->addBehavior(new Separation(mari, fab   , 0.001, 5));
                 mari->addBehavior(new Flock(mari, 2, 3, 3, 0.001));
                 dynamic_cast<Flock *>(mari->behaviors[7])->addBoid(clau);
                 dynamic_cast<Flock *>(mari->behaviors[7])->addBoid(sab);
@@ -163,12 +163,12 @@ void initJuego() {
                 ents.push_back(mari);
 
                 kris->addBehavior(new Seek(kris, manuel, 0.001   ));
-                kris->addBehavior(new Flee(kris, manuel, 0.001, 5));
-                kris->addBehavior(new Flee(kris, clau  , 0.001, 5));
-                kris->addBehavior(new Flee(kris, sab   , 0.001, 5));
-                kris->addBehavior(new Flee(kris, mari  , 0.001, 5));
-                kris->addBehavior(new Flee(kris, dani  , 0.001, 5));
-                kris->addBehavior(new Flee(kris, fab   , 0.001, 5));
+                kris->addBehavior(new Separation(kris, manuel, 0.001, 5));
+                kris->addBehavior(new Separation(kris, clau  , 0.001, 5));
+                kris->addBehavior(new Separation(kris, sab   , 0.001, 5));
+                kris->addBehavior(new Separation(kris, mari  , 0.001, 5));
+                kris->addBehavior(new Separation(kris, dani  , 0.001, 5));
+                kris->addBehavior(new Separation(kris, fab   , 0.001, 5));
                 kris->addBehavior(new Flock(kris, 2, 3, 3, 0.001));
                 dynamic_cast<Flock *>(kris->behaviors[7])->addBoid(clau);
                 dynamic_cast<Flock *>(kris->behaviors[7])->addBoid(sab);
@@ -178,12 +178,12 @@ void initJuego() {
                 ents.push_back(kris);
 
                 dani->addBehavior(new Seek(dani, manuel, 0.001   ));
-                dani->addBehavior(new Flee(dani, manuel, 0.001, 5));
-                dani->addBehavior(new Flee(dani, clau  , 0.001, 5));
-                dani->addBehavior(new Flee(dani, sab   , 0.001, 5));
-                dani->addBehavior(new Flee(dani, mari  , 0.001, 5));
-                dani->addBehavior(new Flee(dani, kris  , 0.001, 5));
-                dani->addBehavior(new Flee(dani, fab   , 0.001, 5));
+                dani->addBehavior(new Separation(dani, manuel, 0.001, 5));
+                dani->addBehavior(new Separation(dani, clau  , 0.001, 5));
+                dani->addBehavior(new Separation(dani, sab   , 0.001, 5));
+                dani->addBehavior(new Separation(dani, mari  , 0.001, 5));
+                dani->addBehavior(new Separation(dani, kris  , 0.001, 5));
+                dani->addBehavior(new Separation(dani, fab   , 0.001, 5));
                 dani->addBehavior(new Flock(dani, 2, 3, 3, 0.001));
                 dynamic_cast<Flock *>(dani->behaviors[7])->addBoid(clau);
                 dynamic_cast<Flock *>(dani->behaviors[7])->addBoid(sab);
@@ -193,12 +193,12 @@ void initJuego() {
                 ents.push_back(dani);
 
                 fab->addBehavior(new Seek(fab, manuel, 0.001   ));
-                fab->addBehavior(new Flee(fab, manuel, 0.001, 5));
-                fab->addBehavior(new Flee(fab, clau  , 0.001, 5));
-                fab->addBehavior(new Flee(fab, sab   , 0.001, 5));
-                fab->addBehavior(new Flee(fab, mari  , 0.001, 5));
-                fab->addBehavior(new Flee(fab, kris  , 0.001, 5));
-                fab->addBehavior(new Flee(fab, dani  , 0.001, 5));
+                fab->addBehavior(new Separation(fab, manuel, 0.001, 5));
+                fab->addBehavior(new Separation(fab, clau  , 0.001, 5));
+                fab->addBehavior(new Separation(fab, sab   , 0.001, 5));
+                fab->addBehavior(new Separation(fab, mari  , 0.001, 5));
+                fab->addBehavior(new Separation(fab, kris  , 0.001, 5));
+                fab->addBehavior(new Separation(fab, dani  , 0.001, 5));
                 fab->addBehavior(new Flock(fab, 2, 3, 3, 0.001));
                 dynamic_cast<Flock *>(fab->behaviors[7])->addBoid(clau);
                 dynamic_cast<Flock *>(fab->behaviors[7])->addBoid(sab);

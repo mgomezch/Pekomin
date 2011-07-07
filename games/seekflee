@@ -25,11 +25,11 @@ huidor {
         class = RuntimePoint;
         pos.x = 10;
         pos.y = 24;
-        Flee {
-                class      = Flee;
+        Separation {
+                class      = Separation;
                 target     = player;
                 maxSpeed   = 0.025;
-                fleeRadius = 3;
+                separationRadius = 3;
         }
 }
 

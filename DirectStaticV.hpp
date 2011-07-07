@@ -8,7 +8,7 @@
 
 using namespace std;
 
-class DirectStaticV : public Behavior {
+class DirectStaticV : public virtual Behavior {
         public:
                 virtual pair<bool, Triple> getPos(unsigned int ticks) = 0;
 };

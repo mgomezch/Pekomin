@@ -8,7 +8,7 @@
 
 using namespace std;
 
-class DirectStaticA : public Behavior {
+class DirectStaticA : public virtual Behavior {
         public:
                 virtual pair<bool, double> getAng(unsigned int ticks) = 0;
 };

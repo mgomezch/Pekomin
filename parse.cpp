@@ -583,6 +583,28 @@ void parse(char *s) {
                                 continue;
                         }
 
+                        // BoundedDynamicSeparation(Mobile *character, Mobile *target, double maxForce, double separationRadius);
+                        if (class_s == string("BoundedDynamicSeparation")) {
+                                SET_CHARACTER();
+                                SET_TARGET();
+                                SET_DOUBLE(maxForce);
+                                SET_DOUBLE(separationRadius);
+
+                                SET_P(new BoundedDynamicSeparation(character, target, maxForce, separationRadius));
+                                continue;
+                        }
+
+                        // DynamicSeparation(Mobile *character, Mobile *target, double minForce, double separationRadius);
+                        if (class_s == string("DynamicSeparation")) {
+                                SET_CHARACTER();
+                                SET_TARGET();
+                                SET_DOUBLE(minForce);
+                                SET_DOUBLE(separationRadius);
+
+                                SET_P(new DynamicSeparation(character, target, minForce, separationRadius));
+                                continue;
+                        }
+
                         // Evade(Mobile *character, Mobile *target, double maxAcceleration);
                         if (class_s == string("Evade")) {
                                 SET_CHARACTER();
@@ -605,14 +627,14 @@ void parse(char *s) {
                                 continue;
                         }
 
-                        // Flee(Mobile *character, Mobile *target, double maxSpeed, double fleeRadius);
-                        if (class_s == string("Flee")) {
+                        // Separation(Mobile *character, Mobile *target, double maxSpeed, double separationRadius);
+                        if (class_s == string("Separation")) {
                                 SET_CHARACTER();
                                 SET_TARGET();
                                 SET_DOUBLE(maxSpeed);
-                                SET_DOUBLE(fleeRadius);
+                                SET_DOUBLE(separationRadius);
 
-                                SET_P(new Flee(character, target, maxSpeed, fleeRadius));
+                                SET_P(new Separation(character, target, maxSpeed, separationRadius));
                                 continue;
                         }
 
@@ -627,14 +649,14 @@ void parse(char *s) {
                                 continue;
                         }
 
-                        // KinematicFlee(Ent *character, Ent *target, double maxSpeed, double fleeRadius);
-                        if (class_s == string("KinematicFlee")) {
+                        // KinematicSeparation(Ent *character, Ent *target, double maxSpeed, double separationRadius);
+                        if (class_s == string("KinematicSeparation")) {
                                 SET_CHARACTER();
                                 SET_TARGET();
                                 SET_DOUBLE(maxSpeed);
-                                SET_DOUBLE(fleeRadius);
+                                SET_DOUBLE(separationRadius);
 
-                                SET_P(new KinematicFlee(character, target, maxSpeed, fleeRadius));
+                                SET_P(new KinematicSeparation(character, target, maxSpeed, separationRadius));
                                 continue;
                         }
 

@@ -21,11 +21,11 @@ arrivador {
                 targetRadius = 2;
                 slowRadius   = 5;
         }
-        flee {
-                class      = Flee;
+        separation {
+                class      = Separation;
                 target     = player;
                 maxSpeed   = 0.005;
-                fleeRadius = 5;
+                separationRadius = 5;
         }
         look {
                 class              = StaticLookWhereYoureGoing;

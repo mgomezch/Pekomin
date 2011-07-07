@@ -1,23 +1,23 @@
 #include "Ent.hpp"
-#include "KinematicFlee.hpp"
+#include "KinematicSeparation.hpp"
 #include "Triple.hpp"
 
-KinematicFlee::KinematicFlee(Ent *character, Ent *target, double maxSpeed, double fleeRadius) {
+KinematicSeparation::KinematicSeparation(Ent *character, Ent *target, double maxSpeed, double separationRadius) {
         this->character  = character ;
         this->target     = target    ;
         this->maxSpeed   = maxSpeed  ;
-        this->fleeRadius = fleeRadius;
+        this->separationRadius = separationRadius;
         this->dead       = false     ;
 }
 
 // Retorna incrementos de velocidad y rotación
-pair<bool, Triple> KinematicFlee::getVelIncr(unsigned int ticks) {
+pair<bool, Triple> KinematicSeparation::getVelIncr(unsigned int ticks) {
         pair<bool, Triple> steering;
         Triple cp, tp;
 
         tie(cp, tp) = points(this->character, this->target);
         steering.second = cp - tp;
-        if (steering.second.length() < fleeRadius) {
+        if (steering.second.length() < separationRadius) {
                 steering.first = true;
                 steering.second.normalize();
                 steering.second *= maxSpeed;
