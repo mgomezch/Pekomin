@@ -21,6 +21,8 @@ class Actor : public virtual Mobile {
                                 double vrot = 0
                      );
 
+                void addBehavior(Behavior *);
+
                 virtual void steer(unsigned int ticks);
                 virtual void update();
 };

@@ -537,16 +537,14 @@ void parse_r(char *s, int chars) {
 
 void parse(char *s) {
         string class_s;
-        unordered_map<string, string                                                  >::const_iterator it_fields;
-        unordered_map<string, Mobile *                                                >::const_iterator it_entses;
-        unordered_map<string, unordered_map<string, unordered_map<string, string> *> *>::const_iterator it_e;
-                              unordered_map<string, unordered_map<string, string> *>   ::const_iterator it_b;
-        RuntimePoint   *p;
+        unordered_map<string, string  >::const_iterator it_fields;
+        unordered_map<string, Mobile *>::const_iterator it_entses;
+        RuntimePoint *p;
 
         parse_r(s, 0);
 
-        for (it_e = behaviorses.begin(); it_e != behaviorses.end(); ++it_e) {
-                for (it_b = it_e->second->begin(); it_b != it_e->second->end(); ++it_b) {
+        for (auto it_e = behaviorses.begin(); it_e != behaviorses.end(); ++it_e) {
+                for (auto it_b = it_e->second->begin(); it_b != it_e->second->end(); ++it_b) {
 #ifdef DEBUG_PARSE
                         cout << "parse: making behavior: " << it_b->first << " for Ent " << it_e->first << endl;
 #endif

@@ -1,6 +1,6 @@
 *~
 .*.swp*
 *.o
-pekomin
-Makefile
+/pekomin
+/Makefile
 tags

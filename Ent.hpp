@@ -18,6 +18,7 @@ class Ent {
                 double ang;
 
                 Ent(string name = "", Triple pos = Triple(), double ang = 0);
+                virtual ~Ent() = 0;
 
                 virtual void draw()                    = 0;
                 virtual void steer(unsigned int ticks) = 0;

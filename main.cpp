@@ -88,17 +88,11 @@ void initJuego() {
                                 while (!p->behaviors.empty()) {
                                         b = p->behaviors.back();
                                         p->behaviors.pop_back();
-                                        // TODO: esto no debería funcionar por el mismo peo que daba con los ents. Pero funciona. D:
                                         delete b;
                                 }
                         }
 
-                        string type_name = typeid(e).name();
-                        if      (type_name == "RuntimePoint"  ) delete dynamic_cast<RuntimePoint   *>(e);
-                        else if (type_name == "RuntimeSegment") delete dynamic_cast<RuntimeSegment *>(e);
-                        else if (type_name == "RuntimeBox"    ) delete dynamic_cast<RuntimeBox     *>(e);
-                        else if (type_name == "Player"        ) delete dynamic_cast<Player         *>(e);
-                        else fprintf(stderr, "ERROR: cannot delete ent at %p; unknown type!\n", e);
+                        delete e;
                 }
                 player = NULL;
 

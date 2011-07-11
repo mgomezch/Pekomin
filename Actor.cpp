@@ -10,8 +10,7 @@
 //#define DEBUG_ACTOR
 
 #ifdef DEBUG_ACTOR
-#include <iostream>
-#include <stdio.h>
+#       include <iostream>
 #endif
 
 #define RUN_V_STEERING(FAMILY, CALL)                                              \
@@ -37,6 +36,13 @@ using namespace std;
 Actor::Actor(string name, Triple pos, double ang, Triple vel, double vrot):
         Mobile(name, pos, ang, vel, vrot)
 {}
+
+void Actor::addBehavior(Behavior *b) {
+        behaviors.push_back(b);
+#ifdef DEBUG_ACTOR
+        cout << "actor " << static_cast<void *>(this) << ": adding behavior " << static_cast<void *>(b) << endl;
+#endif
+}
 
 void Actor::steer(unsigned int ticks) {
         unsigned int i;

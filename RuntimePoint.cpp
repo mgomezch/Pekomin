@@ -14,13 +14,6 @@ RuntimePoint::RuntimePoint(string name, Triple pos, double ang, Triple vel, doub
         Actor(name, pos, ang, vel, vrot)
 {}
 
-void RuntimePoint::addBehavior(Behavior *b) {
-        behaviors.push_back(b);
-#ifdef DEBUG_RUNTIMEPOINT
-        cout << "actor " << static_cast<void *>(this) << ": adding behavior " << static_cast<void *>(b) << endl;
-#endif
-}
-
 void RuntimePoint::draw() {
         glPushMatrix();
                 glColor4ub(255, 0, 0, 255);
