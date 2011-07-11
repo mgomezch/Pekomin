@@ -33,7 +33,7 @@ Alien::Alien(string name, Triple pos, double ang, Triple vel, double vrot):
 #endif
         for (unsigned int i = 0; i < ents.size(); i++) {
                 if (this != dynamic_cast<Alien *>(ents[i])) {
-                        (this->flock).push_back(&addBehavior(new Flee(this, dynamic_cast<Mobile *>(ents[i]), 0.05, 3)));
+                        (this->flock).push_back(&addBehavior(new Separation(this, dynamic_cast<Mobile *>(ents[i]), 0.05, 3)));
                         cout << "Flee : " << flock[i]->active << endl;
                 }
         }

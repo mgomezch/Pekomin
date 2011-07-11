@@ -12,11 +12,11 @@
 #endif
 
 Separation::Separation(Mobile *character, Mobile *target, double maxSpeed, double separationRadius) {
-        this->character  = character ;
-        this->target     = target    ;
-        this->maxSpeed   = maxSpeed  ;
+        this->character  = character             ;
+        this->target     = target                ;
+        this->maxSpeed   = maxSpeed              ;
         this->separationRadius = separationRadius;
-        this->dead       = false     ;
+        this->active     = true                  ;
 }
 
 pair<bool, Triple> Separation::getVelIncr(unsigned int ticks) {

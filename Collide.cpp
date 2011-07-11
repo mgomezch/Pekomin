@@ -14,7 +14,7 @@
 Collide::Collide(Mobile *character, Mobile *target) {
         this->character = character;
         this->target    = target;
-        this->dead      = false;
+        this->active    = true;
 }
 
 pair<bool, Triple> Collide::getPosIncr(unsigned int ticks) {
