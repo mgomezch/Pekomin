@@ -25,10 +25,10 @@ huidor {
         class = RuntimePoint;
         pos.x = 10;
         pos.y = 40;
-        kinematicFlee {
-                class      = KinematicFlee;
+        kinematicSeparation {
+                class      = KinematicSeparation;
                 target     = player;
                 maxSpeed   = 0.0025;
-                fleeRadius = 5;
+                separationRadius = 5;
         }
 }

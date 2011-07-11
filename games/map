@@ -33,41 +33,41 @@ npc {
                 targetRadius    = 5     ;
                 slowRadius      = 10    ;
         }
-        flee_wleft {
-                class      = Flee;
+        separation_wleft {
+                class      = DynamicSeparation;
                 target     = wall_left;
-                maxSpeed   = 0.025;
-                fleeRadius = 3;
+                minForce   = 0.001;
+                separationRadius = 3;
         }
-        flee_wright {
-                class      = Flee;
+        separation_wright {
+                class      = DynamicSeparation;
                 target     = wall_right;
-                maxSpeed   = 0.025;
-                fleeRadius = 3;
+                minForce   = 0.001;
+                separationRadius = 3;
         }
-        flee_wup {
-                class      = Flee;
+        separation_wup {
+                class      = DynamicSeparation;
                 target     = wall_up;
-                maxSpeed   = 0.025;
-                fleeRadius = 3;
+                minForce   = 0.001;
+                separationRadius = 3;
         }
-        flee_wdown {
-                class      = Flee;
+        separation_wdown {
+                class      = DynamicSeparation;
                 target     = wall_down;
-                maxSpeed   = 0.025;
-                fleeRadius = 3;
+                minForce   = 0.001;
+                separationRadius = 3;
         }
-        flee_o1center {
-                class      = Flee;
+        separation_o1center {
+                class      = DynamicSeparation;
                 target     = obstacle_center1;
-                maxSpeed   = 0.025;
-                fleeRadius = 5;
+                minForce   = 0.001;
+                separationRadius = 5;
         }
-        flee_o2center {
-                class      = Flee;
+        separation_o2center {
+                class      = DynamicSeparation;
                 target     = obstacle_center2;
-                maxSpeed   = 0.025;
-                fleeRadius = 5;
+                minForce   = 0.001;
+                separationRadius = 5;
         }
 }
 
@@ -97,41 +97,41 @@ npc_2 {
                 wanderTime      = 1000;
                 maxAcceleration = 0.02;
         }
-        flee_wleft {
-                class      = Flee;
+        separation_wleft {
+                class      = DynamicSeparation;
                 target     = wall_left;
-                maxSpeed   = 0.025;
-                fleeRadius = 3;
+                minForce   = 0.001;
+                separationRadius = 3;
         }
-        flee_wright {
-                class      = Flee;
+        separation_wright {
+                class      = DynamicSeparation;
                 target     = wall_right;
-                maxSpeed   = 0.025;
-                fleeRadius = 3;
+                minForce   = 0.001;
+                separationRadius = 3;
         }
-        flee_wup {
-                class      = Flee;
+        separation_wup {
+                class      = DynamicSeparation;
                 target     = wall_up;
-                maxSpeed   = 0.025;
-                fleeRadius = 3;
+                minForce   = 0.001;
+                separationRadius = 3;
         }
-        flee_wdown {
-                class      = Flee;
+        separation_wdown {
+                class      = DynamicSeparation;
                 target     = wall_down;
-                maxSpeed   = 0.025;
-                fleeRadius = 3;
+                minForce   = 0.001;
+                separationRadius = 3;
         }
-        flee_o1center {
-                class      = Flee;
+        separation_o1center {
+                class      = DynamicSeparation;
                 target     = obstacle_center1;
-                maxSpeed   = 0.025;
-                fleeRadius = 3;
+                minForce   = 0.001;
+                separationRadius = 3;
         }
-        flee_o2center {
-                class      = Flee;
+        separation_o2center {
+                class      = DynamicSeparation;
                 target     = obstacle_center2;
-                maxSpeed   = 0.025;
-                fleeRadius = 3;
+                minForce   = 0.001;
+                separationRadius = 3;
         }
 }
 

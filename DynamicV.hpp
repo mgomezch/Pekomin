@@ -8,7 +8,7 @@
 
 using namespace std;
 
-class DynamicV : public Behavior {
+class DynamicV : public virtual Behavior {
         public:
                 virtual pair<bool, Triple> getForce(unsigned int ticks) = 0;
 };

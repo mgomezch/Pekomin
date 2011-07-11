@@ -15,9 +15,9 @@ doc {
         pos.x = 10; pos.y = 1;
         LookWhereYoureGoing { class = LookWhereYoureGoing; maxAngularAcceleration = 0.1; maxRotation = 0.01; targetRadius = 5; slowRadius = 10; }
         Arrive              { class = Arrive             ; target = player ; maxAcceleration = 0.1; maxSpeed = 0.01; targetRadius = 5; slowRadius = 10; }
-        Flee_player         { class = Flee               ; target = player ; maxAcceleration = 0.01; fleeRadius = 5; }
-        Flee_grumpy         { class = Flee               ; target = grumpy ; maxAcceleration = 0.01; fleeRadius = 5; }
-        Flee_happy          { class = Flee               ; target = happy  ; maxAcceleration = 0.01; fleeRadius = 5; }
+        Separation_player         { class = Separation               ; target = player ; maxAcceleration = 0.01; separationRadius = 5; }
+        Separation_grumpy         { class = Separation               ; target = grumpy ; maxAcceleration = 0.01; separationRadius = 5; }
+        Separation_happy          { class = Separation               ; target = happy  ; maxAcceleration = 0.01; separationRadius = 5; }
 }
 
 grumpy {
@@ -25,9 +25,9 @@ grumpy {
         pos.x = 10; pos.y = 2;
         LookWhereYoureGoing { class = LookWhereYoureGoing; maxAngularAcceleration = 0.1; maxRotation = 0.01; targetRadius = 5; slowRadius = 10; }
         Arrive              { class = Arrive             ; target = player ; maxAcceleration = 0.1; maxSpeed = 0.01; targetRadius = 5; slowRadius = 10; }
-        Flee_player         { class = Flee               ; target = player ; maxAcceleration = 0.01; fleeRadius = 5; }
-        Flee_doc            { class = Flee               ; target = doc    ; maxAcceleration = 0.01; fleeRadius = 5; }
-        Flee_happy          { class = Flee               ; target = happy  ; maxAcceleration = 0.01; fleeRadius = 5; }
+        Separation_player         { class = Separation               ; target = player ; maxAcceleration = 0.01; separationRadius = 5; }
+        Separation_doc            { class = Separation               ; target = doc    ; maxAcceleration = 0.01; separationRadius = 5; }
+        Separation_happy          { class = Separation               ; target = happy  ; maxAcceleration = 0.01; separationRadius = 5; }
 }
 
 happy {
@@ -35,7 +35,7 @@ happy {
         pos.x = 10; pos.y = 3;
         LookWhereYoureGoing { class = LookWhereYoureGoing; maxAngularAcceleration = 0.1; maxRotation = 0.01; targetRadius = 5; slowRadius = 10; }
         Arrive              { class = Arrive             ; target = player ; maxAcceleration = 0.1; maxSpeed = 0.01; targetRadius = 5; slowRadius = 10; }
-        Flee_player         { class = Flee               ; target = player ; maxAcceleration = 0.01; fleeRadius = 5; }
-        Flee_doc            { class = Flee               ; target = doc    ; maxAcceleration = 0.01; fleeRadius = 5; }
-        Flee_grumpy         { class = Flee               ; target = grumpy ; maxAcceleration = 0.01; fleeRadius = 5; }
+        Separation_player         { class = Separation               ; target = player ; maxAcceleration = 0.01; separationRadius = 5; }
+        Separation_doc            { class = Separation               ; target = doc    ; maxAcceleration = 0.01; separationRadius = 5; }
+        Separation_grumpy         { class = Separation               ; target = grumpy ; maxAcceleration = 0.01; separationRadius = 5; }
 }

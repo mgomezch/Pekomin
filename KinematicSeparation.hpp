@@ -1,5 +1,5 @@
-#ifndef _KINEMATICFLEE_HPP
-#define _KINEMATICFLEE_HPP
+#ifndef _KINEMATICSEPARATION_HPP
+#define _KINEMATICSEPARATION_HPP
 
 #include "KinematicV.hpp"
 #include "Triple.hpp"
@@ -8,14 +8,14 @@ using namespace std;
 
 class Ent;
 
-class KinematicFlee : public KinematicV {
+class KinematicSeparation : public KinematicV {
         public:
                 Ent *character;
                 Ent *target;
                 double maxSpeed;
-                double fleeRadius;
+                double separationRadius;
 
-                KinematicFlee(Ent *character, Ent *target, double maxSpeed, double fleeRadius);
+                KinematicSeparation(Ent *character, Ent *target, double maxSpeed, double separationRadius);
 
                 virtual pair<bool, Triple> getVelIncr(unsigned int ticks);
 };

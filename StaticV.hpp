@@ -8,7 +8,7 @@
 
 using namespace std;
 
-class StaticV : public Behavior {
+class StaticV : public virtual Behavior {
         public:
                 virtual pair<bool, Triple> getPosIncr(unsigned int ticks) = 0;
 };

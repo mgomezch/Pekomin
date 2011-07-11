@@ -7,7 +7,7 @@
 
 using namespace std;
 
-class KinematicA : public Behavior {
+class KinematicA : public virtual Behavior {
         public:
                 virtual pair<bool, double> getAngVelIncr(unsigned int ticks) = 0;
 };
