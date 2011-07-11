@@ -14,22 +14,26 @@
 #include <stdio.h>
 #endif
 
-#define RUN_V_STEERING(FAMILY, CALL)                                              \
-        if ((( p_ ## FAMILY ) = dynamic_cast< FAMILY *>(behaviors[i])) != NULL) { \
-                v_steering = ( p_ ## FAMILY )-> CALL (ticks);                     \
-                if (v_steering.first) {                                           \
-                        ( n_ ## FAMILY )++;                                       \
-                        ( v_ ## FAMILY ).push_back(v_steering.second);            \
-                }                                                                 \
+#define RUN_V_STEERING(FAMILY, CALL)                                                              \
+        if (behaviors[i]->active) {                                                                \
+                if ((( p_ ## FAMILY ) = dynamic_cast< FAMILY *>(behaviors[i])) != NULL) { \
+                        v_steering = ( p_ ## FAMILY )-> CALL (ticks);                             \
+                        if (v_steering.first) {                                                   \
+                                ( n_ ## FAMILY )++;                                               \
+                                ( v_ ## FAMILY ).push_back(v_steering.second);                    \
+                        }                                                                         \
+                }                                                                                 \
         }
 
-#define RUN_A_STEERING(FAMILY, CALL)                                              \
-        if ((( p_ ## FAMILY ) = dynamic_cast< FAMILY *>(behaviors[i])) != NULL) { \
-                a_steering = ( p_ ## FAMILY )-> CALL (ticks);                     \
-                if (a_steering.first) {                                           \
-                        ( n_ ## FAMILY )++;                                       \
-                        ( v_ ## FAMILY ).push_back(a_steering.second);            \
-                }                                                                 \
+#define RUN_A_STEERING(FAMILY, CALL)                                                              \
+        if (behaviors[i]->active) {                                                                \
+                if ((( p_ ## FAMILY ) = dynamic_cast< FAMILY *>(behaviors[i])) != NULL) { \
+                        a_steering = ( p_ ## FAMILY )-> CALL (ticks);                             \
+                        if (a_steering.first) {                                                   \
+                                ( n_ ## FAMILY )++;                                               \
+                                ( v_ ## FAMILY ).push_back(a_steering.second);                    \
+                        }                                                                         \
+                }                                                                                 \
         }
 
 using namespace std;
@@ -37,6 +41,14 @@ using namespace std;
 Actor::Actor(string name, Triple pos, double ang, Triple vel, double vrot):
         Mobile(name, pos, ang, vel, vrot)
 {}
+
+Behavior &Actor::addBehavior(Behavior *b) {
+        behaviors.push_back(b);
+#ifdef DEBUG_ACTOR
+        cout << "actor " << static_cast<void>(this) << " : adding behavior " << static_cast<void *>(b) << endl;
+#endif
+        return *(behaviors.back());
+}
 
 void Actor::steer(unsigned int ticks) {
         unsigned int i;

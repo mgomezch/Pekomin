@@ -1,0 +1,149 @@
+player {
+        class = Player;
+        pos.x = 0;
+        pos.y = 0;
+        pos.z = 0;
+        ang   = 0;
+        vel.x = 0;
+        vel.y = 0;
+        vel.z = 0;
+        vrot  = 0;
+}
+
+npc_1 {
+        class = Alien;
+        pos.x = 45;
+        pos.y = 0;
+}
+
+npc_2 {
+        class = Alien;
+        pos.x = 45;
+        pos.y = 0;
+}
+
+npc_3 {
+        class = Alien;
+        pos.x = 45;
+        pos.y = 0;
+}
+
+npc_4 {
+        class = Alien;
+        pos.x = 45;
+        pos.y = 0;
+}
+
+npc_5 {
+        class = Alien;
+        pos.x = 45;
+        pos.y = 0;
+}
+
+npc_6 {
+        class = Alien;
+        pos.x = 45;
+        pos.y = 0;
+}
+
+npc_7 {
+        class = Alien;
+        pos.x = 45;
+        pos.y = 0;
+}
+
+npc_8 {
+        class = Alien;
+        pos.x = 45;
+        pos.y = 0;
+}
+
+wall_left {
+        class  = RuntimeSegment;
+        pos.x  =   0;
+        pos.y  = -40;
+        pos.z  =   0;
+        p1.x   =  60;
+        p1.y   =   0;
+        p1.z   =   0;
+        p2.x   = -60;
+        p2.y   =   0;
+        p2.z   =   0;
+        width  =   2;
+        height =   5;
+}
+
+wall_right {
+        class  = RuntimeSegment;
+        pos.x  =   0;
+        pos.y  =  40;
+        pos.z  =   0;
+        p1.x   =  60;
+        p1.y   =   0;
+        p1.z   =   0;
+        p2.x   = -60;
+        p2.y   =   0;
+        p2.z   =   0;
+        width  =   2;
+        height =   5;
+}
+
+wall_up {
+        class  = RuntimeSegment;
+        pos.x  = -60;
+        pos.y  =   0;
+        pos.z  =   0;
+        p1.x   =   0;
+        p1.y   =  40;
+        p1.z   =   0;
+        p2.x   =   0;
+        p2.y   = -40;
+        p2.z   =   0;
+        width  =   2;
+        height =   5;
+}
+
+wall_down {
+        class  = RuntimeSegment;
+        pos.x  =  60;
+        pos.y  =   0;
+        pos.z  =   0;
+        p1.x   =   0;
+        p1.y   =  40;
+        p1.z   =   0;
+        p2.x   =   0;
+        p2.y   = -40;
+        p2.z   =   0;
+        width  =   2;
+        height =   5;
+}
+
+obstacle_center1 {
+        class  = RuntimeSegment;
+        pos.x  =   0;
+        pos.y  =   0;
+        pos.z  =   0;
+        p1.x   =  20;
+        p1.y   =   0;
+        p1.z   =   0;
+        p2.x   = -20;
+        p2.y   =   0;
+        p2.z   =   0;
+        width  =   5;
+        height =  10;
+}
+
+obstacle_center2 {
+        class  = RuntimeSegment;
+        pos.x  =   0;
+        pos.y  =   0;
+        pos.z  =   0;
+        p1.x   =   0;
+        p1.y   =  20;
+        p1.z   =   0;
+        p2.x   =   0;
+        p2.y   = -20;
+        p2.z   =   0;
+        width  =   5;
+        height =  10;
+}

@@ -9,7 +9,6 @@ PathFollowing::PathFollowing(Mobile *character, Mobile *target, double maxSpeed,
         this->maxSpeed     = maxSpeed    ;
         this->targetRadius = targetRadius;
         this->slowRadius   = slowRadius  ;
-        this->dead         = false       ;
 
         double distance;
 
@@ -55,7 +54,7 @@ pair<bool, Triple> PathFollowing::getVel(unsigned int ticks) {
 
                 if (distance < targetRadius) {
                         steering.second = target->vel;
-                        dead = true; // MATANDO PATHFOLLOWING
+                        active = false; // MATANDO PATHFOLLOWING
                         if (steering.second.length() > maxSpeed) {
                                 steering.second.normalize();
                                 steering.second *= maxSpeed;

@@ -16,7 +16,6 @@ LookWhereYoureGoing::LookWhereYoureGoing(Mobile *character, double maxAngularVel
         this->maxAngularVelocity = maxAngularVelocity;
         this->targetRadius       = targetRadius      ;
         this->slowRadius         = slowRadius        ;
-        this->dead               = false             ;
 }
 
 pair<bool, double> LookWhereYoureGoing::getAngVel(unsigned int ticks) {

@@ -8,12 +8,11 @@ using namespace std;
 class Behavior {
         public:
                 string name;
-                bool dead;
+                bool active;
 
                 Behavior(string name = "");
 
                 virtual ~Behavior() = 0;
 };
-
 
 #endif

@@ -7,7 +7,6 @@ KinematicFlee::KinematicFlee(Ent *character, Ent *target, double maxSpeed, doubl
         this->target     = target    ;
         this->maxSpeed   = maxSpeed  ;
         this->fleeRadius = fleeRadius;
-        this->dead       = false     ;
 }
 
 // Retorna incrementos de velocidad y rotación

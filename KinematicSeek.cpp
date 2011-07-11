@@ -3,10 +3,9 @@
 #include "Triple.hpp"
 
 KinematicSeek::KinematicSeek(Ent *character, Ent *target, double maxSpeed) {
-        this->character = character;
-        this->target    = target   ;
-        this->maxSpeed  = maxSpeed ;
-        this->dead      = false    ;
+        this->character = character ;
+        this->target    = target    ;
+        this->maxSpeed  = maxSpeed  ;
 }
 
 pair<bool, Triple> KinematicSeek::getVelIncr(unsigned int ticks) {

@@ -11,7 +11,6 @@ KinematicWander::KinematicWander(Ent *character, double maxSpeed, double maxRota
         this->maxRotation = maxRotation;
         this->accum       = 0          ;
         this->wanderTime  = wanderTime ;
-        this->dead        = false      ;
 }
 
 pair<bool, Triple> KinematicWander::getVel(unsigned int ticks) {

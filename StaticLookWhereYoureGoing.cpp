@@ -3,8 +3,7 @@
 #include "util.hpp"
 
 StaticLookWhereYoureGoing::StaticLookWhereYoureGoing(Mobile *character) {
-        this->character = character;
-        this->dead      = false    ;
+        this->character = character ;
 }
 
 pair<bool, double> StaticLookWhereYoureGoing::getAng(unsigned int ticks) {

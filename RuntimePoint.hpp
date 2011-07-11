@@ -2,6 +2,7 @@
 #define _RUNTIMEPOINT_HPP
 
 #include <string>
+#include <tuple>
 
 #include "Actor.hpp"
 #include "Triple.hpp"
@@ -18,7 +19,6 @@ class RuntimePoint : public virtual Actor {
                             );
                 // TODO: destructor!
 
-                void addBehavior(Behavior *);
                 virtual void draw();
 };
 

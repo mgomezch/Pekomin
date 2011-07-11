@@ -28,7 +28,6 @@ Wander::Wander(
         this->wanderTime   = wanderTime   ;
         this->maxSpeed     = maxSpeed     ;
         this->accum        = wanderTime   ;
-        this->dead         = false        ;
 
         wanderOrientation = RandBin(-1, 1) * M_PI;
         target->ang = character->ang + wanderOrientation;

@@ -15,6 +15,7 @@
 #include "Player.hpp"
 #include "Phantom.hpp"
 #include "RuntimePoint.hpp"
+#include "Alien.hpp"
 #include "RuntimeSegment.hpp"
 #include "RuntimeBox.hpp"
 
@@ -348,19 +349,21 @@
                 }
 #endif
 
-#define SET_P(BEHAVIOR)                              \
-        p = dynamic_cast<RuntimePoint *>(character); \
-        if (p != NULL) p->addBehavior(BEHAVIOR);     \
-        else {                                       \
-                cerr << "parse error making Ent '"   \
-                     << it_e->first                  \
-                     << "' behavior '"               \
-                     << it_b->first                  \
-                     << "': Ent '"                   \
-                     << it_e->first                  \
-                     << "' is not a RuntimePoint"    \
-                     << endl;                        \
-                exit(EX_SOFTWARE);                   \
+#define SET_P(BEHAVIOR)                                            \
+        if ((p = dynamic_cast<RuntimePoint *>(character)) != NULL) \
+                p->addBehavior(BEHAVIOR);                          \
+        else if ((p = dynamic_cast<Alien *>(character)) != NULL)   \
+                p->addBehavior(BEHAVIOR);                          \
+        else {                                                     \
+                cerr << "parse error making Ent '"                 \
+                     << it_e->first                                \
+                     << "' behavior '"                             \
+                     << it_b->first                                \
+                     << "': Ent '"                                 \
+                     << it_e->first                                \
+                     << "' is not a RuntimePoint or Alien"                  \
+                     << endl;                                      \
+                exit(EX_SOFTWARE);                                 \
         }
 
 using namespace std;
@@ -485,6 +488,7 @@ void parse_r(char *s, int chars) {
                 }
                 else if (it->second == string("Phantom"       )) ent = new Phantom();
                 else if (it->second == string("RuntimePoint"  )) ent = new RuntimePoint();
+                else if (it->second == string("Alien"         )) ent = new Alien();
                 else if (it->second == string("RuntimeSegment")) {
                         RuntimeSegment *rs = new RuntimeSegment();
 
@@ -541,7 +545,7 @@ void parse(char *s) {
         unordered_map<string, Mobile *                                                >::const_iterator it_entses;
         unordered_map<string, unordered_map<string, unordered_map<string, string> *> *>::const_iterator it_e;
                               unordered_map<string, unordered_map<string, string> *>   ::const_iterator it_b;
-        RuntimePoint   *p;
+        Actor *p;
 
         parse_r(s, 0);
 

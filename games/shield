@@ -1,0 +1,329 @@
+player {
+        class = Player;
+        pos.x = 0;
+        pos.y = 0;
+        pos.z = 0;
+        ang   = 0;
+        vel.x = 0;
+        vel.y = 0;
+        vel.z = 0;
+        vrot  = 0;
+}
+
+npc_1 {
+        class = RuntimePoint;
+        pos.x = 10;
+        pos.y = 20;
+        pos.z =  0;
+        vel.x =  0;
+        vel.y =  0;
+        vel.z =  0;
+
+        arrive {
+                class    = KinematicArrive;
+                target   = player;
+                maxSpeed = 0.0001;
+                radius   = 5;
+        }
+        flee_player {
+                class      = Flee;
+                target     = player;
+                maxSpeed   = 0.025;
+                fleeRadius = 5;
+        }
+        flee_npc2 {
+                class      = Flee;
+                target     = npc_2;
+                maxSpeed   = 0.025;
+                fleeRadius = 5;
+        }
+        flee_npc3 {
+                class      = Flee;
+                target     = npc_3;
+                maxSpeed   = 0.025;
+                fleeRadius = 5;
+        }
+        flee_npc4 {
+                class      = Flee;
+                target     = npc_4;
+                maxSpeed   = 0.025;
+                fleeRadius = 5;
+        }
+        flee_npc5 {
+                class      = Flee;
+                target     = npc_5;
+                maxSpeed   = 0.025;
+                fleeRadius = 5;
+        }
+        flee_npc6 {
+                class      = Flee;
+                target     = npc_6;
+                maxSpeed   = 0.025;
+                fleeRadius = 5;
+        }
+}
+
+npc_2 {
+        class = RuntimePoint;
+        pos.x = 10;
+        pos.y = 30;
+        pos.z =  0;
+        vel.x =  0;
+        vel.y =  0;
+        vel.z =  0; 
+        
+        arrive {
+                class    = KinematicArrive;
+                target   = player;
+                maxSpeed = 0.0001;
+                radius   = 5;
+        }
+        flee_player {
+                class      = Flee;
+                target     = player;
+                maxSpeed   = 0.025;
+                fleeRadius = 5;
+        }
+        flee_npc1 {
+                class      = Flee;
+                target     = npc_1;
+                maxSpeed   = 0.025;
+                fleeRadius = 5;
+        }
+        flee_npc3 {
+                class      = Flee;
+                target     = npc_3;
+                maxSpeed   = 0.025;
+                fleeRadius = 5;
+        }
+        flee_npc4 {
+                class      = Flee;
+                target     = npc_4;
+                maxSpeed   = 0.025;
+                fleeRadius = 5;
+        }
+        flee_npc5 {
+                class      = Flee;
+                target     = npc_5;
+                maxSpeed   = 0.025;
+                fleeRadius = 5;
+        }
+        flee_npc6 {
+                class      = Flee;
+                target     = npc_6;
+                maxSpeed   = 0.025;
+                fleeRadius = 5;
+        }
+}
+
+npc_3 {
+        class = RuntimePoint;
+        pos.x = 10;
+        pos.y = 40;
+        pos.z =  0;
+        vel.x =  0;
+        vel.y =  0;
+        vel.z =  0; 
+        
+        arrive {
+                class    = KinematicArrive;
+                target   = player;
+                maxSpeed = 0.0001;
+                radius   = 5;
+        }
+        flee_player {
+                class      = Flee;
+                target     = player;
+                maxSpeed   = 0.025;
+                fleeRadius = 5;
+        }
+        flee_npc1 {
+                class      = Flee;
+                target     = npc_1;
+                maxSpeed   = 0.025;
+                fleeRadius = 5;
+        }
+        flee_npc2 {
+                class      = Flee;
+                target     = npc_2;
+                maxSpeed   = 0.025;
+                fleeRadius = 5;
+        }
+        flee_npc4 {
+                class      = Flee;
+                target     = npc_4;
+                maxSpeed   = 0.025;
+                fleeRadius = 5;
+        }
+        flee_npc5 {
+                class      = Flee;
+                target     = npc_5;
+                maxSpeed   = 0.025;
+                fleeRadius = 5;
+        }
+        flee_npc6 {
+                class      = Flee;
+                target     = npc_6;
+                maxSpeed   = 0.025;
+                fleeRadius = 5;
+        }
+}
+
+npc_4 {
+        class = RuntimePoint;
+        pos.x = 10;
+        pos.y = 50;
+        pos.z =  0;
+        vel.x =  0;
+        vel.y =  0;
+        vel.z =  0; 
+        
+        arrive {
+                class    = KinematicArrive;
+                target   = player;
+                maxSpeed = 0.0001;
+                radius   = 5;
+        }
+        flee_player {
+                class      = Flee;
+                target     = player;
+                maxSpeed   = 0.025;
+                fleeRadius = 5;
+        }
+        flee_npc1 {
+                class      = Flee;
+                target     = npc_1;
+                maxSpeed   = 0.025;
+                fleeRadius = 5;
+        }
+        flee_npc2 {
+                class      = Flee;
+                target     = npc_2;
+                maxSpeed   = 0.025;
+                fleeRadius = 5;
+        }
+        flee_npc3 {
+                class      = Flee;
+                target     = npc_3;
+                maxSpeed   = 0.025;
+                fleeRadius = 5;
+        }
+        flee_npc5 {
+                class      = Flee;
+                target     = npc_5;
+                maxSpeed   = 0.025;
+                fleeRadius = 5;
+        }
+        flee_npc6 {
+                class      = Flee;
+                target     = npc_6;
+                maxSpeed   = 0.025;
+                fleeRadius = 5;
+        }
+}
+
+npc_5 {
+        class = RuntimePoint;
+        pos.x = 10;
+        pos.y = 60;
+        pos.z =  0;
+        vel.x =  0;
+        vel.y =  0;
+        vel.z =  0; 
+        
+        arrive {
+                class    = KinematicArrive;
+                target   = player;
+                maxSpeed = 0.0001;
+                radius   = 5;
+        }
+        flee_player {
+                class      = Flee;
+                target     = player;
+                maxSpeed   = 0.025;
+                fleeRadius = 5;
+        }
+        flee_npc1 {
+                class      = Flee;
+                target     = npc_1;
+                maxSpeed   = 0.025;
+                fleeRadius = 5;
+        }
+        flee_npc2 {
+                class      = Flee;
+                target     = npc_2;
+                maxSpeed   = 0.025;
+                fleeRadius = 5;
+        }
+        flee_npc3 {
+                class      = Flee;
+                target     = npc_3;
+                maxSpeed   = 0.025;
+                fleeRadius = 5;
+        }
+        flee_npc4 {
+                class      = Flee;
+                target     = npc_4;
+                maxSpeed   = 0.025;
+                fleeRadius = 5;
+        }
+        flee_npc6 {
+                class      = Flee;
+                target     = npc_6;
+                maxSpeed   = 0.025;
+                fleeRadius = 5;
+        }
+}
+
+npc_6 {
+        class = RuntimePoint;
+        pos.x = 10;
+        pos.y = 70;
+        pos.z =  0;
+        vel.x =  0;
+        vel.y =  0;
+        vel.z =  0; 
+        
+        arrive {
+                class    = KinematicArrive;
+                target   = player;
+                maxSpeed = 0.0001;
+                radius   = 5;
+        }
+        flee_player {
+                class      = Flee;
+                target     = player;
+                maxSpeed   = 0.025;
+                fleeRadius = 5;
+        }
+        flee_npc1 {
+                class      = Flee;
+                target     = npc_1;
+                maxSpeed   = 0.025;
+                fleeRadius = 5;
+        }
+        flee_npc2 {
+                class      = Flee;
+                target     = npc_2;
+                maxSpeed   = 0.025;
+                fleeRadius = 5;
+        }
+        flee_npc3 {
+                class      = Flee;
+                target     = npc_3;
+                maxSpeed   = 0.025;
+                fleeRadius = 5;
+        }
+        flee_npc4 {
+                class      = Flee;
+                target     = npc_4;
+                maxSpeed   = 0.025;
+                fleeRadius = 5;
+        }
+        flee_npc5 {
+                class      = Flee;
+                target     = npc_5;
+                maxSpeed   = 0.025;
+                fleeRadius = 5;
+        }
+}

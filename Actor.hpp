@@ -2,6 +2,7 @@
 #define _ACTOR_HPP
 
 #include <vector>
+#include <tuple>
 
 #include "Behavior.hpp"
 #include "Mobile.hpp"
@@ -16,6 +17,7 @@ class Actor : public virtual Mobile {
                 Actor(string name = "", Triple pos = Triple(), double ang = 0, Triple vel = Triple(), double vrot = 0);
 
                 virtual void steer(unsigned int ticks);
+                Behavior &addBehavior(Behavior *);
                 virtual void update();
 };
 

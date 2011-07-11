@@ -16,7 +16,6 @@ Flee::Flee(Mobile *character, Mobile *target, double maxSpeed, double fleeRadius
         this->target     = target    ;
         this->maxSpeed   = maxSpeed  ;
         this->fleeRadius = fleeRadius;
-        this->dead       = false     ;
 }
 
 pair<bool, Triple> Flee::getVel(unsigned int ticks) {

@@ -17,7 +17,6 @@ Face::Face(Mobile *character, Mobile *target, double maxAngularVelocity, double 
         this->maxAngularVelocity = maxAngularVelocity;
         this->targetRadius       = targetRadius;
         this->slowRadius         = slowRadius;
-        this->dead               = false;
 }
 
 pair<bool, double> Face::getAngVelIncr(unsigned int ticks) {

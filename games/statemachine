@@ -1,0 +1,59 @@
+player {
+        class = Player;
+        pos.x = 0;
+        pos.y = 0;
+        pos.z = 0;
+        ang   = 0;
+        vel.x = 0;
+        vel.y = 0;
+        vel.z = 0;
+        vrot  = 0;
+}
+
+npc_1 {
+        class = Alien;
+        pos.x = 30;
+        pos.y = 0;
+}
+
+npc_2 {
+        class = Alien;
+        pos.x = 45;
+        pos.y = 0;
+}
+
+npc_3 {
+        class = Alien;
+        pos.x = 45;
+        pos.y = 0;
+}
+
+npc_4 {
+        class = Alien;
+        pos.x = 45;
+        pos.y = 0;
+}
+
+npc_5 {
+        class = Alien;
+        pos.x = 45;
+        pos.y = 0;
+}
+
+npc_6 {
+        class = Alien;
+        pos.x = 45;
+        pos.y = 0;
+}
+
+npc_7 {
+        class = Alien;
+        pos.x = 45;
+        pos.y = 0;
+}
+
+npc_8 {
+        class = Alien;
+        pos.x = 45;
+        pos.y = 0;
+}

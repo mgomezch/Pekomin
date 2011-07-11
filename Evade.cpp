@@ -7,10 +7,9 @@
 #endif
 
 Evade::Evade(Mobile *character, Mobile *target, double maxSpeed) {
-        this->character = character;
-        this->target    = target   ;
-        this->maxSpeed  = maxSpeed ;
-        this->dead      = false    ;
+        this->character = character ;
+        this->target    = target    ;
+        this->maxSpeed  = maxSpeed  ;
 }
 
 pair<bool, Triple> Evade::getVel(unsigned int ticks) {

@@ -9,10 +9,9 @@
 #endif
 
 Pursue::Pursue(Mobile *character, Mobile *target, double maxSpeed) {
-        this->character = character;
-        this->target    = target   ;
-        this->maxSpeed  = maxSpeed ;
-        this->dead      = false    ;
+        this->character = character ;
+        this->target    = target    ;
+        this->maxSpeed  = maxSpeed  ;
 }
 
 pair<bool, Triple> Pursue::getVel(unsigned int ticks) {

@@ -14,7 +14,6 @@ Arrive::Arrive(Mobile *character, Mobile *target, double maxSpeed, double target
         this->maxSpeed     = maxSpeed    ;
         this->targetRadius = targetRadius;
         this->slowRadius   = slowRadius  ;
-        this->dead         = false       ;
 }
 
 pair<bool, Triple> Arrive::getVel(unsigned int ticks) {

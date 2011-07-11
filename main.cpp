@@ -20,6 +20,7 @@
 #include "Player.hpp"
 #include "RuntimeBox.hpp"
 #include "RuntimePoint.hpp"
+#include "Alien.hpp"
 #include "RuntimeSegment.hpp"
 #include "Triple.hpp"
 #include "util.hpp"
@@ -76,15 +77,15 @@ void initJuego() {
         balas = BALAS;
 
         {
-                Ent            *e;
-                Behavior       *b;
-                RuntimePoint *p;
+                Ent          *e;
+                Behavior     *b;
+                Actor        *p;
 
                 while (!ents.empty()) {
                         e = ents.back();
                         ents.pop_back();
                         // TODO: hacer lo mismo pa otros tipos de runtime
-                        if ((p = dynamic_cast<RuntimePoint *>(e)) != NULL) {
+                        if (((p = dynamic_cast<RuntimePoint *>(e)) != NULL) && ((p = dynamic_cast<Actor *>(e)) != NULL)) {
                                 while (!p->behaviors.empty()) {
                                         b = p->behaviors.back();
                                         p->behaviors.pop_back();
@@ -95,118 +96,13 @@ void initJuego() {
 
                         string type_name = typeid(e).name();
                         if      (type_name == "RuntimePoint"  ) delete dynamic_cast<RuntimePoint   *>(e);
+                        else if (type_name == "Alien"         ) delete dynamic_cast<Alien          *>(e);
                         else if (type_name == "RuntimeSegment") delete dynamic_cast<RuntimeSegment *>(e);
                         else if (type_name == "RuntimeBox"    ) delete dynamic_cast<RuntimeBox     *>(e);
                         else if (type_name == "Player"        ) delete dynamic_cast<Player         *>(e);
                         else fprintf(stderr, "ERROR: cannot delete ent at %p; unknown type!\n", e);
                 }
                 player = NULL;
-
-                /*
-                player = new Player(Triple(0, 0, 0), 0);
-                ents.push_back(player);
-
-                Phantom *manuel    = new Phantom(       Triple(10,  0, 0), 0);
-                RuntimePoint *clau = new RuntimePoint(Triple(10,  4, 0), 0);
-                RuntimePoint *sab  = new RuntimePoint(Triple(10,  8, 0), 0);
-                RuntimePoint *mari = new RuntimePoint(Triple(10, 12, 0), 0);
-                RuntimePoint *kris = new RuntimePoint(Triple(10, 16, 0), 0);
-                RuntimePoint *dani = new RuntimePoint(Triple(10, 20, 0), 0);
-                RuntimePoint *fab  = new RuntimePoint(Triple(10, 24, 0), 0);
-
-                manuel->addBehavior(new Wander(manuel, M_PI/3, 1, 2, 1, 5, 1.2, M_PI/3, 0.001));
-                ents.push_back(manuel);
-
-                clau->addBehavior(new Seek(clau, manuel, 0.001   ));
-                clau->addBehavior(new Flee(clau, manuel, 0.001, 5));
-                clau->addBehavior(new Flee(clau, sab   , 0.001, 5));
-                clau->addBehavior(new Flee(clau, mari  , 0.001, 5));
-                clau->addBehavior(new Flee(clau, kris  , 0.001, 5));
-                clau->addBehavior(new Flee(clau, dani  , 0.001, 5));
-                clau->addBehavior(new Flee(clau, fab   , 0.001, 5));
-                clau->addBehavior(new Flock(clau, 2, 3, 3, 0.001));
-                dynamic_cast<Flock *>(clau->behaviors[7])->addBoid(sab);
-                dynamic_cast<Flock *>(clau->behaviors[7])->addBoid(mari);
-                dynamic_cast<Flock *>(clau->behaviors[7])->addBoid(kris);
-                dynamic_cast<Flock *>(clau->behaviors[7])->addBoid(dani);
-                dynamic_cast<Flock *>(clau->behaviors[7])->addBoid(fab);
-                ents.push_back(clau);
-
-                sab->addBehavior(new Seek(sab, manuel, 0.001   ));
-                sab->addBehavior(new Flee(sab, manuel, 0.001, 5));
-                sab->addBehavior(new Flee(sab, clau  , 0.001, 5));
-                sab->addBehavior(new Flee(sab, mari  , 0.001, 5));
-                sab->addBehavior(new Flee(sab, kris  , 0.001, 5));
-                sab->addBehavior(new Flee(sab, dani  , 0.001, 5));
-                sab->addBehavior(new Flee(sab, fab   , 0.001, 5));
-                sab->addBehavior(new Flock(sab, 2, 3, 3, 0.001));
-                dynamic_cast<Flock *>(sab->behaviors[7])->addBoid(clau);
-                dynamic_cast<Flock *>(sab->behaviors[7])->addBoid(mari);
-                dynamic_cast<Flock *>(sab->behaviors[7])->addBoid(kris);
-                dynamic_cast<Flock *>(sab->behaviors[7])->addBoid(dani);
-                dynamic_cast<Flock *>(sab->behaviors[7])->addBoid(fab);
-                ents.push_back(sab);
-
-                mari->addBehavior(new Seek(mari, manuel, 0.001   ));
-                mari->addBehavior(new Flee(mari, manuel, 0.001, 5));
-                mari->addBehavior(new Flee(mari, clau  , 0.001, 5));
-                mari->addBehavior(new Flee(mari, sab   , 0.001, 5));
-                mari->addBehavior(new Flee(mari, kris  , 0.001, 5));
-                mari->addBehavior(new Flee(mari, dani  , 0.001, 5));
-                mari->addBehavior(new Flee(mari, fab   , 0.001, 5));
-                mari->addBehavior(new Flock(mari, 2, 3, 3, 0.001));
-                dynamic_cast<Flock *>(mari->behaviors[7])->addBoid(clau);
-                dynamic_cast<Flock *>(mari->behaviors[7])->addBoid(sab);
-                dynamic_cast<Flock *>(mari->behaviors[7])->addBoid(kris);
-                dynamic_cast<Flock *>(mari->behaviors[7])->addBoid(dani);
-                dynamic_cast<Flock *>(mari->behaviors[7])->addBoid(fab);
-                ents.push_back(mari);
-
-                kris->addBehavior(new Seek(kris, manuel, 0.001   ));
-                kris->addBehavior(new Flee(kris, manuel, 0.001, 5));
-                kris->addBehavior(new Flee(kris, clau  , 0.001, 5));
-                kris->addBehavior(new Flee(kris, sab   , 0.001, 5));
-                kris->addBehavior(new Flee(kris, mari  , 0.001, 5));
-                kris->addBehavior(new Flee(kris, dani  , 0.001, 5));
-                kris->addBehavior(new Flee(kris, fab   , 0.001, 5));
-                kris->addBehavior(new Flock(kris, 2, 3, 3, 0.001));
-                dynamic_cast<Flock *>(kris->behaviors[7])->addBoid(clau);
-                dynamic_cast<Flock *>(kris->behaviors[7])->addBoid(sab);
-                dynamic_cast<Flock *>(kris->behaviors[7])->addBoid(mari);
-                dynamic_cast<Flock *>(kris->behaviors[7])->addBoid(dani);
-                dynamic_cast<Flock *>(kris->behaviors[7])->addBoid(fab);
-                ents.push_back(kris);
-
-                dani->addBehavior(new Seek(dani, manuel, 0.001   ));
-                dani->addBehavior(new Flee(dani, manuel, 0.001, 5));
-                dani->addBehavior(new Flee(dani, clau  , 0.001, 5));
-                dani->addBehavior(new Flee(dani, sab   , 0.001, 5));
-                dani->addBehavior(new Flee(dani, mari  , 0.001, 5));
-                dani->addBehavior(new Flee(dani, kris  , 0.001, 5));
-                dani->addBehavior(new Flee(dani, fab   , 0.001, 5));
-                dani->addBehavior(new Flock(dani, 2, 3, 3, 0.001));
-                dynamic_cast<Flock *>(dani->behaviors[7])->addBoid(clau);
-                dynamic_cast<Flock *>(dani->behaviors[7])->addBoid(sab);
-                dynamic_cast<Flock *>(dani->behaviors[7])->addBoid(mari);
-                dynamic_cast<Flock *>(dani->behaviors[7])->addBoid(kris);
-                dynamic_cast<Flock *>(dani->behaviors[7])->addBoid(fab);
-                ents.push_back(dani);
-
-                fab->addBehavior(new Seek(fab, manuel, 0.001   ));
-                fab->addBehavior(new Flee(fab, manuel, 0.001, 5));
-                fab->addBehavior(new Flee(fab, clau  , 0.001, 5));
-                fab->addBehavior(new Flee(fab, sab   , 0.001, 5));
-                fab->addBehavior(new Flee(fab, mari  , 0.001, 5));
-                fab->addBehavior(new Flee(fab, kris  , 0.001, 5));
-                fab->addBehavior(new Flee(fab, dani  , 0.001, 5));
-                fab->addBehavior(new Flock(fab, 2, 3, 3, 0.001));
-                dynamic_cast<Flock *>(fab->behaviors[7])->addBoid(clau);
-                dynamic_cast<Flock *>(fab->behaviors[7])->addBoid(sab);
-                dynamic_cast<Flock *>(fab->behaviors[7])->addBoid(mari);
-                dynamic_cast<Flock *>(fab->behaviors[7])->addBoid(kris);
-                dynamic_cast<Flock *>(fab->behaviors[7])->addBoid(dani);
-                ents.push_back(fab);
-                */
 
                 Triple pos = Triple();
                 Node *node;

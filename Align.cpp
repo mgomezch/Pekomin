@@ -17,7 +17,6 @@ Align::Align(Mobile *character, Mobile *target, double maxAngularVelocity, doubl
         this->maxAngularVelocity = maxAngularVelocity;
         this->targetRadius       = targetRadius      ;
         this->slowRadius         = slowRadius        ;
-        this->dead               = false             ;
 }
 
 pair<bool, double> Align::getAngVel(unsigned int ticks) {
