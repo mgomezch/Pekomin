@@ -18,9 +18,19 @@ void collide(void *client_data, DtObjectRef obj1, DtObjectRef obj2, const DtColl
         }
 }
 
+#define MAKE_OBJ(PX, PY, PZ, ROT) \
+        objp = new tuple<double[3], double>(); \
+        get<0>(*objp)[0] = (PX);               \
+        get<0>(*objp)[1] = (PY);               \
+        get<0>(*objp)[2] = (PZ);               \
+        get<1>(*objp) = 0;                     \
+        objs.push_back(objp);                  \
+        dtCreateObject(objp, shape);
+
 int main(int argc, char **argv) {
         unsigned int c, i, n;
-        int obj1 = 1, obj2 = 2;
+        tuple<double[3], double> *objp;
+        vector<decltype(objp)> objs;
         vector<tuple<DtCollData, DtObjectRef, DtObjectRef>> cs;
 
         dtDisableCaching();
@@ -32,30 +42,40 @@ int main(int argc, char **argv) {
                 dtEnd();
         dtEndComplexShape();
 
-        dtCreateObject(&obj1, shape);
-        dtCreateObject(&obj2, shape);
-        dtSetPairResponse(&obj1, &obj2, &collide, DT_SMART_RESPONSE, &cs);
+        auto obj1 = MAKE_OBJ( 0, 0, 0, 0       );
+        auto obj2 = MAKE_OBJ(-5, 0, 0, M_PI/2.0);
 
-        dtSelectObject(&obj1);
-        dtLoadIdentity();
+        dtSetDefaultResponse(&collide, DT_SMART_RESPONSE, &cs);
 
-        dtSelectObject(&obj2);
-        dtLoadIdentity();
-        {
-                auto q = Quaternion(Vector(0, 0, 1), M_PI / 2.0);
-                dtRotate(q[0], q[1], q[2], q[3]);
-                dtTranslate(-5, 0, 0);
+        for (i = 0, n = objs.size(); i < n; i++) {
+                dtSelectObject(objs[i]);
+                dtLoadIdentity();
+                {
+                        auto q = Quaternion(Vector(0, 0, 1), get<1>(*(objs[i])));
+                        dtRotate(q[0], q[1], q[2], q[3]);
+                        dtTranslate(get<0>(*(objs[i]))[0], get<0>(*(objs[i]))[1], get<0>(*(objs[i]))[2]);
+                }
         }
-
         dtProceed();
 
         while (true) {
+                get<0>(*obj2)[0] += 0.2;
+
+                for (i = 0, n = objs.size(); i < n; i++) {
+                        dtSelectObject(objs[i]);
+                        dtLoadIdentity();
+                        {
+                                auto q = Quaternion(Vector(0, 0, 1), get<1>(*(objs[i])));
+                                dtRotate(q[0], q[1], q[2], q[3]);
+                                dtTranslate(get<0>(*(objs[i]))[0], get<0>(*(objs[i]))[1], get<0>(*(objs[i]))[2]);
+                        }
+                }
+
                 while (true) {
                         cs.clear();
-                        dtTestObjects(&obj1, &obj2);
-                        c = cs.size();
+                        c = dtTest();
                         if (c == 0) {
-                                //cout << "Cero colisiones! :-O" << endl;
+//                              cout << "Cero colisiones! :-O" << endl;
                                 break;
                         }
                         if (c == 1) cout << "Una colisión! :-O" << endl;
@@ -65,22 +85,23 @@ int main(int argc, char **argv) {
                                 auto cd = cs[i];
                                 auto d  = get<0>(cd);
                                 auto n  = d.normal;
-                                auto p1 = d.point1;
-                                auto p2 = d.point2;
-                                auto o1 = get<1>(cd);
-                                auto o2 = get<2>(cd);
+//                              auto p1 = d.point1;
+//                              auto p2 = d.point2;
+                                auto o1 = reinterpret_cast<decltype(objp)>(get<1>(cd));
+                                auto o2 = reinterpret_cast<decltype(objp)>(get<2>(cd));
 
                                 PRINT_COLL_DATA(d);
 
                                 dtSelectObject(o1);
-                                dtTranslate(-n[0], -n[1], -n[2]);
+                                get<0>(*o1)[0] -= n[0];
+                                get<0>(*o1)[1] -= n[1];
+                                get<0>(*o1)[2] -= n[2];
                                 dtSelectObject(o2);
-                                dtTranslate( n[0],  n[1],  n[2]);
+                                get<0>(*o2)[0] += n[0];
+                                get<0>(*o2)[1] += n[1];
+                                get<0>(*o2)[2] += n[2];
                         }
                 }
                 dtProceed();
-
-                dtSelectObject(&obj2);
-                dtTranslate(0.1, 0, 0);
         }
 }
