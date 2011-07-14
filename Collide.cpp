@@ -20,21 +20,21 @@ Collide::Collide(Mobile *character, Mobile *target) {
 pair<bool, Triple> Collide::getPosIncr(unsigned int ticks) {
         pair<bool, Triple> steering;
         double d;
-/*
+
         Triple cp, tp;
         tie(cp, tp) = points(character, target);
 
         steering.second = cp - tp;
         d = steering.second.length();
+/*
         DEBUG_COLLIDE_PRINT(d);
         if (0 < d && d < separationRadius) {
                 steering.first = true;
                 steering.second *= maxSpeed * (d / separationRadius);
         }
         else steering.first = false;
-
-        return steering;
 */
+        return steering;
 }
 
 pair<bool, Triple> Collide::getVelIncr(unsigned int ticks) {

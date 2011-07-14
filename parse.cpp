@@ -488,7 +488,7 @@ void parse_r(char *s, int chars) {
                 else if (it->second == string("Alien"         )) ent = new Alien(NULL); // FIXME!!!!!!!!!!!!!!!!!!
 #warning "FIXME: Alien instantiated with NULL target!"
                 else if (it->second == string("Phantom"       )) ent = new Phantom();
-                else if (it->second == string("RuntimePoint"  )) ent = new RuntimePoint();
+                else if (it->second == string("RuntimePoint"  )) ent = new RuntimePoint(); // TODO: gráficos
                 else if (it->second == string("RuntimeSegment")) {
                         RuntimeSegment *rs = new RuntimeSegment();
 
@@ -500,8 +500,7 @@ void parse_r(char *s, int chars) {
                         SET_SEGMENT_FIELD_DOUBLE(p2.z);
 
                         ent = rs;
-                }
-                else if (it->second == string("RuntimeBox")) {
+                } else if (it->second == string("RuntimeBox")) {
                         RuntimeBox *rb = new RuntimeBox();
 
                         SET_BOX_FIELD_DOUBLE(sx);
@@ -542,16 +541,14 @@ void parse_r(char *s, int chars) {
 
 void parse(char *s) {
         string class_s;
-        unordered_map<string, string                                                  >::const_iterator it_fields;
-        unordered_map<string, Mobile *                                                >::const_iterator it_entses;
-        unordered_map<string, unordered_map<string, unordered_map<string, string> *> *>::const_iterator it_e;
-                              unordered_map<string, unordered_map<string, string> *>   ::const_iterator it_b;
+        unordered_map<string, string  >::const_iterator it_fields;
+        unordered_map<string, Mobile *>::const_iterator it_entses;
         Actor *p;
 
         parse_r(s, 0);
 
-        for (it_e = behaviorses.begin(); it_e != behaviorses.end(); ++it_e) {
-                for (it_b = it_e->second->begin(); it_b != it_e->second->end(); ++it_b) {
+        for (auto it_e = behaviorses.begin(); it_e != behaviorses.end(); ++it_e) {
+                for (auto it_b = it_e->second->begin(); it_b != it_e->second->end(); ++it_b) {
 #ifdef DEBUG_PARSE
                         cout << "parse: making behavior: " << it_b->first << " for Ent " << it_e->first << endl;
 #endif

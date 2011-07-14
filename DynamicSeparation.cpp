@@ -12,11 +12,11 @@
 #endif
 
 DynamicSeparation::DynamicSeparation(Mobile *character, Mobile *target, double minForce, double separationRadius) {
-        this->character  = character             ;
-        this->target     = target                ;
-        this->minForce   = minForce              ;
+        this->character        = character;
+        this->target           = target;
+        this->minForce         = minForce;
         this->separationRadius = separationRadius;
-        this->active     = false                 ;
+        this->active           = false;
 }
 
 pair<bool, Triple> DynamicSeparation::getForce(unsigned int ticks) {

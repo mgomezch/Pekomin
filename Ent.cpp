@@ -31,6 +31,8 @@ Ent::Ent(string name, Triple pos, double ang):
         ang(ang)
 {}
 
+Ent::~Ent() {}
+
 void Ent::update() {
         this->new_pos = this->pos;
         this->new_ang = this->ang;
