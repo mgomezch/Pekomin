@@ -1,5 +1,5 @@
-#ifndef _DIRECTSTATICA_HPP
-#define _DIRECTSTATICA_HPP
+#ifndef DIRECTSTATICA_HPP
+#define DIRECTSTATICA_HPP
 
 #include <utility>
 
@@ -8,9 +8,11 @@
 
 using namespace std;
 
+#define DirectStaticA_CALL_NAME getAng
+
 class DirectStaticA : public virtual Behavior {
         public:
-                virtual pair<bool, double> getAng(unsigned int ticks) = 0;
+                virtual pair<bool, double> DirectStaticA_CALL_NAME(unsigned int ticks) = 0;
 };
 
 #endif

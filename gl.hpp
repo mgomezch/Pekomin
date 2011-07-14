@@ -1,8 +1,7 @@
-#ifndef _GL_HPP
-#define _GL_HPP
+#ifndef GL_HPP
+#define GL_HPP
 
 #include <GL/glut.h>
-#include <stdlib.h>
 
 #define N_SLICES_RINGBASE   6
 #define N_SLICES           12

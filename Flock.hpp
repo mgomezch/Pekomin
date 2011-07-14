@@ -1,5 +1,5 @@
-#ifndef _FLOCK_HPP
-#define _FLOCK_HPP
+#ifndef FLOCK_HPP
+#define FLOCK_HPP
 
 #include <vector>
 #include <utility>

@@ -1,5 +1,5 @@
-#ifndef _KINEMATICWANDER_HPP
-#define _KINEMATICWANDER_HPP
+#ifndef KINEMATICWANDER_HPP
+#define KINEMATICWANDER_HPP
 
 #include "DirectKinematicV.hpp"
 #include "Triple.hpp"

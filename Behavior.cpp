@@ -6,5 +6,6 @@ Behavior::~Behavior() {}
 
 Behavior::Behavior(string name):
         name(name),
-        active(true)
+        active(true),
+        dead(false)
 {}

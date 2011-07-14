@@ -1,5 +1,5 @@
-#ifndef _ENT_HPP
-#define _ENT_HPP
+#ifndef ENT_HPP
+#define ENT_HPP
 
 #include <string>
 #include <tuple>

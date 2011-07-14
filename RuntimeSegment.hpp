@@ -1,5 +1,5 @@
-#ifndef _RUNTIMESEGMENT_HPP
-#define _RUNTIMESEGMENT_HPP
+#ifndef RUNTIMESEGMENT_HPP
+#define RUNTIMESEGMENT_HPP
 
 #include <string>
 

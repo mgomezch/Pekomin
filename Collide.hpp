@@ -1,5 +1,5 @@
-#ifndef _COLLIDE_HPP
-#define _COLLIDE_HPP
+#ifndef COLLIDE_HPP
+#define COLLIDE_HPP
 
 #include "KinematicV.hpp"
 #include "StaticV.hpp"

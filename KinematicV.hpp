@@ -1,5 +1,5 @@
-#ifndef _KINEMATICV_HPP
-#define _KINEMATICV_HPP
+#ifndef KINEMATICV_HPP
+#define KINEMATICV_HPP
 
 #include <utility>
 
@@ -8,9 +8,11 @@
 
 using namespace std;
 
+#define KinematicV_CALL_NAME getVelIncr
+
 class KinematicV : public virtual Behavior {
         public:
-                virtual pair<bool, Triple> getVelIncr(unsigned int ticks) = 0;
+                virtual pair<bool, Triple> KinematicV_CALL_NAME(unsigned int ticks) = 0;
 };
 
 #endif

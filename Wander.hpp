@@ -1,5 +1,5 @@
-#ifndef _WANDER_HPP
-#define _WANDER_HPP
+#ifndef WANDER_HPP
+#define WANDER_HPP
 
 #include "DirectKinematicV.hpp"
 #include "Triple.hpp"

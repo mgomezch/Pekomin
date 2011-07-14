@@ -1,5 +1,5 @@
-#ifndef _BEHAVIOR_HPP
-#define _BEHAVIOR_HPP
+#ifndef BEHAVIOR_HPP
+#define BEHAVIOR_HPP
 
 #include <string>
 
@@ -9,6 +9,7 @@ class Behavior {
         public:
                 string name;
                 bool active;
+                bool dead;
 
                 Behavior(string name = "");
 

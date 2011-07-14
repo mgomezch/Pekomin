@@ -1,71 +1,74 @@
 #include "Alien.hpp"
-#include "Families.hpp"
-#include "Behaviors.hpp"
-#include "Triple.hpp"
-#include "game.hpp"
-#include "util.hpp"
 #include "gl.hpp"
+#include "Triple.hpp"
+
+#include "Arrive.hpp"
+#include "Evade.hpp"
+#include "Pursue.hpp"
+#include "Wander.hpp"
 
 //#define DEBUG_ALIEN
 
 #ifndef DEBUG_ALIEN
-#include <iostream>
+#       include <iostream>
 #endif
 
 using namespace std;
 
-Alien::Alien(string name, Triple pos, double ang, Triple vel, double vrot):
-        Actor(name, pos, ang, vel, vrot) {
-        this->hp    = 100;
-        this->state = States::WANDER;
-        this->wanderFlag = &addBehavior(new Wander(this, 0.2, 0.25, 1, 1, 7, 3.1415, 1000, 0.025));
-        this->arriveFlag = &addBehavior(new Arrive(this, player, 0.015, 5, 10));
-        this->arriveFlag->active = false;
-        this->pursueFlag = &addBehavior(new Pursue(this, player, 0.0025));
-        this->pursueFlag->active = false;
-        this->evadeFlag  = &addBehavior(new Evade (this, player, 0.0025));
-        this->evadeFlag->active  = false;
-#ifdef DEBUG_ALIEN
-        cout << "wanderFlag value: " << (this->wanderFlag)->active << endl;
-        cout << "arriveFlag value: " << (this->arriveFlag)->active << endl;
-        cout << "pursueFlag value: " << (this->pursueFlag)->active << endl;
-        cout << "evadeFlag value: "  << (this->evadeFlag )->active << endl;
+Alien::Alien(Mobile *target, string name, Triple pos, double ang, Triple vel, double vrot, int hpmax):
+        Actor(name, pos, ang, vel, vrot),
+        target(target),
+        hpmax(hpmax),
+        hp(hpmax),
+        state(States::Wander),
+        wander(&addBehavior(new Wander(this, 0.2, 0.25, 1, 1, 7, 3.1415, 1000, 0.025))),
+        arrive(&addBehavior(new Arrive(this, target, 0.015, 5, 10))),
+        pursue(&addBehavior(new Pursue(this, target, 0.0025))),
+        evade (&addBehavior(new Evade (this, target, 0.0025)))
+{
+#if 0
+        this->wander = &addBehavior(new Wander(this, 0.2, 0.25, 1, 1, 7, 3.1415, 1000, 0.025));
+        this->arrive = &addBehavior(new Arrive(this, target, 0.015, 5, 10));
+        this->pursue = &addBehavior(new Pursue(this, target, 0.0025));
+        this->evade  = &addBehavior(new Evade (this, target, 0.0025));
 #endif
-        for (unsigned int i = 0; i < ents.size(); i++) {
-                if (this != dynamic_cast<Alien *>(ents[i])) {
-                        (this->flock).push_back(&addBehavior(new Separation(this, dynamic_cast<Mobile *>(ents[i]), 0.05, 3)));
-                        cout << "Flee : " << flock[i]->active << endl;
-                }
-        }
+
+        this->arrive->active = false;
+        this->pursue->active = false;
+        this->evade ->active = false;
 }
 
 void Alien::steer(unsigned int ticks) {
         Triple cp, tp;
+        double d;
 
-        tie(cp, tp) = points(this, player);
+        tie(cp, tp) = points(this, target);
+        d = (tp - cp).length();
 
-        if (state != States::WANDER && (tp - cp).length() > 20) {
-                this->state = States::WANDER;
-                (this->arriveFlag)->active = false;
-                (this->evadeFlag )->active = false;
-                (this->wanderFlag)->active = true ;
+        if (state != States::Wander && d > 20) {
+                this->state = States::Wander;
+                this->wander->active = true ;
+                this->arrive->active = false;
+                this->pursue->active = false;
+                this->evade ->active = false;
         }
-        else if (state != States::ARRIVE && (tp - cp).length() <= 20) {
-                this->state = States::ARRIVE;
+        else if (state != States::Arrive && d <= 20) {
+                this->state = States::Arrive;
                 if (this->hp >= 40) {
-                        (this->arriveFlag)->active = true ;
-                        (this->evadeFlag )->active = false;
-                        (this->wanderFlag)->active = false;
+                        this->wander->active = false;
+                        this->arrive->active = true ;
+                        this->pursue->active = false;
+                        this->evade ->active = false;
                 }
                 else {
-                        (this->arriveFlag)->active = false;
-                        (this->evadeFlag )->active = true ;
-                        (this->wanderFlag)->active = false;
+                        this->wander->active = false;
+                        this->arrive->active = false;
+                        this->pursue->active = false;
+                        this->evade ->active = true ;
                 }
         }
 
         this->Actor::steer(ticks);
-
 }
 
 void Alien::draw() {

@@ -12,11 +12,11 @@
 #endif
 
 BoundedDynamicSeparation::BoundedDynamicSeparation(Mobile *character, Mobile *target, double maxForce, double separationRadius) {
-        this->character  = character             ;
-        this->target     = target                ;
-        this->maxForce   = maxForce              ;
+        this->character = character;
+        this->target = target;
+        this->maxForce = maxForce;
         this->separationRadius = separationRadius;
-        this->active     = false                 ;
+        this->active = false;
 }
 
 pair<bool, Triple> BoundedDynamicSeparation::getForce(unsigned int ticks) {

@@ -1,5 +1,5 @@
-#ifndef _PLAYER_HPP
-#define _PLAYER_HPP
+#ifndef PLAYER_HPP
+#define PLAYER_HPP
 
 #include <string>
 

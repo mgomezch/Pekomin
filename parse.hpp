@@ -1,5 +1,5 @@
-#ifndef _PARSE_HPP
-#define _PARSE_HPP
+#ifndef PARSE_HPP
+#define PARSE_HPP
 
 void parse(char *);
 

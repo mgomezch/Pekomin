@@ -10,30 +10,28 @@
 //#define DEBUG_ACTOR
 
 #ifdef DEBUG_ACTOR
-#include <iostream>
-#include <stdio.h>
+#       include <iostream>
 #endif
 
-#define RUN_V_STEERING(FAMILY, CALL)                                                              \
-        if (behaviors[i]->active) {                                                                \
-                if ((( p_ ## FAMILY ) = dynamic_cast< FAMILY *>(behaviors[i])) != NULL) { \
-                        v_steering = ( p_ ## FAMILY )-> CALL (ticks);                             \
-                        if (v_steering.first) {                                                   \
-                                ( n_ ## FAMILY )++;                                               \
-                                ( v_ ## FAMILY ).push_back(v_steering.second);                    \
-                        }                                                                         \
-                }                                                                                 \
+#define BUILD_CALL_NAME_MACRO(S) S ## _ ## CALL_NAME
+#define CALLNAME(S) BUILD_CALL_NAME_MACRO(S)
+
+#define RUN_V_STEERING(FAMILY)                                                    \
+        if ((( p_ ## FAMILY ) = dynamic_cast< FAMILY *>(behaviors[i])) != NULL) { \
+                v_steering = ( p_ ## FAMILY )-> CALLNAME(FAMILY) (ticks);         \
+                if (v_steering.first) {                                           \
+                        ( n_ ## FAMILY )++;                                       \
+                        ( v_ ## FAMILY ).push_back(v_steering.second);            \
+                }                                                                 \
         }
 
-#define RUN_A_STEERING(FAMILY, CALL)                                                              \
-        if (behaviors[i]->active) {                                                                \
-                if ((( p_ ## FAMILY ) = dynamic_cast< FAMILY *>(behaviors[i])) != NULL) { \
-                        a_steering = ( p_ ## FAMILY )-> CALL (ticks);                             \
-                        if (a_steering.first) {                                                   \
-                                ( n_ ## FAMILY )++;                                               \
-                                ( v_ ## FAMILY ).push_back(a_steering.second);                    \
-                        }                                                                         \
-                }                                                                                 \
+#define RUN_A_STEERING(FAMILY)                                                    \
+        if ((( p_ ## FAMILY ) = dynamic_cast< FAMILY *>(behaviors[i])) != NULL) { \
+                a_steering = ( p_ ## FAMILY )-> CALLNAME(FAMILY) (ticks);         \
+                if (a_steering.first) {                                           \
+                        ( n_ ## FAMILY )++;                                       \
+                        ( v_ ## FAMILY ).push_back(a_steering.second);            \
+                }                                                                 \
         }
 
 using namespace std;
@@ -47,7 +45,7 @@ Behavior &Actor::addBehavior(Behavior *b) {
 #ifdef DEBUG_ACTOR
         cout << "actor " << static_cast<void>(this) << " : adding behavior " << static_cast<void *>(b) << endl;
 #endif
-        return *(behaviors.back());
+        return *b;
 }
 
 void Actor::steer(unsigned int ticks) {
@@ -107,17 +105,19 @@ void Actor::steer(unsigned int ticks) {
         this->ang = mapToRange(this->ang);
 
         for (i = 0; i < behaviors.size(); i++) {
-                RUN_V_STEERING(DirectStaticV   , getPos    )
-                RUN_V_STEERING(StaticV         , getPosIncr)
-                RUN_V_STEERING(DirectKinematicV, getVel    )
-                RUN_V_STEERING(KinematicV      , getVelIncr)
-                RUN_V_STEERING(DynamicV        , getForce  )
+                if (!behaviors[i]->active) continue;
 
-                RUN_A_STEERING(DirectStaticA   , getAng       )
-                RUN_A_STEERING(StaticA         , getAngIncr   )
-                RUN_A_STEERING(DirectKinematicA, getAngVel    )
-                RUN_A_STEERING(KinematicA      , getAngVelIncr)
-                RUN_A_STEERING(DynamicA        , getTorque    )
+                RUN_V_STEERING(DirectStaticV   )
+                RUN_V_STEERING(StaticV         )
+                RUN_V_STEERING(DirectKinematicV)
+                RUN_V_STEERING(KinematicV      )
+                RUN_V_STEERING(DynamicV        )
+
+                RUN_A_STEERING(DirectStaticA   )
+                RUN_A_STEERING(StaticA         )
+                RUN_A_STEERING(DirectKinematicA)
+                RUN_A_STEERING(KinematicA      )
+                RUN_A_STEERING(DynamicA        )
         }
 
         for (i = 0; i < n_DirectStaticV   ; i++) sum_DirectStaticV    += v_DirectStaticV[i];

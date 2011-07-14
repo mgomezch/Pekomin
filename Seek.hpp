@@ -1,5 +1,5 @@
-#ifndef _SEEK_HPP
-#define _SEEK_HPP
+#ifndef SEEK_HPP
+#define SEEK_HPP
 
 #include "DirectKinematicV.hpp"
 #include "Triple.hpp"

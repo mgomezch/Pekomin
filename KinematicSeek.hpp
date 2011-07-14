@@ -1,5 +1,5 @@
-#ifndef _KINEMATICSEEK_HPP
-#define _KINEMATICSEEK_HPP
+#ifndef KINEMATICSEEK_HPP
+#define KINEMATICSEEK_HPP
 
 #include "KinematicV.hpp"
 #include "Triple.hpp"

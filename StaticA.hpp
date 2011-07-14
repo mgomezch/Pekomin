@@ -1,5 +1,5 @@
-#ifndef _STATICA_HPP
-#define _STATICA_HPP
+#ifndef STATICA_HPP
+#define STATICA_HPP
 
 #include <utility>
 
@@ -7,9 +7,11 @@
 
 using namespace std;
 
+#define StaticA_CALL_NAME getAngIncr
+
 class StaticA : public virtual Behavior {
         public:
-                virtual pair<bool, double> getAngIncr(unsigned int ticks) = 0;
+                virtual pair<bool, double> StaticA_CALL_NAME(unsigned int ticks) = 0;
 };
 
 #endif

@@ -1,5 +1,5 @@
-#ifndef _KINEMATICSEPARATION_HPP
-#define _KINEMATICSEPARATION_HPP
+#ifndef KINEMATICSEPARATION_HPP
+#define KINEMATICSEPARATION_HPP
 
 #include "KinematicV.hpp"
 #include "Triple.hpp"

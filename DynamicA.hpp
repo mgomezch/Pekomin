@@ -1,5 +1,5 @@
-#ifndef _DYNAMICA_HPP
-#define _DYNAMICA_HPP
+#ifndef DYNAMICA_HPP
+#define DYNAMICA_HPP
 
 #include <utility>
 
@@ -8,9 +8,11 @@
 
 using namespace std;
 
+#define DynamicA_CALL_NAME getTorque
+
 class DynamicA : public virtual Behavior {
         public:
-                virtual pair<bool, double> getTorque(unsigned int ticks) = 0;
+                virtual pair<bool, double> DynamicA_CALL_NAME(unsigned int ticks) = 0;
 };
 
 #endif

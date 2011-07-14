@@ -1,13 +1,15 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sysexits.h>
-
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
 #include <iostream>
 #include <string>
 #include <unordered_map>
 #include <vector>
 
+#include <sysexits.h>
+
+#include "Actor.hpp"
+#include "Alien.hpp"
 #include "Behaviors.hpp"
 #include "game.hpp"
 #include "Mobile.hpp"
@@ -15,7 +17,6 @@
 #include "Player.hpp"
 #include "Phantom.hpp"
 #include "RuntimePoint.hpp"
-#include "Alien.hpp"
 #include "RuntimeSegment.hpp"
 #include "RuntimeBox.hpp"
 
@@ -349,21 +350,19 @@
                 }
 #endif
 
-#define SET_P(BEHAVIOR)                                            \
-        if ((p = dynamic_cast<RuntimePoint *>(character)) != NULL) \
-                p->addBehavior(BEHAVIOR);                          \
-        else if ((p = dynamic_cast<Alien *>(character)) != NULL)   \
-                p->addBehavior(BEHAVIOR);                          \
-        else {                                                     \
-                cerr << "parse error making Ent '"                 \
-                     << it_e->first                                \
-                     << "' behavior '"                             \
-                     << it_b->first                                \
-                     << "': Ent '"                                 \
-                     << it_e->first                                \
-                     << "' is not a RuntimePoint or Alien"                  \
-                     << endl;                                      \
-                exit(EX_SOFTWARE);                                 \
+#define SET_P(BEHAVIOR)                            \
+        p = dynamic_cast<Actor *>(character);      \
+        if (p != NULL) p->addBehavior(BEHAVIOR);   \
+        else {                                     \
+                cerr << "parse error making Ent '" \
+                     << it_e->first                \
+                     << "' behavior '"             \
+                     << it_b->first                \
+                     << "': Ent '"                 \
+                     << it_e->first                \
+                     << "' is not an Actor"        \
+                     << endl;                      \
+                exit(EX_SOFTWARE);                 \
         }
 
 using namespace std;
@@ -486,9 +485,10 @@ void parse_r(char *s, int chars) {
                         }
                         ent = player = new Player();
                 }
+                else if (it->second == string("Alien"         )) ent = new Alien(NULL); // FIXME!!!!!!!!!!!!!!!!!!
+#warning "FIXME: Alien instantiated with NULL target!"
                 else if (it->second == string("Phantom"       )) ent = new Phantom();
                 else if (it->second == string("RuntimePoint"  )) ent = new RuntimePoint();
-                else if (it->second == string("Alien"         )) ent = new Alien();
                 else if (it->second == string("RuntimeSegment")) {
                         RuntimeSegment *rs = new RuntimeSegment();
 
@@ -500,7 +500,8 @@ void parse_r(char *s, int chars) {
                         SET_SEGMENT_FIELD_DOUBLE(p2.z);
 
                         ent = rs;
-                } else if (it->second == string("RuntimeBox")) {
+                }
+                else if (it->second == string("RuntimeBox")) {
                         RuntimeBox *rb = new RuntimeBox();
 
                         SET_BOX_FIELD_DOUBLE(sx);

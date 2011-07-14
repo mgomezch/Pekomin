@@ -1,5 +1,5 @@
-#ifndef _EVADE_HPP
-#define _EVADE_HPP
+#ifndef EVADE_HPP
+#define EVADE_HPP
 
 #include "DirectKinematicV.hpp"
 #include "Triple.hpp"

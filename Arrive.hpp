@@ -1,5 +1,5 @@
-#ifndef _ARRIVE_HPP
-#define _ARRIVE_HPP
+#ifndef ARRIVE_HPP
+#define ARRIVE_HPP
 
 #include "DirectKinematicV.hpp"
 

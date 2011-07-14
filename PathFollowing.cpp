@@ -10,22 +10,22 @@ PathFollowing::PathFollowing(Mobile *character, Mobile *target, double maxSpeed,
         this->targetRadius = targetRadius;
         this->slowRadius   = slowRadius  ;
 
-        double distance;
+        double d;
 
-        distance = (nodes[0]->pos - character->pos).length();
+        d = (nodes[0]->pos - character->pos).length();
         this->begin = nodes[0];
         for (unsigned int i = 1; i < nodes.size(); i++) {
-                if (distance > (nodes[i]->pos - character->pos).length()) {
-                        distance = (nodes[i]->pos - character->pos).length();
+                if (d > (nodes[i]->pos - character->pos).length()) {
+                        d = (nodes[i]->pos - character->pos).length();
                         this->begin = nodes[i];
                 }
         }
 
-        distance = (nodes[0]->pos - target->pos).length();
+        d = (nodes[0]->pos - target->pos).length();
         this->end = nodes[0];
         for (unsigned int i = 1; i < nodes.size(); i++) {
-                if (distance > (nodes[i]->pos - target->pos).length()) {
-                        distance = (nodes[i]->pos - target->pos).length();
+                if (d > (nodes[i]->pos - target->pos).length()) {
+                        d = (nodes[i]->pos - target->pos).length();
                         this->end = nodes[i];
                 }
         }
@@ -35,37 +35,33 @@ PathFollowing::PathFollowing(Mobile *character, Mobile *target, double maxSpeed,
 
 pair<bool, Triple> PathFollowing::getVel(unsigned int ticks) {
         pair<bool, Triple> steering;
-        Triple direction;
-        double distance, targetSpeed;
+        Triple dir;
+        double d, targetSpeed;
 
         steering.first = true;
         if (path.size() > 0) {
-                direction = path.front()->pos - character->pos;
-                distance = direction.length();
-                if (distance < targetRadius)
-                        path.erase(path.begin());
-                steering.second = direction.normalized();
+                dir = path.front()->pos - character->pos;
+                d = dir.length();
+                if (d < targetRadius) path.erase(path.begin());
+                steering.second = dir.normalized();
                 steering.second *= maxSpeed;
-        }
-        else {
-                direction = target->pos - character->pos;
-                distance = direction.length();
-                direction.normalize();
+        } else {
+                Triple cp, tp;
+                tie(cp, tp) = points(character, target);
 
-                if (distance < targetRadius) {
-                        steering.second = target->vel;
-                        active = false; // MATANDO PATHFOLLOWING
-                        if (steering.second.length() > maxSpeed) {
-                                steering.second.normalize();
-                                steering.second *= maxSpeed;
-                        }
+                dir = tp - cp;
+                d = dir.length();
+
+                if (d < targetRadius) {
+                        steering.first = false;
+                        dead = true;
                         return steering;
                 }
 
                 targetSpeed = maxSpeed;
-                if (distance < slowRadius) targetSpeed *= (distance - targetRadius) / (slowRadius - targetRadius);
+                if (d < slowRadius) targetSpeed *= (d - targetRadius) / (slowRadius - targetRadius);
 
-                steering.second = direction * targetSpeed;
+                steering.second = dir * targetSpeed;
         }
 
         return steering;

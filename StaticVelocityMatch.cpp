@@ -3,8 +3,8 @@
 #include "Triple.hpp"
 
 StaticVelocityMatch::StaticVelocityMatch(Mobile *character, Mobile *target) {
-        this->character = character ;
-        this->target    = target    ;
+        this->character = character;
+        this->target    = target   ;
 }
 
 pair<bool, Triple> StaticVelocityMatch::getVel(unsigned int ticks) {

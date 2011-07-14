@@ -1,5 +1,6 @@
-#include <math.h>
-#include <stdlib.h>
+#include <cmath>
+#include <cstdlib>
+
 #include <sys/time.h>
 
 #include "util.hpp"

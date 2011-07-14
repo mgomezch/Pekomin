@@ -1,5 +1,5 @@
-#ifndef _TRIPLE_HPP
-#define _TRIPLE_HPP
+#ifndef TRIPLE_HPP
+#define TRIPLE_HPP
 
 #include <string>
 

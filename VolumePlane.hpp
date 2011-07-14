@@ -1,5 +1,5 @@
-#ifndef _VOLUMEPLANE_HPP
-#define _VOLUMEPLANE_HPP
+#ifndef VOLUMEPLANE_HPP
+#define VOLUMEPLANE_HPP
 
 #include <tuple>
 

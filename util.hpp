@@ -1,5 +1,5 @@
-#ifndef _UTIL_HPP
-#define _UTIL_HPP
+#ifndef UTIL_HPP
+#define UTIL_HPP
 
 double randomBinomial();
 double RandBin(double fMin, double fMax);

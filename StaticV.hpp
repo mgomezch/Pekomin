@@ -1,5 +1,5 @@
-#ifndef _STATICV_HPP
-#define _STATICV_HPP
+#ifndef STATICV_HPP
+#define STATICV_HPP
 
 #include <utility>
 
@@ -8,9 +8,11 @@
 
 using namespace std;
 
+#define StaticV_CALL_NAME getPosIncr
+
 class StaticV : public virtual Behavior {
         public:
-                virtual pair<bool, Triple> getPosIncr(unsigned int ticks) = 0;
+                virtual pair<bool, Triple> StaticV_CALL_NAME(unsigned int ticks) = 0;
 };
 
 #endif

@@ -1,5 +1,5 @@
-#ifndef _BEHAVIORS_HPP
-#define _BEHAVIORS_HPP
+#ifndef BEHAVIORS_HPP
+#define BEHAVIORS_HPP
 
 #include "Align.hpp"
 #include "Arrive.hpp"

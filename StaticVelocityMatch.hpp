@@ -1,5 +1,5 @@
-#ifndef _STATICVELOCITYMATCH_HPP
-#define _STATICVELOCITYMATCH_HPP
+#ifndef STATICVELOCITYMATCH_HPP
+#define STATICVELOCITYMATCH_HPP
 
 #include "DirectKinematicV.hpp"
 #include "Triple.hpp"

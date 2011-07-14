@@ -1,5 +1,5 @@
-#ifndef _DIRECTKINEMATICA_HPP
-#define _DIRECTKINEMATICA_HPP
+#ifndef DIRECTKINEMATICA_HPP
+#define DIRECTKINEMATICA_HPP
 
 #include <utility>
 
@@ -8,9 +8,11 @@
 
 using namespace std;
 
+#define DirectKinematicA_CALL_NAME getAngVel
+
 class DirectKinematicA : public virtual Behavior {
         public:
-                virtual pair<bool, double> getAngVel(unsigned int ticks) = 0;
+                virtual pair<bool, double> DirectKinematicA_CALL_NAME(unsigned int ticks) = 0;
 };
 
 #endif

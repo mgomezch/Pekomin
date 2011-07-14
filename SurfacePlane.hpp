@@ -1,5 +1,5 @@
-#ifndef _SURFACEPLANE_HPP
-#define _SURFACEPLANE_HPP
+#ifndef SURFACEPLANE_HPP
+#define SURFACEPLANE_HPP
 
 #include <tuple>
 

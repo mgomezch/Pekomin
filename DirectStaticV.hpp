@@ -1,5 +1,5 @@
-#ifndef _DIRECTSTATICV_HPP
-#define _DIRECTSTATICV_HPP
+#ifndef DIRECTSTATICV_HPP
+#define DIRECTSTATICV_HPP
 
 #include <utility>
 
@@ -8,9 +8,11 @@
 
 using namespace std;
 
+#define DirectStaticV_CALL_NAME getPos
+
 class DirectStaticV : public virtual Behavior {
         public:
-                virtual pair<bool, Triple> getPos(unsigned int ticks) = 0;
+                virtual pair<bool, Triple> DirectStaticV_CALL_NAME(unsigned int ticks) = 0;
 };
 
 #endif

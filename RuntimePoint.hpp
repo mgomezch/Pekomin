@@ -1,12 +1,10 @@
-#ifndef _RUNTIMEPOINT_HPP
-#define _RUNTIMEPOINT_HPP
+#ifndef RUNTIMEPOINT_HPP
+#define RUNTIMEPOINT_HPP
 
 #include <string>
-#include <tuple>
 
 #include "Actor.hpp"
 #include "Triple.hpp"
-#include "Behavior.hpp"
 
 using namespace std;
 

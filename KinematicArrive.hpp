@@ -1,5 +1,5 @@
-#ifndef _KINEMATICARRIVE_HPP
-#define _KINEMATICARRIVE_HPP
+#ifndef KINEMATICARRIVE_HPP
+#define KINEMATICARRIVE_HPP
 
 #include "DirectKinematicV.hpp"
 #include "Triple.hpp"

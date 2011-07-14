@@ -1,5 +1,5 @@
-#ifndef _SEGMENT_HPP
-#define _SEGMENT_HPP
+#ifndef SEGMENT_HPP
+#define SEGMENT_HPP
 
 #include <tuple>
 

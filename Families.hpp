@@ -1,5 +1,5 @@
-#ifndef _FAMILIES_HPP
-#define _FAMILIES_HPP
+#ifndef FAMILIES_HPP
+#define FAMILIES_HPP
 
 #include "DirectStaticV.hpp"
 #include "StaticV.hpp"

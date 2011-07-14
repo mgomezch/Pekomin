@@ -1,5 +1,5 @@
-#ifndef _ALIGN_HPP
-#define _ALIGN_HPP
+#ifndef ALIGN_HPP
+#define ALIGN_HPP
 
 #include "DirectKinematicA.hpp"
 

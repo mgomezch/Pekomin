@@ -1,5 +1,5 @@
-#ifndef _BOX_HPP
-#define _BOX_HPP
+#ifndef BOX_HPP
+#define BOX_HPP
 
 #include <tuple>
 

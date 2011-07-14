@@ -1,5 +1,5 @@
-#ifndef _PURSUE_HPP
-#define _PURSUE_HPP
+#ifndef PURSUE_HPP
+#define PURSUE_HPP
 
 #include "DirectKinematicV.hpp"
 #include "Triple.hpp"

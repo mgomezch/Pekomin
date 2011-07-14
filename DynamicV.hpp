@@ -1,5 +1,5 @@
-#ifndef _DYNAMICV_HPP
-#define _DYNAMICV_HPP
+#ifndef DYNAMICV_HPP
+#define DYNAMICV_HPP
 
 #include <utility>
 
@@ -8,9 +8,11 @@
 
 using namespace std;
 
+#define DynamicV_CALL_NAME getForce
+
 class DynamicV : public virtual Behavior {
         public:
-                virtual pair<bool, Triple> getForce(unsigned int ticks) = 0;
+                virtual pair<bool, Triple> DynamicV_CALL_NAME(unsigned int ticks) = 0;
 };
 
 #endif

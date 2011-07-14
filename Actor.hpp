@@ -1,8 +1,7 @@
-#ifndef _ACTOR_HPP
-#define _ACTOR_HPP
+#ifndef ACTOR_HPP
+#define ACTOR_HPP
 
 #include <vector>
-#include <tuple>
 
 #include "Behavior.hpp"
 #include "Mobile.hpp"
@@ -23,8 +22,9 @@ class Actor : public virtual Mobile {
                      );
 
                 virtual void steer(unsigned int ticks);
-                Behavior &addBehavior(Behavior *);
                 virtual void update();
+
+                Behavior &addBehavior(Behavior *);
 };
 
 #endif

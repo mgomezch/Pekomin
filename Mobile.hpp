@@ -1,5 +1,5 @@
-#ifndef _MOBILE_HPP
-#define _MOBILE_HPP
+#ifndef MOBILE_HPP
+#define MOBILE_HPP
 
 #include "Ent.hpp"
 #include "Triple.hpp"

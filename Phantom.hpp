@@ -1,5 +1,5 @@
-#ifndef _PHANTOM_HPP
-#define _PHANTOM_HPP
+#ifndef PHANTOM_HPP
+#define PHANTOM_HPP
 
 #include "RuntimePoint.hpp"
 

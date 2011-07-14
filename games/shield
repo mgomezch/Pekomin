@@ -70,8 +70,8 @@ npc_2 {
         pos.z =  0;
         vel.x =  0;
         vel.y =  0;
-        vel.z =  0; 
-        
+        vel.z =  0;
+
         arrive {
                 class    = KinematicArrive;
                 target   = player;
@@ -123,8 +123,8 @@ npc_3 {
         pos.z =  0;
         vel.x =  0;
         vel.y =  0;
-        vel.z =  0; 
-        
+        vel.z =  0;
+
         arrive {
                 class    = KinematicArrive;
                 target   = player;
@@ -176,8 +176,8 @@ npc_4 {
         pos.z =  0;
         vel.x =  0;
         vel.y =  0;
-        vel.z =  0; 
-        
+        vel.z =  0;
+
         arrive {
                 class    = KinematicArrive;
                 target   = player;
@@ -229,8 +229,8 @@ npc_5 {
         pos.z =  0;
         vel.x =  0;
         vel.y =  0;
-        vel.z =  0; 
-        
+        vel.z =  0;
+
         arrive {
                 class    = KinematicArrive;
                 target   = player;
@@ -282,8 +282,8 @@ npc_6 {
         pos.z =  0;
         vel.x =  0;
         vel.y =  0;
-        vel.z =  0; 
-        
+        vel.z =  0;
+
         arrive {
                 class    = KinematicArrive;
                 target   = player;

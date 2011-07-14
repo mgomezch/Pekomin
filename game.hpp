@@ -1,5 +1,5 @@
-#ifndef _GAME_HPP
-#define _GAME_HPP
+#ifndef GAME_HPP
+#define GAME_HPP
 
 #include <GL/glut.h>
 

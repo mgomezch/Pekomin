@@ -1,5 +1,5 @@
-#ifndef _RUNTIMEBOX_HPP
-#define _RUNTIMEBOX_HPP
+#ifndef RUNTIMEBOX_HPP
+#define RUNTIMEBOX_HPP
 
 #include <string>
 

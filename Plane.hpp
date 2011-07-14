@@ -1,5 +1,5 @@
-#ifndef _PLANE_HPP
-#define _PLANE_HPP
+#ifndef PLANE_HPP
+#define PLANE_HPP
 
 #include <tuple>
 

@@ -1,11 +1,11 @@
+#include <cmath>
+#include <cstdio>
+#include <cstdlib>
 #include <iostream>
 #include <typeinfo>
 #include <vector>
 
 #include <GL/glut.h>
-#include <math.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <sysexits.h>
 #include <sys/time.h>
 
@@ -77,18 +77,18 @@ void initJuego() {
         balas = BALAS;
 
         {
-                Ent          *e;
-                Behavior     *b;
-                Actor        *p;
+                Ent      *e;
+                Behavior *b;
+                Actor    *a;
 
                 while (!ents.empty()) {
                         e = ents.back();
                         ents.pop_back();
                         // TODO: hacer lo mismo pa otros tipos de runtime
-                        if (((p = dynamic_cast<RuntimePoint *>(e)) != NULL) && ((p = dynamic_cast<Actor *>(e)) != NULL)) {
-                                while (!p->behaviors.empty()) {
-                                        b = p->behaviors.back();
-                                        p->behaviors.pop_back();
+                        if ((a = dynamic_cast<Actor *>(e)) != NULL) {
+                                while (!a->behaviors.empty()) {
+                                        b = a->behaviors.back();
+                                        a->behaviors.pop_back();
                                         // TODO: esto no debería funcionar por el mismo peo que daba con los ents. Pero funciona. D:
                                         delete b;
                                 }
@@ -104,31 +104,22 @@ void initJuego() {
                 }
                 player = NULL;
 
-                Triple pos = Triple();
-                Node *node;
-
                 for (int i = -60; i <= 40; i = i + 20) {
                         for (int j = -40; j <= 20; j = j + 20) {
-                                pos = (Triple(i, j, 0) + Triple(i, j + 20, 0) + Triple(i + 20, j, 0))/3.0;
-                                node = new Node("", pos);
-                                nodes.push_back(node);
-                                pos = (Triple(i + 20, j + 20, 0) + Triple(i + 20, j, 0) + Triple(i, j + 20, 0))/3.0;
-                                node = new Node("", pos);
-                                nodes.push_back(node);
+                                nodes.push_back(new Node("", (Triple(i     , j     , 0) + Triple(i     , j + 20, 0) + Triple(i + 20, j     , 0))/3.0));
+                                nodes.push_back(new Node("", (Triple(i + 20, j + 20, 0) + Triple(i + 20, j     , 0) + Triple(i     , j + 20, 0))/3.0));
                         }
                 }
 
                 for (unsigned int i = 0; i < nodes.size(); i++) {
                         for (unsigned int j = 0; j < nodes.size(); j++) {
                                 if (nodes[i] != nodes[j] && (nodes[j]->pos - nodes[i]->pos).length() < 25) {
-//                                      nodes[i]->add_adj(make_tuple(nodes[j], false, 0));
                                         nodes[i]->add_adj(nodes[j]);
                                 }
-                        }  
-                }
-
-                for (unsigned int i = 0; i < nodes.size(); i++) {
+                        }
+#ifdef DEBUG_MAIN
                         nodes[i]->print_node();
+#endif
                 }
 
                 {

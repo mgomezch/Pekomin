@@ -1,5 +1,5 @@
-#ifndef _DYNAMICSEPARATION_HPP
-#define _DYNAMICSEPARATION_HPP
+#ifndef DYNAMICSEPARATION_HPP
+#define DYNAMICSEPARATION_HPP
 
 #include "DynamicV.hpp"
 #include "Triple.hpp"

@@ -1,5 +1,5 @@
-#ifndef _VELOCITYMATCH_HPP
-#define _VELOCITYMATCH_HPP
+#ifndef VELOCITYMATCH_HPP
+#define VELOCITYMATCH_HPP
 
 #include <utility>
 

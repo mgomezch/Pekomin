@@ -1,5 +1,5 @@
-#ifndef _FACE_HPP
-#define _FACE_HPP
+#ifndef FACE_HPP
+#define FACE_HPP
 
 #include "KinematicA.hpp"
 

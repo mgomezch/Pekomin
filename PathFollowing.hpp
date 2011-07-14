@@ -1,5 +1,5 @@
-#ifndef _PATHFOLLOWING_HPP
-#define _PATHFOLLOWING_HPP
+#ifndef PATHFOLLOWING_HPP
+#define PATHFOLLOWING_HPP
 
 #include <vector>
 

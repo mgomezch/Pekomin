@@ -1,5 +1,6 @@
+#include <cstdlib>
+
 #include <png.h>
-#include <stdlib.h>
 #include <sysexits.h>
 
 #include "game.hpp"
