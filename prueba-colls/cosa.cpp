@@ -1,9 +1,9 @@
 #include <cmath>
 #include <tuple>
 
-#include <FreeSOLID/3D/Point.h>
-#include <FreeSOLID/3D/Quaternion.h>
-#include <FreeSOLID/SOLID/solid.h>
+#include <3D/Point.h>
+#include <3D/Quaternion.h>
+#include <SOLID/solid.h>
 
 #define PRINT_COLL_DATA(CD) \
                 cout << "Punto 1: (" << (CD).point1[0] << ", " << (CD).point1[1] << ", " << (CD).point1[2] << ")" << endl; \
