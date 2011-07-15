@@ -2,7 +2,8 @@
 #include "KinematicArrive.hpp"
 #include "Triple.hpp"
 
-KinematicArrive::KinematicArrive(Ent *character, Ent *target, double maxSpeed, double radius):
+KinematicArrive::KinematicArrive(string name, Ent *character, Ent *target, double maxSpeed, double radius):
+        DirectKinematicV(name),
         character(character),
         target(target),
         maxSpeed(maxSpeed),

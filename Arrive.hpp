@@ -7,7 +7,7 @@ using namespace std;
 
 class Mobile;
 
-class Arrive : public DirectKinematicV {
+class Arrive : public virtual DirectKinematicV {
         public:
                 Mobile *character;
                 Mobile *target;

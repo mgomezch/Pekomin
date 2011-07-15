@@ -6,7 +6,7 @@
 
 class Ent;
 
-class KinematicWander : public DirectKinematicV {
+class KinematicWander : public virtual DirectKinematicV {
         public:
                 Ent *character;
                 double maxSpeed;

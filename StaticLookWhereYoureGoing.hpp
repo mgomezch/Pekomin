@@ -7,7 +7,7 @@ using namespace std;
 
 class Mobile;
 
-class StaticLookWhereYoureGoing : public DirectStaticA {
+class StaticLookWhereYoureGoing : public virtual DirectStaticA {
         public:
                 Mobile *character;
 

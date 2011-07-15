@@ -8,7 +8,7 @@ using namespace std;
 
 class Mobile;
 
-class DynamicSeparation : public DynamicV {
+class DynamicSeparation : public virtual DynamicV {
         public:
                 Mobile *character;
                 Mobile *target;

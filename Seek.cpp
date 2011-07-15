@@ -8,7 +8,8 @@
 #       include <iostream>
 #endif
 
-Seek::Seek(Mobile *character, Mobile *target, double maxSpeed):
+Seek::Seek(string name, Mobile *character, Mobile *target, double maxSpeed):
+        DirectKinematicV(name),
         character(character),
         target(target),
         maxSpeed(maxSpeed)

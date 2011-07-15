@@ -8,7 +8,7 @@ using namespace std;
 
 class Ent;
 
-class KinematicArrive : public DirectKinematicV { // TODO: "Kinematic_______" no debería ser DirectKinematic!
+class KinematicArrive : public virtual DirectKinematicV { // TODO: "Kinematic_______" no debería ser DirectKinematic!
         public:
                 Ent *character;
                 Ent *target;

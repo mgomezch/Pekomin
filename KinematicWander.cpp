@@ -5,7 +5,8 @@
 #include "Triple.hpp"
 #include "util.hpp"
 
-KinematicWander::KinematicWander(Ent *character, double maxSpeed, double maxRotation, double wanderTime):
+KinematicWander::KinematicWander(string name, Ent *character, double maxSpeed, double maxRotation, double wanderTime):
+        DirectKinematicV(name),
         character(character),
         maxSpeed(maxSpeed),
         maxRotation(maxRotation),

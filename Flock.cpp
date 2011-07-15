@@ -3,7 +3,8 @@
 #include "Phantom.hpp"
 #include "Triple.hpp"
 
-Flock::Flock(Mobile *character, double targetRadius, double slowRadius, double flockRadius, double maxAcceleration):
+Flock::Flock(string name, Mobile *character, double targetRadius, double slowRadius, double flockRadius, double maxAcceleration):
+        KinematicV(name),
         character(character),
         targetRadius(targetRadius),
         slowRadius(slowRadius),

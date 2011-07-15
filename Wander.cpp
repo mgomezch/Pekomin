@@ -6,7 +6,8 @@
 #include "util.hpp"
 #include "Wander.hpp"
 
-Wander::Wander(Mobile *character, double maxRotation, double targetRadius, double slowRadius, double wanderOffset, double wanderRadius, double wanderRate, double wanderTime, double maxSpeed):
+Wander::Wander(string name, Mobile *character, double maxRotation, double targetRadius, double slowRadius, double wanderOffset, double wanderRadius, double wanderRate, double wanderTime, double maxSpeed):
+        DirectKinematicV(name),
         character(character),
         maxRotation(maxRotation),
         targetRadius(targetRadius),

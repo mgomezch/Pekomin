@@ -8,7 +8,7 @@ using namespace std;
 
 class Ent;
 
-class KinematicSeek : public KinematicV {
+class KinematicSeek : public virtual KinematicV {
         public:
                 Ent *character;
                 Ent *target;

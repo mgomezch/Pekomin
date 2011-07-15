@@ -2,7 +2,8 @@
 #include "KinematicSeparation.hpp"
 #include "Triple.hpp"
 
-KinematicSeparation::KinematicSeparation(Ent *character, Ent *target, double maxSpeed, double separationRadius):
+KinematicSeparation::KinematicSeparation(string name, Ent *character, Ent *target, double maxSpeed, double separationRadius):
+        KinematicV(name),
         character(character),
         target(target),
         maxSpeed(maxSpeed),

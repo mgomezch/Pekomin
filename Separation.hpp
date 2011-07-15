@@ -8,7 +8,7 @@ using namespace std;
 
 class Mobile;
 
-class Separation : public KinematicV {
+class Separation : public virtual KinematicV {
         public:
                 Mobile *character;
                 Mobile *target;

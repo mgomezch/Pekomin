@@ -11,7 +11,8 @@
 #       include <iostream>
 #endif
 
-LookWhereYoureGoing::LookWhereYoureGoing(Mobile *character, double maxAngularVelocity, double targetRadius, double slowRadius):
+LookWhereYoureGoing::LookWhereYoureGoing(string name, Mobile *character, double maxAngularVelocity, double targetRadius, double slowRadius):
+        DirectKinematicA(name),
         character(character),
         maxAngularVelocity(maxAngularVelocity),
         targetRadius(targetRadius),

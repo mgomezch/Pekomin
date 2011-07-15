@@ -7,7 +7,7 @@ using namespace std;
 
 class Mobile;
 
-class Face : public KinematicA {
+class Face : public virtual KinematicA {
         public:
                 Mobile *character;
                 Mobile *target;

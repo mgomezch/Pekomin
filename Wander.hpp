@@ -6,7 +6,7 @@
 
 class Mobile;
 
-class Wander : public DirectKinematicV {
+class Wander : public virtual DirectKinematicV {
         public:
                 Mobile* character;
                 double maxRotation;

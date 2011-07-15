@@ -11,7 +11,7 @@ using namespace std;
 
 class Mobile;
 
-class PathFollowing : public DirectKinematicV {
+class PathFollowing : public virtual DirectKinematicV {
         public:
                 Mobile *character;
                 Mobile *target;

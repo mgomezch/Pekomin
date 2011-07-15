@@ -11,7 +11,8 @@
 #include <iostream>
 #endif
 
-Align::Align(Mobile *character, Mobile *target, double maxAngularVelocity, double targetRadius, double slowRadius):
+Align::Align(string name, Mobile *character, Mobile *target, double maxAngularVelocity, double targetRadius, double slowRadius):
+        DirectKinematicA(name),
         character(character),
         target(target),
         maxAngularVelocity(maxAngularVelocity),

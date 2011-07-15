@@ -7,7 +7,7 @@ using namespace std;
 
 class Mobile;
 
-class LookWhereYoureGoing : public DirectKinematicA {
+class LookWhereYoureGoing : public virtual DirectKinematicA {
         public:
                 Mobile *character;
                 double maxAngularVelocity;

@@ -11,7 +11,8 @@
 #       define DEBUG_SEPARATION_PRINT(S)
 #endif
 
-Separation::Separation(Mobile *character, Mobile *target, double maxSpeed, double separationRadius):
+Separation::Separation(string name, Mobile *character, Mobile *target, double maxSpeed, double separationRadius):
+        KinematicV(name),
         character(character),
         target(target),
         maxSpeed(maxSpeed),

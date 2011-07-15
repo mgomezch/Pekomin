@@ -8,7 +8,7 @@ using namespace std;
 
 class Mobile;
 
-class Evade : public DirectKinematicV {
+class Evade : public virtual DirectKinematicV {
         public:
                 Mobile *character;
                 Mobile *target;

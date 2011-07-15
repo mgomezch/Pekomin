@@ -10,7 +10,7 @@ using namespace std;
 
 class Mobile;
 
-class VelocityMatch : public KinematicV {
+class VelocityMatch : public virtual KinematicV {
         public:
                 Mobile *character;
                 Mobile *target;

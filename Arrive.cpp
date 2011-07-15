@@ -8,7 +8,8 @@
 #include <iostream>
 #endif
 
-Arrive::Arrive(Mobile *character, Mobile *target, double maxSpeed, double targetRadius, double slowRadius):
+Arrive::Arrive(string name, Mobile *character, Mobile *target, double maxSpeed, double targetRadius, double slowRadius):
+        DirectKinematicV(name),
         character(character),
         target(target),
         maxSpeed(maxSpeed),

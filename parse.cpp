@@ -36,25 +36,25 @@
                              << endl;                       \
                         ent-> FIELD = it->second;           \
                 }
-        #define SET_ENT_FIELD_STRING_D(FIELD, DEFAULT)      \
-                SET_ENT_FIELD_STRING(FIELD)                 \
-                else ent-> FIELD = DEFAULT;                 \
-                cout << "parse: Ent "                       \
-                     << name_s                              \
-                     << " processing string field "         \
-                     << it->first                           \
-                     << " with default value \""            \
-                     << DEFAULT                             \
-                     << "\""                                \
+        #define SET_ENT_FIELD_STRING_D(FIELD, DEFAULT) \
+                SET_ENT_FIELD_STRING(FIELD)            \
+                else ent-> FIELD = DEFAULT;            \
+                cout << "parse: Ent "                  \
+                     << name_s                         \
+                     << " processing string field "    \
+                     << it->first                      \
+                     << " with default value \""       \
+                     << DEFAULT                        \
+                     << "\""                           \
                      << endl;
 #else
-        #define SET_ENT_FIELD_STRING(FIELD)                 \
-                it = fields.find(string( #FIELD ));         \
-                if (it != fields.end()) {                   \
-                        ent-> FIELD = it->second;           \
+        #define SET_ENT_FIELD_STRING(FIELD)         \
+                it = fields.find(string( #FIELD )); \
+                if (it != fields.end()) {           \
+                        ent-> FIELD = it->second;   \
                 }
-        #define SET_ENT_FIELD_STRING_D(FIELD, DEFAULT)      \
-                SET_ENT_FIELD_STRING(FIELD)                 \
+        #define SET_ENT_FIELD_STRING_D(FIELD, DEFAULT) \
+                SET_ENT_FIELD_STRING(FIELD)            \
                 else ent-> FIELD = DEFAULT;
 #endif
 
@@ -80,16 +80,16 @@
                         }                                                       \
                         ent-> FIELD = d;                                        \
                 }
-        #define SET_ENT_FIELD_DOUBLE_D(FIELD, DEFAULT)                          \
-                SET_ENT_FIELD_DOUBLE(FIELD)                                     \
-                else ent-> FIELD = DEFAULT;                                     \
-                cout << "parse: Ent "                                           \
-                     << name_s                                                  \
-                     << " processing string field "                             \
-                     << it->first                                               \
-                     << " with default value \""                                \
-                     << DEFAULT                                                 \
-                     << "\""                                                    \
+        #define SET_ENT_FIELD_DOUBLE_D(FIELD, DEFAULT) \
+                SET_ENT_FIELD_DOUBLE(FIELD)            \
+                else ent-> FIELD = DEFAULT;            \
+                cout << "parse: Ent "                  \
+                     << name_s                         \
+                     << " processing string field "    \
+                     << it->first                      \
+                     << " with default value \""       \
+                     << DEFAULT                        \
+                     << "\""                           \
                      << endl;
 #else
         #define SET_ENT_FIELD_DOUBLE(FIELD)                                     \
@@ -105,8 +105,8 @@
                         }                                                       \
                         ent-> FIELD = d;                                        \
                 }
-        #define SET_ENT_FIELD_DOUBLE_D(FIELD, DEFAULT)                          \
-                SET_ENT_FIELD_DOUBLE(FIELD)                                     \
+        #define SET_ENT_FIELD_DOUBLE_D(FIELD, DEFAULT) \
+                SET_ENT_FIELD_DOUBLE(FIELD)            \
                 else ent-> FIELD = DEFAULT;
 #endif
 
@@ -131,15 +131,15 @@
                         }                                                           \
                         rs-> FIELD = d;                                             \
                 }
-        #define SET_SEGMENT_FIELD_DOUBLE_D(FIELD, DEFAULT)                          \
-                SET_SEGMENT_FIELD_DOUBLE(FIELD)                                     \
-                else rs-> FIELD = DEFAULT;                                          \
-                cout << "parse: Ent "                                               \
-                     << name_s                                                      \
-                     << " processing Segment double field "                         \
-                     << it->first                                                   \
-                     << " with default value "                                      \
-                     << DEFAULT                                                     \
+        #define SET_SEGMENT_FIELD_DOUBLE_D(FIELD, DEFAULT)  \
+                SET_SEGMENT_FIELD_DOUBLE(FIELD)             \
+                else rs-> FIELD = DEFAULT;                  \
+                cout << "parse: Ent "                       \
+                     << name_s                              \
+                     << " processing Segment double field " \
+                     << it->first                           \
+                     << " with default value "              \
+                     << DEFAULT                             \
                      << endl;
 #else
         #define SET_SEGMENT_FIELD_DOUBLE(FIELD)                                     \
@@ -155,8 +155,8 @@
                         }                                                           \
                         rs-> FIELD = d;                                             \
                 }
-        #define SET_SEGMENT_FIELD_DOUBLE_D(FIELD, DEFAULT)                          \
-                SET_SEGMENT_FIELD_DOUBLE(FIELD)                                     \
+        #define SET_SEGMENT_FIELD_DOUBLE_D(FIELD, DEFAULT) \
+                SET_SEGMENT_FIELD_DOUBLE(FIELD)            \
                 else rs-> FIELD = DEFAULT;
 #endif
 
@@ -181,15 +181,15 @@
                         }                                                       \
                         rb-> FIELD = d;                                         \
                 }
-#       define SET_BOX_FIELD_DOUBLE_D(FIELD, DEFAULT)                           \
-                SET_BOX_FIELD_DOUBLE(FIELD)                                     \
-                else rb-> FIELD = DEFAULT;                                      \
-                cout << "parse: Ent "                                           \
-                     << name_s                                                  \
-                     << " processing Box double field "                         \
-                     << it->first                                               \
-                     << " with default value "                                  \
-                     << DEFAULT                                                 \
+#       define SET_BOX_FIELD_DOUBLE_D(FIELD, DEFAULT)   \
+                SET_BOX_FIELD_DOUBLE(FIELD)             \
+                else rb-> FIELD = DEFAULT;              \
+                cout << "parse: Ent "                   \
+                     << name_s                          \
+                     << " processing Box double field " \
+                     << it->first                       \
+                     << " with default value "          \
+                     << DEFAULT                         \
                      << endl;
 #else
 #       define SET_BOX_FIELD_DOUBLE(FIELD)                                      \
@@ -205,12 +205,12 @@
                         }                                                       \
                         rb-> FIELD = d;                                         \
                 }
-#       define SET_BOX_FIELD_DOUBLE_D(FIELD, DEFAULT)                           \
-                SET_BOX_FIELD_DOUBLE(FIELD)                                     \
+#       define SET_BOX_FIELD_DOUBLE_D(FIELD, DEFAULT) \
+                SET_BOX_FIELD_DOUBLE(FIELD)           \
                 else rb-> FIELD = DEFAULT;
 #endif
 
-#define SET_CHARACTER()                            \
+#define SET_BEHAVIOR_CHARACTER()                   \
         Mobile *character;                         \
         it_entses = entses.find(it_e->first);      \
         if (it_entses == entses.end()) {           \
@@ -226,7 +226,7 @@
         }                                          \
         character = it_entses->second;
 
-#define SET_TARGET()                                               \
+#define SET_BEHAVIOR_TARGET()                                      \
         Mobile *target;                                            \
         it_fields = it_b->second->find(string("target"));          \
         if (it_fields == it_b->second->end()) {                    \
@@ -253,7 +253,7 @@
         target = it_entses->second;
 
 #ifdef DEBUG_PARSE
-#       define SET_DOUBLE_D(FIELD, DEFAULT)                                                 \
+#       define SET_BEHAVIOR_DOUBLE_D(FIELD, DEFAULT)                                        \
                 double FIELD ;                                                              \
                 it_fields = it_b->second->find(string( #FIELD ));                           \
                 if (it_fields == it_b->second->end()) {                                     \
@@ -277,7 +277,7 @@
                              << endl;                                                       \
                         exit(EX_DATAERR);                                                   \
                 }
-#       define SET_DOUBLE(FIELD)                                               \
+#       define SET_BEHAVIOR_DOUBLE(FIELD)                                      \
                 double FIELD ;                                                 \
                 it_fields = it_b->second->find(string( #FIELD ));              \
                 if (it_fields == it_b->second->end()) {                        \
@@ -308,7 +308,7 @@
                      << FIELD                                                  \
                      << endl;
 #else
-#       define SET_DOUBLE_D(FIELD, DEFAULT)                                    \
+#       define SET_BEHAVIOR_DOUBLE_D(FIELD, DEFAULT)                           \
                 double FIELD ;                                                 \
                 it_fields = it_b->second->find(string( #FIELD ));              \
                 if (it_fields == it_b->second->end()) {                        \
@@ -325,7 +325,7 @@
                              << endl;                                          \
                         exit(EX_DATAERR);                                      \
                 }
-#       define SET_DOUBLE(FIELD)                                               \
+#       define SET_BEHAVIOR_DOUBLE(FIELD)                                      \
                 double FIELD ;                                                 \
                 it_fields = it_b->second->find(string( #FIELD ));              \
                 if (it_fields == it_b->second->end()) {                        \
@@ -561,211 +561,211 @@ void parse(char *s) {
                                 exit(EX_DATAERR);
                         }
 
-                        // Align(Mobile *character, Mobile *target, double maxAngularVelocity, double targetRadius, double slowRadius);
+                        // Align(string name, Mobile *character, Mobile *target, double maxAngularVelocity, double targetRadius, double slowRadius);
                         if (class_s == string("Align")) {
-                                SET_CHARACTER();
-                                SET_TARGET();
-                                SET_DOUBLE(maxAngularVelocity);
-                                SET_DOUBLE(targetRadius      );
-                                SET_DOUBLE(slowRadius        );
+                                SET_BEHAVIOR_CHARACTER();
+                                SET_BEHAVIOR_TARGET();
+                                SET_BEHAVIOR_DOUBLE(maxAngularVelocity);
+                                SET_BEHAVIOR_DOUBLE(targetRadius      );
+                                SET_BEHAVIOR_DOUBLE(slowRadius        );
 
-                                SET_P(new Align(character, target, maxAngularVelocity, targetRadius, slowRadius));
+                                SET_P(new Align(it_e->first, character, target, maxAngularVelocity, targetRadius, slowRadius));
                                 continue;
                         }
 
-                        // Arrive(Mobile *character, Mobile *target, double maxSpeed, double targetRadius, double slowRadius);
+                        // Arrive(string name, Mobile *character, Mobile *target, double maxSpeed, double targetRadius, double slowRadius);
                         if (class_s == string("Arrive")) {
-                                SET_CHARACTER();
-                                SET_TARGET();
-                                SET_DOUBLE(maxSpeed    );
-                                SET_DOUBLE(targetRadius);
-                                SET_DOUBLE(slowRadius  );
+                                SET_BEHAVIOR_CHARACTER();
+                                SET_BEHAVIOR_TARGET();
+                                SET_BEHAVIOR_DOUBLE(maxSpeed    );
+                                SET_BEHAVIOR_DOUBLE(targetRadius);
+                                SET_BEHAVIOR_DOUBLE(slowRadius  );
 
-                                SET_P(new Arrive(character, target, maxSpeed, targetRadius, slowRadius));
+                                SET_P(new Arrive(it_e->first, character, target, maxSpeed, targetRadius, slowRadius));
                                 continue;
                         }
 
-                        // BoundedDynamicSeparation(Mobile *character, Mobile *target, double maxForce, double separationRadius);
+                        // BoundedDynamicSeparation(string name, Mobile *character, Mobile *target, double maxForce, double separationRadius);
                         if (class_s == string("BoundedDynamicSeparation")) {
-                                SET_CHARACTER();
-                                SET_TARGET();
-                                SET_DOUBLE(maxForce);
-                                SET_DOUBLE(separationRadius);
+                                SET_BEHAVIOR_CHARACTER();
+                                SET_BEHAVIOR_TARGET();
+                                SET_BEHAVIOR_DOUBLE(maxForce);
+                                SET_BEHAVIOR_DOUBLE(separationRadius);
 
-                                SET_P(new BoundedDynamicSeparation(character, target, maxForce, separationRadius));
+                                SET_P(new BoundedDynamicSeparation(it_e->first, character, target, maxForce, separationRadius));
                                 continue;
                         }
 
-                        // DynamicSeparation(Mobile *character, Mobile *target, double minForce, double separationRadius);
+                        // DynamicSeparation(string name, Mobile *character, Mobile *target, double minForce, double separationRadius);
                         if (class_s == string("DynamicSeparation")) {
-                                SET_CHARACTER();
-                                SET_TARGET();
-                                SET_DOUBLE(minForce);
-                                SET_DOUBLE(separationRadius);
+                                SET_BEHAVIOR_CHARACTER();
+                                SET_BEHAVIOR_TARGET();
+                                SET_BEHAVIOR_DOUBLE(minForce);
+                                SET_BEHAVIOR_DOUBLE(separationRadius);
 
-                                SET_P(new DynamicSeparation(character, target, minForce, separationRadius));
+                                SET_P(new DynamicSeparation(it_e->first, character, target, minForce, separationRadius));
                                 continue;
                         }
 
-                        // Evade(Mobile *character, Mobile *target, double maxAcceleration);
+                        // Evade(string name, Mobile *character, Mobile *target, double maxAcceleration);
                         if (class_s == string("Evade")) {
-                                SET_CHARACTER();
-                                SET_TARGET();
-                                SET_DOUBLE(maxSpeed);
+                                SET_BEHAVIOR_CHARACTER();
+                                SET_BEHAVIOR_TARGET();
+                                SET_BEHAVIOR_DOUBLE(maxSpeed);
 
-                                SET_P(new Evade(character, target, maxSpeed));
+                                SET_P(new Evade(it_e->first, character, target, maxSpeed));
                                 continue;
                         }
 
-                        // Face(Mobile *character, Mobile *target, double maxAngularVelocity, double targetRadius, double slowRadius);
+                        // Face(string name, Mobile *character, Mobile *target, double maxAngularVelocity, double targetRadius, double slowRadius);
                         if (class_s == string("Face")) {
-                                SET_CHARACTER();
-                                SET_TARGET();
-                                SET_DOUBLE(maxAngularVelocity);
-                                SET_DOUBLE(targetRadius);
-                                SET_DOUBLE(slowRadius);
+                                SET_BEHAVIOR_CHARACTER();
+                                SET_BEHAVIOR_TARGET();
+                                SET_BEHAVIOR_DOUBLE(maxAngularVelocity);
+                                SET_BEHAVIOR_DOUBLE(targetRadius);
+                                SET_BEHAVIOR_DOUBLE(slowRadius);
 
-                                SET_P(new Face(character, target, maxAngularVelocity, targetRadius, slowRadius));
+                                SET_P(new Face(it_e->first, character, target, maxAngularVelocity, targetRadius, slowRadius));
                                 continue;
                         }
 
-                        // Separation(Mobile *character, Mobile *target, double maxSpeed, double separationRadius);
+                        // Separation(string name, Mobile *character, Mobile *target, double maxSpeed, double separationRadius);
                         if (class_s == string("Separation")) {
-                                SET_CHARACTER();
-                                SET_TARGET();
-                                SET_DOUBLE(maxSpeed);
-                                SET_DOUBLE(separationRadius);
+                                SET_BEHAVIOR_CHARACTER();
+                                SET_BEHAVIOR_TARGET();
+                                SET_BEHAVIOR_DOUBLE(maxSpeed);
+                                SET_BEHAVIOR_DOUBLE(separationRadius);
 
-                                SET_P(new Separation(character, target, maxSpeed, separationRadius));
+                                SET_P(new Separation(it_e->first, character, target, maxSpeed, separationRadius));
                                 continue;
                         }
 
-                        // KinematicArrive(Ent *character, Ent *target, double maxSpeed, double radius);
+                        // KinematicArrive(string name, Ent *character, Ent *target, double maxSpeed, double radius);
                         if (class_s == string("KinematicArrive")) {
-                                SET_CHARACTER();
-                                SET_TARGET();
-                                SET_DOUBLE(maxSpeed);
-                                SET_DOUBLE(radius);
+                                SET_BEHAVIOR_CHARACTER();
+                                SET_BEHAVIOR_TARGET();
+                                SET_BEHAVIOR_DOUBLE(maxSpeed);
+                                SET_BEHAVIOR_DOUBLE(radius);
 
-                                SET_P(new KinematicArrive(character, target, maxSpeed, radius));
+                                SET_P(new KinematicArrive(it_e->first, character, target, maxSpeed, radius));
                                 continue;
                         }
 
-                        // KinematicSeparation(Ent *character, Ent *target, double maxSpeed, double separationRadius);
+                        // KinematicSeparation(string name, Ent *character, Ent *target, double maxSpeed, double separationRadius);
                         if (class_s == string("KinematicSeparation")) {
-                                SET_CHARACTER();
-                                SET_TARGET();
-                                SET_DOUBLE(maxSpeed);
-                                SET_DOUBLE(separationRadius);
+                                SET_BEHAVIOR_CHARACTER();
+                                SET_BEHAVIOR_TARGET();
+                                SET_BEHAVIOR_DOUBLE(maxSpeed);
+                                SET_BEHAVIOR_DOUBLE(separationRadius);
 
-                                SET_P(new KinematicSeparation(character, target, maxSpeed, separationRadius));
+                                SET_P(new KinematicSeparation(it_e->first, character, target, maxSpeed, separationRadius));
                                 continue;
                         }
 
-                        // KinematicSeek(Ent *character, Ent *target, double maxSpeed);
+                        // KinematicSeek(string name, Ent *character, Ent *target, double maxSpeed);
                         if (class_s == string("KinematicSeek")) {
-                                SET_CHARACTER();
-                                SET_TARGET();
-                                SET_DOUBLE(maxSpeed);
+                                SET_BEHAVIOR_CHARACTER();
+                                SET_BEHAVIOR_TARGET();
+                                SET_BEHAVIOR_DOUBLE(maxSpeed);
 
-                                SET_P(new KinematicSeek(character, target, maxSpeed));
+                                SET_P(new KinematicSeek(it_e->first, character, target, maxSpeed));
                                 continue;
                         }
 
-                        // KinematicWander(Ent *character, double maxSpeed, double maxRotation, double wanderTime);
+                        // KinematicWander(string name, Ent *character, double maxSpeed, double maxRotation, double wanderTime);
                         if (class_s == string("KinematicWander")) {
-                                SET_CHARACTER();
-                                SET_DOUBLE(maxSpeed);
-                                SET_DOUBLE(maxRotation);
-                                SET_DOUBLE(wanderTime);
+                                SET_BEHAVIOR_CHARACTER();
+                                SET_BEHAVIOR_DOUBLE(maxSpeed);
+                                SET_BEHAVIOR_DOUBLE(maxRotation);
+                                SET_BEHAVIOR_DOUBLE(wanderTime);
 
-                                SET_P(new KinematicWander(character, maxSpeed, maxRotation, wanderTime));
+                                SET_P(new KinematicWander(it_e->first, character, maxSpeed, maxRotation, wanderTime));
                                 continue;
                         }
 
-                        // StaticLookWhereYoureGoing(Mobile *character);
+                        // StaticLookWhereYoureGoing(string name, Mobile *character);
                         if (class_s == string("StaticLookWhereYoureGoing")) {
-                                SET_CHARACTER();
+                                SET_BEHAVIOR_CHARACTER();
 
-                                SET_P(new StaticLookWhereYoureGoing(character));
+                                SET_P(new StaticLookWhereYoureGoing(it_e->first, character));
                                 continue;
                         }
 
-                        // LookWhereYoureGoing(Mobile *character, double maxAngularVelocity, double targetRadius, double slowRadius);
+                        // LookWhereYoureGoing(string name, Mobile *character, double maxAngularVelocity, double targetRadius, double slowRadius);
                         if (class_s == string("LookWhereYoureGoing")) {
-                                SET_CHARACTER();
-                                SET_DOUBLE(maxAngularVelocity);
-                                SET_DOUBLE(targetRadius);
-                                SET_DOUBLE(slowRadius);
+                                SET_BEHAVIOR_CHARACTER();
+                                SET_BEHAVIOR_DOUBLE(maxAngularVelocity);
+                                SET_BEHAVIOR_DOUBLE(targetRadius);
+                                SET_BEHAVIOR_DOUBLE(slowRadius);
 
-                                SET_P(new LookWhereYoureGoing(character, maxAngularVelocity, targetRadius, slowRadius));
+                                SET_P(new LookWhereYoureGoing(it_e->first, character, maxAngularVelocity, targetRadius, slowRadius));
                                 continue;
                         }
 
-                        // Pursue(Mobile *character, Mobile *target, double maxAcceleration);
+                        // Pursue(string name, Mobile *character, Mobile *target, double maxAcceleration);
                         if (class_s == string("Pursue")) {
-                                SET_CHARACTER();
-                                SET_TARGET();
-                                SET_DOUBLE(maxSpeed);
+                                SET_BEHAVIOR_CHARACTER();
+                                SET_BEHAVIOR_TARGET();
+                                SET_BEHAVIOR_DOUBLE(maxSpeed);
 
-                                SET_P(new Pursue(character, target, maxSpeed));
+                                SET_P(new Pursue(it_e->first, character, target, maxSpeed));
                                 continue;
                         }
 
-                        // Seek(Mobile *character, Mobile *target, double maxAcceleration);
+                        // Seek(string name, Mobile *character, Mobile *target, double maxAcceleration);
                         if (class_s == string("Seek")) {
-                                SET_CHARACTER();
-                                SET_TARGET();
-                                SET_DOUBLE(maxSpeed);
+                                SET_BEHAVIOR_CHARACTER();
+                                SET_BEHAVIOR_TARGET();
+                                SET_BEHAVIOR_DOUBLE(maxSpeed);
 
-                                SET_P(new Seek(character, target, maxSpeed));
+                                SET_P(new Seek(it_e->first, character, target, maxSpeed));
                                 continue;
                         }
 
-                        // StaticVelocityMatch(Mobile *character, Mobile *target);
+                        // StaticVelocityMatch(string name, Mobile *character, Mobile *target);
                         if (class_s == string("StaticVelocityMatch")) {
-                                SET_CHARACTER();
-                                SET_TARGET();
+                                SET_BEHAVIOR_CHARACTER();
+                                SET_BEHAVIOR_TARGET();
 
-                                SET_P(new StaticVelocityMatch(character, target));
+                                SET_P(new StaticVelocityMatch(it_e->first, character, target));
                                 continue;
                         }
 
-                        // VelocityMatch(Mobile *character, Mobile *target, double maxAcceleration);
+                        // VelocityMatch(string name, Mobile *character, Mobile *target, double maxAcceleration);
                         if (class_s == string("VelocityMatch")) {
-                                SET_CHARACTER();
-                                SET_TARGET();
-                                SET_DOUBLE(maxAcceleration);
+                                SET_BEHAVIOR_CHARACTER();
+                                SET_BEHAVIOR_TARGET();
+                                SET_BEHAVIOR_DOUBLE(maxAcceleration);
 
-                                SET_P(new VelocityMatch(character, target, maxAcceleration));
+                                SET_P(new VelocityMatch(it_e->first, character, target, maxAcceleration));
                                 continue;
                         }
 
-                        // Wander(Mobile *character, Mobile *target, double maxAngularAcceleration, double maxRotation, double targetRadius, double slowRadius, double wanderOffset, double wanderRadius, double wanderRate, double wanderTime, double maxAcceleration);
+                        // Wander(string name, Mobile *character, Mobile *target, double maxAngularAcceleration, double maxRotation, double targetRadius, double slowRadius, double wanderOffset, double wanderRadius, double wanderRate, double wanderTime, double maxAcceleration);
                         if (class_s == string("Wander")) {
-                                SET_CHARACTER();
-                                SET_DOUBLE(maxRotation);
-                                SET_DOUBLE(targetRadius);
-                                SET_DOUBLE(slowRadius);
-                                SET_DOUBLE(wanderOffset);
-                                SET_DOUBLE(wanderRadius);
-                                SET_DOUBLE(wanderRate);
-                                SET_DOUBLE(wanderTime);
-                                SET_DOUBLE(maxAcceleration);
+                                SET_BEHAVIOR_CHARACTER();
+                                SET_BEHAVIOR_DOUBLE(maxRotation);
+                                SET_BEHAVIOR_DOUBLE(targetRadius);
+                                SET_BEHAVIOR_DOUBLE(slowRadius);
+                                SET_BEHAVIOR_DOUBLE(wanderOffset);
+                                SET_BEHAVIOR_DOUBLE(wanderRadius);
+                                SET_BEHAVIOR_DOUBLE(wanderRate);
+                                SET_BEHAVIOR_DOUBLE(wanderTime);
+                                SET_BEHAVIOR_DOUBLE(maxAcceleration);
 
-                                SET_P(new Wander(character, maxRotation, targetRadius, slowRadius, wanderOffset, wanderRadius, wanderRate, wanderTime, maxAcceleration));
+                                SET_P(new Wander(it_e->first, character, maxRotation, targetRadius, slowRadius, wanderOffset, wanderRadius, wanderRate, wanderTime, maxAcceleration));
                                 continue;
                         }
 
-                        // PathFollowing(Mobile *character, Mobile *target, double maxSpeed, double targetRadius, double slowRadius);
+                        // PathFollowing(string name, Mobile *character, Mobile *target, double maxSpeed, double targetRadius, double slowRadius);
                         if (class_s == string("PathFollowing")) {
-                                SET_CHARACTER();
-                                SET_TARGET();
-                                SET_DOUBLE(maxSpeed);
-                                SET_DOUBLE(targetRadius);
-                                SET_DOUBLE(slowRadius);
+                                SET_BEHAVIOR_CHARACTER();
+                                SET_BEHAVIOR_TARGET();
+                                SET_BEHAVIOR_DOUBLE(maxSpeed);
+                                SET_BEHAVIOR_DOUBLE(targetRadius);
+                                SET_BEHAVIOR_DOUBLE(slowRadius);
 
-                                SET_P(new PathFollowing(character, target, maxSpeed, targetRadius, slowRadius));
+                                SET_P(new PathFollowing(it_e->first, character, target, maxSpeed, targetRadius, slowRadius));
                                 continue;
                         }
 

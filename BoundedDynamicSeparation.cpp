@@ -11,7 +11,8 @@
 #       define DEBUG_SEPARATION_PRINT(S)
 #endif
 
-BoundedDynamicSeparation::BoundedDynamicSeparation(Mobile *character, Mobile *target, double maxForce, double separationRadius):
+BoundedDynamicSeparation::BoundedDynamicSeparation(string name, Mobile *character, Mobile *target, double maxForce, double separationRadius):
+        DynamicV(name),
         character(character),
         target(target),
         maxForce(maxForce),

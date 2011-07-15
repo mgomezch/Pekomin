@@ -2,7 +2,8 @@
 #include "Mobile.hpp"
 #include "util.hpp"
 
-StaticLookWhereYoureGoing::StaticLookWhereYoureGoing(Mobile *character):
+StaticLookWhereYoureGoing::StaticLookWhereYoureGoing(string name, Mobile *character):
+        DirectStaticA(name),
         character(character)
 {}
 

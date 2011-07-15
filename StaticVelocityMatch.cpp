@@ -2,7 +2,8 @@
 #include "StaticVelocityMatch.hpp"
 #include "Triple.hpp"
 
-StaticVelocityMatch::StaticVelocityMatch(Mobile *character, Mobile *target):
+StaticVelocityMatch::StaticVelocityMatch(string name, Mobile *character, Mobile *target):
+        DirectKinematicV(name),
         character(character),
         target(target)
 {}

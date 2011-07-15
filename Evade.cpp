@@ -6,7 +6,8 @@
 #       include <iostream>
 #endif
 
-Evade::Evade(Mobile *character, Mobile *target, double maxSpeed):
+Evade::Evade(string name, Mobile *character, Mobile *target, double maxSpeed):
+        DirectKinematicV(name),
         character(character),
         target(target),
         maxSpeed(maxSpeed)

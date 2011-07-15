@@ -8,7 +8,7 @@
 
 class Mobile;
 
-class Flock : public KinematicV {
+class Flock : public virtual KinematicV {
         public:
                 Mobile* character;
                 double targetRadius;

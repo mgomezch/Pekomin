@@ -8,7 +8,8 @@
 #include <iostream>
 #endif
 
-Pursue::Pursue(Mobile *character, Mobile *target, double maxSpeed):
+Pursue::Pursue(string name, Mobile *character, Mobile *target, double maxSpeed):
+        DirectKinematicV(name),
         character(character),
         target(target),
         maxSpeed(maxSpeed)

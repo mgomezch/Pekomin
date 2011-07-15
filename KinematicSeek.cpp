@@ -2,7 +2,8 @@
 #include "KinematicSeek.hpp"
 #include "Triple.hpp"
 
-KinematicSeek::KinematicSeek(Ent *character, Ent *target, double maxSpeed):
+KinematicSeek::KinematicSeek(string name, Ent *character, Ent *target, double maxSpeed):
+        KinematicV(name),
         character(character),
         target(target),
         maxSpeed(maxSpeed)

@@ -3,7 +3,8 @@
 #include "util.hpp"
 #include "VelocityMatch.hpp"
 
-VelocityMatch::VelocityMatch(Mobile *character, Mobile *target, double maxSpeed):
+VelocityMatch::VelocityMatch(string name, Mobile *character, Mobile *target, double maxSpeed):
+        KinematicV(name),
         character(character),
         target(target),
         maxSpeed(maxSpeed)

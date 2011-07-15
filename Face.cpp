@@ -11,7 +11,8 @@
 #include <iostream>
 #endif
 
-Face::Face(Mobile *character, Mobile *target, double maxAngularVelocity, double targetRadius, double slowRadius):
+Face::Face(string name, Mobile *character, Mobile *target, double maxAngularVelocity, double targetRadius, double slowRadius):
+        KinematicA(name),
         character(character),
         target(target),
         maxAngularVelocity(maxAngularVelocity),
