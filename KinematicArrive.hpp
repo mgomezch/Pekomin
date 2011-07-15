@@ -14,6 +14,7 @@ class KinematicArrive : public DirectKinematicV { // TODO: "Kinematic_______" no
                 Ent *target;
                 double maxSpeed;
                 double radius;
+
                 static const double timeToTarget = 0.25;
 
                 KinematicArrive(Ent *character, Ent *target, double maxSpeed, double radius);

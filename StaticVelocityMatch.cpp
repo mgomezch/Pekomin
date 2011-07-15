@@ -2,10 +2,10 @@
 #include "StaticVelocityMatch.hpp"
 #include "Triple.hpp"
 
-StaticVelocityMatch::StaticVelocityMatch(Mobile *character, Mobile *target) {
-        this->character = character;
-        this->target    = target   ;
-}
+StaticVelocityMatch::StaticVelocityMatch(Mobile *character, Mobile *target):
+        character(character),
+        target(target)
+{}
 
 pair<bool, Triple> StaticVelocityMatch::getVel(unsigned int ticks) {
         pair<bool, Triple> steering;

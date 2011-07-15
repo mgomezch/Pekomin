@@ -3,21 +3,16 @@
 #include "Phantom.hpp"
 #include "Triple.hpp"
 
-Flock::Flock(
-                Mobile *character,
-                double targetRadius,
-                double slowRadius,
-                double flockRadius,
-                double maxAcceleration
-            ) {
-        this->character       = character      ;
-        this->target          = new Phantom()  ;
-        this->targetRadius    = targetRadius   ;
-        this->slowRadius      = slowRadius     ;
-        this->flockRadius     = flockRadius    ;
-        this->maxAcceleration = maxAcceleration;
-        this->accum           = 0              ;
-}
+Flock::Flock(Mobile *character, double targetRadius, double slowRadius, double flockRadius, double maxAcceleration):
+        character(character),
+        targetRadius(targetRadius),
+        slowRadius(slowRadius),
+        flockRadius(flockRadius),
+        maxAcceleration(maxAcceleration),
+
+        target(new Phantom()),
+        accum(0)
+{}
 
 pair<bool, Triple> Flock::getVelIncr(unsigned int ticks) {
         pair<bool, Triple> steering;

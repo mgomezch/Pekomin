@@ -11,13 +11,13 @@
 #include <iostream>
 #endif
 
-Align::Align(Mobile *character, Mobile *target, double maxAngularVelocity, double targetRadius, double slowRadius) {
-        this->character          = character         ;
-        this->target             = target            ;
-        this->maxAngularVelocity = maxAngularVelocity;
-        this->targetRadius       = targetRadius      ;
-        this->slowRadius         = slowRadius        ;
-}
+Align::Align(Mobile *character, Mobile *target, double maxAngularVelocity, double targetRadius, double slowRadius):
+        character(character),
+        target(target),
+        maxAngularVelocity(maxAngularVelocity),
+        targetRadius(targetRadius),
+        slowRadius(slowRadius)
+{}
 
 pair<bool, double> Align::getAngVel(unsigned int ticks) {
         pair<bool, double> steering;

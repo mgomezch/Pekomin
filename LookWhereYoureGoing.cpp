@@ -11,12 +11,12 @@
 #       include <iostream>
 #endif
 
-LookWhereYoureGoing::LookWhereYoureGoing(Mobile *character, double maxAngularVelocity, double targetRadius, double slowRadius) {
-        this->character          = character         ;
-        this->maxAngularVelocity = maxAngularVelocity;
-        this->targetRadius       = targetRadius      ;
-        this->slowRadius         = slowRadius        ;
-}
+LookWhereYoureGoing::LookWhereYoureGoing(Mobile *character, double maxAngularVelocity, double targetRadius, double slowRadius):
+        character(character),
+        maxAngularVelocity(maxAngularVelocity),
+        targetRadius(targetRadius),
+        slowRadius(slowRadius)
+{}
 
 pair<bool, double> LookWhereYoureGoing::getAngVel(unsigned int ticks) {
         pair<bool, double> steering;

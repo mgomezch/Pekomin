@@ -11,13 +11,13 @@
 #       define DEBUG_SEPARATION_PRINT(S)
 #endif
 
-Separation::Separation(Mobile *character, Mobile *target, double maxSpeed, double separationRadius) {
-        this->character  = character             ;
-        this->target     = target                ;
-        this->maxSpeed   = maxSpeed              ;
-        this->separationRadius = separationRadius;
-        this->active     = true                  ;
-}
+Separation::Separation(Mobile *character, Mobile *target, double maxSpeed, double separationRadius):
+        character(character),
+        target(target),
+        maxSpeed(maxSpeed),
+        separationRadius(separationRadius),
+        active(true)
+{}
 
 pair<bool, Triple> Separation::getVelIncr(unsigned int ticks) {
         pair<bool, Triple> steering;

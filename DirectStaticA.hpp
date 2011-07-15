@@ -12,6 +12,8 @@ using namespace std;
 
 class DirectStaticA : public virtual Behavior {
         public:
+                DirectStaticA(string name);
+
                 virtual pair<bool, double> DirectStaticA_CALL_NAME(unsigned int ticks) = 0;
 };
 

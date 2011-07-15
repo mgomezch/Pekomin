@@ -2,13 +2,12 @@
 #include "KinematicSeparation.hpp"
 #include "Triple.hpp"
 
-KinematicSeparation::KinematicSeparation(Ent *character, Ent *target, double maxSpeed, double separationRadius) {
-        this->character  = character             ;
-        this->target     = target                ;
-        this->maxSpeed   = maxSpeed              ;
-        this->separationRadius = separationRadius;
-        this->active     = true                  ;
-}
+KinematicSeparation::KinematicSeparation(Ent *character, Ent *target, double maxSpeed, double separationRadius):
+        character(character),
+        target(target),
+        maxSpeed(maxSpeed),
+        separationRadius(separationRadius)
+{}
 
 // Retorna incrementos de velocidad y rotación
 pair<bool, Triple> KinematicSeparation::getVelIncr(unsigned int ticks) {

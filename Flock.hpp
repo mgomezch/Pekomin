@@ -10,20 +10,17 @@ class Mobile;
 
 class Flock : public KinematicV {
         public:
-                Mobile* character     ;
-                Mobile* target        ;
-                vector<Mobile*> boids ;
-                double targetRadius   ;
-                double slowRadius     ;
-                double flockRadius    ;
+                Mobile* character;
+                double targetRadius;
+                double slowRadius;
+                double flockRadius;
                 double maxAcceleration;
-                unsigned int accum    ;
 
-                Flock(Mobile *character     ,
-                      double targetRadius   ,
-                      double slowRadius     ,
-                      double flockRadius    ,
-                      double maxAcceleration);
+                Mobile* target;
+                unsigned int accum;
+                vector<Mobile*> boids;
+
+                Flock(Mobile *character, double targetRadius, double slowRadius, double flockRadius, double maxAcceleration);
 
                 virtual pair<bool, Triple> getVelIncr(unsigned int ticks);
 

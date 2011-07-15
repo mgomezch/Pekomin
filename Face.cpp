@@ -11,13 +11,13 @@
 #include <iostream>
 #endif
 
-Face::Face(Mobile *character, Mobile *target, double maxAngularVelocity, double targetRadius, double slowRadius) {
-        this->character          = character;
-        this->target             = target;
-        this->maxAngularVelocity = maxAngularVelocity;
-        this->targetRadius       = targetRadius;
-        this->slowRadius         = slowRadius;
-}
+Face::Face(Mobile *character, Mobile *target, double maxAngularVelocity, double targetRadius, double slowRadius):
+        character(character),
+        target(target),
+        maxAngularVelocity(maxAngularVelocity),
+        targetRadius(targetRadius),
+        slowRadius(slowRadius)
+{}
 
 pair<bool, double> Face::getAngVelIncr(unsigned int ticks) {
         pair<bool, double> steering;

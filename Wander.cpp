@@ -6,30 +6,21 @@
 #include "util.hpp"
 #include "Wander.hpp"
 
-Wander::Wander(
-                Mobile *character,
-                double maxRotation,
-                double targetRadius,
-                double slowRadius,
-                double wanderOffset,
-                double wanderRadius,
-                double wanderRate,
-                double wanderTime,
-                double maxSpeed
-              ) {
-        this->character    = character    ;
-        this->target       = new Phantom();
-        this->maxRotation  = maxRotation  ;
-        this->targetRadius = targetRadius ;
-        this->slowRadius   = slowRadius   ;
-        this->wanderOffset = wanderOffset ;
-        this->wanderRadius = wanderRadius ;
-        this->wanderRate   = wanderRate   ;
-        this->wanderTime   = wanderTime   ;
-        this->maxSpeed     = maxSpeed     ;
-        this->accum        = wanderTime   ;
+Wander::Wander(Mobile *character, double maxRotation, double targetRadius, double slowRadius, double wanderOffset, double wanderRadius, double wanderRate, double wanderTime, double maxSpeed):
+        character(character),
+        maxRotation(maxRotation),
+        targetRadius(targetRadius),
+        slowRadius(slowRadius),
+        wanderOffset(wanderOffset),
+        wanderRadius(wanderRadius),
+        wanderRate(wanderRate),
+        wanderTime(wanderTime),
+        maxSpeed(maxSpeed),
 
-        wanderOrientation = RandBin(-1, 1) * M_PI;
+        accum(wanderTime),
+        target(new Phantom()),
+        wanderOrientation(RandBin(-1, 1) * M_PI)
+{
         target->ang = character->ang + wanderOrientation;
         target->pos = character->pos + target->orientation() * wanderRadius;
 }

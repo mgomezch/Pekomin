@@ -13,9 +13,10 @@ class Evade : public DirectKinematicV {
                 Mobile *character;
                 Mobile *target;
                 double maxSpeed;
+
                 static const double maxPrediction = 10;
 
-                Evade(Mobile *character, Mobile *target, double maxAcceleration);
+                Evade(Mobile *character, Mobile *target, double maxSpeed);
 
                 virtual pair<bool, Triple> getVel(unsigned int ticks);
 };

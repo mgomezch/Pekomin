@@ -8,11 +8,11 @@
 #       include <iostream>
 #endif
 
-Seek::Seek(Mobile *character, Mobile *target, double maxSpeed) {
-        this->character = character;
-        this->target    = target   ;
-        this->maxSpeed  = maxSpeed ;
-}
+Seek::Seek(Mobile *character, Mobile *target, double maxSpeed):
+        character(character),
+        target(target),
+        maxSpeed(maxSpeed)
+{}
 
 pair<bool, Triple> Seek::getVel(unsigned int ticks) {
         pair<bool, Triple> steering;

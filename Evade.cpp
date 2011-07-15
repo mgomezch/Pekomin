@@ -6,11 +6,11 @@
 #       include <iostream>
 #endif
 
-Evade::Evade(Mobile *character, Mobile *target, double maxSpeed) {
-        this->character = character ;
-        this->target    = target    ;
-        this->maxSpeed  = maxSpeed  ;
-}
+Evade::Evade(Mobile *character, Mobile *target, double maxSpeed):
+        character(character),
+        target(target),
+        maxSpeed(maxSpeed)
+{}
 
 pair<bool, Triple> Evade::getVel(unsigned int ticks) {
         pair<bool, Triple> steering;

@@ -11,13 +11,12 @@
 #       define DEBUG_SEPARATION_PRINT(S)
 #endif
 
-DynamicSeparation::DynamicSeparation(Mobile *character, Mobile *target, double minForce, double separationRadius) {
-        this->character        = character;
-        this->target           = target;
-        this->minForce         = minForce;
-        this->separationRadius = separationRadius;
-        this->active           = false;
-}
+DynamicSeparation::DynamicSeparation(Mobile *character, Mobile *target, double minForce, double separationRadius):
+        character(character),
+        target(target),
+        minForce(minForce),
+        separationRadius(separationRadius)
+{}
 
 pair<bool, Triple> DynamicSeparation::getForce(unsigned int ticks) {
         pair<bool, Triple> steering;

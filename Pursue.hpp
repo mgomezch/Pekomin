@@ -13,6 +13,7 @@ class Pursue : public virtual DirectKinematicV {
                 Mobile *character;
                 Mobile *target;
                 double maxSpeed;
+
                 static const double maxPrediction = 10;
 
                 Pursue(Mobile *character, Mobile *target, double maxSpeed);

@@ -12,6 +12,7 @@ class KinematicWander : public DirectKinematicV {
                 double maxSpeed;
                 double maxRotation;
                 double wanderTime;
+
                 int accum;
 
                 KinematicWander(Ent *character, double maxSpeed, double maxRotation, double wanderTime);

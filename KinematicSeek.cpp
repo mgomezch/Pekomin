@@ -2,11 +2,11 @@
 #include "KinematicSeek.hpp"
 #include "Triple.hpp"
 
-KinematicSeek::KinematicSeek(Ent *character, Ent *target, double maxSpeed) {
-        this->character = character ;
-        this->target    = target    ;
-        this->maxSpeed  = maxSpeed  ;
-}
+KinematicSeek::KinematicSeek(Ent *character, Ent *target, double maxSpeed):
+        character(character),
+        target(target),
+        maxSpeed(maxSpeed)
+{}
 
 pair<bool, Triple> KinematicSeek::getVelIncr(unsigned int ticks) {
         pair<bool, Triple> steering;

@@ -15,12 +15,13 @@ class PathFollowing : public DirectKinematicV {
         public:
                 Mobile *character;
                 Mobile *target;
-                vector<Node *> path;
-                Node *begin;
-                Node *end;
                 double maxSpeed;
                 double targetRadius;
                 double slowRadius;
+
+                vector<Node *> path;
+                Node *begin;
+                Node *end;
 
                 PathFollowing(Mobile *character, Mobile *target, double maxSpeed, double targetRadius, double slowRadius);
 

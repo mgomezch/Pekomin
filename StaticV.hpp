@@ -12,6 +12,8 @@ using namespace std;
 
 class StaticV : public virtual Behavior {
         public:
+                StaticV(string name);
+
                 virtual pair<bool, Triple> StaticV_CALL_NAME(unsigned int ticks) = 0;
 };
 

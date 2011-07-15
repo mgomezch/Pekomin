@@ -3,13 +3,13 @@
 #include "Mobile.hpp"
 #include "PathFollowing.hpp"
 
-PathFollowing::PathFollowing(Mobile *character, Mobile *target, double maxSpeed, double targetRadius, double slowRadius) {
-        this->character    = character   ;
-        this->target       = target      ;
-        this->maxSpeed     = maxSpeed    ;
-        this->targetRadius = targetRadius;
-        this->slowRadius   = slowRadius  ;
-
+PathFollowing::PathFollowing(Mobile *character, Mobile *target, double maxSpeed, double targetRadius, double slowRadius):
+        character(character),
+        target(target),
+        maxSpeed(maxSpeed),
+        targetRadius(targetRadius),
+        slowRadius(slowRadius)
+{
         double d;
 
         d = (nodes[0]->pos - character->pos).length();

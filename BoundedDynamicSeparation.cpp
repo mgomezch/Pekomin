@@ -11,13 +11,13 @@
 #       define DEBUG_SEPARATION_PRINT(S)
 #endif
 
-BoundedDynamicSeparation::BoundedDynamicSeparation(Mobile *character, Mobile *target, double maxForce, double separationRadius) {
-        this->character = character;
-        this->target = target;
-        this->maxForce = maxForce;
-        this->separationRadius = separationRadius;
-        this->active = false;
-}
+BoundedDynamicSeparation::BoundedDynamicSeparation(Mobile *character, Mobile *target, double maxForce, double separationRadius):
+        character(character),
+        target(target),
+        maxForce(maxForce),
+        separationRadius(separationRadius),
+        active(false)
+{}
 
 pair<bool, Triple> BoundedDynamicSeparation::getForce(unsigned int ticks) {
         pair<bool, Triple> steering;

@@ -2,9 +2,9 @@
 #include "Mobile.hpp"
 #include "util.hpp"
 
-StaticLookWhereYoureGoing::StaticLookWhereYoureGoing(Mobile *character) {
-        this->character = character;
-}
+StaticLookWhereYoureGoing::StaticLookWhereYoureGoing(Mobile *character):
+        character(character)
+{}
 
 pair<bool, double> StaticLookWhereYoureGoing::getAng(unsigned int ticks) {
         pair<bool, double> steering;

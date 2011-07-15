@@ -11,6 +11,8 @@ using namespace std;
 
 class StaticA : public virtual Behavior {
         public:
+                StaticA(string name);
+
                 virtual pair<bool, double> StaticA_CALL_NAME(unsigned int ticks) = 0;
 };
 

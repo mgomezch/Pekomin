@@ -12,6 +12,8 @@ using namespace std;
 
 class DirectKinematicA : public virtual Behavior {
         public:
+                DirectKinematicA(string name);
+
                 virtual pair<bool, double> DirectKinematicA_CALL_NAME(unsigned int ticks) = 0;
 };
 

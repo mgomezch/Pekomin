@@ -12,6 +12,8 @@ using namespace std;
 
 class DynamicA : public virtual Behavior {
         public:
+                DynamicA(string name);
+
                 virtual pair<bool, double> DynamicA_CALL_NAME(unsigned int ticks) = 0;
 };
 

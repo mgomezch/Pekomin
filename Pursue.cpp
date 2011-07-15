@@ -8,11 +8,11 @@
 #include <iostream>
 #endif
 
-Pursue::Pursue(Mobile *character, Mobile *target, double maxSpeed) {
-        this->character = character;
-        this->target    = target   ;
-        this->maxSpeed  = maxSpeed ;
-}
+Pursue::Pursue(Mobile *character, Mobile *target, double maxSpeed):
+        character(character),
+        target(target),
+        maxSpeed(maxSpeed)
+{}
 
 pair<bool, Triple> Pursue::getVel(unsigned int ticks) {
         pair<bool, Triple> steering;

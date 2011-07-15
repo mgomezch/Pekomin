@@ -5,13 +5,13 @@
 #include "Triple.hpp"
 #include "util.hpp"
 
-KinematicWander::KinematicWander(Ent *character, double maxSpeed, double maxRotation, double wanderTime) {
-        this->character   = character  ;
-        this->maxSpeed    = maxSpeed   ;
-        this->maxRotation = maxRotation;
-        this->accum       = 0          ;
-        this->wanderTime  = wanderTime ;
-}
+KinematicWander::KinematicWander(Ent *character, double maxSpeed, double maxRotation, double wanderTime):
+        character(character),
+        maxSpeed(maxSpeed),
+        maxRotation(maxRotation),
+        wanderTime(wanderTime),
+        accum(0)
+{}
 
 pair<bool, Triple> KinematicWander::getVel(unsigned int ticks) {
         pair<bool, Triple> steering;
