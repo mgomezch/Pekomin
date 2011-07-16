@@ -20,9 +20,9 @@ class Flock : public virtual KinematicV {
                 unsigned int accum;
                 vector<Mobile*> boids;
 
-                Flock(Mobile *character, double targetRadius, double slowRadius, double flockRadius, double maxAcceleration);
+                Flock(string name, Mobile *character, double targetRadius, double slowRadius, double flockRadius, double maxAcceleration);
 
-                virtual pair<bool, Triple> getVelIncr(unsigned int ticks);
+                virtual vector<Triple> getVelIncr(unsigned int ticks);
 
                 void addBoid(Mobile *boid);
 };

@@ -14,9 +14,9 @@ class KinematicSeek : public virtual KinematicV {
                 Ent *target;
                 double maxSpeed;
 
-                KinematicSeek(Ent *character, Ent *target, double maxSpeed);
+                KinematicSeek(string name, Ent *character, Ent *target, double maxSpeed);
 
-                virtual pair<bool, Triple> getVelIncr(unsigned int ticks);
+                virtual vector<Triple> getVelIncr(unsigned int ticks);
 };
 
 #endif

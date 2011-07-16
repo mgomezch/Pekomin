@@ -1,4 +1,5 @@
 #include <cmath>
+#include <vector>
 
 #include "Align.hpp"
 #include "Mobile.hpp"
@@ -20,12 +21,10 @@ Align::Align(string name, Mobile *character, Mobile *target, double maxAngularVe
         slowRadius(slowRadius)
 {}
 
-pair<bool, double> Align::getAngVel(unsigned int ticks) {
-        pair<bool, double> steering;
+vector<double> Align::getAngVel(unsigned int ticks) {
+        double steering;
         double rotation, rotationSize, targetRotation;
         Triple direction;
-
-        steering.first = true;
 
         rotation = mapToRange(mapToRange(target->ang) - mapToRange(character->ang));
         rotationSize = abs(rotation);
@@ -34,11 +33,11 @@ pair<bool, double> Align::getAngVel(unsigned int ticks) {
 #ifdef DEBUG_ALIGN
                 cout << "Align " << static_cast<void *>(this) << ": dentro de targetRadius" << endl;
 #endif
-                steering.second = target->vrot - character->vrot;
-                if (abs(steering.second) > maxAngularVelocity) {
-                        steering.second = maxAngularVelocity;
+                steering = target->vrot - character->vrot;
+                if (abs(steering) > maxAngularVelocity) {
+                        steering = maxAngularVelocity;
                 }
-                return steering;
+                return vector<double>(1, steering);
         }
 
         targetRotation = maxAngularVelocity;
@@ -56,7 +55,7 @@ pair<bool, double> Align::getAngVel(unsigned int ticks) {
 
         //targetRotation *= map_atan(20000 * target->vrot);
 
-        steering.second = targetRotation * (rotation > 0 ? -1 : 1);
+        steering = targetRotation * (rotation > 0 ? -1 : 1);
 
-        return steering;
+        return vector<double>(1, steering);
 }

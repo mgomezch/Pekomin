@@ -15,9 +15,9 @@ class KinematicWander : public virtual DirectKinematicV {
 
                 int accum;
 
-                KinematicWander(Ent *character, double maxSpeed, double maxRotation, double wanderTime);
+                KinematicWander(string name, Ent *character, double maxSpeed, double maxRotation, double wanderTime);
 
-                virtual pair<bool, Triple> getVel(unsigned int ticks);
+                virtual vector<Triple> getVel(unsigned int ticks);
 };
 
 #endif

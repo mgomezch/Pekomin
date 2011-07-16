@@ -1,3 +1,5 @@
+#include <vector>
+
 #include "Arrive.hpp"
 #include "Mobile.hpp"
 #include "Triple.hpp"
@@ -17,13 +19,11 @@ Arrive::Arrive(string name, Mobile *character, Mobile *target, double maxSpeed, 
         slowRadius(slowRadius)
 {}
 
-pair<bool, Triple> Arrive::getVel(unsigned int ticks) {
-        pair<bool, Triple> steering;
+vector<Triple> Arrive::getVel(unsigned int ticks) {
+        Triple steering;
         Triple direction, targetVelocity;
         double distance, targetSpeed;
         Triple cp, tp;
-
-        steering.first = true;
 
         tie(cp, tp) = points(this->character, this->target);
         direction = tp - cp;
@@ -31,12 +31,12 @@ pair<bool, Triple> Arrive::getVel(unsigned int ticks) {
         direction.normalize();
 
         if (distance < targetRadius) {
-                steering.second = target->vel;
-                if (steering.second.length() > maxSpeed) {
-                        steering.second.normalize();
-                        steering.second *= maxSpeed;
+                steering = target->vel;
+                if (steering.length() > maxSpeed) {
+                        steering.normalize();
+                        steering *= maxSpeed;
                 }
-                return steering;
+                return vector<Triple>(1, steering);
         }
 
 //      targetSpeed = maxSpeed - character->vel.dot(direction);
@@ -47,7 +47,7 @@ pair<bool, Triple> Arrive::getVel(unsigned int ticks) {
 //      if (targetSpeed < 0       ) targetSpeed = 0       ;
 //      if (targetSpeed > maxSpeed) targetSpeed = maxSpeed;
 
-        steering.second = direction * targetSpeed;
+        steering = direction * targetSpeed;
 
-        return steering;
+        return vector<Triple>(1, steering);
 }

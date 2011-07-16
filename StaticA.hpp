@@ -1,7 +1,7 @@
 #ifndef STATICA_HPP
 #define STATICA_HPP
 
-#include <utility>
+#include <vector>
 
 #include "Behavior.hpp"
 
@@ -13,7 +13,7 @@ class StaticA : public virtual Behavior {
         public:
                 StaticA(string name);
 
-                virtual pair<bool, double> StaticA_CALL_NAME(unsigned int ticks) = 0;
+                virtual vector<double> StaticA_CALL_NAME(unsigned int ticks) = 0;
 };
 
 #endif

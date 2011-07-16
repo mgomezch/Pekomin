@@ -1,3 +1,5 @@
+#include <vector>
+
 #include "Mobile.hpp"
 #include "Pursue.hpp"
 #include "Triple.hpp"
@@ -15,15 +17,14 @@ Pursue::Pursue(string name, Mobile *character, Mobile *target, double maxSpeed):
         maxSpeed(maxSpeed)
 {}
 
-pair<bool, Triple> Pursue::getVel(unsigned int ticks) {
-        pair<bool, Triple> steering;
+vector<Triple> Pursue::getVel(unsigned int ticks) {
+        Triple steering;
         Triple direction;
         double distance, targetRadius = 2.0, speed, prediction;
         Triple cp, tp;
 
         if (character->vel.length() == 0) {
-                steering.first = false;
-                return steering;
+                return vector<Triple>();
         }
 
         tie(cp, tp) = points(this->character, this->target);
@@ -31,8 +32,7 @@ pair<bool, Triple> Pursue::getVel(unsigned int ticks) {
         distance = direction.length();
 
         if (distance < targetRadius) {
-                steering.first = false;
-                return steering;
+                return vector<Triple>();
         }
 
         speed = character->vel.length();
@@ -40,8 +40,7 @@ pair<bool, Triple> Pursue::getVel(unsigned int ticks) {
         if (speed <= (distance / maxPrediction)) prediction = maxPrediction;
         else prediction = distance / speed;
 
-        steering.first = true;
-        steering.second = (tp + target->vel * prediction - cp).normalized() * maxSpeed;
+        steering = (tp + target->vel * prediction - cp).normalized() * maxSpeed;
 
-        return steering;
+        return vector<Triple>(1, steering);
 }

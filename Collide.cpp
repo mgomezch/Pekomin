@@ -11,48 +11,51 @@
 #       define DEBUG_COLLIDE_PRINT(S)
 #endif
 
-Collide::Collide(Mobile *character, Mobile *target) {
-        this->character = character;
-        this->target    = target;
-        this->active    = true;
-}
+Collide::Collide(string name, Mobile *character, Mobile *target):
+        KinematicV(name),
+        StaticV(name),
+        character(character),
+        target(target)
+{}
 
-pair<bool, Triple> Collide::getPosIncr(unsigned int ticks) {
-        pair<bool, Triple> steering;
+vector<Triple> Collide::getPosIncr(unsigned int ticks) {
+        Triple steering;
         double d;
 
         Triple cp, tp;
         tie(cp, tp) = points(character, target);
 
-        steering.second = cp - tp;
-        d = steering.second.length();
-/*
+        steering = cp - tp;
+        d = steering.length();
+
+#if 0
         DEBUG_COLLIDE_PRINT(d);
         if (0 < d && d < separationRadius) {
-                steering.first = true;
-                steering.second *= maxSpeed * (d / separationRadius);
+                steering *= maxSpeed * (d / separationRadius);
+                return vector<Triple>(1, steering);
         }
-        else steering.first = false;
-*/
-        return steering;
+#endif
+
+        return vector<Triple>();
 }
 
-pair<bool, Triple> Collide::getVelIncr(unsigned int ticks) {
-        pair<bool, Triple> steering;
+vector<Triple> Collide::getVelIncr(unsigned int ticks) {
+        Triple steering;
         double d;
-/*
+
         Triple cp, tp;
         tie(cp, tp) = points(character, target);
 
-        steering.second = cp - tp;
-        d = steering.second.length();
+        steering = cp - tp;
+        d = steering.length();
+
+#if 0
         DEBUG_COLLIDE_PRINT(d);
         if (0 < d && d < separationRadius) {
-                steering.first = true;
-                steering.second *= maxSpeed * (d / separationRadius);
+                steering *= maxSpeed * (d / separationRadius);
+                return vector<Triple>(1, steering);
         }
-        else steering.first = false;
+#endif
 
-        return steering;
-*/
+        return vector<Triple>();
 }

@@ -1,4 +1,5 @@
 #include <cmath>
+#include <vector>
 
 #include "Mobile.hpp"
 #include "Phantom.hpp"
@@ -18,20 +19,18 @@ Wander::Wander(string name, Mobile *character, double maxRotation, double target
         wanderTime(wanderTime),
         maxSpeed(maxSpeed),
 
-        accum(wanderTime),
         target(new Phantom()),
+        accum(wanderTime),
         wanderOrientation(RandBin(-1, 1) * M_PI)
 {
         target->ang = character->ang + wanderOrientation;
         target->pos = character->pos + target->orientation() * wanderRadius;
 }
 
-pair<bool, Triple> Wander::getVel(unsigned int ticks) {
-        pair<bool, Triple> steering;
+vector<Triple> Wander::getVel(unsigned int ticks) {
+        Triple steering;
         Triple direction;
         double distance, targetSpeed;
-
-        steering.first = true;
 
         Triple cp, tp;
         tie(cp, tp) = points(character, target);
@@ -49,12 +48,12 @@ pair<bool, Triple> Wander::getVel(unsigned int ticks) {
         }
 
         if (distance < targetRadius) {
-                steering.second = target->vel - character->vel;
-                if (steering.second.length() > maxSpeed) {
-                        steering.second.normalized();
-                        steering.second *= maxSpeed;
+                steering = target->vel - character->vel;
+                if (steering.length() > maxSpeed) {
+                        steering.normalized();
+                        steering *= maxSpeed;
                 }
-                return steering;
+                return vector<Triple>(1, steering);
         }
 
         targetSpeed = maxSpeed - character->vel.dot(direction / distance);
@@ -64,6 +63,6 @@ pair<bool, Triple> Wander::getVel(unsigned int ticks) {
         if (targetSpeed < 0) targetSpeed = 0;
         if (targetSpeed > maxSpeed) targetSpeed = maxSpeed;
 
-        steering.second = (direction * targetSpeed)/distance;
-        return steering;
+        steering = (direction * targetSpeed)/distance;
+        return vector<Triple>(1, steering);
 }

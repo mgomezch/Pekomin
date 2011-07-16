@@ -19,18 +19,18 @@
 #define RUN_V_STEERING(FAMILY)                                                    \
         if ((( p_ ## FAMILY ) = dynamic_cast< FAMILY *>(behaviors[i])) != NULL) { \
                 v_steering = ( p_ ## FAMILY )-> CALLNAME(FAMILY) (ticks);         \
-                if (v_steering.first) {                                           \
+                for (j = 0, n = v_steering.size(); j < n; ++j) {                  \
                         ( n_ ## FAMILY )++;                                       \
-                        ( v_ ## FAMILY ).push_back(v_steering.second);            \
+                        ( v_ ## FAMILY ).push_back(v_steering[j]);                \
                 }                                                                 \
         }
 
 #define RUN_A_STEERING(FAMILY)                                                    \
         if ((( p_ ## FAMILY ) = dynamic_cast< FAMILY *>(behaviors[i])) != NULL) { \
                 a_steering = ( p_ ## FAMILY )-> CALLNAME(FAMILY) (ticks);         \
-                if (a_steering.first) {                                           \
+                for (j = 0, n = a_steering.size(); j < n; ++j) {                  \
                         ( n_ ## FAMILY )++;                                       \
-                        ( v_ ## FAMILY ).push_back(a_steering.second);            \
+                        ( v_ ## FAMILY ).push_back(a_steering[j]);                \
                 }                                                                 \
         }
 
@@ -49,7 +49,7 @@ Behavior &Actor::addBehavior(Behavior *b) {
 }
 
 void Actor::steer(unsigned int ticks) {
-        unsigned int i;
+        unsigned int i, j, n;
         Triple vdir;
 
         DirectStaticV    *p_DirectStaticV   ;
@@ -88,8 +88,8 @@ void Actor::steer(unsigned int ticks) {
                sum_KinematicA       = 0,
                sum_DynamicA         = 0;
 
-        pair<bool, Triple> v_steering;
-        pair<bool, double> a_steering;
+        vector<Triple> v_steering;
+        vector<double> a_steering;
 
         unsigned int n_DirectStaticV    = 0,
                      n_StaticV          = 0,

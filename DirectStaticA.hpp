@@ -1,7 +1,7 @@
 #ifndef DIRECTSTATICA_HPP
 #define DIRECTSTATICA_HPP
 
-#include <utility>
+#include <vector>
 
 #include "Behavior.hpp"
 #include "Triple.hpp"
@@ -14,7 +14,7 @@ class DirectStaticA : public virtual Behavior {
         public:
                 DirectStaticA(string name);
 
-                virtual pair<bool, double> DirectStaticA_CALL_NAME(unsigned int ticks) = 0;
+                virtual vector<double> DirectStaticA_CALL_NAME(unsigned int ticks) = 0;
 };
 
 #endif

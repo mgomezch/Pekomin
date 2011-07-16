@@ -1,7 +1,7 @@
 #ifndef KINEMATICV_HPP
 #define KINEMATICV_HPP
 
-#include <utility>
+#include <vector>
 
 #include "Behavior.hpp"
 #include "Triple.hpp"
@@ -14,7 +14,7 @@ class KinematicV : public virtual Behavior {
         public:
                 KinematicV(string name);
 
-                virtual pair<bool, Triple> KinematicV_CALL_NAME(unsigned int ticks) = 0;
+                virtual vector<Triple> KinematicV_CALL_NAME(unsigned int ticks) = 0;
 };
 
 #endif

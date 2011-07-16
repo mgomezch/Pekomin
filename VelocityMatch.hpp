@@ -17,9 +17,9 @@ class VelocityMatch : public virtual KinematicV {
                 double maxSpeed;
                 static const double timeToTarget = 0.1;
 
-                VelocityMatch(Mobile *character, Mobile *target, double maxSpeed);
+                VelocityMatch(string name, Mobile *character, Mobile *target, double maxSpeed);
 
-                virtual pair<bool, Triple> getVelIncr(unsigned int ticks);
+                virtual vector<Triple> getVelIncr(unsigned int ticks);
 };
 
 #endif

@@ -1,8 +1,10 @@
+#include <vector>
+
 #include "Separation.hpp"
 #include "Mobile.hpp"
 #include "Triple.hpp"
 
-#define DEBUG_SEPARATION
+//#define DEBUG_SEPARATION
 
 #ifdef DEBUG_SEPARATION
 #       include <iostream>
@@ -16,25 +18,23 @@ Separation::Separation(string name, Mobile *character, Mobile *target, double ma
         character(character),
         target(target),
         maxSpeed(maxSpeed),
-        separationRadius(separationRadius),
-        active(true)
+        separationRadius(separationRadius)
 {}
 
-pair<bool, Triple> Separation::getVelIncr(unsigned int ticks) {
-        pair<bool, Triple> steering;
+vector<Triple> Separation::getVelIncr(unsigned int ticks) {
+        Triple steering;
         double d;
 
         Triple cp, tp;
         tie(cp, tp) = points(character, target);
 
-        steering.second = cp - tp;
-        d = steering.second.length();
+        steering = cp - tp;
+        d = steering.length();
         DEBUG_SEPARATION_PRINT(d);
         if (0 < d && d < separationRadius) {
-                steering.first = true;
-                steering.second *= maxSpeed * (d / separationRadius);
+                steering *= maxSpeed * (d / separationRadius);
+                return vector<Triple>(1, steering);
         }
-        else steering.first = false;
+        return vector<Triple>();
 
-        return steering;
 }

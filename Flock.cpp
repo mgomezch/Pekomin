@@ -1,3 +1,5 @@
+#include <vector>
+
 #include "Flock.hpp"
 #include "Mobile.hpp"
 #include "Phantom.hpp"
@@ -15,8 +17,8 @@ Flock::Flock(string name, Mobile *character, double targetRadius, double slowRad
         accum(0)
 {}
 
-pair<bool, Triple> Flock::getVelIncr(unsigned int ticks) {
-        pair<bool, Triple> steering;
+vector<Triple> Flock::getVelIncr(unsigned int ticks) {
+        Triple steering;
         Triple direction;
         int tam = 0;
         double distance, targetSpeed;
@@ -34,11 +36,11 @@ pair<bool, Triple> Flock::getVelIncr(unsigned int ticks) {
         //if (this->accum++ == 3000) this->accum = 0;
 
         tie(cp, tp) = points(this->character, this->target);
-        /*steering.first = true;
-        steering.second = tp - cp;
-        if (steering.second.length() > 0.001) {
-                steering.second.normalized();
-                steering.second *= maxAcceleration;
+        /*
+        steering = tp - cp;
+        if (steering.length() > 0.001) {
+                steering.normalized();
+                steering *= maxAcceleration;
         }*/
 
         // TODO: distance
@@ -46,12 +48,12 @@ pair<bool, Triple> Flock::getVelIncr(unsigned int ticks) {
         distance = direction.length();
 
         if (distance < targetRadius) {
-                steering.second = target->vel - character->vel;
-                if (steering.second.length() > maxAcceleration) {
-                        steering.second.normalized();
-                        steering.second *= maxAcceleration;
+                steering = target->vel - character->vel;
+                if (steering.length() > maxAcceleration) {
+                        steering.normalized();
+                        steering *= maxAcceleration;
                 }
-                return steering;
+                return vector<Triple>(1, steering);
         }
 
         targetSpeed = maxAcceleration - character->vel.dot(direction.normalized());
@@ -61,9 +63,9 @@ pair<bool, Triple> Flock::getVelIncr(unsigned int ticks) {
         if (targetSpeed < 0) targetSpeed = 0;
         if (targetSpeed > maxAcceleration) targetSpeed = maxAcceleration;
 
-        steering.second = direction.normalized() * targetSpeed;
+        steering = direction.normalized() * targetSpeed;
 
-        return steering;
+        return vector<Triple>(1, steering);
 }
 
 void Flock::addBoid(Mobile *boid) {

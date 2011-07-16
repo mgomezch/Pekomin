@@ -23,9 +23,9 @@ class PathFollowing : public virtual DirectKinematicV {
                 Node *begin;
                 Node *end;
 
-                PathFollowing(Mobile *character, Mobile *target, double maxSpeed, double targetRadius, double slowRadius);
+                PathFollowing(string name, Mobile *character, Mobile *target, double maxSpeed, double targetRadius, double slowRadius);
 
-                virtual pair<bool, Triple> getVel(unsigned int ticks);
+                virtual vector<Triple> getVel(unsigned int ticks);
 };
 
 #endif

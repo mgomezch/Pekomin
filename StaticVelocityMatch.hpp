@@ -13,9 +13,9 @@ class StaticVelocityMatch : public virtual DirectKinematicV {
                 Mobile *character;
                 Mobile *target;
 
-                StaticVelocityMatch(Mobile *character, Mobile *target);
+                StaticVelocityMatch(string name, Mobile *character, Mobile *target);
 
-                virtual pair<bool, Triple> getVel(unsigned int ticks);
+                virtual vector<Triple> getVel(unsigned int ticks);
 };
 
 #endif

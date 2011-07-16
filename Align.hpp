@@ -15,9 +15,9 @@ class Align : public virtual DirectKinematicA {
                 double targetRadius;
                 double slowRadius;
 
-                Align(Mobile *character, Mobile *target, double maxAngularVelocity, double targetRadius, double slowRadius);
+                Align(string name, Mobile *character, Mobile *target, double maxAngularVelocity, double targetRadius, double slowRadius);
 
-                virtual pair<bool, double> getAngVel(unsigned int ticks);
+                virtual vector<double> getAngVel(unsigned int ticks);
 };
 
 #endif

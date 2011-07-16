@@ -1,3 +1,5 @@
+#include <vector>
+
 #include "BoundedDynamicSeparation.hpp"
 #include "Mobile.hpp"
 #include "Triple.hpp"
@@ -16,25 +18,23 @@ BoundedDynamicSeparation::BoundedDynamicSeparation(string name, Mobile *characte
         character(character),
         target(target),
         maxForce(maxForce),
-        separationRadius(separationRadius),
-        active(false)
+        separationRadius(separationRadius)
 {}
 
-pair<bool, Triple> BoundedDynamicSeparation::getForce(unsigned int ticks) {
-        pair<bool, Triple> steering;
+vector<Triple> BoundedDynamicSeparation::getForce(unsigned int ticks) {
+        Triple steering;
         double d;
 
         Triple cp, tp;
         tie(cp, tp) = points(character, target);
 
-        steering.second = cp - tp;
-        d = steering.second.length();
+        steering = cp - tp;
+        d = steering.length();
         DEBUG_SEPARATION_PRINT(d);
         if (0 < d && d < separationRadius) {
-                steering.first = true;
-                steering.second *= maxForce * (d / separationRadius);
+                steering *= maxForce * (d / separationRadius);
+                return vector<Triple>(1, steering);
         }
-        else steering.first = false;
+        return vector<Triple>();
 
-        return steering;
 }

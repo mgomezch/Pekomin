@@ -1,7 +1,7 @@
 #ifndef DYNAMICA_HPP
 #define DYNAMICA_HPP
 
-#include <utility>
+#include <vector>
 
 #include "Behavior.hpp"
 #include "Triple.hpp"
@@ -14,7 +14,7 @@ class DynamicA : public virtual Behavior {
         public:
                 DynamicA(string name);
 
-                virtual pair<bool, double> DynamicA_CALL_NAME(unsigned int ticks) = 0;
+                virtual vector<double> DynamicA_CALL_NAME(unsigned int ticks) = 0;
 };
 
 #endif

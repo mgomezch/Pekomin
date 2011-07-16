@@ -1,4 +1,5 @@
 #include <cmath>
+#include <vector>
 
 #include "Face.hpp"
 #include "Mobile.hpp"
@@ -20,13 +21,11 @@ Face::Face(string name, Mobile *character, Mobile *target, double maxAngularVelo
         slowRadius(slowRadius)
 {}
 
-pair<bool, double> Face::getAngVelIncr(unsigned int ticks) {
-        pair<bool, double> steering;
+vector<double> Face::getAngVelIncr(unsigned int ticks) {
+        double steering;
         double rotation, rotationSize, targetRotation;
         Triple direction;
         Triple cp, tp;
-
-        steering.first = true;
 
         tie(cp, tp) = points(this->character, this->target);
         direction = tp - cp;
@@ -38,11 +37,11 @@ pair<bool, double> Face::getAngVelIncr(unsigned int ticks) {
 #ifdef DEBUG_FACE
                 cout << "Face " << static_cast<void *>(this) << ": dentro de targetRadius" << endl;
 #endif
-                steering.second = target->vrot - character->vrot;
-                if (abs(steering.second) > maxAngularVelocity) {
-                        steering.second = maxAngularVelocity;
+                steering = target->vrot - character->vrot;
+                if (abs(steering) > maxAngularVelocity) {
+                        steering = maxAngularVelocity;
                 }
-                return steering;
+                return vector<double>(1, steering);
         }
 
         targetRotation = maxAngularVelocity; // - target->vrot;
@@ -59,7 +58,7 @@ pair<bool, double> Face::getAngVelIncr(unsigned int ticks) {
 #endif
         //if (targetRotation < 0) targetRotation = 0;
 
-        steering.second = targetRotation * (rotation > 0 ? -1 : 1);
+        steering = targetRotation * (rotation > 0 ? -1 : 1);
 
-        return steering;
+        return vector<double>(1, steering);
 }

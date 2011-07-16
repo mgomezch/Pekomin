@@ -14,9 +14,9 @@ class LookWhereYoureGoing : public virtual DirectKinematicA {
                 double targetRadius;
                 double slowRadius;
 
-                LookWhereYoureGoing(Mobile *character, double maxAngularVelocity, double targetRadius, double slowRadius);
+                LookWhereYoureGoing(string name, Mobile *character, double maxAngularVelocity, double targetRadius, double slowRadius);
 
-                virtual pair<bool, double> getAngVel(unsigned int ticks);
+                virtual vector<double> getAngVel(unsigned int ticks);
 };
 
 #endif

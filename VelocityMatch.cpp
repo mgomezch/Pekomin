@@ -1,3 +1,5 @@
+#include <vector>
+
 #include "Mobile.hpp"
 #include "Triple.hpp"
 #include "util.hpp"
@@ -10,19 +12,18 @@ VelocityMatch::VelocityMatch(string name, Mobile *character, Mobile *target, dou
         maxSpeed(maxSpeed)
 {}
 
-pair<bool, Triple> VelocityMatch::getVelIncr(unsigned int ticks) {
-        pair<bool, Triple> steering;
+vector<Triple> VelocityMatch::getVelIncr(unsigned int ticks) {
+        Triple steering;
         double targetVelocity;
 
-        steering.first = true;
-        steering.second = target->vel - character->vel;
-        targetVelocity = map_atan(steering.second.length());
-        steering.second *= targetVelocity * 1.0 / timeToTarget;
+        steering = target->vel - character->vel;
+        targetVelocity = map_atan(steering.length());
+        steering *= targetVelocity * 1.0 / timeToTarget;
 
-        if (steering.second.length() > maxSpeed) {
-                steering.second.normalize();
-                steering.second *= maxSpeed;
+        if (steering.length() > maxSpeed) {
+                steering.normalize();
+                steering *= maxSpeed;
         }
 
-        return steering;
+        return vector<Triple>(1, steering);
 }

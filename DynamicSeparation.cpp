@@ -1,3 +1,5 @@
+#include <vector>
+
 #include "DynamicSeparation.hpp"
 #include "Mobile.hpp"
 #include "Triple.hpp"
@@ -19,21 +21,20 @@ DynamicSeparation::DynamicSeparation(string name, Mobile *character, Mobile *tar
         separationRadius(separationRadius)
 {}
 
-pair<bool, Triple> DynamicSeparation::getForce(unsigned int ticks) {
-        pair<bool, Triple> steering;
+vector<Triple> DynamicSeparation::getForce(unsigned int ticks) {
+        Triple steering;
         double d;
 
         Triple cp, tp;
         tie(cp, tp) = points(character, target);
 
-        steering.second = cp - tp;
-        d = steering.second.length();
+        steering = cp - tp;
+        d = steering.length();
         DEBUG_SEPARATION_PRINT(d);
         if (0 < d && d < separationRadius) {
-                steering.first = true;
-                steering.second *= (minForce * separationRadius) / d;
+                steering *= (minForce * separationRadius) / d;
+                return vector<Triple>(1, steering);
         }
-        else steering.first = false;
+        return vector<Triple>();
 
-        return steering;
 }

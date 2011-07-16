@@ -1,3 +1,5 @@
+#include <vector>
+
 #include "Dijkstra.hpp"
 #include "game.hpp"
 #include "Mobile.hpp"
@@ -34,18 +36,17 @@ PathFollowing::PathFollowing(string name, Mobile *character, Mobile *target, dou
         path = dijkstra(begin, end);
 }
 
-pair<bool, Triple> PathFollowing::getVel(unsigned int ticks) {
-        pair<bool, Triple> steering;
+vector<Triple> PathFollowing::getVel(unsigned int ticks) {
+        Triple steering;
         Triple dir;
         double d, targetSpeed;
 
-        steering.first = true;
         if (path.size() > 0) {
                 dir = path.front()->pos - character->pos;
                 d = dir.length();
                 if (d < targetRadius) path.erase(path.begin());
-                steering.second = dir.normalized();
-                steering.second *= maxSpeed;
+                steering = dir.normalized();
+                steering *= maxSpeed;
         } else {
                 Triple cp, tp;
                 tie(cp, tp) = points(character, target);
@@ -54,16 +55,15 @@ pair<bool, Triple> PathFollowing::getVel(unsigned int ticks) {
                 d = dir.length();
 
                 if (d < targetRadius) {
-                        steering.first = false;
                         dead = true;
-                        return steering;
+                        return vector<Triple>();
                 }
 
                 targetSpeed = maxSpeed;
                 if (d < slowRadius) targetSpeed *= (d - targetRadius) / (slowRadius - targetRadius);
 
-                steering.second = dir * targetSpeed;
+                steering = dir * targetSpeed;
         }
 
-        return steering;
+        return vector<Triple>(1, steering);
 }

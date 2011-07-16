@@ -1,3 +1,5 @@
+#include <vector>
+
 #include "Ent.hpp"
 #include "KinematicSeek.hpp"
 #include "Triple.hpp"
@@ -9,16 +11,10 @@ KinematicSeek::KinematicSeek(string name, Ent *character, Ent *target, double ma
         maxSpeed(maxSpeed)
 {}
 
-pair<bool, Triple> KinematicSeek::getVelIncr(unsigned int ticks) {
-        pair<bool, Triple> steering;
+vector<Triple> KinematicSeek::getVelIncr(unsigned int ticks) {
         Triple cp, tp;
 
-        steering.first = true;
         tie(cp, tp) = points(this->character, this->target);
-        steering.second = tp - cp;
-        steering.second.normalize();
-        steering.second *= maxSpeed;
-        //steering.second = getNewOrientation(character->ang, steering.second);
 
-        return steering;
+        return vector<Triple>(1, (tp - cp).normalized() * maxSpeed);
 }

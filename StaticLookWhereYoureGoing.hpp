@@ -11,9 +11,9 @@ class StaticLookWhereYoureGoing : public virtual DirectStaticA {
         public:
                 Mobile *character;
 
-                StaticLookWhereYoureGoing(Mobile *character);
+                StaticLookWhereYoureGoing(string name, Mobile *character);
 
-                virtual pair<bool, double> getAng(unsigned int ticks);
+                virtual vector<double> getAng(unsigned int ticks);
 };
 
 #endif

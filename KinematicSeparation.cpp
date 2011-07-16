@@ -1,3 +1,5 @@
+#include <vector>
+
 #include "Ent.hpp"
 #include "KinematicSeparation.hpp"
 #include "Triple.hpp"
@@ -10,21 +12,16 @@ KinematicSeparation::KinematicSeparation(string name, Ent *character, Ent *targe
         separationRadius(separationRadius)
 {}
 
-// Retorna incrementos de velocidad y rotación
-pair<bool, Triple> KinematicSeparation::getVelIncr(unsigned int ticks) {
-        pair<bool, Triple> steering;
+vector<Triple> KinematicSeparation::getVelIncr(unsigned int ticks) {
+        Triple steering;
         Triple cp, tp;
 
         tie(cp, tp) = points(this->character, this->target);
-        steering.second = cp - tp;
-        if (steering.second.length() < separationRadius) {
-                steering.first = true;
-                steering.second.normalize();
-                steering.second *= maxSpeed;
+        steering = cp - tp;
+        if (steering.length() < separationRadius) {
+                steering.normalize();
+                steering *= maxSpeed;
+                return vector<Triple>(1, steering);
         }
-        else {
-                steering.first = false;
-        }
-
-        return steering;
+        return vector<Triple>();
 }

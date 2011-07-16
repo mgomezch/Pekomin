@@ -1,4 +1,5 @@
 #include <cmath>
+#include <vector>
 
 #include "LookWhereYoureGoing.hpp"
 #include "Mobile.hpp"
@@ -19,17 +20,14 @@ LookWhereYoureGoing::LookWhereYoureGoing(string name, Mobile *character, double 
         slowRadius(slowRadius)
 {}
 
-pair<bool, double> LookWhereYoureGoing::getAngVel(unsigned int ticks) {
-        pair<bool, double> steering;
+vector<double> LookWhereYoureGoing::getAngVel(unsigned int ticks) {
+        double steering;
         double rotation, rotationSize, targetRotation;
         Triple direction;
 
-        steering.first = true;
-
         direction = character->vel;
         if (direction.length() == 0) {
-                steering.first = false;
-                return steering;
+                return vector<double>();
         }
 
         rotation = mapToRange(mapToRange(atan2(direction.y, direction.x)) - mapToRange(character->ang));
@@ -39,11 +37,11 @@ pair<bool, double> LookWhereYoureGoing::getAngVel(unsigned int ticks) {
 #ifdef DEBUG_LOOKWHEREYOUREGOING
                 cout << "LookWhereYoureGoing " << static_cast<void *>(this) << ": dentro de targetRadius" << endl;
 #endif
-                steering.second = character->vrot;
-                if (abs(steering.second) > maxAngularVelocity) {
-                        steering.second = maxAngularVelocity;
+                steering = character->vrot;
+                if (abs(steering) > maxAngularVelocity) {
+                        steering = maxAngularVelocity;
                 }
-                return steering;
+                return vector<double>(1, steering);
         }
 
         targetRotation = maxAngularVelocity;
@@ -65,7 +63,7 @@ pair<bool, double> LookWhereYoureGoing::getAngVel(unsigned int ticks) {
         cout << "LookWhereYoureGoing " << static_cast<void *>(this) << ": targetRotation == " << targetRotation << " after mapping vel with factor " << map_atan(200*character->vel.length()) << endl;
 #endif
 
-        steering.second = targetRotation * (rotation > 0 ? -1 : 1);
+        steering = targetRotation * (rotation > 0 ? -1 : 1);
 
-        return steering;
+        return vector<double>(1, steering);
 }

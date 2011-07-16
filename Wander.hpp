@@ -8,7 +8,7 @@ class Mobile;
 
 class Wander : public virtual DirectKinematicV {
         public:
-                Mobile* character;
+                Mobile *character;
                 double maxRotation;
                 double targetRadius;
                 double slowRadius;
@@ -18,13 +18,13 @@ class Wander : public virtual DirectKinematicV {
                 double wanderTime;
                 double maxSpeed;
 
-                Mobile* target;
-                double wanderOrientation;
+                Mobile *target;
                 unsigned int accum;
+                double wanderOrientation;
 
-                Wander(Mobile *character, double maxRotation, double targetRadius, double slowRadius, double wanderOffset, double wanderRadius, double wanderRate, double wanderTime, double maxSpeed);
+                Wander(string name, Mobile *character, double maxRotation, double targetRadius, double slowRadius, double wanderOffset, double wanderRadius, double wanderRate, double wanderTime, double maxSpeed);
 
-                virtual pair<bool, Triple> getVel(unsigned int ticks);
+                virtual vector<Triple> getVel(unsigned int ticks);
 };
 
 #endif

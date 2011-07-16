@@ -15,9 +15,9 @@ class Face : public virtual KinematicA {
                 double targetRadius;
                 double slowRadius;
 
-                Face(Mobile *character, Mobile *target, double maxAngularVelocity, double targetRadius, double slowRadius);
+                Face(string name, Mobile *character, Mobile *target, double maxAngularVelocity, double targetRadius, double slowRadius);
 
-                virtual pair<bool, double> getAngVelIncr(unsigned int ticks);
+                virtual vector<double> getAngVelIncr(unsigned int ticks);
 };
 
 #endif

@@ -1,4 +1,5 @@
 #include <cmath>
+#include <vector>
 
 #include "KinematicWander.hpp"
 #include "Ent.hpp"
@@ -14,8 +15,8 @@ KinematicWander::KinematicWander(string name, Ent *character, double maxSpeed, d
         accum(0)
 {}
 
-pair<bool, Triple> KinematicWander::getVel(unsigned int ticks) {
-        pair<bool, Triple> steering;
+vector<Triple> KinematicWander::getVel(unsigned int ticks) {
+        Triple steering;
         double ang;
 
         if (this->accum == 0) {
@@ -23,8 +24,5 @@ pair<bool, Triple> KinematicWander::getVel(unsigned int ticks) {
         }
         if ((this->accum += ticks) >= wanderTime) this->accum = 0;
 
-        steering.first = true;
-        steering.second = Triple(cos(ang), sin(ang), 0) * maxSpeed;
-
-        return steering;
+        return vector<Triple>(1, Triple(cos(ang), sin(ang), 0) * maxSpeed);
 }

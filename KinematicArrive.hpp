@@ -17,9 +17,9 @@ class KinematicArrive : public virtual DirectKinematicV { // TODO: "Kinematic___
 
                 static const double timeToTarget = 0.25;
 
-                KinematicArrive(Ent *character, Ent *target, double maxSpeed, double radius);
+                KinematicArrive(string name, Ent *character, Ent *target, double maxSpeed, double radius);
 
-                virtual pair<bool, Triple> getVel(unsigned int ticks);
+                virtual vector<Triple> getVel(unsigned int ticks);
 };
 
 #endif

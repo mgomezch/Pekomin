@@ -15,9 +15,9 @@ class Separation : public virtual KinematicV {
                 double maxSpeed;
                 double separationRadius;
 
-                Separation(Mobile *character, Mobile *target, double maxSpeed, double separationRadius);
+                Separation(string name, Mobile *character, Mobile *target, double maxSpeed, double separationRadius);
 
-                virtual pair<bool, Triple> getVelIncr(unsigned int ticks);
+                virtual vector<Triple> getVelIncr(unsigned int ticks);
 };
 
 #endif

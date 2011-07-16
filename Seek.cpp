@@ -1,3 +1,5 @@
+#include <vector>
+
 #include "Mobile.hpp"
 #include "Seek.hpp"
 #include "Triple.hpp"
@@ -15,22 +17,9 @@ Seek::Seek(string name, Mobile *character, Mobile *target, double maxSpeed):
         maxSpeed(maxSpeed)
 {}
 
-pair<bool, Triple> Seek::getVel(unsigned int ticks) {
-        pair<bool, Triple> steering;
+vector<Triple> Seek::getVel(unsigned int ticks) {
         Triple cp, tp;
 
-#if 0
-        steering.first = true;
-        steering.second = target->pos - character->pos;
-        steering.second.normalize();
-        steering.second *= maxSpeed;
-#endif
-
-        steering.first = true;
         tie(cp, tp) = points(this->character, this->target);
-        steering.second = tp - cp;
-        steering.second.normalize();
-        steering.second *= maxSpeed;
-
-        return steering;
+        return vector<Triple>(1, (tp - cp).normalized() * maxSpeed);
 }

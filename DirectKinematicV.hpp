@@ -1,7 +1,7 @@
 #ifndef DIRECTKINEMATICV_HPP
 #define DIRECTKINEMATICV_HPP
 
-#include <utility>
+#include <vector>
 
 #include "Behavior.hpp"
 #include "Triple.hpp"
@@ -14,7 +14,7 @@ class DirectKinematicV : public virtual Behavior {
         public:
                 DirectKinematicV(string name);
 
-                virtual pair<bool, Triple> DirectKinematicV_CALL_NAME(unsigned int ticks) = 0;
+                virtual vector<Triple> DirectKinematicV_CALL_NAME(unsigned int ticks) = 0;
 };
 
 #endif

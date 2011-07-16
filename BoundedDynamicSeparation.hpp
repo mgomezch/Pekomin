@@ -15,9 +15,9 @@ class BoundedDynamicSeparation : public virtual DynamicV {
                 double maxForce;
                 double separationRadius;
 
-                BoundedDynamicSeparation(Mobile *character, Mobile *target, double maxForce, double separationRadius);
+                BoundedDynamicSeparation(string name, Mobile *character, Mobile *target, double maxForce, double separationRadius);
 
-                virtual pair<bool, Triple> getForce(unsigned int ticks);
+                virtual vector<Triple> getForce(unsigned int ticks);
 };
 
 #endif

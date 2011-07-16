@@ -21,10 +21,10 @@ Alien::Alien(Mobile *target, string name, Triple pos, double ang, Triple vel, do
         hpmax(hpmax),
         hp(hpmax),
         state(States::Wander),
-        wander(&addBehavior(new Wander(this, 0.2, 0.25, 1, 1, 7, 3.1415, 1000, 0.025))),
-        arrive(&addBehavior(new Arrive(this, target, 0.015, 5, 10))),
-        pursue(&addBehavior(new Pursue(this, target, 0.0025))),
-        evade (&addBehavior(new Evade (this, target, 0.0025)))
+        wander(&addBehavior(new Wander(name + "Wander", this, 0.2, 0.25, 1, 1, 7, 3.1415, 1000, 0.025))),
+        arrive(&addBehavior(new Arrive(name + "Arrive", this, target, 0.015, 5, 10))),
+        pursue(&addBehavior(new Pursue(name + "Pursue", this, target, 0.0025))),
+        evade (&addBehavior(new Evade (name + "Evade" , this, target, 0.0025)))
 {
 #if 0
         this->wander = &addBehavior(new Wander(this, 0.2, 0.25, 1, 1, 7, 3.1415, 1000, 0.025));

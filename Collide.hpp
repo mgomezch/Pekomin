@@ -14,10 +14,10 @@ class Collide : public virtual KinematicV, public virtual StaticV {
                 Mobile *character;
                 Mobile *target;
 
-                Collide(Mobile *character, Mobile *target);
+                Collide(string name, Mobile *character, Mobile *target);
 
-                virtual pair<bool, Triple> getPosIncr(unsigned int ticks);
-                virtual pair<bool, Triple> getVelIncr(unsigned int ticks);
+                virtual vector<Triple> getPosIncr(unsigned int ticks);
+                virtual vector<Triple> getVelIncr(unsigned int ticks);
 };
 
 #endif
