@@ -3,4 +3,4 @@
 #include "Behavior.hpp"
 #include "KinematicA.hpp"
 
-KinematicA::KinematicA(string name): Behavior(name) {}
+KinematicA::KinematicA(std::string name): Behavior(name) {}

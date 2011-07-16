@@ -8,13 +8,11 @@
 #include "Ent.hpp"
 #include "Triple.hpp"
 
-using namespace std;
-
 class Node : public Ent {
         public:
-                vector<Node*> adj;
+                std::vector<Node*> adj;
 
-                Node(string name = "", Triple pos = Triple());
+                Node(std::string name = "", Triple pos = Triple());
 
                 void add_adj(Node *node);
                 bool is_adj(Node *adj);
@@ -22,7 +20,7 @@ class Node : public Ent {
                 void print_node();
 
                 virtual void draw();
-                virtual void steer(unsigned int ticks);
+                virtual void steer(unsigned int ticks, unsigned int delta_ticks);
                 virtual void update();
 };
 

@@ -5,14 +5,14 @@
 #include "util.hpp"
 #include "VelocityMatch.hpp"
 
-VelocityMatch::VelocityMatch(string name, Mobile *character, Mobile *target, double maxSpeed):
+VelocityMatch::VelocityMatch(std::string name, Mobile *character, Mobile *target, double maxSpeed):
         KinematicV(name),
         character(character),
         target(target),
         maxSpeed(maxSpeed)
 {}
 
-vector<Triple> VelocityMatch::getVelIncr(unsigned int ticks) {
+std::vector<Triple> VelocityMatch::getVelIncr(unsigned int ticks, unsigned int delta_ticks) {
         Triple steering;
         double targetVelocity;
 
@@ -25,5 +25,5 @@ vector<Triple> VelocityMatch::getVelIncr(unsigned int ticks) {
                 steering *= maxSpeed;
         }
 
-        return vector<Triple>(1, steering);
+        return std::vector<Triple>(1, steering);
 }

@@ -1,10 +1,10 @@
 #ifndef KINEMATICSEEK_HPP
 #define KINEMATICSEEK_HPP
 
+#include <vector>
+
 #include "KinematicV.hpp"
 #include "Triple.hpp"
-
-using namespace std;
 
 class Ent;
 
@@ -14,9 +14,9 @@ class KinematicSeek : public virtual KinematicV {
                 Ent *target;
                 double maxSpeed;
 
-                KinematicSeek(string name, Ent *character, Ent *target, double maxSpeed);
+                KinematicSeek(std::string name, Ent *character, Ent *target, double maxSpeed);
 
-                virtual vector<Triple> getVelIncr(unsigned int ticks);
+                virtual std::vector<Triple> getVelIncr(unsigned int ticks, unsigned int delta_ticks);
 };
 
 #endif

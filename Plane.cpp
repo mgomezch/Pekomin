@@ -8,7 +8,7 @@
 #       include <iostream>
 #endif
 
-Plane::Plane(string name, Triple pos, double ang, Triple vel, double vrot, Triple pp, Triple n):
+Plane::Plane(std::string name, Triple pos, double ang, Triple vel, double vrot, Triple pp, Triple n):
         Mobile(name, pos, ang, vel, vrot),
         pp(pp),
         n(n)

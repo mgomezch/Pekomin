@@ -6,15 +6,13 @@
 #include "Behavior.hpp"
 #include "Triple.hpp"
 
-using namespace std;
-
 #define KinematicV_CALL_NAME getVelIncr
 
 class KinematicV : public virtual Behavior {
         public:
-                KinematicV(string name);
+                KinematicV(std::string name);
 
-                virtual vector<Triple> KinematicV_CALL_NAME(unsigned int ticks) = 0;
+                virtual std::vector<Triple> KinematicV_CALL_NAME(unsigned int ticks, unsigned int delta_ticks) = 0;
 };
 
 #endif

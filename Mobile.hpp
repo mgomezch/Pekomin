@@ -10,7 +10,7 @@ class Mobile : public virtual Ent {
                 double vrot;
 
                 Mobile(
-                                string name = "",
+                                std::string name = "",
                                 Triple pos = Triple(), double  ang = 0,
                                 Triple vel = Triple(), double vrot = 0
                       );
@@ -22,8 +22,8 @@ class Mobile : public virtual Ent {
                 double new_vrot;
 };
 
-tuple<Triple, Triple> points(Ent    *e1, Mobile *e2);
-tuple<Triple, Triple> points(Mobile *e1, Ent    *e2);
-tuple<Triple, Triple> points(Mobile *e1, Mobile *e2);
+std::tuple<Triple, Triple> points(Ent    *e1, Mobile *e2);
+std::tuple<Triple, Triple> points(Mobile *e1, Ent    *e2);
+std::tuple<Triple, Triple> points(Mobile *e1, Mobile *e2);
 
 #endif

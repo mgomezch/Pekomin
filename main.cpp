@@ -140,7 +140,7 @@ void initJuego() {
                         parse(buf);
 
                         if (player == NULL) {
-                                cerr << "warning: no player defined in game file; using default player." << endl;
+                                std::cerr << "warning: no player defined in game file; using default player." << std::endl;
                                 player = new Player("default player");
                                 ents.push_back(player);
                         }
@@ -649,7 +649,7 @@ void keydown(unsigned char key, int mx, int my) {
         else if (key == key_pause) {
                 frozen ^= 1;
 #ifdef DEBUG_MAIN
-                cout << "toggling pause" << endl;
+                std::cout << "toggling pause" << std::endl;
 #endif
         }
         else if (key == key_cam_switch) {
@@ -745,7 +745,7 @@ void juego(int v) {
                 player->vrot = (pvrz * M_PI) / 180.0;
 
                 for (i = 0; (unsigned int)i < ents.size(); i++) {
-                        ents[i]->steer(delta);
+                        ents[i]->steer(new_time, delta);
                 }
                 for (i = 0; (unsigned int)i < ents.size(); i++) {
                         ents[i]->update();

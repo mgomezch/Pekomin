@@ -1,9 +1,9 @@
 #ifndef FACE_HPP
 #define FACE_HPP
 
-#include "KinematicA.hpp"
+#include <vector>
 
-using namespace std;
+#include "KinematicA.hpp"
 
 class Mobile;
 
@@ -15,9 +15,9 @@ class Face : public virtual KinematicA {
                 double targetRadius;
                 double slowRadius;
 
-                Face(string name, Mobile *character, Mobile *target, double maxAngularVelocity, double targetRadius, double slowRadius);
+                Face(std::string name, Mobile *character, Mobile *target, double maxAngularVelocity, double targetRadius, double slowRadius);
 
-                virtual vector<double> getAngVelIncr(unsigned int ticks);
+                virtual std::vector<double> getAngVelIncr(unsigned int ticks, unsigned int delta_ticks);
 };
 
 #endif

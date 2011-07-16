@@ -5,7 +5,7 @@
 #include "Mobile.hpp"
 #include "PathFollowing.hpp"
 
-PathFollowing::PathFollowing(string name, Mobile *character, Mobile *target, double maxSpeed, double targetRadius, double slowRadius):
+PathFollowing::PathFollowing(std::string name, Mobile *character, Mobile *target, double maxSpeed, double targetRadius, double slowRadius):
         DirectKinematicV(name),
         character(character),
         target(target),
@@ -36,7 +36,7 @@ PathFollowing::PathFollowing(string name, Mobile *character, Mobile *target, dou
         path = dijkstra(begin, end);
 }
 
-vector<Triple> PathFollowing::getVel(unsigned int ticks) {
+std::vector<Triple> PathFollowing::getVel(unsigned int ticks, unsigned int delta_ticks) {
         Triple steering;
         Triple dir;
         double d, targetSpeed;
@@ -49,14 +49,14 @@ vector<Triple> PathFollowing::getVel(unsigned int ticks) {
                 steering *= maxSpeed;
         } else {
                 Triple cp, tp;
-                tie(cp, tp) = points(character, target);
+                std::tie(cp, tp) = points(character, target);
 
                 dir = tp - cp;
                 d = dir.length();
 
                 if (d < targetRadius) {
                         dead = true;
-                        return vector<Triple>();
+                        return std::vector<Triple>();
                 }
 
                 targetSpeed = maxSpeed;
@@ -65,5 +65,5 @@ vector<Triple> PathFollowing::getVel(unsigned int ticks) {
                 steering = dir * targetSpeed;
         }
 
-        return vector<Triple>(1, steering);
+        return std::vector<Triple>(1, steering);
 }

@@ -12,7 +12,7 @@
 #include <iostream>
 #endif
 
-Align::Align(string name, Mobile *character, Mobile *target, double maxAngularVelocity, double targetRadius, double slowRadius):
+Align::Align(std::string name, Mobile *character, Mobile *target, double maxAngularVelocity, double targetRadius, double slowRadius):
         DirectKinematicA(name),
         character(character),
         target(target),
@@ -21,7 +21,7 @@ Align::Align(string name, Mobile *character, Mobile *target, double maxAngularVe
         slowRadius(slowRadius)
 {}
 
-vector<double> Align::getAngVel(unsigned int ticks) {
+std::vector<double> Align::getAngVel(unsigned int ticks, unsigned int delta_ticks) {
         double steering;
         double rotation, rotationSize, targetRotation;
         Triple direction;
@@ -31,25 +31,25 @@ vector<double> Align::getAngVel(unsigned int ticks) {
 
         if (rotationSize < targetRadius) {
 #ifdef DEBUG_ALIGN
-                cout << "Align " << static_cast<void *>(this) << ": dentro de targetRadius" << endl;
+                std::cout << "Align " << static_cast<void *>(this) << ": dentro de targetRadius" << std::endl;
 #endif
                 steering = target->vrot - character->vrot;
                 if (abs(steering) > maxAngularVelocity) {
                         steering = maxAngularVelocity;
                 }
-                return vector<double>(1, steering);
+                return std::vector<double>(1, steering);
         }
 
         targetRotation = maxAngularVelocity;
         if (rotationSize < slowRadius){
                 targetRotation *= rotationSize / slowRadius;
 #ifdef DEBUG_ALIGN
-                cout << "Align " << static_cast<void *>(this) << ": entre targetRadius y slowRadius; targetRotation = " << targetRotation << "; rotation = " << rotation << endl;
+                std::cout << "Align " << static_cast<void *>(this) << ": entre targetRadius y slowRadius; targetRotation = " << targetRotation << "; rotation = " << rotation << std::endl;
 #endif
         }
 #ifdef DEBUG_ALIGN
         else {
-                cout << "Align " << static_cast<void *>(this) << ": fuera de slowRadius; targetRotation = " << targetRotation << "; rotation = " << rotation << endl;
+                std::cout << "Align " << static_cast<void *>(this) << ": fuera de slowRadius; targetRotation = " << targetRotation << "; rotation = " << rotation << std::endl;
         }
 #endif
 
@@ -57,5 +57,5 @@ vector<double> Align::getAngVel(unsigned int ticks) {
 
         steering = targetRotation * (rotation > 0 ? -1 : 1);
 
-        return vector<double>(1, steering);
+        return std::vector<double>(1, steering);
 }

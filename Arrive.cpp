@@ -10,7 +10,7 @@
 #include <iostream>
 #endif
 
-Arrive::Arrive(string name, Mobile *character, Mobile *target, double maxSpeed, double targetRadius, double slowRadius):
+Arrive::Arrive(std::string name, Mobile *character, Mobile *target, double maxSpeed, double targetRadius, double slowRadius):
         DirectKinematicV(name),
         character(character),
         target(target),
@@ -19,13 +19,13 @@ Arrive::Arrive(string name, Mobile *character, Mobile *target, double maxSpeed, 
         slowRadius(slowRadius)
 {}
 
-vector<Triple> Arrive::getVel(unsigned int ticks) {
+std::vector<Triple> Arrive::getVel(unsigned int ticks, unsigned int delta_ticks) {
         Triple steering;
         Triple direction, targetVelocity;
         double distance, targetSpeed;
         Triple cp, tp;
 
-        tie(cp, tp) = points(this->character, this->target);
+        std::tie(cp, tp) = points(this->character, this->target);
         direction = tp - cp;
         distance = direction.length();
         direction.normalize();
@@ -36,7 +36,7 @@ vector<Triple> Arrive::getVel(unsigned int ticks) {
                         steering.normalize();
                         steering *= maxSpeed;
                 }
-                return vector<Triple>(1, steering);
+                return std::vector<Triple>(1, steering);
         }
 
 //      targetSpeed = maxSpeed - character->vel.dot(direction);
@@ -49,5 +49,5 @@ vector<Triple> Arrive::getVel(unsigned int ticks) {
 
         steering = direction * targetSpeed;
 
-        return vector<Triple>(1, steering);
+        return std::vector<Triple>(1, steering);
 }

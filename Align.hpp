@@ -1,9 +1,9 @@
 #ifndef ALIGN_HPP
 #define ALIGN_HPP
 
-#include "DirectKinematicA.hpp"
+#include <vector>
 
-using namespace std;
+#include "DirectKinematicA.hpp"
 
 class Mobile;
 
@@ -15,9 +15,9 @@ class Align : public virtual DirectKinematicA {
                 double targetRadius;
                 double slowRadius;
 
-                Align(string name, Mobile *character, Mobile *target, double maxAngularVelocity, double targetRadius, double slowRadius);
+                Align(std::string name, Mobile *character, Mobile *target, double maxAngularVelocity, double targetRadius, double slowRadius);
 
-                virtual vector<double> getAngVel(unsigned int ticks);
+                virtual std::vector<double> getAngVel(unsigned int ticks, unsigned int delta_ticks);
 };
 
 #endif

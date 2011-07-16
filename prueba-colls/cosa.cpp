@@ -5,7 +5,7 @@
 #include <3D/Quaternion.h>
 #include <SOLID/solid.h>
 
-#define PRINT_COLL_DATA(CD) \
+#define PRINT_COLL_DATA(CD)                                                                                                \
                 cout << "Punto 1: (" << (CD).point1[0] << ", " << (CD).point1[1] << ", " << (CD).point1[2] << ")" << endl; \
                 cout << "Punto 2: (" << (CD).point2[0] << ", " << (CD).point2[1] << ", " << (CD).point2[2] << ")" << endl; \
                 cout << "Normal : (" << (CD).normal[0] << ", " << (CD).normal[1] << ", " << (CD).normal[2] << ")" << endl;
@@ -18,7 +18,7 @@ void collide(void *client_data, DtObjectRef obj1, DtObjectRef obj2, const DtColl
         }
 }
 
-#define MAKE_OBJ(PX, PY, PZ, ROT) \
+#define MAKE_OBJ(PX, PY, PZ, ROT)              \
         objp = new tuple<double[3], double>(); \
         get<0>(*objp)[0] = (PX);               \
         get<0>(*objp)[1] = (PY);               \
@@ -81,7 +81,7 @@ int main(int argc, char **argv) {
                         if (c == 1) cout << "Una colisión! :-O" << endl;
                         else cout << c << " colisiones! :-O" << endl;
 
-                        for (i = 0, n = cs.size(); i < n; i++) {
+                        for (i = 0, n = cs.size(); i < n; ++i) {
                                 auto cd = cs[i];
                                 auto d  = get<0>(cd);
                                 auto n  = d.normal;
@@ -93,13 +93,28 @@ int main(int argc, char **argv) {
                                 PRINT_COLL_DATA(d);
 
                                 dtSelectObject(o1);
-                                get<0>(*o1)[0] -= n[0];
-                                get<0>(*o1)[1] -= n[1];
-                                get<0>(*o1)[2] -= n[2];
+                                get<0>(*o1)[0] += n[0];
+                                get<0>(*o1)[1] += n[1];
+                                get<0>(*o1)[2] += n[2];
                                 dtSelectObject(o2);
-                                get<0>(*o2)[0] += n[0];
-                                get<0>(*o2)[1] += n[1];
-                                get<0>(*o2)[2] += n[2];
+                                get<0>(*o2)[0] -= n[0];
+                                get<0>(*o2)[1] -= n[1];
+                                get<0>(*o2)[2] -= n[2];
+
+                                dtSelectObject(o1);
+                                dtLoadIdentity();
+                                {
+                                        auto q = Quaternion(Vector(0, 0, 1), get<1>(*o1));
+                                        dtRotate(q[0], q[1], q[2], q[3]);
+                                        dtTranslate(get<0>(*o1)[0], get<0>(*o1)[1], get<0>(*o1)[2]);
+                                }
+                                dtSelectObject(o2);
+                                dtLoadIdentity();
+                                {
+                                        auto q = Quaternion(Vector(0, 0, 1), get<1>(*o1));
+                                        dtRotate(q[0], q[1], q[2], q[3]);
+                                        dtTranslate(get<0>(*o2)[0], get<0>(*o2)[1], get<0>(*o2)[2]);
+                                }
                         }
                 }
                 dtProceed();

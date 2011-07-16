@@ -6,15 +6,13 @@
 #include "Behavior.hpp"
 #include "Triple.hpp"
 
-using namespace std;
-
 #define DynamicV_CALL_NAME getForce
 
 class DynamicV : public virtual Behavior {
         public:
-                DynamicV(string name);
+                DynamicV(std::string name);
 
-                virtual vector<Triple> DynamicV_CALL_NAME(unsigned int ticks) = 0;
+                virtual std::vector<Triple> DynamicV_CALL_NAME(unsigned int ticks, unsigned int delta_ticks) = 0;
 };
 
 #endif

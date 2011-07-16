@@ -5,8 +5,8 @@
 #include "Node.hpp"
 #include "Player.hpp"
 
-vector<Node *> nodes;
-vector<Ent *> ents;
+std::vector<Node *> nodes;
+std::vector<Ent *> ents;
 Player *player = NULL;
 
 unsigned int ww   = 512;

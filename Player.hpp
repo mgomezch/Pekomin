@@ -20,14 +20,14 @@ class Player : public virtual RuntimePoint {
                 Player(const Player &);
 
                 Player(
-                                string name = "",
+                                std::string name = "",
                                 Triple pos = Triple(), double ang = 0,
                                 Triple vel = Triple(), double vrot = 0
                       );
                 // TODO: destructor!
 
                 virtual void draw();
-                virtual void steer(unsigned int ticks);
+                virtual void steer(unsigned int ticks, unsigned int delta_ticks);
                 virtual void update();
 };
 

@@ -10,7 +10,7 @@
 #       include <iostream>
 #endif
 
-RuntimePoint::RuntimePoint(string name, Triple pos, double ang, Triple vel, double vrot):
+RuntimePoint::RuntimePoint(std::string name, Triple pos, double ang, Triple vel, double vrot):
         Actor(name, pos, ang, vel, vrot)
 {}
 

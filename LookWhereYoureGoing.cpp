@@ -12,7 +12,7 @@
 #       include <iostream>
 #endif
 
-LookWhereYoureGoing::LookWhereYoureGoing(string name, Mobile *character, double maxAngularVelocity, double targetRadius, double slowRadius):
+LookWhereYoureGoing::LookWhereYoureGoing(std::string name, Mobile *character, double maxAngularVelocity, double targetRadius, double slowRadius):
         DirectKinematicA(name),
         character(character),
         maxAngularVelocity(maxAngularVelocity),
@@ -20,14 +20,14 @@ LookWhereYoureGoing::LookWhereYoureGoing(string name, Mobile *character, double 
         slowRadius(slowRadius)
 {}
 
-vector<double> LookWhereYoureGoing::getAngVel(unsigned int ticks) {
+std::vector<double> LookWhereYoureGoing::getAngVel(unsigned int ticks, unsigned int delta_ticks) {
         double steering;
         double rotation, rotationSize, targetRotation;
         Triple direction;
 
         direction = character->vel;
         if (direction.length() == 0) {
-                return vector<double>();
+                return std::vector<double>();
         }
 
         rotation = mapToRange(mapToRange(atan2(direction.y, direction.x)) - mapToRange(character->ang));
@@ -35,35 +35,35 @@ vector<double> LookWhereYoureGoing::getAngVel(unsigned int ticks) {
 
         if (rotationSize < targetRadius) {
 #ifdef DEBUG_LOOKWHEREYOUREGOING
-                cout << "LookWhereYoureGoing " << static_cast<void *>(this) << ": dentro de targetRadius" << endl;
+                std::cout << "LookWhereYoureGoing " << static_cast<void *>(this) << ": dentro de targetRadius" << std::endl;
 #endif
                 steering = character->vrot;
                 if (abs(steering) > maxAngularVelocity) {
                         steering = maxAngularVelocity;
                 }
-                return vector<double>(1, steering);
+                return std::vector<double>(1, steering);
         }
 
         targetRotation = maxAngularVelocity;
         if (rotationSize < slowRadius) {
 #ifdef DEBUG_LOOKWHEREYOUREGOING
-                cout << "LookWhereYoureGoing " << static_cast<void *>(this) << ": entre targetRadius y slowRadius" << endl;
+                std::cout << "LookWhereYoureGoing " << static_cast<void *>(this) << ": entre targetRadius y slowRadius" << std::endl;
 #endif
                 targetRotation *= rotationSize / slowRadius;
         }
 #ifdef DEBUG_LOOKWHEREYOUREGOING
         else {
-                cout << "LookWhereYoureGoing " << static_cast<void *>(this) << ": fuera de slowRadius" << endl;
+                std::cout << "LookWhereYoureGoing " << static_cast<void *>(this) << ": fuera de slowRadius" << std::endl;
         }
 #endif
 
         targetRotation *= map_atan(20000*character->vel.length());
 
 #ifdef DEBUG_LOOKWHEREYOUREGOING
-        cout << "LookWhereYoureGoing " << static_cast<void *>(this) << ": targetRotation == " << targetRotation << " after mapping vel with factor " << map_atan(200*character->vel.length()) << endl;
+        std::cout << "LookWhereYoureGoing " << static_cast<void *>(this) << ": targetRotation == " << targetRotation << " after mapping vel with factor " << map_atan(200*character->vel.length()) << std::endl;
 #endif
 
         steering = targetRotation * (rotation > 0 ? -1 : 1);
 
-        return vector<double>(1, steering);
+        return std::vector<double>(1, steering);
 }

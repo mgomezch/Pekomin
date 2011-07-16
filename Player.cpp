@@ -28,7 +28,7 @@ Player::Player(const Player &p) {
         control_shoot = p.control_shoot;
 }
 
-Player::Player(string name, Triple pos, double ang, Triple vel, double vrot):
+Player::Player(std::string name, Triple pos, double ang, Triple vel, double vrot):
         RuntimePoint(name, pos, ang, vel, vrot),
         control_f(false),
         control_b(false),
@@ -40,7 +40,7 @@ Player::Player(string name, Triple pos, double ang, Triple vel, double vrot):
         control_shoot(false)
 {}
 
-void Player::steer(unsigned int ticks) {
+void Player::steer(unsigned int ticks, unsigned int delta_ticks) {
         /*
         double pv = 0;
 
@@ -51,22 +51,22 @@ void Player::steer(unsigned int ticks) {
 
         // TODO: convertir en Behavior "Fall"
         if (this->pos.z != 0 || this->vel.z != 0) {
-                this->vel.z += GRAVEDAD * ticks;
+                this->vel.z += GRAVEDAD * delta_ticks;
                 if (this->pos.z <= 0) {
                         this->pos.z = 0;
                         this->vel.z = 0;
                 }
         } else {
-                if (control_f    ) pv          =  ticks / 10000.0;
-                if (control_b    ) pv          = -ticks / 10000.0;
-                if (control_rot_l) this->vrot +=  ticks / 5000.0;
-                if (control_rot_r) this->vrot -=  ticks / 5000.0;
-                // pv += -0.005 * pv * ticks;
+                if (control_f    ) pv          =  delta_ticks / 10000.0;
+                if (control_b    ) pv          = -delta_ticks / 10000.0;
+                if (control_rot_l) this->vrot +=  delta_ticks / 5000.0;
+                if (control_rot_r) this->vrot -=  delta_ticks / 5000.0;
+                // pv += -0.005 * pv * delta_ticks;
                 this->vel.x += pv * cos(this->ang);
                 this->vel.y += pv * sin(this->ang);
         }
 
-        this->Actor::steer(ticks);
+        this->Actor::steer(delta_ticks);
         */
 }
 
@@ -83,6 +83,6 @@ void Player::draw() {
                 glEnd();
         glPopMatrix();
 #ifdef DEBUG_PLAYER
-        cout << "player: drawing at (" << pos.x << ", " << pos.y << ", " << pos.z << ")" << endl;
+        std::cout << "player: drawing at (" << pos.x << ", " << pos.y << ", " << pos.z << ")" << std::endl;
 #endif
 }

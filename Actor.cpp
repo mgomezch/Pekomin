@@ -16,39 +16,39 @@
 #define BUILD_CALL_NAME_MACRO(S) S ## _ ## CALL_NAME
 #define CALLNAME(S) BUILD_CALL_NAME_MACRO(S)
 
-#define RUN_V_STEERING(FAMILY)                                                    \
-        if ((( p_ ## FAMILY ) = dynamic_cast< FAMILY *>(behaviors[i])) != NULL) { \
-                v_steering = ( p_ ## FAMILY )-> CALLNAME(FAMILY) (ticks);         \
-                for (j = 0, n = v_steering.size(); j < n; ++j) {                  \
-                        ( n_ ## FAMILY )++;                                       \
-                        ( v_ ## FAMILY ).push_back(v_steering[j]);                \
-                }                                                                 \
+#define RUN_V_STEERING(FAMILY)                                                         \
+        if ((( p_ ## FAMILY ) = dynamic_cast< FAMILY *>(behaviors[i])) != NULL) {      \
+                v_steering = ( p_ ## FAMILY )-> CALLNAME(FAMILY) (ticks, delta_ticks); \
+                for (j = 0, n = v_steering.size(); j < n; ++j) {                       \
+                        ( n_ ## FAMILY )++;                                            \
+                        ( v_ ## FAMILY ).push_back(v_steering[j]);                     \
+                }                                                                      \
         }
 
-#define RUN_A_STEERING(FAMILY)                                                    \
-        if ((( p_ ## FAMILY ) = dynamic_cast< FAMILY *>(behaviors[i])) != NULL) { \
-                a_steering = ( p_ ## FAMILY )-> CALLNAME(FAMILY) (ticks);         \
-                for (j = 0, n = a_steering.size(); j < n; ++j) {                  \
-                        ( n_ ## FAMILY )++;                                       \
-                        ( v_ ## FAMILY ).push_back(a_steering[j]);                \
-                }                                                                 \
+#define RUN_A_STEERING(FAMILY)                                                         \
+        if ((( p_ ## FAMILY ) = dynamic_cast< FAMILY *>(behaviors[i])) != NULL) {      \
+                a_steering = ( p_ ## FAMILY )-> CALLNAME(FAMILY) (ticks, delta_ticks); \
+                for (j = 0, n = a_steering.size(); j < n; ++j) {                       \
+                        ( n_ ## FAMILY )++;                                            \
+                        ( v_ ## FAMILY ).push_back(a_steering[j]);                     \
+                }                                                                      \
         }
 
 using namespace std;
 
-Actor::Actor(string name, Triple pos, double ang, Triple vel, double vrot):
+Actor::Actor(std::string name, Triple pos, double ang, Triple vel, double vrot):
         Mobile(name, pos, ang, vel, vrot)
 {}
 
 Behavior &Actor::addBehavior(Behavior *b) {
         behaviors.push_back(b);
 #ifdef DEBUG_ACTOR
-        cout << "actor " << static_cast<void>(this) << " : adding behavior " << static_cast<void *>(b) << endl;
+        std::cout << "actor " << static_cast<void>(this) << " : adding behavior " << static_cast<void *>(b) << std::endl;
 #endif
         return *b;
 }
 
-void Actor::steer(unsigned int ticks) {
+void Actor::steer(unsigned int ticks, unsigned int delta_ticks) {
         unsigned int i, j, n;
         Triple vdir;
 
@@ -64,13 +64,13 @@ void Actor::steer(unsigned int ticks) {
         KinematicA       *p_KinematicA      ;
         DynamicA         *p_DynamicA        ;
 
-        vector<Triple> v_DirectStaticV   ,
+        std::vector<Triple> v_DirectStaticV   ,
                        v_StaticV         ,
                        v_DirectKinematicV,
                        v_KinematicV      ,
                        v_DynamicV        ;
 
-        vector<double> v_DirectStaticA   ,
+        std::vector<double> v_DirectStaticA   ,
                        v_StaticA         ,
                        v_DirectKinematicA,
                        v_KinematicA      ,
@@ -88,8 +88,8 @@ void Actor::steer(unsigned int ticks) {
                sum_KinematicA       = 0,
                sum_DynamicA         = 0;
 
-        vector<Triple> v_steering;
-        vector<double> a_steering;
+        std::vector<Triple> v_steering;
+        std::vector<double> a_steering;
 
         unsigned int n_DirectStaticV    = 0,
                      n_StaticV          = 0,
@@ -139,32 +139,32 @@ void Actor::steer(unsigned int ticks) {
 
         if (n_DirectStaticV   ) this->new_pos   = sum_DirectStaticV / n_DirectStaticV;
         if (n_DirectKinematicV) this->new_vel   = sum_DirectKinematicV;
-        if (n_DynamicV        ) this->new_vel  += sum_DynamicV * (double)ticks; // TODO: divide by mass
+        if (n_DynamicV        ) this->new_vel  += sum_DynamicV * (double)delta_ticks; // TODO: divide by mass
         if (n_KinematicV      ) this->new_vel  += sum_KinematicV;
         if (n_StaticV         ) this->new_pos  += sum_StaticV;
 
         if (n_DirectStaticA   ) this->new_ang   = sum_DirectStaticA / n_DirectStaticA;
         if (n_DirectKinematicA) this->new_vrot  = sum_DirectKinematicA;
-        if (n_DynamicA        ) this->new_vrot += sum_DynamicA * ticks; // TODO: divide by inertia
+        if (n_DynamicA        ) this->new_vrot += sum_DynamicA * delta_ticks; // TODO: divide by inertia
         if (n_KinematicA      ) this->new_vrot += sum_KinematicA;
         if (n_StaticA         ) this->new_ang  += sum_StaticA;
 
 #ifdef DEBUG_ACTOR
-        cout << "actor " << this->name << ": final vel == " << this->new_vel.to_string() << ", vrot == " << this->new_vrot << endl;
+        std::cout << "actor " << this->name << ": final vel == " << this->new_vel.to_string() << ", vrot == " << this->new_vrot << std::endl;
 #endif
 
         // TODO: chequear que estés en el piso antes de calcular roce
         if (this->new_pos.z == 0) {
                 vdir = this->new_vel.normalized();
-                this->new_vel += Triple(this->new_vel.x, this->new_vel.y, 0) * (-0.005) * static_cast<double>(ticks);
+                this->new_vel += Triple(this->new_vel.x, this->new_vel.y, 0) * (-0.005) * static_cast<double>(delta_ticks);
                 if (vdir.dot(this->new_vel) < 0) this->new_vel = Triple(0, 0, 0);
 
-                if      (this->new_vrot > 0 && (this->new_vrot += this->new_vrot * (-0.030) * static_cast<double>(ticks)) < 0) this->new_vrot = 0;
-                else if (this->new_vrot < 0 && (this->new_vrot += this->new_vrot * (-0.030) * static_cast<double>(ticks)) > 0) this->new_vrot = 0;
+                if      (this->new_vrot > 0 && (this->new_vrot += this->new_vrot * (-0.030) * static_cast<double>(delta_ticks)) < 0) this->new_vrot = 0;
+                else if (this->new_vrot < 0 && (this->new_vrot += this->new_vrot * (-0.030) * static_cast<double>(delta_ticks)) > 0) this->new_vrot = 0;
         }
 
-        this->new_pos += this->new_vel  * static_cast<double>(ticks);
-        this->new_ang += this->new_vrot * static_cast<double>(ticks);
+        this->new_pos += this->new_vel  * static_cast<double>(delta_ticks);
+        this->new_ang += this->new_vrot * static_cast<double>(delta_ticks);
         this->new_ang  = mapToRange(this->new_ang);
 
         // TODO: piratería para que el salto funcione

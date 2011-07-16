@@ -1,9 +1,9 @@
 #ifndef ARRIVE_HPP
 #define ARRIVE_HPP
 
-#include "DirectKinematicV.hpp"
+#include <vector>
 
-using namespace std;
+#include "DirectKinematicV.hpp"
 
 class Mobile;
 
@@ -15,9 +15,9 @@ class Arrive : public virtual DirectKinematicV {
                 double targetRadius;
                 double slowRadius;
 
-                Arrive(string name, Mobile *character, Mobile *target, double maxSpeed, double targetRadius, double slowRadius);
+                Arrive(std::string name, Mobile *character, Mobile *target, double maxSpeed, double targetRadius, double slowRadius);
 
-                virtual vector<Triple> getVel(unsigned int ticks);
+                virtual std::vector<Triple> getVel(unsigned int ticks, unsigned int delta_ticks);
 };
 
 #endif

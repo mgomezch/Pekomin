@@ -6,15 +6,13 @@
 #include "Behavior.hpp"
 #include "Triple.hpp"
 
-using namespace std;
-
 #define DirectKinematicA_CALL_NAME getAngVel
 
 class DirectKinematicA : public virtual Behavior {
         public:
-                DirectKinematicA(string name);
+                DirectKinematicA(std::string name);
 
-                virtual vector<double> DirectKinematicA_CALL_NAME(unsigned int ticks) = 0;
+                virtual std::vector<double> DirectKinematicA_CALL_NAME(unsigned int ticks, unsigned int delta_ticks) = 0;
 };
 
 #endif

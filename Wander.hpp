@@ -1,6 +1,8 @@
 #ifndef WANDER_HPP
 #define WANDER_HPP
 
+#include <vector>
+
 #include "DirectKinematicV.hpp"
 #include "Triple.hpp"
 
@@ -22,9 +24,9 @@ class Wander : public virtual DirectKinematicV {
                 unsigned int accum;
                 double wanderOrientation;
 
-                Wander(string name, Mobile *character, double maxRotation, double targetRadius, double slowRadius, double wanderOffset, double wanderRadius, double wanderRate, double wanderTime, double maxSpeed);
+                Wander(std::string name, Mobile *character, double maxRotation, double targetRadius, double slowRadius, double wanderOffset, double wanderRadius, double wanderRate, double wanderTime, double maxSpeed);
 
-                virtual vector<Triple> getVel(unsigned int ticks);
+                virtual std::vector<Triple> getVel(unsigned int ticks, unsigned int delta_ticks);
 };
 
 #endif

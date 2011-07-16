@@ -10,29 +10,29 @@
 #include <iostream>
 #endif
 
-Pursue::Pursue(string name, Mobile *character, Mobile *target, double maxSpeed):
+Pursue::Pursue(std::string name, Mobile *character, Mobile *target, double maxSpeed):
         DirectKinematicV(name),
         character(character),
         target(target),
         maxSpeed(maxSpeed)
 {}
 
-vector<Triple> Pursue::getVel(unsigned int ticks) {
+std::vector<Triple> Pursue::getVel(unsigned int ticks, unsigned int delta_ticks) {
         Triple steering;
         Triple direction;
         double distance, targetRadius = 2.0, speed, prediction;
         Triple cp, tp;
 
         if (character->vel.length() == 0) {
-                return vector<Triple>();
+                return std::vector<Triple>();
         }
 
-        tie(cp, tp) = points(this->character, this->target);
+        std::tie(cp, tp) = points(this->character, this->target);
         direction = tp - cp;
         distance = direction.length();
 
         if (distance < targetRadius) {
-                return vector<Triple>();
+                return std::vector<Triple>();
         }
 
         speed = character->vel.length();
@@ -42,5 +42,5 @@ vector<Triple> Pursue::getVel(unsigned int ticks) {
 
         steering = (tp + target->vel * prediction - cp).normalized() * maxSpeed;
 
-        return vector<Triple>(1, steering);
+        return std::vector<Triple>(1, steering);
 }

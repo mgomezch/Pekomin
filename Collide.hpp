@@ -5,8 +5,6 @@
 #include "StaticV.hpp"
 #include "Triple.hpp"
 
-using namespace std;
-
 class Mobile;
 
 class Collide : public virtual KinematicV, public virtual StaticV {
@@ -14,10 +12,10 @@ class Collide : public virtual KinematicV, public virtual StaticV {
                 Mobile *character;
                 Mobile *target;
 
-                Collide(string name, Mobile *character, Mobile *target);
+                Collide(std::string name, Mobile *character, Mobile *target);
 
-                virtual vector<Triple> getPosIncr(unsigned int ticks);
-                virtual vector<Triple> getVelIncr(unsigned int ticks);
+                virtual std::vector<Triple> getPosIncr(unsigned int ticks, unsigned int delta_ticks);
+                virtual std::vector<Triple> getVelIncr(unsigned int ticks, unsigned int delta_ticks);
 };
 
 #endif

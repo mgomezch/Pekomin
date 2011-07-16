@@ -3,4 +3,4 @@
 #include "Behavior.hpp"
 #include "DirectKinematicV.hpp"
 
-DirectKinematicV::DirectKinematicV(string name): Behavior(name) {}
+DirectKinematicV::DirectKinematicV(std::string name): Behavior(name) {}

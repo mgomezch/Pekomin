@@ -3,15 +3,13 @@
 
 #include <string>
 
-using namespace std;
-
 class Behavior {
         public:
-                string name;
+                std::string name;
                 bool active;
                 bool dead;
 
-                Behavior(string name = "");
+                Behavior(std::string name = "");
 
                 virtual ~Behavior() = 0;
 };

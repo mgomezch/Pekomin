@@ -3,4 +3,4 @@
 #include "Behavior.hpp"
 #include "DirectStaticA.hpp"
 
-DirectStaticA::DirectStaticA(string name): Behavior(name) {}
+DirectStaticA::DirectStaticA(std::string name): Behavior(name) {}

@@ -6,12 +6,10 @@
 #include "Actor.hpp"
 #include "Triple.hpp"
 
-using namespace std;
-
 class RuntimePoint : public virtual Actor {
         public:
                 RuntimePoint(
-                                string name = "",
+                                std::string name = "",
                                 Triple pos = Triple(), double ang  = 0,
                                 Triple vel = Triple(), double vrot = 0
                             );

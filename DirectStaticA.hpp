@@ -6,15 +6,13 @@
 #include "Behavior.hpp"
 #include "Triple.hpp"
 
-using namespace std;
-
 #define DirectStaticA_CALL_NAME getAng
 
 class DirectStaticA : public virtual Behavior {
         public:
-                DirectStaticA(string name);
+                DirectStaticA(std::string name);
 
-                virtual vector<double> DirectStaticA_CALL_NAME(unsigned int ticks) = 0;
+                virtual std::vector<double> DirectStaticA_CALL_NAME(unsigned int ticks, unsigned int delta_ticks) = 0;
 };
 
 #endif

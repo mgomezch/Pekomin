@@ -10,16 +10,16 @@
 #       include <iostream>
 #endif
 
-Seek::Seek(string name, Mobile *character, Mobile *target, double maxSpeed):
+Seek::Seek(std::string name, Mobile *character, Mobile *target, double maxSpeed):
         DirectKinematicV(name),
         character(character),
         target(target),
         maxSpeed(maxSpeed)
 {}
 
-vector<Triple> Seek::getVel(unsigned int ticks) {
+std::vector<Triple> Seek::getVel(unsigned int ticks, unsigned int delta_ticks) {
         Triple cp, tp;
 
-        tie(cp, tp) = points(this->character, this->target);
-        return vector<Triple>(1, (tp - cp).normalized() * maxSpeed);
+        std::tie(cp, tp) = points(this->character, this->target);
+        return std::vector<Triple>(1, (tp - cp).normalized() * maxSpeed);
 }

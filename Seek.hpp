@@ -1,10 +1,10 @@
 #ifndef SEEK_HPP
 #define SEEK_HPP
 
+#include <vector>
+
 #include "DirectKinematicV.hpp"
 #include "Triple.hpp"
-
-using namespace std;
 
 class Mobile;
 
@@ -14,9 +14,9 @@ class Seek : public virtual DirectKinematicV {
                 Mobile *target;
                 double maxSpeed;
 
-                Seek(string name, Mobile *character, Mobile *target, double maxSpeed);
+                Seek(std::string name, Mobile *character, Mobile *target, double maxSpeed);
 
-                virtual vector<Triple> getVel(unsigned int ticks);
+                virtual std::vector<Triple> getVel(unsigned int ticks, unsigned int delta_ticks);
 };
 
 #endif

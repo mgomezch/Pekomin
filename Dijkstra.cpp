@@ -4,36 +4,36 @@
 #include "Node.hpp"
 #include "Dijkstra.hpp"
 
-vector<Node *> dijkstra(Node *begin, Node *end) {
-        tuple<vector<Node *>, double> path, path_temp;
-        vector<tuple<vector<Node *>, double> > open;
-        vector<tuple<vector<Node *>, double> > close;
-        vector<Node *> nodes_temp, out;
+std::vector<Node *> dijkstra(Node *begin, Node *end) {
+        std::tuple<std::vector<Node *>, double> path, path_temp;
+        std::vector<std::tuple<std::vector<Node *>, double> > open;
+        std::vector<std::tuple<std::vector<Node *>, double> > close;
+        std::vector<Node *> nodes_temp, out;
         Node *suc;
         bool ready;
 
-        get<0>(path).push_back(begin);
-        get<1>(path) = 0.0;
+        std::get<0>(path).push_back(begin);
+        std::get<1>(path) = 0.0;
         open.push_back(path);
 
         while (!open.empty()) {
                 path = open.front();
                 open.erase(open.begin());
                 close.push_back(path);
-                for (unsigned int i = 0; i < (get<0>(path).back())->adj.size(); i++) {
-                        suc = get<0>(path).back()->adj[i];
+                for (unsigned int i = 0; i < (std::get<0>(path).back())->adj.size(); i++) {
+                        suc = std::get<0>(path).back()->adj[i];
                         ready = false;
                         for (unsigned int j = 0; j < close.size(); j++) {
-                                if (suc == get<0>(close[j]).back()) {
+                                if (suc == std::get<0>(close[j]).back()) {
                                         ready = true;
                                         break;
                                 }
                         }
                         if (!ready) {
-                                nodes_temp = get<0>(path);
+                                nodes_temp = std::get<0>(path);
                                 nodes_temp.push_back(suc);
-                                get<0>(path_temp) = nodes_temp;
-                                get<1>(path_temp) += distanceNode(get<0>(path).back(), suc);
+                                std::get<0>(path_temp) = nodes_temp;
+                                std::get<1>(path_temp) += distanceNode(std::get<0>(path).back(), suc);
                                 open.push_back(path_temp);
                         }
                 }
@@ -41,8 +41,8 @@ vector<Node *> dijkstra(Node *begin, Node *end) {
                 for (unsigned int i = 0; i < open.size(); i++) {
                         for (unsigned int j = 0; j < open.size(); j++) {
                                 if (open[i] != open[j]) {
-                                        if (get<0>(open[i]).back() == get<0>(open[j]).back()) {
-                                                if (get<1>(open[i]) < get<1>(open[j])) open.erase(open.begin() + j);
+                                        if (std::get<0>(open[i]).back() == std::get<0>(open[j]).back()) {
+                                                if (std::get<1>(open[i]) < std::get<1>(open[j])) open.erase(open.begin() + j);
                                                 else open.erase(open.begin() + i);
                                         }
                                 }
@@ -51,8 +51,8 @@ vector<Node *> dijkstra(Node *begin, Node *end) {
         }
 
         for (unsigned int i = 0; i < close.size(); i++) {
-                if (get<0>(close[i]).front() == begin && get<0>(close[i]).back() == end) {
-                        out = get<0>(close[i]);
+                if (std::get<0>(close[i]).front() == begin && std::get<0>(close[i]).back() == end) {
+                        out = std::get<0>(close[i]);
                         break;
                 }
         }

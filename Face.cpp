@@ -12,7 +12,7 @@
 #include <iostream>
 #endif
 
-Face::Face(string name, Mobile *character, Mobile *target, double maxAngularVelocity, double targetRadius, double slowRadius):
+Face::Face(std::string name, Mobile *character, Mobile *target, double maxAngularVelocity, double targetRadius, double slowRadius):
         KinematicA(name),
         character(character),
         target(target),
@@ -21,13 +21,13 @@ Face::Face(string name, Mobile *character, Mobile *target, double maxAngularVelo
         slowRadius(slowRadius)
 {}
 
-vector<double> Face::getAngVelIncr(unsigned int ticks) {
+std::vector<double> Face::getAngVelIncr(unsigned int ticks, unsigned int delta_ticks) {
         double steering;
         double rotation, rotationSize, targetRotation;
         Triple direction;
         Triple cp, tp;
 
-        tie(cp, tp) = points(this->character, this->target);
+        std::tie(cp, tp) = points(this->character, this->target);
         direction = tp - cp;
         rotation = mapToRange(atan2(direction.y, direction.x) - character->ang);
         //if (rotation > M_PI) rotation -= 2 * M_PI;
@@ -35,30 +35,30 @@ vector<double> Face::getAngVelIncr(unsigned int ticks) {
 
         if (rotationSize < targetRadius) {
 #ifdef DEBUG_FACE
-                cout << "Face " << static_cast<void *>(this) << ": dentro de targetRadius" << endl;
+                std::cout << "Face " << static_cast<void *>(this) << ": dentro de targetRadius" << std::endl;
 #endif
                 steering = target->vrot - character->vrot;
                 if (abs(steering) > maxAngularVelocity) {
                         steering = maxAngularVelocity;
                 }
-                return vector<double>(1, steering);
+                return std::vector<double>(1, steering);
         }
 
         targetRotation = maxAngularVelocity; // - target->vrot;
         if (rotationSize < slowRadius) {
 #ifdef DEBUG_FACE
-                cout << "Face " << static_cast<void *>(this) << ": entre targetRadius y slowRadius" << endl;
+                std::cout << "Face " << static_cast<void *>(this) << ": entre targetRadius y slowRadius" << std::endl;
 #endif
                 targetRotation *= rotationSize / slowRadius;
         }
 #ifdef DEBUG_FACE
         else {
-                cout << "Face " << static_cast<void *>(this) << ": fuera de slowRadius" << endl;
+                std::cout << "Face " << static_cast<void *>(this) << ": fuera de slowRadius" << std::endl;
         }
 #endif
         //if (targetRotation < 0) targetRotation = 0;
 
         steering = targetRotation * (rotation > 0 ? -1 : 1);
 
-        return vector<double>(1, steering);
+        return std::vector<double>(1, steering);
 }

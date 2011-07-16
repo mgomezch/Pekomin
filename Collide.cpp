@@ -6,24 +6,24 @@
 
 #ifdef DEBUG_COLLIDE
 #       include <iostream>
-#       define DEBUG_COLLIDE_PRINT(S) cout << "DEBUG: Collide " << reinterpret_cast<void *>(this) << ": " #S << " == " << S << endl;
+#       define DEBUG_COLLIDE_PRINT(S) std::cout << "DEBUG: Collide " << reinterpret_cast<void *>(this) << ": " #S << " == " << S << std::endl;
 #else
 #       define DEBUG_COLLIDE_PRINT(S)
 #endif
 
-Collide::Collide(string name, Mobile *character, Mobile *target):
+Collide::Collide(std::string name, Mobile *character, Mobile *target):
         KinematicV(name),
         StaticV(name),
         character(character),
         target(target)
 {}
 
-vector<Triple> Collide::getPosIncr(unsigned int ticks) {
+std::vector<Triple> Collide::getPosIncr(unsigned int ticks, unsigned int delta_ticks) {
         Triple steering;
         double d;
 
         Triple cp, tp;
-        tie(cp, tp) = points(character, target);
+        std::tie(cp, tp) = points(character, target);
 
         steering = cp - tp;
         d = steering.length();
@@ -32,19 +32,19 @@ vector<Triple> Collide::getPosIncr(unsigned int ticks) {
         DEBUG_COLLIDE_PRINT(d);
         if (0 < d && d < separationRadius) {
                 steering *= maxSpeed * (d / separationRadius);
-                return vector<Triple>(1, steering);
+                return std::vector<Triple>(1, steering);
         }
 #endif
 
-        return vector<Triple>();
+        return std::vector<Triple>();
 }
 
-vector<Triple> Collide::getVelIncr(unsigned int ticks) {
+std::vector<Triple> Collide::getVelIncr(unsigned int ticks, unsigned int delta_ticks) {
         Triple steering;
         double d;
 
         Triple cp, tp;
-        tie(cp, tp) = points(character, target);
+        std::tie(cp, tp) = points(character, target);
 
         steering = cp - tp;
         d = steering.length();
@@ -53,9 +53,9 @@ vector<Triple> Collide::getVelIncr(unsigned int ticks) {
         DEBUG_COLLIDE_PRINT(d);
         if (0 < d && d < separationRadius) {
                 steering *= maxSpeed * (d / separationRadius);
-                return vector<Triple>(1, steering);
+                return std::vector<Triple>(1, steering);
         }
 #endif
 
-        return vector<Triple>();
+        return std::vector<Triple>();
 }

@@ -3,8 +3,6 @@
 
 #include <string>
 
-using namespace std;
-
 class Triple {
         public:
                 double x, y, z;
@@ -34,7 +32,7 @@ class Triple {
                 double length_2();
                 Triple normalized();
                 double ang_xy();
-                string to_string();
+                std::string to_string();
 };
 
 #endif

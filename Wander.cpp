@@ -7,7 +7,7 @@
 #include "util.hpp"
 #include "Wander.hpp"
 
-Wander::Wander(string name, Mobile *character, double maxRotation, double targetRadius, double slowRadius, double wanderOffset, double wanderRadius, double wanderRate, double wanderTime, double maxSpeed):
+Wander::Wander(std::string name, Mobile *character, double maxRotation, double targetRadius, double slowRadius, double wanderOffset, double wanderRadius, double wanderRate, double wanderTime, double maxSpeed):
         DirectKinematicV(name),
         character(character),
         maxRotation(maxRotation),
@@ -27,18 +27,18 @@ Wander::Wander(string name, Mobile *character, double maxRotation, double target
         target->pos = character->pos + target->orientation() * wanderRadius;
 }
 
-vector<Triple> Wander::getVel(unsigned int ticks) {
+std::vector<Triple> Wander::getVel(unsigned int ticks, unsigned int delta_ticks) {
         Triple steering;
         Triple direction;
         double distance, targetSpeed;
 
         Triple cp, tp;
-        tie(cp, tp) = points(character, target);
+        std::tie(cp, tp) = points(character, target);
 
         direction = tp - cp;
         distance = direction.length();
 
-        if ((accum += ticks) > wanderTime) accum = wanderTime;
+        if ((accum += delta_ticks) > wanderTime) accum = wanderTime;
 
         if (accum == wanderTime) {
                 wanderOrientation += RandBin(-1, 1) * wanderRate;
@@ -53,7 +53,7 @@ vector<Triple> Wander::getVel(unsigned int ticks) {
                         steering.normalized();
                         steering *= maxSpeed;
                 }
-                return vector<Triple>(1, steering);
+                return std::vector<Triple>(1, steering);
         }
 
         targetSpeed = maxSpeed - character->vel.dot(direction / distance);
@@ -64,5 +64,5 @@ vector<Triple> Wander::getVel(unsigned int ticks) {
         if (targetSpeed > maxSpeed) targetSpeed = maxSpeed;
 
         steering = (direction * targetSpeed)/distance;
-        return vector<Triple>(1, steering);
+        return std::vector<Triple>(1, steering);
 }

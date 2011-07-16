@@ -1,10 +1,10 @@
 #ifndef STATICVELOCITYMATCH_HPP
 #define STATICVELOCITYMATCH_HPP
 
+#include <vector>
+
 #include "DirectKinematicV.hpp"
 #include "Triple.hpp"
-
-using namespace std;
 
 class Mobile;
 
@@ -13,9 +13,9 @@ class StaticVelocityMatch : public virtual DirectKinematicV {
                 Mobile *character;
                 Mobile *target;
 
-                StaticVelocityMatch(string name, Mobile *character, Mobile *target);
+                StaticVelocityMatch(std::string name, Mobile *character, Mobile *target);
 
-                virtual vector<Triple> getVel(unsigned int ticks);
+                virtual std::vector<Triple> getVel(unsigned int ticks, unsigned int delta_ticks);
 };
 
 #endif

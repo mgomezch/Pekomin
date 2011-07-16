@@ -6,14 +6,12 @@
 #include "Mobile.hpp"
 #include "Triple.hpp"
 
-using namespace std;
-
 class Segment : public virtual Mobile {
         public:
                 Triple p1, p2;
 
                 Segment(
-                                string name = "",
+                                std::string name = "",
                                 Triple pos = Triple(), double ang  = 0,
                                 Triple vel = Triple(), double vrot = 0,
                                 Triple p1 = Triple(-1, 0, 0),
@@ -24,10 +22,10 @@ class Segment : public virtual Mobile {
                 Triple v2();
 };
 
-tuple<Triple, Triple> points(Segment *, Ent     *);
-tuple<Triple, Triple> points(Ent     *, Segment *);
-tuple<Triple, Triple> points(Segment *, Mobile  *);
-tuple<Triple, Triple> points(Mobile  *, Segment *);
-tuple<Triple, Triple> points(Segment *, Segment *);
+std::tuple<Triple, Triple> points(Segment *, Ent     *);
+std::tuple<Triple, Triple> points(Ent     *, Segment *);
+std::tuple<Triple, Triple> points(Segment *, Mobile  *);
+std::tuple<Triple, Triple> points(Mobile  *, Segment *);
+std::tuple<Triple, Triple> points(Segment *, Segment *);
 
 #endif

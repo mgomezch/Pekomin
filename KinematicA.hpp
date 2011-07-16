@@ -5,14 +5,12 @@
 
 #include "Behavior.hpp"
 
-using namespace std;
-
 #define KinematicA_CALL_NAME getAngVelIncr
 
 class KinematicA : public virtual Behavior {
         public:
-                KinematicA(string name);
-                virtual vector<double> KinematicA_CALL_NAME(unsigned int ticks) = 0;
+                KinematicA(std::string name);
+                virtual std::vector<double> KinematicA_CALL_NAME(unsigned int ticks, unsigned int delta_ticks) = 0;
 };
 
 #endif

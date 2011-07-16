@@ -4,7 +4,7 @@
 #include "KinematicArrive.hpp"
 #include "Triple.hpp"
 
-KinematicArrive::KinematicArrive(string name, Ent *character, Ent *target, double maxSpeed, double radius):
+KinematicArrive::KinematicArrive(std::string name, Ent *character, Ent *target, double maxSpeed, double radius):
         DirectKinematicV(name),
         character(character),
         target(target),
@@ -12,11 +12,11 @@ KinematicArrive::KinematicArrive(string name, Ent *character, Ent *target, doubl
         radius(radius)
 {}
 
-vector<Triple> KinematicArrive::getVel(unsigned int ticks) {
+std::vector<Triple> KinematicArrive::getVel(unsigned int ticks, unsigned int delta_ticks) {
         Triple steering;
         Triple cp, tp;
 
-        tie(cp, tp) = points(this->character, this->target);
+        std::tie(cp, tp) = points(this->character, this->target);
         steering = tp - cp;
 
         if (steering.length() > radius) {
@@ -25,8 +25,8 @@ vector<Triple> KinematicArrive::getVel(unsigned int ticks) {
                         steering.normalized();
                         steering *= maxSpeed;
                 }
-                return vector<Triple>(1, steering);
+                return std::vector<Triple>(1, steering);
         }
 
-        return vector<Triple>();
+        return std::vector<Triple>();
 }

@@ -13,19 +13,19 @@
 #include <iostream>
 #endif
 
-#define DEF_POINTS_SWAPPER(T1, T2)                   \
-        tuple<Triple, Triple> points(T2 *x, T1 *y) { \
-                Triple a, b;                         \
-                tie(b, a) = points(y, x);            \
-                return make_tuple(a, b);             \
+#define DEF_POINTS_SWAPPER(T1, T2)                        \
+        std::tuple<Triple, Triple> points(T2 *x, T1 *y) { \
+                Triple a, b;                              \
+                std::tie(b, a) = points(y, x);            \
+                return std::make_tuple(a, b);             \
         }
 
-#define DEF_POINTS_STUB(T1, T2)                        \
-        tuple<Triple, Triple> points(T1 *x, T2 *y) {   \
-                return make_tuple(Triple(), Triple()); \
+#define DEF_POINTS_STUB(T1, T2)                             \
+        std::tuple<Triple, Triple> points(T1 *x, T2 *y) {   \
+                return std::make_tuple(Triple(), Triple()); \
         }
 
-Ent::Ent(string name, Triple pos, double ang):
+Ent::Ent(std::string name, Triple pos, double ang):
         name(name),
         pos(pos),
         ang(ang)
@@ -42,7 +42,7 @@ Triple Ent::orientation() {
         return Triple(cos(ang), sin(ang), 0);
 }
 
-tuple<Triple, Triple> points(Ent *e1, Ent *e2) {
+std::tuple<Triple, Triple> points(Ent *e1, Ent *e2) {
         // TODO: los comportamientos deberían ser templates para que no haga falta todo esto
         Segment      *s1, *s2;
         Box          *b1, *b2;
@@ -82,7 +82,19 @@ tuple<Triple, Triple> points(Ent *e1, Ent *e2) {
         if ((f2 = dynamic_cast<SurfacePlane *>(e2)) != NULL) return points(e1, f2);
         if ((v2 = dynamic_cast<VolumePlane  *>(e2)) != NULL) return points(e1, v2);
 
-        return make_tuple(e1->pos, e2->pos);
+        return std::make_tuple(e1->pos, e2->pos);
+}
+
+void Ent::addNormal(const Triple &n) {
+        this->normals.push_back(n);
+}
+
+void Ent::collide() {
+        int i, n;
+        for (i = 0, n = this->normals.size(); i < n; ++i) {
+                this->pos += this->normals[i];
+        }
+        normals.clear();
 }
 
 // TODO: implementar toda esta vaina!

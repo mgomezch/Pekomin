@@ -8,12 +8,12 @@
 
 #ifdef DEBUG_DYNAMICSEPARATION
 #       include <iostream>
-#       define DEBUG_SEPARATION_PRINT(S) cout << "DEBUG: Separation " << reinterpret_cast<void *>(this) << ": " #S << " == " << S << endl;
+#       define DEBUG_SEPARATION_PRINT(S) std::cout << "DEBUG: Separation " << reinterpret_cast<void *>(this) << ": " #S << " == " << S << std::endl;
 #else
 #       define DEBUG_SEPARATION_PRINT(S)
 #endif
 
-DynamicSeparation::DynamicSeparation(string name, Mobile *character, Mobile *target, double minForce, double separationRadius):
+DynamicSeparation::DynamicSeparation(std::string name, Mobile *character, Mobile *target, double minForce, double separationRadius):
         DynamicV(name),
         character(character),
         target(target),
@@ -21,20 +21,20 @@ DynamicSeparation::DynamicSeparation(string name, Mobile *character, Mobile *tar
         separationRadius(separationRadius)
 {}
 
-vector<Triple> DynamicSeparation::getForce(unsigned int ticks) {
+std::vector<Triple> DynamicSeparation::getForce(unsigned int ticks, unsigned int delta_ticks) {
         Triple steering;
         double d;
 
         Triple cp, tp;
-        tie(cp, tp) = points(character, target);
+        std::tie(cp, tp) = points(character, target);
 
         steering = cp - tp;
         d = steering.length();
         DEBUG_SEPARATION_PRINT(d);
         if (0 < d && d < separationRadius) {
                 steering *= (minForce * separationRadius) / d;
-                return vector<Triple>(1, steering);
+                return std::vector<Triple>(1, steering);
         }
-        return vector<Triple>();
+        return std::vector<Triple>();
 
 }

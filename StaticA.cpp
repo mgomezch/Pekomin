@@ -3,4 +3,4 @@
 #include "Behavior.hpp"
 #include "StaticA.hpp"
 
-StaticA::StaticA(string name): Behavior(name) {}
+StaticA::StaticA(std::string name): Behavior(name) {}

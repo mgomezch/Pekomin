@@ -5,15 +5,13 @@
 
 #include "Behavior.hpp"
 
-using namespace std;
-
 #define StaticA_CALL_NAME getAngIncr
 
 class StaticA : public virtual Behavior {
         public:
-                StaticA(string name);
+                StaticA(std::string name);
 
-                virtual vector<double> StaticA_CALL_NAME(unsigned int ticks) = 0;
+                virtual std::vector<double> StaticA_CALL_NAME(unsigned int ticks, unsigned int delta_ticks) = 0;
 };
 
 #endif

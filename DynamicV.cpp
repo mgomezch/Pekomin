@@ -3,4 +3,4 @@
 #include "Behavior.hpp"
 #include "DynamicV.hpp"
 
-DynamicV::DynamicV(string name): Behavior(name) {}
+DynamicV::DynamicV(std::string name): Behavior(name) {}

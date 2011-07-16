@@ -2,7 +2,6 @@
 #define FLOCK_HPP
 
 #include <vector>
-#include <utility>
 
 #include "KinematicV.hpp"
 
@@ -18,11 +17,11 @@ class Flock : public virtual KinematicV {
 
                 Mobile* target;
                 unsigned int accum;
-                vector<Mobile*> boids;
+               std::vector<Mobile*> boids;
 
-                Flock(string name, Mobile *character, double targetRadius, double slowRadius, double flockRadius, double maxAcceleration);
+                Flock(std::string name, Mobile *character, double targetRadius, double slowRadius, double flockRadius, double maxAcceleration);
 
-                virtual vector<Triple> getVelIncr(unsigned int ticks);
+                virtual std::vector<Triple> getVelIncr(unsigned int ticks, unsigned int delta_ticks);
 
                 void addBoid(Mobile *boid);
 };

@@ -11,7 +11,7 @@
 #       include <iostream>
 #endif
 
-RuntimeSegment::RuntimeSegment(string name, Triple pos, double ang, Triple vel, double vrot, Triple p1, Triple p2):
+RuntimeSegment::RuntimeSegment(std::string name, Triple pos, double ang, Triple vel, double vrot, Triple p1, Triple p2):
         Segment(name, pos, ang, vel, vrot, p1, p2)
 {}
 

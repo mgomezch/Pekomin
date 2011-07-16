@@ -165,7 +165,7 @@ string Triple::to_string() {
         string r;
 
         if (asprintf(&s, "(%f, %f, %f)", x, y, z) == -1) {
-                cerr << "ERROR: Triple::to_string(): cannot allocate output string." << endl;
+                std::cerr << "ERROR: Triple::to_string(): cannot allocate output string." << std::endl;
                 exit(EX_OSERR);
         }
         r = string(s);

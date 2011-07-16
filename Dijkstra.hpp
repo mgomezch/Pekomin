@@ -5,7 +5,7 @@
 
 #include "Node.hpp"
 
-vector<Node *> dijkstra(Node *begin, Node *end);
+std::vector<Node *> dijkstra(Node *begin, Node *end);
 double distanceNode(Node *n1, Node *n2);
 
 #endif

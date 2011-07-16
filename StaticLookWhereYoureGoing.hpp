@@ -1,9 +1,9 @@
 #ifndef STATICLOOKWHEREYOUREGOING_HPP
 #define STATICLOOKWHEREYOUREGOING_HPP
 
-#include "DirectStaticA.hpp"
+#include <vector>
 
-using namespace std;
+#include "DirectStaticA.hpp"
 
 class Mobile;
 
@@ -11,9 +11,9 @@ class StaticLookWhereYoureGoing : public virtual DirectStaticA {
         public:
                 Mobile *character;
 
-                StaticLookWhereYoureGoing(string name, Mobile *character);
+                StaticLookWhereYoureGoing(std::string name, Mobile *character);
 
-                virtual vector<double> getAng(unsigned int ticks);
+                virtual std::vector<double> getAng(unsigned int ticks, unsigned int delta_ticks);
 };
 
 #endif

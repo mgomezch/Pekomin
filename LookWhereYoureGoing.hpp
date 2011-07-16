@@ -1,9 +1,9 @@
 #ifndef LOOKWHEREYOUREGOING_HPP
 #define LOOKWHEREYOUREGOING_HPP
 
-#include "DirectKinematicA.hpp"
+#include <vector>
 
-using namespace std;
+#include "DirectKinematicA.hpp"
 
 class Mobile;
 
@@ -14,9 +14,9 @@ class LookWhereYoureGoing : public virtual DirectKinematicA {
                 double targetRadius;
                 double slowRadius;
 
-                LookWhereYoureGoing(string name, Mobile *character, double maxAngularVelocity, double targetRadius, double slowRadius);
+                LookWhereYoureGoing(std::string name, Mobile *character, double maxAngularVelocity, double targetRadius, double slowRadius);
 
-                virtual vector<double> getAngVel(unsigned int ticks);
+                virtual std::vector<double> getAngVel(unsigned int ticks, unsigned int delta_ticks);
 };
 
 #endif

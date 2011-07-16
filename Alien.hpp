@@ -2,12 +2,9 @@
 #define ALIEN_HPP
 
 #include <vector>
-#include <tuple>
 
 #include "Actor.hpp"
 #include "Triple.hpp"
-
-using namespace std;
 
 #define ALIEN_DEFAULT_MAX_HP 100
 
@@ -30,11 +27,11 @@ class Alien : public virtual Actor {
                 Behavior *wander, *arrive, *pursue, *evade;
 
                 bool leader;
-                vector<Behavior *> flock;
+                std::vector<Behavior *> flock;
 
-                Alien(Mobile *target, string name = "", Triple pos = Triple(), double ang = 0, Triple vel = Triple(), double vrot = 0, int hpmax = ALIEN_DEFAULT_MAX_HP);
+                Alien(Mobile *target, std::string name = "", Triple pos = Triple(), double ang = 0, Triple vel = Triple(), double vrot = 0, int hpmax = ALIEN_DEFAULT_MAX_HP);
 
-                virtual void steer(unsigned int ticks);
+                virtual void steer(unsigned int ticks, unsigned int delta_ticks);
                 virtual void draw();
 };
 

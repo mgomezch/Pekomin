@@ -1,6 +1,8 @@
 #ifndef KINEMATICWANDER_HPP
 #define KINEMATICWANDER_HPP
 
+#include <vector>
+
 #include "DirectKinematicV.hpp"
 #include "Triple.hpp"
 
@@ -15,9 +17,9 @@ class KinematicWander : public virtual DirectKinematicV {
 
                 int accum;
 
-                KinematicWander(string name, Ent *character, double maxSpeed, double maxRotation, double wanderTime);
+                KinematicWander(std::string name, Ent *character, double maxSpeed, double maxRotation, double wanderTime);
 
-                virtual vector<Triple> getVel(unsigned int ticks);
+                virtual std::vector<Triple> getVel(unsigned int ticks, unsigned int delta_ticks);
 };
 
 #endif

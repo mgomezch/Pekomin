@@ -38,11 +38,11 @@ Alien::Alien(Mobile *target, string name, Triple pos, double ang, Triple vel, do
         this->evade ->active = false;
 }
 
-void Alien::steer(unsigned int ticks) {
+void Alien::steer(unsigned int ticks, unsigned int delta_ticks) {
         Triple cp, tp;
         double d;
 
-        tie(cp, tp) = points(this, target);
+        std::tie(cp, tp) = points(this, target);
         d = (tp - cp).length();
 
         if (state != States::Wander && d > 20) {
@@ -68,7 +68,7 @@ void Alien::steer(unsigned int ticks) {
                 }
         }
 
-        this->Actor::steer(ticks);
+        this->Actor::steer(ticks, delta_ticks);
 }
 
 void Alien::draw() {

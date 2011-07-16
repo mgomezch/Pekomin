@@ -49,8 +49,8 @@
 #define COSA                3
 
 extern Player *player;
-extern vector<Ent *> ents;
-extern vector<Node *> nodes;
+extern std::vector<Ent *> ents;
+extern std::vector<Node *> nodes;
 
 enum cam_enum {
         CAM_STATIC_OVERHEAD = 0,

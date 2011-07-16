@@ -1,10 +1,10 @@
 #ifndef BOUNDEDDYNAMICSEPARATION_HPP
 #define BOUNDEDDYNAMICSEPARATION_HPP
 
+#include <vector>
+
 #include "DynamicV.hpp"
 #include "Triple.hpp"
-
-using namespace std;
 
 class Mobile;
 
@@ -15,9 +15,9 @@ class BoundedDynamicSeparation : public virtual DynamicV {
                 double maxForce;
                 double separationRadius;
 
-                BoundedDynamicSeparation(string name, Mobile *character, Mobile *target, double maxForce, double separationRadius);
+                BoundedDynamicSeparation(std::string name, Mobile *character, Mobile *target, double maxForce, double separationRadius);
 
-                virtual vector<Triple> getForce(unsigned int ticks);
+                virtual std::vector<Triple> getForce(unsigned int ticks, unsigned int delta_ticks);
 };
 
 #endif

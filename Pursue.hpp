@@ -1,10 +1,10 @@
 #ifndef PURSUE_HPP
 #define PURSUE_HPP
 
+#include <vector>
+
 #include "DirectKinematicV.hpp"
 #include "Triple.hpp"
-
-using namespace std;
 
 class Mobile;
 
@@ -16,9 +16,9 @@ class Pursue : public virtual DirectKinematicV {
 
                 static const double maxPrediction = 10;
 
-                Pursue(string name, Mobile *character, Mobile *target, double maxSpeed);
+                Pursue(std::string name, Mobile *character, Mobile *target, double maxSpeed);
 
-                virtual vector<Triple> getVel(unsigned int ticks);
+                virtual std::vector<Triple> getVel(unsigned int ticks, unsigned int delta_ticks);
 };
 
 #endif

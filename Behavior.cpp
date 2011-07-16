@@ -4,7 +4,7 @@
 
 Behavior::~Behavior() {}
 
-Behavior::Behavior(string name):
+Behavior::Behavior(std::string name):
         name(name),
         active(true),
         dead(false)

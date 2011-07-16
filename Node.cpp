@@ -3,7 +3,7 @@
 #include "gl.hpp"
 #include <GL/glut.h>
 
-Node::Node(string name, Triple pos):
+Node::Node(std::string name, Triple pos):
         Ent(name, pos, 0)
 {}
 
@@ -22,16 +22,16 @@ bool Node::is_adj(Node *node) {
 }
 
 void Node::print_node() {
-        cout << "Node " << static_cast<void *>(this) << ": name == " << this->name << "; pos == (" << this->pos.x << ", " << this->pos.y << ", " << this->pos.z << ")" << endl;
+        std::cout << "Node " << static_cast<void *>(this) << ": name == " << this->name << "; pos == (" << this->pos.x << ", " << this->pos.y << ", " << this->pos.z << ")" << std::endl;
 }
 
 void Node::print_adj() {
         this->print_node();
-        cout << "\tAdjacency nodes:" << endl;
+        std::cout << "\tAdjacency nodes:" << std::endl;
         Node *node;
         for (unsigned int i = 0; i < adj.size(); i++) {
                 node = adj[i];
-                cout << "\tNode " << static_cast<void *>(node) << ": name == " << node->name << "; pos == (" << node->pos.x << ", " << node->pos.y << ", " << node->pos.z << ")" << endl;
+                std::cout << "\tNode " << static_cast<void *>(node) << ": name == " << node->name << "; pos == (" << node->pos.x << ", " << node->pos.y << ", " << node->pos.z << ")" << std::endl;
         }
 }
 
@@ -49,6 +49,6 @@ void Node::draw() {
         glPopMatrix();
 }
 
-void Node::steer(unsigned int ticks) {}
+void Node::steer(unsigned int ticks, unsigned int delta_ticks) {}
 
 void Node::update() {}

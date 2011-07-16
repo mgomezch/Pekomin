@@ -1,10 +1,10 @@
 #ifndef EVADE_HPP
 #define EVADE_HPP
 
+#include <vector>
+
 #include "DirectKinematicV.hpp"
 #include "Triple.hpp"
-
-using namespace std;
 
 class Mobile;
 
@@ -16,9 +16,9 @@ class Evade : public virtual DirectKinematicV {
 
                 static const double maxPrediction = 10;
 
-                Evade(string name, Mobile *character, Mobile *target, double maxSpeed);
+                Evade(std::string name, Mobile *character, Mobile *target, double maxSpeed);
 
-                virtual vector<Triple> getVel(unsigned int ticks);
+                virtual std::vector<Triple> getVel(unsigned int ticks, unsigned int delta_ticks);
 };
 
 #endif

@@ -3,4 +3,4 @@
 #include "Behavior.hpp"
 #include "StaticV.hpp"
 
-StaticV::StaticV(string name): Behavior(name) {}
+StaticV::StaticV(std::string name): Behavior(name) {}

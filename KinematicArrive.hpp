@@ -1,10 +1,10 @@
 #ifndef KINEMATICARRIVE_HPP
 #define KINEMATICARRIVE_HPP
 
+#include <vector>
+
 #include "DirectKinematicV.hpp"
 #include "Triple.hpp"
-
-using namespace std;
 
 class Ent;
 
@@ -17,9 +17,9 @@ class KinematicArrive : public virtual DirectKinematicV { // TODO: "Kinematic___
 
                 static const double timeToTarget = 0.25;
 
-                KinematicArrive(string name, Ent *character, Ent *target, double maxSpeed, double radius);
+                KinematicArrive(std::string name, Ent *character, Ent *target, double maxSpeed, double radius);
 
-                virtual vector<Triple> getVel(unsigned int ticks);
+                virtual std::vector<Triple> getVel(unsigned int ticks, unsigned int delta_ticks);
 };
 
 #endif

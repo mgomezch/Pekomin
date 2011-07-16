@@ -9,17 +9,17 @@
 
 #ifdef DEBUG_BOX
 #       include <iostream>
-#       define DEBUG_BOX_PRINT(S) cout << "DEBUG: Box " << reinterpret_cast<void *>(this) << ": " #S << " == " << S << endl;
+#       define DEBUG_BOX_PRINT(S) std::cout << "DEBUG: Box " << reinterpret_cast<void *>(this) << ": " #S << " == " << S << std::endl;
 #else
 #       define DEBUG_BOX_PRINT(S)
 #endif
 
-Box::Box(string name, Triple pos, double ang, Triple vel, double vrot, double sx, double sy, double sz):
+Box::Box(std::string name, Triple pos, double ang, Triple vel, double vrot, double sx, double sy, double sz):
         Mobile(name, pos, ang, vel, vrot),
         sx(sx), sy(sy), sz(sz)
 {}
 
-tuple<Triple, Triple> points(Box *s, Ent *e) {
+std::tuple<Triple, Triple> points(Box *s, Ent *e) {
         double dist, size;
         Triple r = s->pos, p = e->pos;
         Triple d = p - r;
@@ -46,24 +46,24 @@ tuple<Triple, Triple> points(Box *s, Ent *e) {
         if (size <  dist) dist =  size;
         r += dir * dist;
 
-        return make_tuple(r, p);
+        return std::make_tuple(r, p);
 }
 
-tuple<Triple, Triple> points(Ent *x, Box *y) {
+std::tuple<Triple, Triple> points(Ent *x, Box *y) {
         Triple a, b;
-        tie(b, a) = points(y, x);
-        return make_tuple(a, b);
+        std::tie(b, a) = points(y, x);
+        return std::make_tuple(a, b);
 }
 
-tuple<Triple, Triple> points(Mobile *e, Box *s) {
+std::tuple<Triple, Triple> points(Mobile *e, Box *s) {
         return points(static_cast<Ent *>(e), s);
 }
 
-tuple<Triple, Triple> points(Box *s, Mobile *e) {
+std::tuple<Triple, Triple> points(Box *s, Mobile *e) {
         return points(s, static_cast<Ent *>(e));
 }
 
-tuple<Triple, Triple> points(Box *s1, Box *s2) {
+std::tuple<Triple, Triple> points(Box *s1, Box *s2) {
         // TODO
-        return make_tuple(Triple(), Triple());
+        return std::make_tuple(Triple(), Triple());
 }
