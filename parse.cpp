@@ -8,6 +8,8 @@
 
 #include <sysexits.h>
 
+#include <SOLID/solid.h>
+
 #include "Actor.hpp"
 #include "Alien.hpp"
 #include "Behaviors.hpp"
@@ -36,17 +38,17 @@
                                   << std::endl;                  \
                         ent-> FIELD = it->second;                \
                 }
-        #define SET_ENT_FIELD_STRING_D(FIELD, DEFAULT)   \
-                SET_ENT_FIELD_STRING(FIELD)              \
-                else ent-> FIELD = DEFAULT;              \
-                std::cout << "parse: Ent "               \
-                          << name_s                      \
-                          << " processing string field " \
-                          << it->first                   \
-                          << " with default value \""    \
-                          << DEFAULT                     \
-                          << "\""                        \
-                          << std::endl;
+        #define SET_ENT_FIELD_STRING_D(FIELD, DEFAULT)                                          \
+                SET_ENT_FIELD_STRING(FIELD)                                                     \
+                else {                                                                          \
+                        ent-> FIELD = DEFAULT;                                                  \
+                        std::cout << "parse: Ent "                                              \
+                                  << name_s                                                     \
+                                  << " processing string field " #FIELD " with default value '" \
+                                  << DEFAULT                                                    \
+                                  << "'"                                                        \
+                                  << std::endl;                                                 \
+                }
 #else
         #define SET_ENT_FIELD_STRING(FIELD)         \
                 it = fields.find(string( #FIELD )); \
@@ -64,11 +66,11 @@
                 if (it != fields.end()) {                                            \
                         std::cout << "parse: Ent "                                   \
                                   << name_s                                          \
-                                  << " processing string field "                     \
+                                  << " processing double field "                     \
                                   << it->first                                       \
-                                  << " with value \""                                \
+                                  << " with value '"                                 \
                                   << it->second                                      \
-                                  << "\""                                            \
+                                  << "'"                                             \
                                   << std::endl;                                      \
                         if (sscanf(it->second.c_str(), "%lf", &d) != 1) {            \
                                 std::cerr << "parse error reading Ent double field " \
@@ -80,17 +82,17 @@
                         }                                                            \
                         ent-> FIELD = d;                                             \
                 }
-        #define SET_ENT_FIELD_DOUBLE_D(FIELD, DEFAULT)   \
-                SET_ENT_FIELD_DOUBLE(FIELD)              \
-                else ent-> FIELD = DEFAULT;              \
-                std::cout << "parse: Ent "               \
-                          << name_s                      \
-                          << " processing string field " \
-                          << it->first                   \
-                          << " with default value \""    \
-                          << DEFAULT                     \
-                          << "\""                        \
-                          << std::endl;
+        #define SET_ENT_FIELD_DOUBLE_D(FIELD, DEFAULT)           \
+                SET_ENT_FIELD_DOUBLE(FIELD)                      \
+                else {                                           \
+                        ent-> FIELD = DEFAULT;                   \
+                        std::cout << "parse: Ent "                                              \
+                                  << name_s                                                     \
+                                  << " processing double field " #FIELD " with default value '" \
+                                  << DEFAULT                                                    \
+                                  << "'"                                                        \
+                                  << std::endl;                                                 \
+                }
 #else
         #define SET_ENT_FIELD_DOUBLE(FIELD)                                          \
                 it = fields.find(string( #FIELD ));                                  \
@@ -107,6 +109,60 @@
                 }
         #define SET_ENT_FIELD_DOUBLE_D(FIELD, DEFAULT) \
                 SET_ENT_FIELD_DOUBLE(FIELD)            \
+                else ent-> FIELD = DEFAULT;
+#endif
+
+#ifdef DEBUG_PARSE
+        #define SET_ENT_FIELD_BOOL(FIELD)                                          \
+                it = fields.find(string( #FIELD ));                                \
+                if (it != fields.end()) {                                          \
+                        std::cout << "parse: Ent "                                 \
+                                  << name_s                                        \
+                                  << " processing bool field "                     \
+                                  << it->first                                     \
+                                  << " with value \""                              \
+                                  << it->second                                    \
+                                  << "\""                                          \
+                                  << std::endl;                                    \
+                        if      (it->second != "true" ) ent-> FIELD = true ;       \
+                        else if (it->second != "false") ent-> FIELD = false;       \
+                        else {                                                     \
+                                std::cerr << "parse error reading Ent bool field " \
+                                          << it->first                             \
+                                          << " == "                                \
+                                          << it->second                            \
+                                          << std::endl;                            \
+                                exit(EX_DATAERR);                                  \
+                        }                                                          \
+                }
+        #define SET_ENT_FIELD_BOOL_D(FIELD, DEFAULT)                                           \
+                SET_ENT_FIELD_BOOL(FIELD)                                                      \
+                else {                                                                         \
+                        ent-> FIELD = DEFAULT;                                                 \
+                        std::cout << "parse: Ent "                                             \
+                                  << name_s                                                    \
+                                  << " processing bool field " #FIELD " with default value \'" \
+                                  << DEFAULT                                                   \
+                                  << "\'"                                                      \
+                                  << std::endl;                                                \
+                }
+#else
+        #define SET_ENT_FIELD_BOOL(FIELD)                                          \
+                it = fields.find(string( #FIELD ));                                \
+                if (it != fields.end()) {                                          \
+                        if      (it->second != "true" ) ent-> FIELD = true ;       \
+                        else if (it->second != "false") ent-> FIELD = false;       \
+                        else {                                                     \
+                                std::cerr << "parse error reading Ent bool field " \
+                                          << it->first                             \
+                                          << " == "                                \
+                                          << it->second                            \
+                                          << std::endl;                            \
+                                exit(EX_DATAERR);                                  \
+                        }                                                          \
+                }
+        #define SET_ENT_FIELD_BOOL_D(FIELD, DEFAULT) \
+                SET_ENT_FIELD_BOOL(FIELD)            \
                 else ent-> FIELD = DEFAULT;
 #endif
 
@@ -131,29 +187,30 @@
                         }                                                                \
                         rs-> FIELD = d;                                                  \
                 }
-        #define SET_SEGMENT_FIELD_DOUBLE_D(FIELD, DEFAULT)       \
-                SET_SEGMENT_FIELD_DOUBLE(FIELD)                  \
-                else rs-> FIELD = DEFAULT;                       \
-                std::cout << "parse: Ent "                       \
-                          << name_s                              \
-                          << " processing Segment double field " \
-                          << it->first                           \
-                          << " with default value "              \
-                          << DEFAULT                             \
-                          << std::endl;
+        #define SET_SEGMENT_FIELD_DOUBLE_D(FIELD, DEFAULT)                                             \
+                SET_SEGMENT_FIELD_DOUBLE(FIELD)                                                        \
+                else {                                                                                 \
+                        rs-> FIELD = DEFAULT;                                                          \
+                        std::cout << "parse: Ent "                                                     \
+                                  << name_s                                                            \
+                                  << " processing Segment double field " #FIELD " with default value " \
+                                  << DEFAULT                                                           \
+                                  << std::endl;                                                        \
+                }
 #else
-        #define SET_SEGMENT_FIELD_DOUBLE(FIELD)                                          \
-                it = fields.find(string( #FIELD ));                                      \
-                if (it != fields.end()) {                                                \
-                        if (sscanf(it->second.c_str(), "%lf", &d) != 1) {                \
-                                std::cerr << "parse error reading Segment double field " \
-                                          << it->first                                   \
-                                          << " == "                                      \
-                                          << it->second                                  \
-                                          << std::endl;                                  \
-                                exit(EX_DATAERR);                                        \
-                        }                                                                \
-                        rs-> FIELD = d;                                                  \
+        #define SET_SEGMENT_FIELD_DOUBLE(FIELD)                                           \
+                it = fields.find(string( #FIELD ));                                       \
+                if (it != fields.end()) {                                                 \
+                        if (sscanf(it->second.c_str(), "%lf", &d) != 1) {                 \
+                                std::cerr << "parse error reading Segment double field '" \
+                                          << it->first                                    \
+                                          << "' == '"                                     \
+                                          << it->second                                   \
+                                          << "'"                                          \
+                                          << std::endl;                                   \
+                                exit(EX_DATAERR);                                         \
+                        }                                                                 \
+                        rs-> FIELD = d;                                                   \
                 }
         #define SET_SEGMENT_FIELD_DOUBLE_D(FIELD, DEFAULT) \
                 SET_SEGMENT_FIELD_DOUBLE(FIELD)            \
@@ -181,16 +238,16 @@
                         }                                                            \
                         rb-> FIELD = d;                                              \
                 }
-#       define SET_BOX_FIELD_DOUBLE_D(FIELD, DEFAULT)        \
-                SET_BOX_FIELD_DOUBLE(FIELD)                  \
-                else rb-> FIELD = DEFAULT;                   \
-                std::cout << "parse: Ent "                   \
-                          << name_s                          \
-                          << " processing Box double field " \
-                          << it->first                       \
-                          << " with default value "          \
-                          << DEFAULT                         \
-                          << std::endl;
+#       define SET_BOX_FIELD_DOUBLE_D(FIELD, DEFAULT)                                              \
+                SET_BOX_FIELD_DOUBLE(FIELD)                                                        \
+                else {                                                                             \
+                        rb-> FIELD = DEFAULT;                                                      \
+                        std::cout << "parse: Ent "                                                 \
+                                  << name_s                                                        \
+                                  << " processing Box double field " #FIELD " with default value " \
+                                  << DEFAULT                                                       \
+                                  << std::endl;                                                    \
+                }
 #else
 #       define SET_BOX_FIELD_DOUBLE(FIELD)                                           \
                 it = fields.find(string( #FIELD ));                                  \
@@ -253,29 +310,137 @@
         target = it_entses->second;
 
 #ifdef DEBUG_PARSE
-#       define SET_BEHAVIOR_DOUBLE_D(FIELD, DEFAULT)                                             \
-                double FIELD ;                                                                   \
-                it_fields = it_b->second->find(string( #FIELD ));                                \
-                if (it_fields == it_b->second->end()) {                                          \
-                        std::cout << "parse: Ent '"                                              \
-                                  << it_e->first                                                 \
-                                  << "' behavior '"                                              \
-                                  << it_b->first                                                 \
-                                  << "': processing double field " #FIELD " with default value " \
-                                  << DEFAULT                                                     \
-                                  << std::endl;                                                  \
-                        FIELD = DEFAULT;                                                         \
-                }                                                                                \
-                if (sscanf(it_fields->second.c_str(), "%lf", & FIELD ) != 1) {                   \
-                        std::cerr << "parse error making Ent '"                                  \
-                                  << it_e->first                                                 \
-                                  << "' behavior '"                                              \
-                                  << it_b->first                                                 \
-                                  << "': specified field '" #FIELD "' == '"                      \
-                                  << it_fields->second                                           \
-                                  << "' not a floating-point number"                             \
-                                  << std::endl;                                                  \
-                        exit(EX_DATAERR);                                                        \
+#       define SET_BEHAVIOR_BOOL_D(FIELD, DEFAULT)                                                \
+                bool FIELD ;                                                                      \
+                it_fields = it_b->second->find(string( #FIELD ));                                 \
+                if (it_fields == it_b->second->end()) {                                           \
+                        std::cout << "parse: Ent '"                                               \
+                                  << it_e->first                                                  \
+                                  << "' behavior '"                                               \
+                                  << it_b->first                                                  \
+                                  << "': processing bool field '" #FIELD "' with default value '" \
+                                  << DEFAULT                                                      \
+                                  << "'"                                                          \
+                                  << std::endl;                                                   \
+                        FIELD = DEFAULT;                                                          \
+                }                                                                                 \
+                if      (it_fields->second != "true" ) FIELD = true ;                             \
+                else if (it_fields->second != "false") FIELD = false;                             \
+                else {                                                                            \
+                        std::cerr << "parse error making Ent '"                                   \
+                                  << it_e->first                                                  \
+                                  << "' behavior '"                                               \
+                                  << it_b->first                                                  \
+                                  << "': specified field '" #FIELD "' == '"                       \
+                                  << it_fields->second                                            \
+                                  << "' not a boolean"                                            \
+                                  << std::endl;                                                   \
+                        exit(EX_DATAERR);                                                         \
+                }
+#       define SET_BEHAVIOR_BOOL(FIELD)                                             \
+                bool FIELD ;                                                        \
+                it_fields = it_b->second->find(string( #FIELD ));                   \
+                if (it_fields == it_b->second->end()) {                             \
+                        std::cerr << "parse error making Ent '"                     \
+                                  << it_e->first                                    \
+                                  << "' behavior '"                                 \
+                                  << it_b->first                                    \
+                                  << "': required field '" #FIELD "' not specified" \
+                                  << std::endl;                                     \
+                        exit(EX_DATAERR);                                           \
+                }                                                                   \
+                if      (it_fields->second != "true" ) FIELD = true ;               \
+                else if (it_fields->second != "false") FIELD = false;               \
+                else {                                                              \
+                        std::cerr << "parse error making Ent '"                     \
+                                  << it_e->first                                    \
+                                  << "' behavior '"                                 \
+                                  << it_b->first                                    \
+                                  << "': specified field '" #FIELD "' == '"         \
+                                  << it_fields->second                              \
+                                  << "' not a boolean"                              \
+                                  << std::endl;                                     \
+                        exit(EX_DATAERR);                                           \
+                }                                                                   \
+                std::cout << "parse: Ent '"                                         \
+                          << it_e->first                                            \
+                          << "' behavior '"                                         \
+                          << it_b->first                                            \
+                          << "': processing bool field " #FIELD " with value "      \
+                          << FIELD                                                  \
+                          << std::endl;
+#else
+#       define SET_BEHAVIOR_BOOL_D(FIELD, DEFAULT)                             \
+                bool FIELD ;                                                   \
+                it_fields = it_b->second->find(string( #FIELD ));              \
+                if (it_fields == it_b->second->end()) {                        \
+                        FIELD = DEFAULT;                                       \
+                }                                                              \
+                if      (it_fields->second != "true" ) FIELD = true ;          \
+                else if (it_fields->second != "false") FIELD = false;          \
+                else {                                                         \
+                        std::cerr << "parse error making Ent '"                \
+                                  << it_e->first                               \
+                                  << "' behavior '"                            \
+                                  << it_b->first                               \
+                                  << "': specified field '" #FIELD "' == '"    \
+                                  << it_fields->second                         \
+                                  << "' not a boolean"                         \
+                                  << std::endl;                                \
+                        exit(EX_DATAERR);                                      \
+                }
+#       define SET_BEHAVIOR_BOOL(FIELD)                                             \
+                bool FIELD ;                                                        \
+                it_fields = it_b->second->find(string( #FIELD ));                   \
+                if (it_fields == it_b->second->end()) {                             \
+                        std::cerr << "parse error making Ent '"                     \
+                                  << it_e->first                                    \
+                                  << "' behavior '"                                 \
+                                  << it_b->first                                    \
+                                  << "': required field '" #FIELD "' not specified" \
+                                  << std::endl;                                     \
+                        exit(EX_DATAERR);                                           \
+                }                                                                   \
+                if      (it_fields->second != "true" ) FIELD = true ;               \
+                else if (it_fields->second != "false") FIELD = false;               \
+                else {                                                              \
+                        std::cerr << "parse error making Ent '"                     \
+                                  << it_e->first                                    \
+                                  << "' behavior '"                                 \
+                                  << it_b->first                                    \
+                                  << "': specified field '" #FIELD "' == '"         \
+                                  << it_fields->second                              \
+                                  << "' not a boolean"                              \
+                                  << std::endl;                                     \
+                        exit(EX_DATAERR);                                           \
+                }
+#endif
+
+#ifdef DEBUG_PARSE
+#       define SET_BEHAVIOR_DOUBLE_D(FIELD, DEFAULT)                                                \
+                double FIELD ;                                                                      \
+                it_fields = it_b->second->find(string( #FIELD ));                                   \
+                if (it_fields == it_b->second->end()) {                                             \
+                        std::cout << "parse: Ent '"                                                 \
+                                  << it_e->first                                                    \
+                                  << "' behavior '"                                                 \
+                                  << it_b->first                                                    \
+                                  << "': processing double field '" #FIELD "' with default value '" \
+                                  << DEFAULT                                                        \
+                                  << "'"                                                            \
+                                  << std::endl;                                                     \
+                        FIELD = DEFAULT;                                                            \
+                }                                                                                   \
+                if (sscanf(it_fields->second.c_str(), "%lf", & FIELD ) != 1) {                      \
+                        std::cerr << "parse error making Ent '"                                     \
+                                  << it_e->first                                                    \
+                                  << "' behavior '"                                                 \
+                                  << it_b->first                                                    \
+                                  << "': specified field '" #FIELD "' == '"                         \
+                                  << it_fields->second                                              \
+                                  << "' not a floating-point number"                                \
+                                  << std::endl;                                                     \
+                        exit(EX_DATAERR);                                                           \
                 }
 #       define SET_BEHAVIOR_DOUBLE(FIELD)                                           \
                 double FIELD ;                                                      \
@@ -365,7 +530,8 @@
                 exit(EX_SOFTWARE);                      \
         }
 
-using namespace std;
+using std::unordered_map;
+using std::string;
 
 unordered_map<string, Mobile *> entses;
 unordered_map<string, unordered_map<string, unordered_map<string, string> *> *> behaviorses;
@@ -373,10 +539,9 @@ unordered_map<string, unordered_map<string, unordered_map<string, string> *> *> 
 void parse_r(char *s, int chars) {
         double d;
         char   *name  , *type  , *field  , *value  ;
-        string  name_s,  type_s,  field_s,  value_s;
-        unordered_map<string, string> fields = unordered_map<string, string>();
-        unordered_map<string, unordered_map<string, string> *> *behaviors = new unordered_map<string, unordered_map<string, string> *>();
-        unordered_map<string, string>::const_iterator it;
+        string  name_s,  type_s,  field_s,  value_s, ent_class;
+        auto fields = unordered_map<string, string>();
+        auto behaviors = new unordered_map<string, unordered_map<string, string> *>();
         int nextchars;
         Mobile *ent;
 
@@ -473,43 +638,43 @@ void parse_r(char *s, int chars) {
         std::cout << "parse: leaving Ent " << name_s << std::endl;
 #endif
 
-        it = fields.find(string("class"));
+        auto it = fields.find(string("class"));
         if (it == fields.end()) {
-                std::cerr << "parse error reading Ent " << name_s << ": class attribute not specified" << std::endl;
+                std::cerr << "parse error reading Ent '" << name_s << "': 'class' attribute not specified" << std::endl;
                 exit(EX_DATAERR);
         } else {
-                if (it->second == string("Player")) {
+                ent_class = it->second;
+                if (ent_class == string("Player")) {
                         if (player != NULL) {
                                 std::cerr << "parse error: player already defined" << std::endl;
                                 exit(EX_DATAERR);
                         }
                         ent = player = new Player();
                 }
-                else if (it->second == string("Alien"         )) ent = new Alien(NULL); // FIXME!!!!!!!!!!!!!!!!!!
-#warning "FIXME: Alien instantiated with NULL target!"
-                else if (it->second == string("Phantom"       )) ent = new Phantom();
-                else if (it->second == string("RuntimePoint"  )) ent = new RuntimePoint(); // TODO: gráficos
-                else if (it->second == string("RuntimeSegment")) {
+                else if (ent_class == string("Phantom")) ent = new Phantom();
+                else if (ent_class == string("RuntimePoint")) {
+                        ent = new RuntimePoint(); // TODO: gráficos
+                } else if (ent_class == string("RuntimeSegment")) {
                         RuntimeSegment *rs = new RuntimeSegment();
 
-                        SET_SEGMENT_FIELD_DOUBLE(p1.x);
-                        SET_SEGMENT_FIELD_DOUBLE(p1.y);
-                        SET_SEGMENT_FIELD_DOUBLE(p1.z);
-                        SET_SEGMENT_FIELD_DOUBLE(p2.x);
-                        SET_SEGMENT_FIELD_DOUBLE(p2.y);
-                        SET_SEGMENT_FIELD_DOUBLE(p2.z);
+                        SET_SEGMENT_FIELD_DOUBLE_D(p1.x, -1);
+                        SET_SEGMENT_FIELD_DOUBLE_D(p1.y,  0);
+                        SET_SEGMENT_FIELD_DOUBLE_D(p1.z,  0);
+                        SET_SEGMENT_FIELD_DOUBLE_D(p2.x,  1);
+                        SET_SEGMENT_FIELD_DOUBLE_D(p2.y,  0);
+                        SET_SEGMENT_FIELD_DOUBLE_D(p2.z,  0);
 
                         ent = rs;
-                } else if (it->second == string("RuntimeBox")) {
+                } else if (ent_class == string("RuntimeBox")) {
                         RuntimeBox *rb = new RuntimeBox();
 
-                        SET_BOX_FIELD_DOUBLE(sx);
-                        SET_BOX_FIELD_DOUBLE(sy);
-                        SET_BOX_FIELD_DOUBLE(sz);
+                        SET_BOX_FIELD_DOUBLE_D(sx, 0.5);
+                        SET_BOX_FIELD_DOUBLE_D(sy, 0.5);
+                        SET_BOX_FIELD_DOUBLE_D(sz, 0.5);
 
                         ent = rb;
                 } else {
-                        std::cerr << "parse error reading Ent " << name_s << ": unknown class " << it->second << std::endl;
+                        std::cerr << "parse error reading Ent " << name_s << ": unknown class " << ent_class << std::endl;
                         exit(EX_DATAERR);
                 }
 
@@ -518,19 +683,42 @@ void parse_r(char *s, int chars) {
 
         ent->name = name_s;
 
-        SET_ENT_FIELD_DOUBLE(pos.x);
-        SET_ENT_FIELD_DOUBLE(pos.y);
-        SET_ENT_FIELD_DOUBLE(pos.z);
-        SET_ENT_FIELD_DOUBLE(ang  );
-        SET_ENT_FIELD_DOUBLE(vel.x);
-        SET_ENT_FIELD_DOUBLE(vel.y);
-        SET_ENT_FIELD_DOUBLE(vel.z);
-        SET_ENT_FIELD_DOUBLE(vrot );
+        SET_ENT_FIELD_DOUBLE_D(pos.x, 0);
+        SET_ENT_FIELD_DOUBLE_D(pos.y, 0);
+        SET_ENT_FIELD_DOUBLE_D(pos.z, 0);
+        SET_ENT_FIELD_DOUBLE_D(ang  , 0);
+        SET_ENT_FIELD_DOUBLE_D(vel.x, 0);
+        SET_ENT_FIELD_DOUBLE_D(vel.y, 0);
+        SET_ENT_FIELD_DOUBLE_D(vel.z, 0);
+        SET_ENT_FIELD_DOUBLE_D(vrot , 0);
+        SET_ENT_FIELD_BOOL_D(collides, false);
+
+        if (ent_class == "RuntimePoint" || ent_class == "Phantom" || ent_class == "Player") {
+                DtShapeRef shape = dtNewComplexShape();
+                        dtBegin(DT_SIMPLEX);
+                                dtVertex(ent->pos.x, ent->pos.y, ent->pos.z);
+                        dtEnd();
+                dtEndComplexShape();
+                dtCreateObject(static_cast<Ent *>(ent), shape);
+        } else if (ent_class == "RuntimeSegment") {
+                auto rs = dynamic_cast<RuntimeSegment *>(ent);
+                DtShapeRef shape = dtNewComplexShape();
+                        dtBegin(DT_SIMPLEX);
+                                dtVertex(rs->p1.x, rs->p1.y, rs->p1.z);
+                                dtVertex(rs->p2.x, rs->p2.y, rs->p2.z);
+                        dtEnd();
+                dtEndComplexShape();
+                dtCreateObject(static_cast<Ent *>(rs), shape);
+        } else if (ent_class == "RuntimeBox") {
+                auto rb = dynamic_cast<RuntimeBox *>(ent);
+                DtShapeRef shape = dtBox(2*(rb->sx), 2*(rb->sy), 2*(rb->sz));
+                dtCreateObject(static_cast<Ent *>(rb), shape);
+        }
 
         entses[name_s] = ent;
         behaviorses[name_s] = behaviors;
 
-        fields.erase(fields.begin(), fields.end());
+        fields.clear();
 
 #ifdef DEBUG_PARSE
         std::cout << std::endl;
@@ -772,6 +960,12 @@ void parse(char *s) {
                         std::cerr << "parse error making Ent '" << it_e->first << "' behavior '" << it_b->first << "': field 'class' == '" << it_fields->second << "': class not found" << std::endl;
                         exit(EX_DATAERR);
                 }
+        }
+
+        if (player == NULL) {
+                std::cerr << "warning: no player defined in game file; using default player." << std::endl;
+                player = new Player("default player");
+                ents.push_back(player);
         }
 
         // TODO: DELETE HEAP GARBAGE: delete behaviorses and entses.

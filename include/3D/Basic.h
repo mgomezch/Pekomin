@@ -33,11 +33,6 @@
 
 typedef double Scalar;
 
-#if HAVE_FABS
-/* If Scalar is changed to a float, use fabsf instead */
-#define abs(dbl) fabs(dbl)
-#endif
-
 const Scalar DEGS_PER_RAD = 57.29577951308232286465;
 const Scalar RADS_PER_DEG =  0.01745329251994329547;
 const Scalar TWO_PI =        6.28318530717958623200;

@@ -17,7 +17,10 @@ class Ent {
                 std::string name;
                 Triple pos;
                 double ang;
+
                 std::vector<Triple> normals;
+                bool collides;
+                bool dead;
 
                 Ent(std::string name = "", Triple pos = Triple(), double ang = 0);
                 virtual ~Ent() = 0;
@@ -25,9 +28,9 @@ class Ent {
                 void addNormal(const Triple &n);
                 void collide();
 
-                virtual void draw()                    = 0;
+                virtual void draw() = 0;
                 virtual void steer(unsigned int ticks, unsigned int delta_ticks) = 0;
-                virtual void update()                  = 0;
+                virtual void update() = 0;
 
                 Triple orientation();
 

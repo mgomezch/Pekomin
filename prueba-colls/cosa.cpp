@@ -92,11 +92,9 @@ int main(int argc, char **argv) {
 
                                 PRINT_COLL_DATA(d);
 
-                                dtSelectObject(o1);
                                 get<0>(*o1)[0] += n[0];
                                 get<0>(*o1)[1] += n[1];
                                 get<0>(*o1)[2] += n[2];
-                                dtSelectObject(o2);
                                 get<0>(*o2)[0] -= n[0];
                                 get<0>(*o2)[1] -= n[1];
                                 get<0>(*o2)[2] -= n[2];

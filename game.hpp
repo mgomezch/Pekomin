@@ -194,6 +194,6 @@ extern unsigned int pbi, pbn;
 extern int pts;
 extern unsigned int lives;
 extern unsigned int balas;
-extern unsigned int i, j, k;
+extern unsigned int i, j, k, n;
 
 #endif

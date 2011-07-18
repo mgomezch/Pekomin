@@ -9,36 +9,55 @@
 #include <sysexits.h>
 #include <sys/time.h>
 
+#include <3D/Point.h>
+#include <3D/Quaternion.h>
+#include <SOLID/solid.h>
+
+#include "Alien.hpp"
 #include "Behavior.hpp"
-#include "Behaviors.hpp"
-#include "Dijkstra.hpp"
 #include "game.hpp"
 #include "gl.hpp"
-#include "Node.hpp"
+#include "Node.hpp" // cosas del grafo // TODO: quitar cuando el grafo lo maneje el parser
 #include "parse.hpp"
-#include "Phantom.hpp"
-#include "Player.hpp"
-#include "RuntimeBox.hpp"
-#include "RuntimePoint.hpp"
-#include "Alien.hpp"
-#include "RuntimeSegment.hpp"
-#include "Triple.hpp"
-#include "util.hpp"
+#include "Triple.hpp" // cosas del grafo // TODO: quitar cuando el grafo lo maneje el parser
+#include "util.hpp" // mapToRange para teclado // TODO: quitar cuando el teclado lo maneje Player directamente
 
 #define DEBUG_MAIN
 
 #define NO_LIGHTING
 
-#define BUFSIZE 65536
+#define BUFSIZE 1024*1024
 #define DEFAULT_GAME_FILENAME "games/default"
+#define COLL_MAX_ITERS 10
 
 using namespace std;
 
 char *game_filename;
 
+Vector axis = Vector(0, 0, 1);
+Ent *ent;
+
+void collide(void *client_data, DtObjectRef obj1, DtObjectRef obj2, const DtCollData *coll_data) {
+        std::cout << "hola collide()" << std::endl; // DEBUG
+
+        auto e1 = reinterpret_cast<Ent *>(obj1),
+             e2 = reinterpret_cast<Ent *>(obj2);
+        auto n = coll_data->normal;
+
+#ifdef DEBUG_MAIN
+        std::cout << "Colisión entre " << e1->name << " y " << e2->name << std::endl;
+        std::cout << "Punto 1: (" << coll_data->point1[0] << ", " << coll_data->point1[1] << ", " << coll_data->point1[2] << ")" << std::endl;
+        std::cout << "Punto 2: (" << coll_data->point2[0] << ", " << coll_data->point2[1] << ", " << coll_data->point2[2] << ")" << std::endl;
+        std::cout << "Normal : (" << coll_data->normal[0] << ", " << coll_data->normal[1] << ", " << coll_data->normal[2] << ")" << std::endl;
+#endif
+
+        e1->addNormal(Triple( n[0],  n[1],  n[2]));
+        e2->addNormal(Triple(-n[0], -n[1], -n[2]));
+}
+
 int power(int b, unsigned int e) {
-        int r = 1;
-        for (; e > 0; e--) {
+        int r;
+        for (r = 1; e > 0; e--) {
                 r *= b;
         }
         return r;
@@ -77,15 +96,14 @@ void initJuego() {
         balas = BALAS;
 
         {
-                Ent      *e;
                 Behavior *b;
                 Actor    *a;
 
                 while (!ents.empty()) {
-                        e = ents.back();
+                        ent = ents.back();
                         ents.pop_back();
                         // TODO: hacer lo mismo pa otros tipos de runtime
-                        if ((a = dynamic_cast<Actor *>(e)) != NULL) {
+                        if ((a = dynamic_cast<Actor *>(ent)) != NULL) {
                                 while (!a->behaviors.empty()) {
                                         b = a->behaviors.back();
                                         a->behaviors.pop_back();
@@ -93,7 +111,7 @@ void initJuego() {
                                 }
                         }
 
-                        delete e;
+                        delete ent;
                 }
                 player = NULL;
 
@@ -138,12 +156,6 @@ void initJuego() {
                         while (!feof(file)) pos += fread(&buf + pos, sizeof(char), BUFSIZE - pos, file);
                         buf[pos] = '\0';
                         parse(buf);
-
-                        if (player == NULL) {
-                                std::cerr << "warning: no player defined in game file; using default player." << std::endl;
-                                player = new Player("default player");
-                                ents.push_back(player);
-                        }
                 }
         }
 }
@@ -168,13 +180,13 @@ void display() {
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
 
-/*
+#if 0
         glPushMatrix();
                 //glLoadIdentity();
                 glRasterPos3f(0, 0, 10);
                 glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24,'h');
         glPopMatrix();
-*/
+#endif
 
         switch (pass) {
                 case PASS_BLUR:
@@ -240,7 +252,7 @@ void display() {
                 }
 
                 if (pass == PASS_LAST) {
-                        for (i = 0; static_cast<unsigned int>(i) < ents.size(); i++) {
+                        for (i = 0, n = ents.size(); i < n; i++) {
                                 glPushMatrix();
                                         glTranslatef(ents[i]->pos.x, ents[i]->pos.y, ents[i]->pos.z);
                                         glRotatef((ents[i]->ang * 180.0)/M_PI, 0, 0, 1);
@@ -331,7 +343,7 @@ void display() {
                         glPopMatrix();
                 }
 
-/*
+#if 0
                 glPushMatrix();
                         double cosax, cosay, cosaz, cosavx, cosavy, cosavz;
                         double ncosax, ncosay, ncosaz, ncosavx, ncosavy, ncosavz;
@@ -423,7 +435,7 @@ void display() {
                         glColor4ub(255, 255, 255, 255);
                         glCallList(bala);
                 glPopMatrix();
-*/
+#endif
 
                 glDisable(GL_CULL_FACE);
 #ifndef NO_LIGHTING
@@ -529,12 +541,12 @@ void display() {
                                 glTranslatef(0, 9.2, 0);
                                 glScalef(0.1, 0.1, 0.1);
                                 glTranslatef((((DIGITS_SCORE + 1) / 2.0) - i - 0.5) * (W_SEGMENT + 4.0 * W_SEGMENT_T), 0, 0);
-                                glCallList(segs[(abs(pts) / power(10, i)) % 10]);
+                                glCallList(segs[(std::abs(pts) / power(10, i)) % 10]);
                         glPopMatrix();
                 }
 
                 /* Vidas */
-/*
+#if 0
                 for (i = 0; i < lives - 1; i++) {
                         glPushMatrix();
                                 glTranslatef(-12.25 + 2.1 * i, 8.5, 0);
@@ -542,7 +554,7 @@ void display() {
                                 glCallList(tanque);
                         glPopMatrix();
                 }
- */
+#endif
 
                 //glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
                 //glBindTexture(GL_TEXTURE_2D, tbrushmetal);
@@ -693,12 +705,12 @@ void juego(int v) {
         deltas_cur = (deltas_cur + 1) % N_DELTAS;
 
         if (!frozen) {
-/*
+#if 0
                 if (keystate_u) if ((a_cannon += delta / 20.0) > MAX_A_CANNON) a_cannon = MAX_A_CANNON;
                 if (keystate_d) if ((a_cannon -= delta / 20.0) < MIN_A_CANNON) a_cannon = MIN_A_CANNON;
                 if (keystate_l) if ((a_turret += delta / 20.0) > MAX_A_TURRET) a_turret = MAX_A_TURRET;
                 if (keystate_r) if ((a_turret -= delta / 20.0) < MIN_A_TURRET) a_turret = MIN_A_TURRET;
- */
+#endif
 
                 if (keystate_jump && pz == 0 && pvz == 0) {
                         pvz = 0.04;
@@ -744,12 +756,42 @@ void juego(int v) {
                 player->ang  = mapToRange((prz  * M_PI) / 180.0);
                 player->vrot = (pvrz * M_PI) / 180.0;
 
-                for (i = 0; (unsigned int)i < ents.size(); i++) {
+                for (i = 0, n = ents.size(); i < n; ++i) {
                         ents[i]->steer(new_time, delta);
                 }
-                for (i = 0; (unsigned int)i < ents.size(); i++) {
+                for (i = 0, n = ents.size(); i < n; ++i) {
                         ents[i]->update();
                 }
+                for (i = 0, n = ents.size(); i < n; ++i) {
+                        ent = ents[i];
+                        dtSelectObject(ent);
+                        dtLoadIdentity();
+                        auto q = Quaternion(axis, ent->ang);
+                        dtRotate(q[0], q[1], q[2], q[3]);
+                        dtTranslate(ent->pos.x, ent->pos.y, ent->pos.z);
+                }
+                for (j = 0; j < COLL_MAX_ITERS; ++j) {
+#ifdef DEBUG_MAIN
+                        std::cout << "Collision cycle iteration " << j << std::endl;
+#endif
+                        std::cout << "hola dtTest()" << std::endl; // DEBUG
+                        int colls = dtTest();
+                        std::cout << "chao dtTest()" << std::endl; // DEBUG
+                        if (colls == 0) break;
+                        for (i = 0, n = ents.size(); i < n; ++i) {
+                                ent = ents[i];
+                                ent->collide();
+                                dtSelectObject(ent);
+                                dtLoadIdentity();
+                                auto q = Quaternion(axis, ent->ang);
+                                dtRotate(q[0], q[1], q[2], q[3]);
+                                dtTranslate(ent->pos.x, ent->pos.y, ent->pos.z);
+                        }
+                }
+                if (j == COLL_MAX_ITERS) {
+                        std::cerr << "WARNING: reached max number of collision cycle iterations without resolving interpenetration" << std::endl;
+                }
+                dtProceed();
 
                 if (pbn < N_PBALAS) {
                         if (keystate_enter && balas > 0 && retract == 1) {
@@ -1043,7 +1085,7 @@ void initGL() {
         glLightf(GL_LIGHT0, GL_QUADRATIC_ATTENUATION,   0);
         glEnable(GL_LIGHT0);
 
-/*
+#if 0
         glLightfv(GL_LIGHT1, GL_AMBIENT , black4f      );
         glLightfv(GL_LIGHT1, GL_SPECULAR, black4f      );
         glLightfv(GL_LIGHT1, GL_DIFFUSE , light_diffuse);
@@ -1066,7 +1108,7 @@ void initGL() {
                 glLightf(GL_LIGHT0 + i, GL_LINEAR_ATTENUATION   ,  1);
                 glLightf(GL_LIGHT0 + i, GL_QUADRATIC_ATTENUATION,  2);
         }
-*/
+#endif
 
         glEnable(GL_COLOR_MATERIAL);
         glMateriali(GL_FRONT_AND_BACK, GL_SHININESS, 1);
@@ -1076,7 +1118,7 @@ void initGL() {
         glColor4ub(255, 255, 255, 255);
         glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
 
-/*
+#if 0
         GLfloat fog_color[4] = {0.8, 0.8, 0.8, 1.0};
         glEnable(GL_FOG);
         glFogi(GL_FOG_MODE, GL_EXP2);
@@ -1085,7 +1127,7 @@ void initGL() {
         glFogf(GL_FOG_END, 30.0);
         glFogf(GL_FOG_DENSITY, 0.05);
         glFogfv(GL_FOG_COLOR, fog_color);
-*/
+#endif
 
         buildLists();
 }
@@ -1113,6 +1155,8 @@ int main(int argc, char **argv) {
         }
 
         initGL();
+        dtDisableCaching();
+        dtSetDefaultResponse(&collide, DT_SMART_RESPONSE, NULL);
 
         // TODO: use getopt, implement a decent set of command-line arguments; figure out how glutInit rapes argv
         if (argc == 2) {

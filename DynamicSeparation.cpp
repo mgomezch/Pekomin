@@ -4,11 +4,11 @@
 #include "Mobile.hpp"
 #include "Triple.hpp"
 
-#define DEBUG_DYNAMICSEPARATION
+//#define DEBUG_DYNAMICSEPARATION
 
 #ifdef DEBUG_DYNAMICSEPARATION
 #       include <iostream>
-#       define DEBUG_SEPARATION_PRINT(S) std::cout << "DEBUG: Separation " << reinterpret_cast<void *>(this) << ": " #S << " == " << S << std::endl;
+#       define DEBUG_SEPARATION_PRINT(S) std::cout << "DEBUG: DynamicSeparation " << reinterpret_cast<void *>(this) << ": " #S << " == " << S << std::endl;
 #else
 #       define DEBUG_SEPARATION_PRINT(S)
 #endif

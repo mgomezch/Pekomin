@@ -10,7 +10,7 @@
 #define DEBUG_ENT
 
 #ifdef DEBUG_ENT
-#include <iostream>
+#       include <iostream>
 #endif
 
 #define DEF_POINTS_SWAPPER(T1, T2)                        \
@@ -20,15 +20,25 @@
                 return std::make_tuple(a, b);             \
         }
 
-#define DEF_POINTS_STUB(T1, T2)                             \
-        std::tuple<Triple, Triple> points(T1 *x, T2 *y) {   \
-                return std::make_tuple(Triple(), Triple()); \
-        }
+#ifdef DEBUG_ENT
+#       define DEF_POINTS_STUB(T1, T2)                                                                                       \
+                std::tuple<Triple, Triple> points(T1 *x, T2 *y) {                                                            \
+                        std::cerr << "WARNING: using unimplemented points() function between " #T1 " and " #T2 << std::endl; \
+                        return std::make_tuple(Triple(), Triple());                                                          \
+                }
+#else
+#       define DEF_POINTS_STUB(T1, T2)                              \
+                std::tuple<Triple, Triple> points(T1 *x, T2 *y) {   \
+                        return std::make_tuple(Triple(), Triple()); \
+                }
+#endif
 
 Ent::Ent(std::string name, Triple pos, double ang):
         name(name),
         pos(pos),
-        ang(ang)
+        ang(ang),
+        collides(false),
+        dead(false)
 {}
 
 Ent::~Ent() {}
@@ -86,13 +96,15 @@ std::tuple<Triple, Triple> points(Ent *e1, Ent *e2) {
 }
 
 void Ent::addNormal(const Triple &n) {
-        this->normals.push_back(n);
+        if (this->collides) this->normals.push_back(n);
 }
 
 void Ent::collide() {
         int i, n;
-        for (i = 0, n = this->normals.size(); i < n; ++i) {
-                this->pos += this->normals[i];
+        if (this->collides) {
+                for (i = 0, n = this->normals.size(); i < n; ++i) {
+                        this->pos += this->normals[i];
+                }
         }
         normals.clear();
 }

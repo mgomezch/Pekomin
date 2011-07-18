@@ -121,4 +121,5 @@ int pts = 0;
 
 unsigned int i = 0,
              j = 0,
-             k = 0;
+             k = 0,
+             n = 0;
