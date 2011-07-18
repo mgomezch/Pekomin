@@ -4,6 +4,7 @@ player {
         pos.y = 0;
         pos.z = 0;
         ang   = 0;
+
         vel.x = 0;
         vel.y = 0;
         vel.z = 0;
@@ -14,6 +15,23 @@ npc_1 {
         class = Alien;
         pos.x = 30;
         pos.y = 0;
+        vectorial {
+                class         = AlienStateMachine;
+                target        = player;
+                maxRotationW  = 0.2;
+                targetRadiusW = 0.25;
+                slowRadiusW   = 1;
+                wanderOffsetW = 1;
+                wanderRadiusW = 7;
+                wanderRateW   = 3.1415;
+                wanderTimeW   = 1000;
+                maxSpeedW     = 0.025;
+                maxSpeedA     = 0.015;
+                targetRadiusA = 5;
+                slowRadiusA   = 10;
+                maxSpeedP     = 0.0025;
+                maxSpeedE     = 0.0025;
+        }
 }
 
 npc_2 {

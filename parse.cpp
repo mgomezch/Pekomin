@@ -485,8 +485,7 @@ void parse_r(char *s, int chars) {
                         }
                         ent = player = new Player();
                 }
-                else if (it->second == string("Alien"         )) ent = new Alien(NULL); // FIXME!!!!!!!!!!!!!!!!!!
-#warning "FIXME: Alien instantiated with NULL target!"
+                else if (it->second == string("Alien"         )) ent = new Alien();
                 else if (it->second == string("Phantom"       )) ent = new Phantom();
                 else if (it->second == string("RuntimePoint"  )) ent = new RuntimePoint(); // TODO: gráficos
                 else if (it->second == string("RuntimeSegment")) {
@@ -769,6 +768,28 @@ void parse(char *s) {
                                 SET_BEHAVIOR_DOUBLE(slowRadius);
 
                                 SET_P(new PathFollowing(it_e->first, character, target, maxSpeed, targetRadius, slowRadius));
+                                continue;
+                        }
+                        // AlienStateMachine
+                        if (class_s == string("AlienStateMachine")) {
+                                SET_BEHAVIOR_CHARACTER();
+                                SET_BEHAVIOR_TARGET();
+                                SET_BEHAVIOR_DOUBLE(maxRotationW);
+                                SET_BEHAVIOR_DOUBLE(targetRadiusW);
+                                SET_BEHAVIOR_DOUBLE(slowRadiusW);
+                                SET_BEHAVIOR_DOUBLE(wanderOffsetW);
+                                SET_BEHAVIOR_DOUBLE(wanderRadiusW);
+                                SET_BEHAVIOR_DOUBLE(wanderRateW);
+                                SET_BEHAVIOR_DOUBLE(wanderTimeW);
+                                SET_BEHAVIOR_DOUBLE(maxSpeedW);
+                                SET_BEHAVIOR_DOUBLE(maxSpeedA);
+                                SET_BEHAVIOR_DOUBLE(targetRadiusA);
+                                SET_BEHAVIOR_DOUBLE(slowRadiusA);
+                                SET_BEHAVIOR_DOUBLE(maxSpeedP);
+                                SET_BEHAVIOR_DOUBLE(maxSpeedE);
+
+                                SET_P(new AlienStateMachine(it_e->first, character, target, maxRotationW, targetRadiusW, slowRadiusW, wanderOffsetW, wanderRadiusW, wanderRateW, wanderTimeW, maxSpeedW, maxSpeedA, targetRadiusA, slowRadiusA, maxSpeedP, maxSpeedE));
+
                                 continue;
                         }
 

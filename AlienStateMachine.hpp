@@ -22,7 +22,21 @@ class AlienStateMachine : public virtual DirectKinematicV {
                 States state;
                 Behavior *wander, *arrive, *pursue, *evade;
 
-                AlienStateMachine(std::string name, Mobile *character, Mobile *target, );
+                AlienStateMachine(std::string name, Mobile *character, Mobile *target,
+                        double maxRotationW,
+                        double targetRadiusW,
+                        double slowRadiusW,
+                        double wanderOffsetW,
+                        double wanderRadiusW,
+                        double wanderRateW,
+                        double wanderTimeW,
+                        double maxSpeedW,
+                        double maxSpeedA,
+                        double targetRadiusA,
+                        double slowRadiusA,
+                        double maxSpeedP,
+                        double maxSpeedE
+                );
 
                 virtual std::vector<Triple> getVel(unsigned int ticks, unsigned int delta_ticks);
 };
