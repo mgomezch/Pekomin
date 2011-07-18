@@ -13,6 +13,10 @@ PathFollowing::PathFollowing(std::string name, Mobile *character, Mobile *target
         targetRadius(targetRadius),
         slowRadius(slowRadius)
 {
+        this->create = false;
+}
+
+void PathFollowing::create_Path() {
         double d;
 
         d = (nodes[0]->pos - character->pos).length();
@@ -41,6 +45,11 @@ std::vector<Triple> PathFollowing::getVel(unsigned int ticks, unsigned int delta
         Triple dir;
         double d, targetSpeed;
 
+        if (!create) {
+                this->create = true;
+                this->create_Path();
+        }
+
         if (path.size() > 0) {
                 dir = path.front()->pos - character->pos;
                 d = dir.length();
@@ -56,6 +65,7 @@ std::vector<Triple> PathFollowing::getVel(unsigned int ticks, unsigned int delta
 
                 if (d < targetRadius) {
                         dead = true;
+                        create = false;
                         return std::vector<Triple>();
                 }
 

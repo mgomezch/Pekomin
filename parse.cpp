@@ -513,6 +513,9 @@ void parse_r(char *s, int chars) {
                         exit(EX_DATAERR);
                 }
 
+                if (dynamic_cast<Segment *>(ent))
+                        obstacles.push_back(ent);
+
                 ents.push_back(ent);
         }
 
