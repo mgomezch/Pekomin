@@ -12,7 +12,7 @@
 #endif
 
 RuntimeBox::RuntimeBox(std::string name, Triple pos, double ang, Triple vel, double vrot, double sx, double sy, double sz):
-        Box(name, pos, ang, vel, vrot, sx, sy, sz)
+        BBox(name, pos, ang, vel, vrot, sx, sy, sz)
 {}
 
 void RuntimeBox::draw() {

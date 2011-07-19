@@ -223,13 +223,13 @@
                 if (it != fields.end()) {                                            \
                         std::cout << "parse: Ent "                                   \
                                   << name_s                                          \
-                                  << " processing Box double field "                 \
+                                  << " processing BBox double field "                 \
                                   << it->first                                       \
                                   << " with value "                                  \
                                   << it->second                                      \
                                   << std::endl;                                      \
                         if (sscanf(it->second.c_str(), "%lf", &d) != 1) {            \
-                                std::cerr << "parse error reading Box double field " \
+                                std::cerr << "parse error reading BBox double field " \
                                           << it->first                               \
                                           << " == "                                  \
                                           << it->second                              \
@@ -244,7 +244,7 @@
                         rb-> FIELD = DEFAULT;                                                      \
                         std::cout << "parse: Ent "                                                 \
                                   << name_s                                                        \
-                                  << " processing Box double field " #FIELD " with default value " \
+                                  << " processing BBox double field " #FIELD " with default value " \
                                   << DEFAULT                                                       \
                                   << std::endl;                                                    \
                 }
@@ -253,7 +253,7 @@
                 it = fields.find(string( #FIELD ));                                  \
                 if (it != fields.end()) {                                            \
                         if (sscanf(it->second.c_str(), "%lf", &d) != 1) {            \
-                                std::cerr << "parse error reading Box double field " \
+                                std::cerr << "parse error reading BBox double field " \
                                           << it->first                               \
                                           << " == "                                  \
                                           << it->second                              \
@@ -678,6 +678,8 @@ void parse_r(char *s, int chars) {
                         exit(EX_DATAERR);
                 }
 
+                if (dynamic_cast<Segment *>(ent)) obstacles.push_back(ent);
+
                 ents.push_back(ent);
         }
 
@@ -711,7 +713,7 @@ void parse_r(char *s, int chars) {
                 dtCreateObject(static_cast<Ent *>(rs), shape);
         } else if (ent_class == "RuntimeBox") {
                 auto rb = dynamic_cast<RuntimeBox *>(ent);
-                DtShapeRef shape = dtBox(2*(rb->sx), 2*(rb->sy), 2*(rb->sz));
+                DtShapeRef shape = dtBox(rb->sx, rb->sy, rb->sz);
                 dtCreateObject(static_cast<Ent *>(rb), shape);
         }
 
@@ -954,6 +956,28 @@ void parse(char *s) {
                                 SET_BEHAVIOR_DOUBLE(slowRadius);
 
                                 SET_P(new PathFollowing(it_e->first, character, target, maxSpeed, targetRadius, slowRadius));
+                                continue;
+                        }
+
+                        // AlienStateMachine // TODO: firma
+                        if (class_s == string("AlienStateMachine")) {
+                                SET_BEHAVIOR_CHARACTER();
+                                SET_BEHAVIOR_TARGET();
+                                SET_BEHAVIOR_DOUBLE(maxRotationW);
+                                SET_BEHAVIOR_DOUBLE(targetRadiusW);
+                                SET_BEHAVIOR_DOUBLE(slowRadiusW);
+                                SET_BEHAVIOR_DOUBLE(wanderOffsetW);
+                                SET_BEHAVIOR_DOUBLE(wanderRadiusW);
+                                SET_BEHAVIOR_DOUBLE(wanderRateW);
+                                SET_BEHAVIOR_DOUBLE(wanderTimeW);
+                                SET_BEHAVIOR_DOUBLE(maxSpeedW);
+                                SET_BEHAVIOR_DOUBLE(maxSpeedA);
+                                SET_BEHAVIOR_DOUBLE(targetRadiusA);
+                                SET_BEHAVIOR_DOUBLE(slowRadiusA);
+                                SET_BEHAVIOR_DOUBLE(maxSpeedP);
+                                SET_BEHAVIOR_DOUBLE(maxSpeedE);
+
+                                SET_P(new AlienStateMachine(it_e->first, character, target, maxRotationW, targetRadiusW, slowRadiusW, wanderOffsetW, wanderRadiusW, wanderRateW, wanderTimeW, maxSpeedW, maxSpeedA, targetRadiusA, slowRadiusA, maxSpeedP, maxSpeedE));
                                 continue;
                         }
 

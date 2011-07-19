@@ -10,7 +10,7 @@
 class Segment;
 class SurfacePlane;
 class VolumePlane;
-class Box;
+class BBox;
 
 class Ent {
         public:
@@ -43,16 +43,16 @@ std::tuple<Triple, Triple> points(Ent *e1, Ent *e2);
 
 std::tuple<Triple, Triple> points(Segment      *s, SurfacePlane *f);
 std::tuple<Triple, Triple> points(Segment      *s, VolumePlane  *v);
-std::tuple<Triple, Triple> points(Segment      *s, Box          *b);
+std::tuple<Triple, Triple> points(Segment      *s, BBox          *b);
 std::tuple<Triple, Triple> points(SurfacePlane *f, VolumePlane  *v);
-std::tuple<Triple, Triple> points(SurfacePlane *f, Box          *b);
-std::tuple<Triple, Triple> points(VolumePlane  *v, Box          *b);
+std::tuple<Triple, Triple> points(SurfacePlane *f, BBox          *b);
+std::tuple<Triple, Triple> points(VolumePlane  *v, BBox          *b);
 
 std::tuple<Triple, Triple> points(SurfacePlane *p, Segment      *s);
 std::tuple<Triple, Triple> points(VolumePlane  *p, Segment      *s);
-std::tuple<Triple, Triple> points(Box          *s, Segment      *b);
+std::tuple<Triple, Triple> points(BBox          *s, Segment      *b);
 std::tuple<Triple, Triple> points(VolumePlane  *v, SurfacePlane *s);
-std::tuple<Triple, Triple> points(Box          *b, SurfacePlane *s);
-std::tuple<Triple, Triple> points(Box          *b, VolumePlane  *v);
+std::tuple<Triple, Triple> points(BBox          *b, SurfacePlane *s);
+std::tuple<Triple, Triple> points(BBox          *b, VolumePlane  *v);
 
 #endif

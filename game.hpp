@@ -9,6 +9,8 @@
 #include "Player.hpp"
 #include "Ent.hpp"
 
+#include "Tile.hpp"
+
 #define GRAVEDAD   (-0.0001)
 
 // Mundo
@@ -50,6 +52,10 @@
 
 extern Player *player;
 extern std::vector<Ent *> ents;
+
+extern std::vector<Ent *> obstacles;
+extern std::vector<Tile *> tiles;
+
 extern std::vector<Node *> nodes;
 
 enum cam_enum {

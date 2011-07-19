@@ -2,11 +2,9 @@ player {
         class = Player;
         pos.x = 0;
         pos.y = 0;
-        pos.z = 0;
         ang   = 0;
         vel.x = 0;
         vel.y = 0;
-        vel.z = 0;
         vrot  = 0;
 }
 
@@ -14,14 +12,12 @@ npc {
         class = RuntimePoint;
         pos.x = 30;
         pos.y = 30;
-        pos.z =  0;
         vel.x =  0;
         vel.y =  0;
-        vel.z =  0;
 
         angular {
                 class              = LookWhereYoureGoing;
-                maxAngularVelocity = 0.001 ;
+                maxAngularVelocity = 0.0001 ;
                 targetRadius       = 0.0   ;
                 slowRadius         = 0.5   ;
         }
@@ -36,37 +32,37 @@ npc {
         separation_wleft {
                 class      = DynamicSeparation;
                 target     = wall_left;
-                minForce   = 0.05;
+                minForce   = 0.0001;
                 separationRadius = 10;
         }
         separation_wright {
                 class      = DynamicSeparation;
                 target     = wall_right;
-                minForce   = 0.05;
+                minForce   = 0.0001;
                 separationRadius = 10;
         }
         separation_wup {
                 class      = DynamicSeparation;
                 target     = wall_up;
-                minForce   = 0.05;
+                minForce   = 0.0001;
                 separationRadius = 10;
         }
         separation_wdown {
                 class      = DynamicSeparation;
                 target     = wall_down;
-                minForce   = 0.05;
+                minForce   = 0.0001;
                 separationRadius = 10;
         }
         separation_o1center {
                 class      = DynamicSeparation;
                 target     = obstacle_center1;
-                minForce   = 0.05;
+                minForce   = 0.0001;
                 separationRadius = 5;
         }
         separation_o2center {
                 class      = DynamicSeparation;
                 target     = obstacle_center2;
-                minForce   = 0.05;
+                minForce   = 0.0001;
                 separationRadius = 5;
         }
 }
@@ -75,14 +71,12 @@ npc_2 {
         class = RuntimePoint;
         pos.x = 30;
         pos.y = 30;
-        pos.z =  0;
         vel.x =  0;
         vel.y =  0;
-        vel.z =  0;
 
         angular {
                 class              = LookWhereYoureGoing;
-                maxAngularVelocity = 0.001;
+                maxAngularVelocity = 0.0001;
                 targetRadius       = 0.0  ;
                 slowRadius         = 0.5  ;
         }
@@ -100,127 +94,79 @@ npc_2 {
         separation_wleft {
                 class      = DynamicSeparation;
                 target     = wall_left;
-                minForce   = 0.05;
+                minForce   = 0.0001;
                 separationRadius = 10;
         }
         separation_wright {
                 class      = DynamicSeparation;
                 target     = wall_right;
-                minForce   = 0.05;
+                minForce   = 0.0001;
                 separationRadius = 10;
         }
         separation_wup {
                 class      = DynamicSeparation;
                 target     = wall_up;
-                minForce   = 0.05;
+                minForce   = 0.0001;
                 separationRadius = 10;
         }
         separation_wdown {
                 class      = DynamicSeparation;
                 target     = wall_down;
-                minForce   = 0.05;
+                minForce   = 0.0001;
                 separationRadius = 10;
         }
         separation_o1center {
                 class      = DynamicSeparation;
                 target     = obstacle_center1;
-                minForce   = 0.05;
+                minForce   = 0.0001;
                 separationRadius = 10;
         }
         separation_o2center {
                 class      = DynamicSeparation;
                 target     = obstacle_center2;
-                minForce   = 0.05;
+                minForce   = 0.0001;
                 separationRadius = 10;
         }
 }
 
 wall_left {
         class  = RuntimeSegment;
-        pos.x  =   0;
-        pos.y  = -40;
-        pos.z  =   0;
-        p1.x   =  60;
-        p1.y   =   0;
-        p1.z   =   0;
-        p2.x   = -60;
-        p2.y   =   0;
-        p2.z   =   0;
-        width  =   2;
-        height =   5;
+        pos.x  =   0; pos.y  = -40;
+        p1.x   = -60; p1.y   =   0;
+        p2.x   =  60; p2.y   =   0;
 }
 
 wall_right {
         class  = RuntimeSegment;
-        pos.x  =   0;
-        pos.y  =  40;
-        pos.z  =   0;
-        p1.x   =  60;
-        p1.y   =   0;
-        p1.z   =   0;
-        p2.x   = -60;
-        p2.y   =   0;
-        p2.z   =   0;
-        width  =   2;
-        height =   5;
+        pos.x  =   0; pos.y  =  40;
+        p1.x   = -60; p1.y   =   0;
+        p2.x   =  60; p2.y   =   0;
 }
 
 wall_up {
         class  = RuntimeSegment;
-        pos.x  = -60;
-        pos.y  =   0;
-        pos.z  =   0;
-        p1.x   =   0;
-        p1.y   =  40;
-        p1.z   =   0;
-        p2.x   =   0;
-        p2.y   = -40;
-        p2.z   =   0;
-        width  =   2;
-        height =   5;
+        pos.x  = -60; pos.y  =   0;
+        p1.x   =   0; p1.y   = -39;
+        p2.x   =   0; p2.y   =  39;
 }
 
 wall_down {
         class  = RuntimeSegment;
-        pos.x  =  60;
-        pos.y  =   0;
-        pos.z  =   0;
-        p1.x   =   0;
-        p1.y   =  40;
-        p1.z   =   0;
-        p2.x   =   0;
-        p2.y   = -40;
-        p2.z   =   0;
-        width  =   2;
-        height =   5;
+        pos.x  =  60; pos.y  =   0;
+        p1.x   =   0; p1.y   = -39;
+        p2.x   =   0; p2.y   =  39;
 }
 
 obstacle_center1 {
         class  = RuntimeSegment;
-        pos.x  =   0;
-        pos.y  =   0;
-        pos.z  =   0;
-        p1.x   =  20;
-        p1.y   =   0;
-        p1.z   =   0;
-        p2.x   = -20;
-        p2.y   =   0;
-        p2.z   =   0;
-        width  =   5;
-        height =  10;
+        pos.x  =   0; pos.y  =   0;
+        p1.x   = -20; p1.y   =   0;
+        p2.x   =  20; p2.y   =   0;
 }
 
 obstacle_center2 {
         class  = RuntimeSegment;
-        pos.x  =   0;
-        pos.y  =   0;
-        pos.z  =   0;
-        p1.x   =   0;
-        p1.y   =  20;
-        p1.z   =   0;
-        p2.x   =   0;
-        p2.y   = -20;
-        p2.z   =   0;
-        width  =   5;
-        height =  10;
+        pos.x  =   0; pos.y  =   0;
+        p1.x   =   0; p1.y   = 0.5;
+        p2.x   =   0; p2.y   =  20;
 }

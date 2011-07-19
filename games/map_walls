@@ -1,0 +1,33 @@
+player { class = Player; }
+
+npc {
+        class = RuntimePoint;
+        pos.x = 30;
+        pos.y = 30;
+
+        look_where_youre_going {
+                class              = LookWhereYoureGoing;
+                maxAngularVelocity = 0.001 ;
+                targetRadius       = 0.0   ;
+                slowRadius         = 0.5   ;
+        }
+        arrive {
+                class           = Arrive;
+                target          = player;
+                maxAcceleration = 0.1   ;
+                maxSpeed        = 0.015 ;
+                targetRadius    = 5     ;
+                slowRadius      = 10    ;
+        }
+        separation {
+                class            = Separation;
+                target           = player;
+                maxSpeed         = 0.005;
+                separationRadius = 5;
+        }
+}
+
+wall_u { class = RuntimeBox; pos.y =  40; sx = 80.0; }
+wall_d { class = RuntimeBox; pos.y = -40; sx = 80.0; }
+wall_l { class = RuntimeBox; pos.x = -40; sy = 75.0; }
+wall_r { class = RuntimeBox; pos.x =  40; sy = 75.0; }

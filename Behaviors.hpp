@@ -22,4 +22,6 @@
 #include "VelocityMatch.hpp"
 #include "Wander.hpp"
 
+#include "AlienStateMachine.hpp"
+
 #endif

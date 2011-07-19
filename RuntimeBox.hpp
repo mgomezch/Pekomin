@@ -4,9 +4,9 @@
 #include <string>
 
 #include "RuntimePoint.hpp"
-#include "Box.hpp"
+#include "BBox.hpp"
 
-class RuntimeBox : public virtual RuntimePoint, public virtual Box {
+class RuntimeBox : public virtual RuntimePoint, public virtual BBox {
         public:
                 RuntimeBox(
                                 std::string name = "",

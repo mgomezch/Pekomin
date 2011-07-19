@@ -1,7 +1,7 @@
 CC=gcc
-CCOPTS=-Wall -D_GNU_SOURCE -Iinclude
+CCOPTS=-g -Wall -D_GNU_SOURCE -Iinclude
 CXX=g++
-CXXOPTS=-Wall -D_GNU_SOURCE -Iinclude -std=gnu++0x
+CXXOPTS=-g -Wall -D_GNU_SOURCE -Iinclude -std=gnu++0x
 LD=ld
 LDLIBS=-lm
 LDLIBS=-lpng -lglut -lGLU -lGL -lX11 -lm -lFreeSOLID # `sdl-config --cflags --libs` -lSDL_mixer -lSDL_image

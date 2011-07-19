@@ -19,8 +19,10 @@
 #include "gl.hpp"
 #include "Node.hpp" // cosas del grafo // TODO: quitar cuando el grafo lo maneje el parser
 #include "parse.hpp"
-#include "Triple.hpp" // cosas del grafo // TODO: quitar cuando el grafo lo maneje el parser
-#include "util.hpp" // mapToRange para teclado // TODO: quitar cuando el teclado lo maneje Player directamente
+#include "RuntimeSegment.hpp"
+#include "Tile.hpp"
+#include "Triple.hpp"
+#include "util.hpp"
 
 #define DEBUG_MAIN
 
@@ -38,8 +40,6 @@ Vector axis = Vector(0, 0, 1);
 Ent *ent;
 
 void collide(void *client_data, DtObjectRef obj1, DtObjectRef obj2, const DtCollData *coll_data) {
-        std::cout << "hola collide()" << std::endl; // DEBUG
-
         auto e1 = reinterpret_cast<Ent *>(obj1),
              e2 = reinterpret_cast<Ent *>(obj2);
         auto n = coll_data->normal;
@@ -55,12 +55,23 @@ void collide(void *client_data, DtObjectRef obj1, DtObjectRef obj2, const DtColl
         e2->addNormal(Triple(-n[0], -n[1], -n[2]));
 }
 
+int type_mesh;
+
 int power(int b, unsigned int e) {
         int r;
         for (r = 1; e > 0; e--) {
                 r *= b;
         }
         return r;
+}
+
+void create_nodes(double up, double down, double left, double right) {
+        for (int i = down; i <= up - 20; i = i + 20) {
+                for (int j = left; j <= right - 20; j = j + 20) {
+                        nodes.push_back(new Node("", (Triple(i     , j     , 0) + Triple(i     , j + 20, 0) + Triple(i + 20, j     , 0))/3.0));
+                        nodes.push_back(new Node("", (Triple(i + 20, j + 20, 0) + Triple(i + 20, j     , 0) + Triple(i     , j + 20, 0))/3.0));
+                }
+        }
 }
 
 void initJuego() {
@@ -115,24 +126,6 @@ void initJuego() {
                 }
                 player = NULL;
 
-                for (int i = -60; i <= 40; i = i + 20) {
-                        for (int j = -40; j <= 20; j = j + 20) {
-                                nodes.push_back(new Node("", (Triple(i     , j     , 0) + Triple(i     , j + 20, 0) + Triple(i + 20, j     , 0))/3.0));
-                                nodes.push_back(new Node("", (Triple(i + 20, j + 20, 0) + Triple(i + 20, j     , 0) + Triple(i     , j + 20, 0))/3.0));
-                        }
-                }
-
-                for (unsigned int i = 0; i < nodes.size(); i++) {
-                        for (unsigned int j = 0; j < nodes.size(); j++) {
-                                if (nodes[i] != nodes[j] && (nodes[j]->pos - nodes[i]->pos).length() < 25) {
-                                        nodes[i]->add_adj(nodes[j]);
-                                }
-                        }
-#ifdef DEBUG_MAIN
-                        nodes[i]->print_node();
-#endif
-                }
-
                 {
                         char buf[BUFSIZE];
                         int pos = 0;
@@ -156,6 +149,125 @@ void initJuego() {
                         while (!feof(file)) pos += fread(&buf + pos, sizeof(char), BUFSIZE - pos, file);
                         buf[pos] = '\0';
                         parse(buf);
+                }
+
+                //Limitar mapa mundo
+                double maxup = 60.0, mindown = -60.0, maxright = 40.0, minleft = -40.0; //default values
+                if (obstacles.size() > 0) {
+                        maxup = mindown = obstacles[0]->pos.x;
+                        maxright = minleft = obstacles[0]->pos.y;
+                        for (unsigned int i = 1; i < obstacles.size(); i++) {
+                                if (maxup < obstacles[i]->pos.x) maxup = obstacles[i]->pos.x;
+                                else if (mindown > obstacles[i]->pos.x) mindown = obstacles[i]->pos.x;
+                                if (maxright < obstacles[i]->pos.y) maxright = obstacles[i]->pos.y;
+                                else if (minleft > obstacles[i]->pos.y) minleft = obstacles[i]->pos.y;
+                        }
+                }
+
+                if (type_mesh == 0) {
+                        //Basic mesh
+                        create_nodes(maxup, mindown, minleft, maxright);
+                        Triple t1, t2;
+                        for (unsigned int i = 0; i < nodes.size(); i++) {
+                                for (unsigned int j = i + 1; j < nodes.size(); j++) {
+                                        tie(t1, t2) = points(nodes[j], nodes[i]);
+                                        if ((t2 - t1).length() < 25) {
+                                                nodes[i]->add_adj(nodes[j]);
+                                                nodes[j]->add_adj(nodes[i]);
+                                        }
+                                }
+                        }
+                }
+                else if (type_mesh == 1) {
+                        //Segment intersection mesh
+                        create_nodes(maxup, mindown, minleft, maxright);
+                        RuntimeSegment *s1;
+                        Triple t1, t2;
+                        for (unsigned int i = 0; i < nodes.size(); i++) {
+                                for (unsigned int j = i + 1; j < nodes.size(); j++) {
+                                        if (nodes[i] != nodes[j] && (nodes[j]->pos - nodes[i]->pos).length() < 25) {
+                                                s1 = new RuntimeSegment();
+                                                s1->p1 = nodes[i]->pos;
+                                                s1->p2 = nodes[j]->pos;
+                                                if (obstacles.size() == 0) { //Default
+                                                        nodes[i]->add_adj(nodes[j]);
+                                                        nodes[j]->add_adj(nodes[i]);
+                                                }
+                                                for (unsigned int k = 0; k < obstacles.size(); k++) {
+                                                        tie(t1, t2) = points(s1, dynamic_cast<Segment *>(obstacles[k]));
+                                                        if ((t2 - t1).length() > 0.001) {
+                                                                nodes[i]->add_adj(nodes[j]);
+                                                                nodes[j]->add_adj(nodes[i]);
+                                                        }
+                                                }
+                                        }
+                                }
+                        }
+                }
+                else if (type_mesh == 2) {
+                        //Tile Mesh
+                        double ix, jy;
+                        for (int i = mindown; i <= maxup; i += 5) {
+                                for (int j = minleft; j <= maxright; j += 5) {
+                                        ix = i, jy = j;
+                                        if (i < 0) ix += 2.5;
+                                        if (i > 0) ix -= 2.5;
+                                        if (j < 0) jy += 2.5;
+                                        if (j > 0) jy -= 2.5;
+                                        if (i != 0 && j != 0)
+                                                tiles.push_back(new Tile(Triple(ix, jy, 0)));
+                                }
+                        }
+
+                        Triple pos1, pos2;
+                        for (unsigned int i = 0; i < obstacles.size(); i++) {
+                                pos1 = dynamic_cast<Segment *>(obstacles[i])->v1();
+                                pos2 = dynamic_cast<Segment *>(obstacles[i])->v2();
+                                for (unsigned int j = 0; j < tiles.size(); j++) {
+                                        if (    tiles[j]->pos.x - 2.5 <= pos1.x &&
+                                                tiles[j]->pos.x + 2.5 >= pos1.x &&
+                                                tiles[j]->pos.y - 2.5 <= pos1.y &&
+                                                tiles[j]->pos.y + 2.5 >= pos1.y)
+                                                tiles[j]->active = false;
+                                        else if (tiles[j]->pos.x - 2.5 <= pos2.x &&
+                                                tiles[j]->pos.x + 2.5 >= pos2.x &&
+                                                tiles[j]->pos.y - 2.5 <= pos2.y &&
+                                                tiles[j]->pos.y + 2.5 >= pos2.y)
+                                                tiles[j]->active = false;
+                                        else {
+                                                if (pos1.x == pos2.x) {
+                                                        if (tiles[j]->pos.x - 2.5 <= pos1.x &&
+                                                            tiles[j]->pos.x + 2.5 >= pos2.x &&
+                                                            tiles[j]->pos.y > pos1.y &&
+                                                            tiles[j]->pos.y < pos2.y)
+                                                                tiles[j]->active = false;
+                                                }
+                                                else if (pos1.y == pos2.y) {
+                                                        if (tiles[j]->pos.y - 2.5 <= pos1.y &&
+                                                            tiles[j]->pos.y + 2.5 >= pos2.y &&
+                                                            tiles[j]->pos.x > pos1.x &&
+                                                            tiles[j]->pos.x < pos2.x)
+                                                                tiles[j]->active = false;
+                                                }
+                                        }
+                                }
+                        }
+
+                        for (unsigned int i = 0; i < tiles.size(); i++) {
+                                if (tiles[i]->active)
+                                        nodes.push_back(new Node("", Triple(tiles[i]->pos.x, tiles[i]->pos.y, tiles[i]->pos.z)));
+                        }
+
+                        Triple t1, t2;
+                        for (unsigned int i = 0; i < nodes.size(); i++) {
+                                for (unsigned int j = i + 1; j < nodes.size(); j++) {
+                                        tie(t1, t2) = points(nodes[j], nodes[i]);
+                                        if ((t2 - t1).length() <= 8) {
+                                                nodes[i]->add_adj(nodes[j]);
+                                                nodes[j]->add_adj(nodes[i]);
+                                        }
+                                }
+                        }
                 }
         }
 }
@@ -301,6 +413,13 @@ void display() {
                                                 glPushMatrix();
                                                         glTranslatef(nodes[i]->pos.x, nodes[i]->pos.y, nodes[i]->pos.z);
                                                         nodes[i]->draw();
+                                                glPopMatrix();
+                                        }
+                                        for (unsigned int i = 0; i < tiles.size(); i++) {
+                                                glPushMatrix();
+                                                        glTranslatef(tiles[i]->pos.x, tiles[i]->pos.y, tiles[i]->pos.z);
+                                                        glScalef(5, 5, 1);
+                                                        tiles[i]->draw();
                                                 glPopMatrix();
                                         }
                                 glPopMatrix();
@@ -535,7 +654,7 @@ void display() {
                 glMatrixMode(GL_MODELVIEW);
                 glLoadIdentity();
 
-                /* Score */
+                // Score
                 for (i = 0; i < DIGITS_SCORE; i++) {
                         glPushMatrix();
                                 glTranslatef(0, 9.2, 0);
@@ -545,7 +664,7 @@ void display() {
                         glPopMatrix();
                 }
 
-                /* Vidas */
+                // Vidas
 #if 0
                 for (i = 0; i < lives - 1; i++) {
                         glPushMatrix();
@@ -774,9 +893,7 @@ void juego(int v) {
 #ifdef DEBUG_MAIN
                         std::cout << "Collision cycle iteration " << j << std::endl;
 #endif
-                        std::cout << "hola dtTest()" << std::endl; // DEBUG
                         int colls = dtTest();
-                        std::cout << "chao dtTest()" << std::endl; // DEBUG
                         if (colls == 0) break;
                         for (i = 0, n = ents.size(); i < n; ++i) {
                                 ent = ents[i];
@@ -1159,10 +1276,20 @@ int main(int argc, char **argv) {
         dtSetDefaultResponse(&collide, DT_SMART_RESPONSE, NULL);
 
         // TODO: use getopt, implement a decent set of command-line arguments; figure out how glutInit rapes argv
-        if (argc == 2) {
-                game_filename = argv[1];
+        if (argc == 3) {
+                type_mesh = atoi(argv[1]);
+                game_filename = argv[2];
                 printf("%s\n", game_filename);
+        } else if (argc == 2) {
+                if (std::string(argv[1]) == "0" || std::string(argv[1]) == "1" || std::string(argv[1]) == "2") {
+                        type_mesh = atoi(argv[1]);
+                        game_filename = NULL;
+                } else {
+                        type_mesh = 0;
+                        game_filename = argv[1];
+                }
         } else {
+                type_mesh = 0;
                 game_filename = NULL;
         }
         initJuego();

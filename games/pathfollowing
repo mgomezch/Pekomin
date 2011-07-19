@@ -21,7 +21,7 @@ seguidordecamino {
         pos.x = 0;
         pos.y = 30;
 
-        PathFollowing {
+        vectorial {
                 class        = PathFollowing;
                 target       = quieto;
                 maxSpeed     = 0.01;

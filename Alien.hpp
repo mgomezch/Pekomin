@@ -8,30 +8,13 @@
 
 #define ALIEN_DEFAULT_MAX_HP 100
 
-class Behavior;
-class Mobile;
-
 class Alien : public virtual Actor {
         public:
-                enum class States : unsigned int {
-                        Wander,
-                        Arrive,
-                        Pursue,
-                        Evade
-                };
-
-                Mobile *target;
                 int hpmax;
                 int hp;
-                States state;
-                Behavior *wander, *arrive, *pursue, *evade;
 
-                bool leader;
-                std::vector<Behavior *> flock;
+                Alien(std::string name = "", Triple pos = Triple(), double ang = 0, Triple vel = Triple(), double vrot = 0, int hpmax = ALIEN_DEFAULT_MAX_HP);
 
-                Alien(Mobile *target, std::string name = "", Triple pos = Triple(), double ang = 0, Triple vel = Triple(), double vrot = 0, int hpmax = ALIEN_DEFAULT_MAX_HP);
-
-                virtual void steer(unsigned int ticks, unsigned int delta_ticks);
                 virtual void draw();
 };
 
