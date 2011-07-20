@@ -4,7 +4,7 @@
 #include "Node.hpp"
 #include "Dijkstra.hpp"
 
-std::vector<Node *> dijkstra(Node *begin, Node *end) {
+std::vector<Node *> dijkstra(Ent *e, Node *begin, Node *end) {
         std::tuple<std::vector<Node *>, double> path, path_temp;
         std::vector<std::tuple<std::vector<Node *>, double> > open;
         std::vector<std::tuple<std::vector<Node *>, double> > close;
@@ -20,8 +20,8 @@ std::vector<Node *> dijkstra(Node *begin, Node *end) {
                 path = open.front();
                 open.erase(open.begin());
                 close.push_back(path);
-                for (unsigned int i = 0; i < (std::get<0>(path).back())->adj.size(); i++) {
-                        suc = std::get<0>(path).back()->adj[i];
+                for (auto it = (std::get<0>(path).back())->adj.begin(); it != (std::get<0>(path).back())->adj.end(); ++it) {
+                        suc = (*it);
                         ready = false;
                         for (unsigned int j = 0; j < close.size(); j++) {
                                 if (suc == std::get<0>(close[j]).back()) {
@@ -33,7 +33,7 @@ std::vector<Node *> dijkstra(Node *begin, Node *end) {
                                 nodes_temp = std::get<0>(path);
                                 nodes_temp.push_back(suc);
                                 std::get<0>(path_temp) = nodes_temp;
-                                std::get<1>(path_temp) += distanceNode(std::get<0>(path).back(), suc);
+                                std::get<1>(path_temp) += distanceNode(e, std::get<0>(path).back(), suc);
                                 open.push_back(path_temp);
                         }
                 }
@@ -60,6 +60,10 @@ std::vector<Node *> dijkstra(Node *begin, Node *end) {
         return out;
 }
 
-double distanceNode(Node *n1, Node *n2) {
-        return ((n2->pos - n1->pos).length());
+double distanceNode(Ent *e, Node *n1, Node *n2) {
+        double sum = 0;
+        for (auto it = n2->mods.begin(); it != n2->mods.end(); it++)
+                if (std::get<0>(*it) != e) sum += std::get<1>(*it);
+
+        return sum + (n2->pos - n1->pos).length();
 }

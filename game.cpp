@@ -10,7 +10,7 @@
 std::vector<Node *> nodes;
 std::vector<Ent *> ents;
 
-std::vector<Ent *> obstacles;
+std::vector<Segment *> obstacles;
 std::vector<Tile *> tiles;
 
 Player *player = NULL;

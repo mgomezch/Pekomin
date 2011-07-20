@@ -53,7 +53,7 @@
 extern Player *player;
 extern std::vector<Ent *> ents;
 
-extern std::vector<Ent *> obstacles;
+extern std::vector<Segment *> obstacles;
 extern std::vector<Tile *> tiles;
 
 extern std::vector<Node *> nodes;

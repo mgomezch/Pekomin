@@ -1,0 +1,175 @@
+player {
+        class = Player;
+        pos.x = 0;
+        pos.y = 0;
+        pos.z = 0;
+        ang   = 0;
+        vel.x = 0;
+        vel.y = 0;
+        vel.z = 0;
+        vrot  = 0;
+}
+
+wall_left {
+        class  = RuntimeSegment;
+        pos.x  =   0; pos.y  = -70;
+        p1.x   = -100; p1.y  =   0;
+        p2.x   =  100; p2.y  =   0;
+        obstacle = true;
+}
+
+wall_left_in {
+        class  = RuntimeSegment;
+        pos.x  =   0; pos.y  = -40;
+        p1.x   = -60; p1.y   =   0;
+        p2.x   =  60; p2.y   =   0;
+        obstacle = true;
+}
+
+wall_right {
+        class  = RuntimeSegment;
+        pos.x  =   0; pos.y  =  70;
+        p1.x   = -100; p1.y  =   0;
+        p2.x   =  100; p2.y  =   0;
+        obstacle = true;
+}
+
+wall_right_in {
+        class  = RuntimeSegment;
+        pos.x  =   0; pos.y  =  45;
+        p1.x   = -60; p1.y   =   0;
+        p2.x   =  60; p2.y   =   0;
+        obstacle = true;
+}
+
+wall_up {
+        class  = RuntimeSegment;
+        pos.x  = -100; pos.y  =   0;
+        p1.x   =    0; p1.y   = -60;
+        p2.x   =    0; p2.y   =  60;
+        obstacle = true;
+}
+
+wall_up_in_1 {
+        class  = RuntimeSegment;
+        pos.x  = -60; pos.y  = -15;
+        p1.x   =   0; p1.y   = -25;
+        p2.x   =   0; p2.y   =   0;
+        obstacle = true;
+}
+
+wall_up_in_2 {
+        class  = RuntimeSegment;
+        pos.x  = -60; pos.y  =  15;
+        p1.x   =   0; p1.y   =   5;
+        p2.x   =   0; p2.y   =  30;
+        obstacle = true;
+}
+
+wall_up_in_3 {
+        class  = RuntimeSegment;
+        pos.x  = -20; pos.y  = -15;
+        p1.x   =   0; p1.y   = -25;
+        p2.x   =   0; p2.y   =   0;
+        obstacle = true;
+}
+
+wall_up_in_4 {
+        class  = RuntimeSegment;
+        pos.x  = -20; pos.y  =  15;
+        p1.x   =   0; p1.y   =   5;
+        p2.x   =   0; p2.y   =  30;
+        obstacle = true;
+}
+
+wall_down {
+        class  = RuntimeSegment;
+        pos.x  =  100; pos.y  =   0;
+        p1.x   =    0; p1.y   = -60;
+        p2.x   =    0; p2.y   =  60;
+        obstacle = true;
+}
+
+wall_down_in_1 {
+        class  = RuntimeSegment;
+        pos.x  =  60; pos.y  = -15;
+        p1.x   =   0; p1.y   = -25;
+        p2.x   =   0; p2.y   =   0;
+        obstacle = true;
+}
+
+wall_down_in_2 {
+        class  = RuntimeSegment;
+        pos.x  =  60; pos.y  =  15;
+        p1.x   =   0; p1.y   =   5;
+        p2.x   =   0; p2.y   =  30;
+        obstacle = true;
+}
+
+wall_down_in_3 {
+        class  = RuntimeSegment;
+        pos.x  =  20; pos.y  = -15;
+        p1.x   =   0; p1.y   = -25;
+        p2.x   =   0; p2.y   =   0;
+        obstacle = true;
+}
+
+wall_down_in_4 {
+        class  = RuntimeSegment;
+        pos.x  =  20; pos.y  =  15;
+        p1.x   =   0; p1.y   =   5;
+        p2.x   =   0; p2.y   =  30;
+        obstacle = true;
+}
+
+wall_mobile_1 {
+        class  = RuntimeSegment;
+        pos.x  = -20; pos.y  = -35;
+        p1.x   = -39; p1.y   =   0;
+        p2.x   =  -1; p2.y   =   0;
+        obstacle = true;
+        statemachine {
+                class    = WallCloseStateMachine;
+                target   = wall_mobile_2;
+                maxSpeed = 0.02;
+        }
+}
+
+wall_mobile_2 {
+        class  = RuntimeSegment;
+        pos.x  = -20; pos.y  =  40;
+        p1.x   = -39; p1.y   =   0;
+        p2.x   =  -1; p2.y   =   0;
+        obstacle = true;
+        statemachine {
+                class    = WallCloseStateMachine;
+                target   = wall_mobile_1;
+                maxSpeed = 0.02;
+        }
+}
+
+wall_mobile_3 {
+        class  = RuntimeSegment;
+        pos.x  =  20; pos.y  = -35;
+        p1.x   =   1; p1.y   =   0;
+        p2.x   =  39; p2.y   =   0;
+        obstacle = true;
+        statemachine {
+                class    = WallCloseStateMachine;
+                target   = wall_mobile_4;
+                maxSpeed = 0.02;
+        }
+}
+
+wall_mobile_4 {
+        class  = RuntimeSegment;
+        pos.x  =  20; pos.y  =  40;
+        p1.x   =   1; p1.y   =   0;
+        p2.x   =  39; p2.y   =   0;
+        obstacle = true;
+        statemachine {
+                class    = WallCloseStateMachine;
+                target   = wall_mobile_3;
+                maxSpeed = 0.02;
+        }
+}

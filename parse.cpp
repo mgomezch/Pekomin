@@ -652,6 +652,7 @@ void parse_r(char *s, int chars) {
                         ent = player = new Player();
                 }
                 else if (ent_class == string("Phantom")) ent = new Phantom();
+                else if (ent_class == string("Alien"  )) ent = new Alien();
                 else if (ent_class == string("RuntimePoint")) {
                         ent = new RuntimePoint(); // TODO: gráficos
                 } else if (ent_class == string("RuntimeSegment")) {
@@ -663,6 +664,18 @@ void parse_r(char *s, int chars) {
                         SET_SEGMENT_FIELD_DOUBLE_D(p2.x,  1);
                         SET_SEGMENT_FIELD_DOUBLE_D(p2.y,  0);
                         SET_SEGMENT_FIELD_DOUBLE_D(p2.z,  0);
+
+                        it = fields.find(string("obstacle"));
+                        if (it != fields.end()) {
+#ifdef DEBUG_PARSE
+                                std::cout << "parse: RuntimeSegment " << name_s << " processing bool field " << it->first << " with value \'" << it->second << "\'" << std::endl;
+#endif
+                                if      (it->second == "true" ) obstacles.push_back(rs);
+                                else if (it->second != "false") {
+                                        std::cerr << "parse error reading RuntimeSegment bool field " << it->first << " == " << it->second << std::endl;
+                                        exit(EX_DATAERR);
+                                }
+                        }
 
                         ent = rs;
                 } else if (ent_class == string("RuntimeBox")) {
@@ -677,8 +690,6 @@ void parse_r(char *s, int chars) {
                         std::cerr << "parse error reading Ent " << name_s << ": unknown class " << ent_class << std::endl;
                         exit(EX_DATAERR);
                 }
-
-                if (dynamic_cast<Segment *>(ent)) obstacles.push_back(ent);
 
                 ents.push_back(ent);
         }
@@ -695,7 +706,7 @@ void parse_r(char *s, int chars) {
         SET_ENT_FIELD_DOUBLE_D(vrot , 0);
         SET_ENT_FIELD_BOOL_D(collides, false);
 
-        if (ent_class == "RuntimePoint" || ent_class == "Phantom" || ent_class == "Player") {
+        if (ent_class == "RuntimePoint" || ent_class == "Alien" || ent_class == "Phantom" || ent_class == "Player") {
                 DtShapeRef shape = dtNewComplexShape();
                         dtBegin(DT_SIMPLEX);
                                 dtVertex(ent->pos.x, ent->pos.y, ent->pos.z);
@@ -819,6 +830,18 @@ void parse(char *s) {
                                 continue;
                         }
 
+                        // Follow(std::string name, Mobile *character, Mobile *target, double phantomOffset, double maxSpeed, double targetRadius, double slowRadius);
+                        if (class_s == string("Follow")) {
+                                SET_BEHAVIOR_CHARACTER();
+                                SET_BEHAVIOR_TARGET();
+                                SET_BEHAVIOR_DOUBLE(phantomOffset);
+                                SET_BEHAVIOR_DOUBLE(maxSpeed);
+                                SET_BEHAVIOR_DOUBLE(targetRadius);
+                                SET_BEHAVIOR_DOUBLE(slowRadius);
+
+                                SET_P(new Follow(it_e->first, character, target, phantomOffset, maxSpeed, targetRadius, slowRadius));
+                                continue;
+                        }
                         // Separation(std::string name, Mobile *character, Mobile *target, double maxSpeed, double separationRadius);
                         if (class_s == string("Separation")) {
                                 SET_BEHAVIOR_CHARACTER();
@@ -978,6 +1001,16 @@ void parse(char *s) {
                                 SET_BEHAVIOR_DOUBLE(maxSpeedE);
 
                                 SET_P(new AlienStateMachine(it_e->first, character, target, maxRotationW, targetRadiusW, slowRadiusW, wanderOffsetW, wanderRadiusW, wanderRateW, wanderTimeW, maxSpeedW, maxSpeedA, targetRadiusA, slowRadiusA, maxSpeedP, maxSpeedE));
+                                continue;
+                        }
+
+                        // WallCloseStateMachine // TODO: firma
+                        if (class_s == string("WallCloseStateMachine")) {
+                                SET_BEHAVIOR_CHARACTER();
+                                SET_BEHAVIOR_TARGET();
+                                SET_BEHAVIOR_DOUBLE(maxSpeed);
+
+                                SET_P(new WallCloseStateMachine(it_e->first, character, target, maxSpeed));
                                 continue;
                         }
 

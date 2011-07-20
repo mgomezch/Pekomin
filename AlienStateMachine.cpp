@@ -36,36 +36,65 @@ AlienStateMachine::AlienStateMachine(std::string name    ,
         wander(new Wander(name + "Wander", character, maxRotationW, targetRadiusW, slowRadiusW, wanderOffsetW, wanderRadiusW, wanderRateW, wanderTimeW, maxSpeedW)),
         arrive(new Arrive(name + "Arrive", character, target, maxSpeedA, targetRadiusA, slowRadiusA)),
         pursue(new Pursue(name + "Pursue", character, target, maxSpeedP)),
-        evade(new Evade(name + "Evade", character, target, maxSpeedE))
+        evade(new Evade(name + "Evade", character, target, maxSpeedE)),
+        last_ticks(0)
 {
         this->arrive->active = false;
         this->pursue->active = false;
         this->evade->active  = false;
 }
 
+AlienStateMachine::~AlienStateMachine() {
+        delete this->evade;
+        delete this->pursue;
+        delete this->arrive;
+        delete this->wander;
+}
+
 std::vector<Triple> AlienStateMachine::getVel(unsigned int ticks, unsigned int delta_ticks) {
         Triple cp, tp;
         double distance;
+        std::vector<Triple> temp;
         std::vector<Triple> out;
 
-        std::tie(cp, tp) = points(character, target);
-        distance = (tp - cp).length();
+        if (this->last_ticks != ticks) {
+                this->last_ticks = ticks;
+                std::tie(cp, tp) = points(character, target);
+                distance = (tp - cp).length();
 
-        if (state != States::Wander && distance > 20) {
-                this->state = States::Wander;
-                this->wander->active = true ;
-                this->arrive->active = false;
-                this->pursue->active = false;
-                this->evade->active  = false;
-                out = (dynamic_cast<DirectKinematicV *>(wander)->getVel(ticks, delta_ticks));
+                if (state != States::Wander && distance > 20) {
+                        std::cout << "Wander" << std::endl;
+                        this->state = States::Wander;
+                        this->wander->active = true ;
+                        this->arrive->active = false;
+                        this->pursue->active = false;
+                        this->evade->active  = false;
+                }
+                else if (state != States::Arrive && distance <= 20) {
+                        std::cout << "Wander" << std::endl;
+                        this->state = States::Arrive;
+                        this->wander->active = false;
+                        this->arrive->active = true ;
+                        this->pursue->active = false;
+                        this->evade->active  = false;
+                }
         }
-        else if (state != States::Arrive && distance <= 20) {
-                this->state = States::Arrive;
-                this->wander->active = false;
-                this->arrive->active = true ;
-                this->pursue->active = false;
-                this->evade->active  = false;
-                out = (dynamic_cast<DirectKinematicV *>(arrive)->getVel(ticks, delta_ticks));
+
+        if (this->wander->active) {
+                temp = wander->getVel(ticks, delta_ticks);
+                out.insert(out.begin(), temp.begin(), temp.end());
+        }
+        if (this->arrive->active) {
+                temp = arrive->getVel(ticks, delta_ticks);
+                out.insert(out.begin(), temp.begin(), temp.end());
+        }
+        if (this->pursue->active) {
+                temp = pursue->getVel(ticks, delta_ticks);
+                out.insert(out.begin(), temp.begin(), temp.end());
+        }
+        if (this->evade->active) {
+                temp = evade->getVel(ticks, delta_ticks);
+                out.insert(out.begin(), temp.begin(), temp.end());
         }
 
         return out;

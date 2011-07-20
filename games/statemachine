@@ -29,8 +29,8 @@ npc_1 {
                 maxSpeedA     = 0.015;
                 targetRadiusA = 5;
                 slowRadiusA   = 10;
-                maxSpeedP     = 0.0025;
-                maxSpeedE     = 0.0025;
+                maxSpeedP     = 0.025;
+                maxSpeedE     = 0.025;
         }
 }
 

@@ -10,22 +10,156 @@ player {
         vrot  = 0;
 }
 
-quieto {
+npc_1 {
         class = RuntimePoint;
-        pos.x = -60;
-        pos.y = 50;
+        pos.x = 0;
+        pos.y = 400;
+
+        vectorial {
+                class        = PathFollowing;
+                target       = player;
+                maxSpeed     = 0.01;
+                targetRadius = 3;
+                slowRadius   = 5;
+        }
+        angular {
+                class = StaticLookWhereYoureGoing;
+        }
+        separation_wleft {
+                class      = DynamicSeparation;
+                target     = wall_left;
+                minForce   = 0.0001;
+                separationRadius = 10;
+        }
+        separation_wright {
+                class      = DynamicSeparation;
+                target     = wall_right;
+                minForce   = 0.0001;
+                separationRadius = 10;
+        }
+        separation_wup {
+                class      = DynamicSeparation;
+                target     = wall_up;
+                minForce   = 0.0001;
+                separationRadius = 10;
+        }
+        separation_wdown {
+                class      = DynamicSeparation;
+                target     = wall_down;
+                minForce   = 0.0001;
+                separationRadius = 10;
+        }
+        separation_o1center {
+                class      = DynamicSeparation;
+                target     = obstacle_center1;
+                minForce   = 0.0001;
+                separationRadius = 10;
+        }
+        separation_o2center {
+                class      = DynamicSeparation;
+                target     = obstacle_center2;
+                minForce   = 0.0001;
+                separationRadius = 10;
+        }
 }
 
-seguidordecamino {
+npc_2 {
         class = RuntimePoint;
         pos.x = 0;
         pos.y = 30;
 
         vectorial {
                 class        = PathFollowing;
-                target       = quieto;
+                target       = player;
                 maxSpeed     = 0.01;
                 targetRadius = 3;
                 slowRadius   = 5;
         }
+        angular {
+                class = StaticLookWhereYoureGoing;
+        }
+        separation_wleft {
+                class      = DynamicSeparation;
+                target     = wall_left;
+                minForce   = 0.0001;
+                separationRadius = 10;
+        }
+        separation_wright {
+                class      = DynamicSeparation;
+                target     = wall_right;
+                minForce   = 0.0001;
+                separationRadius = 10;
+        }
+        separation_wup {
+                class      = DynamicSeparation;
+                target     = wall_up;
+                minForce   = 0.0001;
+                separationRadius = 10;
+        }
+        separation_wdown {
+                class      = DynamicSeparation;
+                target     = wall_down;
+                minForce   = 0.0001;
+                separationRadius = 10;
+        }
+        separation_o1center {
+                class      = DynamicSeparation;
+                target     = obstacle_center1;
+                minForce   = 0.0001;
+                separationRadius = 10;
+        }
+        separation_o2center {
+                class      = DynamicSeparation;
+                target     = obstacle_center2;
+                minForce   = 0.0001;
+                separationRadius = 10;
+        }
+}
+
+wall_left {
+        class  = RuntimeSegment;
+        pos.x  =   0; pos.y  = -40;
+        p1.x   = -60; p1.y   =   0;
+        p2.x   =  60; p2.y   =   0;
+        obstacle = true;
+}
+
+wall_right {
+        class  = RuntimeSegment;
+        pos.x  =   0; pos.y  =  40;
+        p1.x   = -60; p1.y   =   0;
+        p2.x   =  60; p2.y   =   0;
+        obstacle = true;
+}
+
+wall_up {
+        class  = RuntimeSegment;
+        pos.x  = -60; pos.y  =   0;
+        p1.x   =   0; p1.y   = -39;
+        p2.x   =   0; p2.y   =  39;
+        obstacle = true;
+}
+
+wall_down {
+        class  = RuntimeSegment;
+        pos.x  =  60; pos.y  =   0;
+        p1.x   =   0; p1.y   = -39;
+        p2.x   =   0; p2.y   =  39;
+        obstacle = true;
+}
+
+obstacle_center1 {
+        class  = RuntimeSegment;
+        pos.x  =   0; pos.y  =   0;
+        p1.x   = -20; p1.y   =   0;
+        p2.x   =  20; p2.y   =   0;
+        obstacle = true;
+}
+
+obstacle_center2 {
+        class  = RuntimeSegment;
+        pos.x  =   0; pos.y  =   0;
+        p1.x   =   0; p1.y   = 0.5;
+        p2.x   =   0; p2.y   =  20;
+        obstacle = true;
 }

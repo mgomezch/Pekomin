@@ -9,6 +9,7 @@
 #include "Face.hpp"
 #include "Separation.hpp"
 #include "Flock.hpp"
+#include "Follow.hpp"
 #include "KinematicArrive.hpp"
 #include "KinematicSeparation.hpp"
 #include "KinematicSeek.hpp"
@@ -23,5 +24,6 @@
 #include "Wander.hpp"
 
 #include "AlienStateMachine.hpp"
+#include "WallCloseStateMachine.hpp"
 
 #endif

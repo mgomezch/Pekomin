@@ -11,10 +11,11 @@ PathFollowing::PathFollowing(std::string name, Mobile *character, Mobile *target
         target(target),
         maxSpeed(maxSpeed),
         targetRadius(targetRadius),
-        slowRadius(slowRadius)
-{
-        this->create = false;
-}
+        slowRadius(slowRadius),
+        create(false),
+        begin(NULL),
+        end(NULL)
+{}
 
 void PathFollowing::create_Path() {
         double d;
@@ -37,7 +38,14 @@ void PathFollowing::create_Path() {
                 }
         }
 
-        path = dijkstra(begin, end);
+        path = dijkstra(character, begin, end);
+
+        for (unsigned int i = 0; i < path.size(); i++)
+                path[i]->print_node();
+
+        for (unsigned int i = 0; i < path.size(); i++)
+                path[i]->add_mod(character, 500);
+
 }
 
 std::vector<Triple> PathFollowing::getVel(unsigned int ticks, unsigned int delta_ticks) {
@@ -53,7 +61,15 @@ std::vector<Triple> PathFollowing::getVel(unsigned int ticks, unsigned int delta
         if (path.size() > 0) {
                 dir = path.front()->pos - character->pos;
                 d = dir.length();
-                if (d < targetRadius) path.erase(path.begin());
+                if (d < targetRadius) {
+                        /*for (auto it = path.front()->mods.begin(); it != path.front()->mods.end(); ++it) {
+                                if (std::get<0>(*it) == character) {
+                                        path.front()->mods.erase(it);
+                                        break;
+                                }
+                        }*/
+                        path.erase(path.begin());
+                }
                 steering = dir.normalized();
                 steering *= maxSpeed;
         } else {
