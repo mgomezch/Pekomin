@@ -21,6 +21,8 @@
 #include "RuntimePoint.hpp"
 #include "RuntimeSegment.hpp"
 #include "RuntimeBox.hpp"
+#include "RecoveryPoint.hpp"
+#include "CoverPoint.hpp"
 
 #define DEBUG_PARSE
 
@@ -653,6 +655,14 @@ void parse_r(char *s, int chars) {
                 }
                 else if (ent_class == string("Phantom")) ent = new Phantom();
                 else if (ent_class == string("Alien"  )) ent = new Alien();
+                else if (ent_class == string("RecoveryPoint")) {
+                        ent = new RecoveryPoint();
+                        recovery.push_back(ent);
+                }
+                else if (ent_class == string("CoverPoint")) {
+                        ent = new CoverPoint();
+                        cover.push_back(ent);
+                }
                 else if (ent_class == string("RuntimePoint")) {
                         ent = new RuntimePoint(); // TODO: gráficos
                 } else if (ent_class == string("RuntimeSegment")) {
@@ -999,8 +1009,11 @@ void parse(char *s) {
                                 SET_BEHAVIOR_DOUBLE(slowRadiusA);
                                 SET_BEHAVIOR_DOUBLE(maxSpeedP);
                                 SET_BEHAVIOR_DOUBLE(maxSpeedE);
+                                SET_BEHAVIOR_DOUBLE(maxSpeed);
+                                SET_BEHAVIOR_DOUBLE(targetRadius);
+                                SET_BEHAVIOR_DOUBLE(slowRadius);
 
-                                SET_P(new AlienStateMachine(it_e->first, character, target, maxRotationW, targetRadiusW, slowRadiusW, wanderOffsetW, wanderRadiusW, wanderRateW, wanderTimeW, maxSpeedW, maxSpeedA, targetRadiusA, slowRadiusA, maxSpeedP, maxSpeedE));
+                                SET_P(new AlienStateMachine(it_e->first, character, target, maxRotationW, targetRadiusW, slowRadiusW, wanderOffsetW, wanderRadiusW, wanderRateW, wanderTimeW, maxSpeedW, maxSpeedA, targetRadiusA, slowRadiusA, maxSpeedP, maxSpeedE, maxSpeed, targetRadius, slowRadius));
                                 continue;
                         }
 

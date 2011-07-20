@@ -49,235 +49,234 @@ void collide(void *client_data, DtObjectRef obj1, DtObjectRef obj2, const DtColl
 
 #ifdef DEBUG_MAIN
         std::cout << "Colisión entre " << e1->name << " y " << e2->name << std::endl;
-                        std::cout << "Punto 1: (" << coll_data->point1[0] << ", " << coll_data->point1[1] << ", " << coll_data->point1[2] << ")" << std::endl;
-                        std::cout << "Punto 2: (" << coll_data->point2[0] << ", " << coll_data->point2[1] << ", " << coll_data->point2[2] << ")" << std::endl;
-                        std::cout << "Normal : (" << coll_data->normal[0] << ", " << coll_data->normal[1] << ", " << coll_data->normal[2] << ")" << std::endl;
-                #endif
+        std::cout << "Punto 1: (" << coll_data->point1[0] << ", " << coll_data->point1[1] << ", " << coll_data->point1[2] << ")" << std::endl;
+        std::cout << "Punto 2: (" << coll_data->point2[0] << ", " << coll_data->point2[1] << ", " << coll_data->point2[2] << ")" << std::endl;
+        std::cout << "Normal : (" << coll_data->normal[0] << ", " << coll_data->normal[1] << ", " << coll_data->normal[2] << ")" << std::endl;
+#endif
 
-                        e1->addNormal(Triple( n[0],  n[1],  n[2]));
-                        e2->addNormal(Triple(-n[0], -n[1], -n[2]));
+        e1->addNormal(Triple( n[0],  n[1],  n[2]));
+        e2->addNormal(Triple(-n[0], -n[1], -n[2]));
+}
+
+int type_mesh;
+
+int power(int b, unsigned int e) {
+        int r;
+        for (r = 1; e > 0; e--) {
+                r *= b;
+        }
+        return r;
+}
+
+void create_nodes(double up, double down, double left, double right) {
+        for (int i = down; i <= up - 20; i = i + 20) {
+                for (int j = left; j <= right - 20; j = j + 20) {
+                        nodes.push_back(new Node("", (Triple(i     , j     , 0) + Triple(i     , j + 20, 0) + Triple(i + 20, j     , 0))/3.0));
+                        nodes.push_back(new Node("", (Triple(i + 20, j + 20, 0) + Triple(i + 20, j     , 0) + Triple(i     , j + 20, 0))/3.0));
+                }
+        }
+}
+
+void initJuego() {
+        nboom = 0;
+        for (i = 0; i < N_BOOM_SETS; i++) {
+                boom[i].on = 0;
+        }
+
+        frozen    = false;
+        level     = START_LEVEL;
+        cam_old_t = 0;
+        retract   = 1;
+        mesh      = false;
+
+        px   = 0;
+        py   = 0;
+        pz   = 0;
+        pv   = 0;
+        prz  = 0;
+        pvx  = 0;
+        pvy  = 0;
+        pvz  = 0;
+        pvrz = 0;
+        pa   = 0;
+        pav  = 0;
+        pbi  = 0;
+        pbn  = 0;
+        for (i = 0; i < N_PBALAS; i++) {
+                pb[i] = 0;
+                pbv[i] = V_BALA_MAX;
+        }
+        pts   = 0;
+        balas = BALAS;
+
+        {
+                Behavior *b;
+                Actor    *a;
+
+                while (!ents.empty()) {
+                        ent = ents.back();
+                        ents.pop_back();
+                        // TODO: hacer lo mismo pa otros tipos de runtime
+                        if ((a = dynamic_cast<Actor *>(ent)) != NULL) {
+                                while (!a->behaviors.empty()) {
+                                        b = a->behaviors.back();
+                                        a->behaviors.pop_back();
+                                        delete b;
+                                }
+                        }
+
+                        delete ent;
+                }
+                player = NULL;
+
+                {
+                        char buf[BUFSIZE];
+                        int pos = 0;
+                        FILE *file;
+
+                        if (game_filename == NULL) {
+                                file = fopen(DEFAULT_GAME_FILENAME, "r");
+                                if (file == NULL) {
+                                        perror("error opening default game file " DEFAULT_GAME_FILENAME ": fopen");
+                                        exit(EX_IOERR);
+                                }
+                        } else {
+                                file = fopen(game_filename, "r");
+                                if (file == NULL) {
+                                        fprintf(stderr, "error opening game file %s: ", game_filename);
+                                        perror("fopen");
+                                        exit(EX_IOERR);
+                                }
+                        }
+
+                        while (!feof(file)) pos += fread(&buf + pos, sizeof(char), BUFSIZE - pos, file);
+                        buf[pos] = '\0';
+                        parse(buf);
                 }
 
-                int type_mesh;
-
-                int power(int b, unsigned int e) {
-                        int r;
-                        for (r = 1; e > 0; e--) {
-                                r *= b;
-                        }
-                        return r;
-                }
-
-                void create_nodes(double up, double down, double left, double right) {
-                        for (int i = down; i <= up - 20; i = i + 20) {
-                                for (int j = left; j <= right - 20; j = j + 20) {
-                                        nodes.push_back(new Node("", (Triple(i     , j     , 0) + Triple(i     , j + 20, 0) + Triple(i + 20, j     , 0))/3.0));
-                                        nodes.push_back(new Node("", (Triple(i + 20, j + 20, 0) + Triple(i + 20, j     , 0) + Triple(i     , j + 20, 0))/3.0));
-                                }
+                //Limitar mapa mundo
+                if (obstacles.size() > 0) {
+                        maxup = mindown = obstacles[0]->pos.x;
+                        maxright = minleft = obstacles[0]->pos.y;
+                        for (unsigned int i = 1; i < obstacles.size(); i++) {
+                                if (maxup < obstacles[i]->pos.x) maxup = obstacles[i]->pos.x;
+                                else if (mindown > obstacles[i]->pos.x) mindown = obstacles[i]->pos.x;
+                                if (maxright < obstacles[i]->pos.y) maxright = obstacles[i]->pos.y;
+                                else if (minleft > obstacles[i]->pos.y) minleft = obstacles[i]->pos.y;
                         }
                 }
 
-                void initJuego() {
-                        nboom = 0;
-                        for (i = 0; i < N_BOOM_SETS; i++) {
-                                boom[i].on = 0;
+                if (type_mesh == 0) {
+                        //Basic mesh
+                        create_nodes(maxup, mindown, minleft, maxright);
+                        Triple t1, t2;
+                        for (unsigned int i = 0; i < nodes.size(); i++) {
+                                for (unsigned int j = i + 1; j < nodes.size(); j++) {
+                                        tie(t1, t2) = points(nodes[j], nodes[i]);
+                                        if ((t2 - t1).length() < 25) {
+                                                nodes[i]->add_adj(nodes[j]);
+                                                nodes[j]->add_adj(nodes[i]);
+                                        }
+                                }
                         }
-
-                        frozen    = false;
-                        level     = START_LEVEL;
-                        cam_old_t = 0;
-                        retract   = 1;
-                        mesh      = false;
-
-                        px   = 0;
-                        py   = 0;
-                        pz   = 0;
-                        pv   = 0;
-                        prz  = 0;
-                        pvx  = 0;
-                        pvy  = 0;
-                        pvz  = 0;
-                        pvrz = 0;
-                        pa   = 0;
-                        pav  = 0;
-                        pbi  = 0;
-                        pbn  = 0;
-                        for (i = 0; i < N_PBALAS; i++) {
-                                pb[i] = 0;
-                                pbv[i] = V_BALA_MAX;
-                        }
-                        pts   = 0;
-                        balas = BALAS;
-
-                        {
-                                Behavior *b;
-                                Actor    *a;
-
-                                while (!ents.empty()) {
-                                        ent = ents.back();
-                                        ents.pop_back();
-                                        // TODO: hacer lo mismo pa otros tipos de runtime
-                                        if ((a = dynamic_cast<Actor *>(ent)) != NULL) {
-                                                while (!a->behaviors.empty()) {
-                                                        b = a->behaviors.back();
-                                                        a->behaviors.pop_back();
-                                                        delete b;
+                }
+                else if (type_mesh == 1) {
+                        //Segment intersection mesh
+                        create_nodes(maxup, mindown, minleft, maxright);
+                        RuntimeSegment *s1;
+                        Triple t1, t2;
+                        for (unsigned int i = 0; i < nodes.size(); i++) {
+                                for (unsigned int j = i + 1; j < nodes.size(); j++) {
+                                        if (nodes[i] != nodes[j] && (nodes[j]->pos - nodes[i]->pos).length() < 25) {
+                                                s1 = new RuntimeSegment();
+                                                s1->p1 = nodes[i]->pos;
+                                                s1->p2 = nodes[j]->pos;
+                                                if (obstacles.size() == 0) { //Default
+                                                        nodes[i]->add_adj(nodes[j]);
+                                                        nodes[j]->add_adj(nodes[i]);
                                                 }
-                                        }
-
-                                        delete ent;
-                                }
-                                player = NULL;
-
-                                {
-                                        char buf[BUFSIZE];
-                                        int pos = 0;
-                                        FILE *file;
-
-                                        if (game_filename == NULL) {
-                                                file = fopen(DEFAULT_GAME_FILENAME, "r");
-                                                if (file == NULL) {
-                                                        perror("error opening default game file " DEFAULT_GAME_FILENAME ": fopen");
-                                                        exit(EX_IOERR);
-                                                }
-                                        } else {
-                                                file = fopen(game_filename, "r");
-                                                if (file == NULL) {
-                                                        fprintf(stderr, "error opening game file %s: ", game_filename);
-                                                        perror("fopen");
-                                                        exit(EX_IOERR);
-                                                }
-                                        }
-
-                                        while (!feof(file)) pos += fread(&buf + pos, sizeof(char), BUFSIZE - pos, file);
-                                        buf[pos] = '\0';
-                                        parse(buf);
-                                }
-
-                                //Limitar mapa mundo
-                                if (obstacles.size() > 0) {
-                                        maxup = mindown = obstacles[0]->pos.x;
-                                        maxright = minleft = obstacles[0]->pos.y;
-                                        for (unsigned int i = 1; i < obstacles.size(); i++) {
-                                                if (maxup < obstacles[i]->pos.x) maxup = obstacles[i]->pos.x;
-                                                else if (mindown > obstacles[i]->pos.x) mindown = obstacles[i]->pos.x;
-                                                if (maxright < obstacles[i]->pos.y) maxright = obstacles[i]->pos.y;
-                                                else if (minleft > obstacles[i]->pos.y) minleft = obstacles[i]->pos.y;
-                                        }
-                                }
-
-                                if (type_mesh == 0) {
-                                        //Basic mesh
-                                        create_nodes(maxup, mindown, minleft, maxright);
-                                        Triple t1, t2;
-                                        for (unsigned int i = 0; i < nodes.size(); i++) {
-                                                for (unsigned int j = i + 1; j < nodes.size(); j++) {
-                                                        tie(t1, t2) = points(nodes[j], nodes[i]);
-                                                        if ((t2 - t1).length() < 25) {
+                                                for (unsigned int k = 0; k < obstacles.size(); k++) {
+                                                        tie(t1, t2) = points(s1, dynamic_cast<Segment *>(obstacles[k]));
+                                                        if ((t2 - t1).length() > 0.001) {
                                                                 nodes[i]->add_adj(nodes[j]);
                                                                 nodes[j]->add_adj(nodes[i]);
                                                         }
                                                 }
                                         }
                                 }
-                                else if (type_mesh == 1) {
-                                        //Segment intersection mesh
-                                        create_nodes(maxup, mindown, minleft, maxright);
-                                        RuntimeSegment *s1;
-                                        Triple t1, t2;
-                                        for (unsigned int i = 0; i < nodes.size(); i++) {
-                                                for (unsigned int j = i + 1; j < nodes.size(); j++) {
-                                                        if (nodes[i] != nodes[j] && (nodes[j]->pos - nodes[i]->pos).length() < 25) {
-                                                                s1 = new RuntimeSegment();
-                                                                s1->p1 = nodes[i]->pos;
-                                                                s1->p2 = nodes[j]->pos;
-                                                                if (obstacles.size() == 0) { //Default
-                                                                        nodes[i]->add_adj(nodes[j]);
-                                                                        nodes[j]->add_adj(nodes[i]);
-                                                                }
-                                                                for (unsigned int k = 0; k < obstacles.size(); k++) {
-                                                                        tie(t1, t2) = points(s1, dynamic_cast<Segment *>(obstacles[k]));
-                                                                        if ((t2 - t1).length() > 0.001) {
-                                                                                nodes[i]->add_adj(nodes[j]);
-                                                                                nodes[j]->add_adj(nodes[i]);
-                                                                        }
-                                                                }
-                                                        }
+                        }
+                }
+                else if (type_mesh == 2) {
+                        //Tile Mesh
+                        double ix, jy;
+                        for (int i = mindown; i <= maxup; i += 5) {
+                                for (int j = minleft; j <= maxright; j += 5) {
+                                        ix = i, jy = j;
+                                        if (i < 0) ix += 2.5;
+                                        if (i > 0) ix -= 2.5;
+                                        if (j < 0) jy += 2.5;
+                                        if (j > 0) jy -= 2.5;
+                                        if (i != 0 && j != 0)
+                                                tiles.push_back(new Tile(Triple(ix, jy, 0)));
+                                }
+                        }
+
+                        Triple pos1, pos2;
+                        for (unsigned int i = 0; i < obstacles.size(); i++) {
+                                pos1 = obstacles[i]->v1();
+                                pos2 = obstacles[i]->v2();
+                                for (unsigned int j = 0; j < tiles.size(); j++) {
+                                        if (    tiles[j]->pos.x - 2.5 <= pos1.x &&
+                                                tiles[j]->pos.x + 2.5 >= pos1.x &&
+                                                tiles[j]->pos.y - 2.5 <= pos1.y &&
+                                                tiles[j]->pos.y + 2.5 >= pos1.y)
+                                                tiles[j]->active = false;
+                                        else if (tiles[j]->pos.x - 2.5 <= pos2.x &&
+                                                tiles[j]->pos.x + 2.5 >= pos2.x &&
+                                                tiles[j]->pos.y - 2.5 <= pos2.y &&
+                                                tiles[j]->pos.y + 2.5 >= pos2.y)
+                                                tiles[j]->active = false;
+                                        else {
+                                                if (pos1.x == pos2.x) {
+                                                        if (tiles[j]->pos.x - 2.5 <= pos1.x &&
+                                                            tiles[j]->pos.x + 2.5 >= pos2.x &&
+                                                            tiles[j]->pos.y > pos1.y &&
+                                                            tiles[j]->pos.y < pos2.y)
+                                                                tiles[j]->active = false;
+                                                }
+                                                else if (pos1.y == pos2.y) {
+                                                        if (tiles[j]->pos.y - 2.5 <= pos1.y &&
+                                                            tiles[j]->pos.y + 2.5 >= pos2.y &&
+                                                            tiles[j]->pos.x > pos1.x &&
+                                                            tiles[j]->pos.x < pos2.x)
+                                                                tiles[j]->active = false;
                                                 }
                                         }
                                 }
-                                else if (type_mesh == 2) {
-                                        //Tile Mesh
-                                        double ix, jy;
-                                        for (int i = mindown; i <= maxup; i += 5) {
-                                                for (int j = minleft; j <= maxright; j += 5) {
-                                                        ix = i, jy = j;
-                                                        if (i < 0) ix += 2.5;
-                                                        if (i > 0) ix -= 2.5;
-                                                        if (j < 0) jy += 2.5;
-                                                        if (j > 0) jy -= 2.5;
-                                                        if (i != 0 && j != 0)
-                                                                tiles.push_back(new Tile(Triple(ix, jy, 0)));
-                                                }
-                                        }
+                        }
 
-                                        Triple pos1, pos2;
-                                        for (unsigned int i = 0; i < obstacles.size(); i++) {
-                                                pos1 = obstacles[i]->v1();
-                                                pos2 = obstacles[i]->v2();
-                                                for (unsigned int j = 0; j < tiles.size(); j++) {
-                                                        if (    tiles[j]->pos.x - 2.5 <= pos1.x &&
-                                                                tiles[j]->pos.x + 2.5 >= pos1.x &&
-                                                                tiles[j]->pos.y - 2.5 <= pos1.y &&
-                                                                tiles[j]->pos.y + 2.5 >= pos1.y)
-                                                                tiles[j]->active = false;
-                                                        else if (tiles[j]->pos.x - 2.5 <= pos2.x &&
-                                                                tiles[j]->pos.x + 2.5 >= pos2.x &&
-                                                                tiles[j]->pos.y - 2.5 <= pos2.y &&
-                                                                tiles[j]->pos.y + 2.5 >= pos2.y)
-                                                                tiles[j]->active = false;
-                                                        else {
-                                                                if (pos1.x == pos2.x) {
-                                                                        if (tiles[j]->pos.x - 2.5 <= pos1.x &&
-                                                                            tiles[j]->pos.x + 2.5 >= pos2.x &&
-                                                                            tiles[j]->pos.y > pos1.y &&
-                                                                            tiles[j]->pos.y < pos2.y)
-                                                                                tiles[j]->active = false;
-                                                                }
-                                                                else if (pos1.y == pos2.y) {
-                                                                        if (tiles[j]->pos.y - 2.5 <= pos1.y &&
-                                                                            tiles[j]->pos.y + 2.5 >= pos2.y &&
-                                                                            tiles[j]->pos.x > pos1.x &&
-                                                                            tiles[j]->pos.x < pos2.x)
-                                                                                tiles[j]->active = false;
-                                                                }
-                                                        }
-                                                }
-                                        }
+                        int tam = 0;
+                        if (minleft < 0) tam += (-1 * minleft);
+                        else             tam += minleft;
+                        if (maxright < 0) tam += (-1 * maxright);
+                        else              tam += maxright;
+                        tam /= 5;
 
-                                        int tam = 0;
-                                        if (minleft < 0) tam += (-1 * minleft);
-                                        else             tam += minleft;
-                                        if (maxright < 0) tam += (-1 * maxright);
-                                        else              tam += maxright;
-                                        tam /= 5;
-
-                                        int j = 0;
-                                        int k = 0;
-                                        for (unsigned int i = 0; i < tiles.size(); i += 4) {
-                                                if (j == 0 && k < tam) {
-                                                        k += 4;
-                                                        if (tiles[i]->active)
-                                                                nodes.push_back(new Node("", Triple(tiles[i]->pos.x, tiles[i]->pos.y, tiles[i]->pos.z)));
-                                                        if (k >= tam) j = 1, k = 0;
-                                                }
-                                                else if (j == 1 && k < tam) {
-                                                        k += 4;
-                                                        if (tiles[i+2]->active)
-                                                                nodes.push_back(new Node("", Triple(tiles[i+2]->pos.x, tiles[i+2]->pos.y, tiles[i+2]->pos.z)));
-                                                        if (k >= tam) j = 0, k = 0;
+                        int j = 0;
+                        int k = 0;
+                        for (unsigned int i = 0; i < tiles.size(); i += 4) {
+                                if (j == 0 && k < tam) {
+                                        k += 4;
+                                        if (tiles[i]->active)
+                                                nodes.push_back(new Node("", Triple(tiles[i]->pos.x, tiles[i]->pos.y, tiles[i]->pos.z)));
+                                        if (k >= tam) j = 1, k = 0;
                                 }
-
+                                else if (j == 1 && k < tam) {
+                                        k += 4;
+                                        if (tiles[i+2]->active)
+                                                nodes.push_back(new Node("", Triple(tiles[i+2]->pos.x, tiles[i+2]->pos.y, tiles[i+2]->pos.z)));
+                                        if (k >= tam) j = 0, k = 0;
+                                }
                         }
 
                         Triple t1, t2;
@@ -290,7 +289,15 @@ void collide(void *client_data, DtObjectRef obj1, DtObjectRef obj2, const DtColl
                                         }
                                 }
                         }
+
                 }
+
+                //4 CoverPoints
+                cover[0]->pos = Triple(mindown + 5, minleft  + 5, 0); //ul
+                cover[1]->pos = Triple(mindown + 5, maxright - 5, 0); //ur
+                cover[2]->pos = Triple(maxup - 5  , minleft  + 5, 0); //dl
+                cover[3]->pos = Triple(maxup - 5  , maxright - 5, 0); //dr
+
         }
 }
 

@@ -55,6 +55,8 @@ extern std::vector<Ent *> ents;
 
 extern std::vector<Segment *> obstacles;
 extern std::vector<Tile *> tiles;
+extern std::vector<Ent *> recovery;
+extern std::vector<Ent *> cover;
 
 extern std::vector<Node *> nodes;
 

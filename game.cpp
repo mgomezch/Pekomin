@@ -12,6 +12,8 @@ std::vector<Ent *> ents;
 
 std::vector<Segment *> obstacles;
 std::vector<Tile *> tiles;
+std::vector<Ent *> recovery;
+std::vector<Ent *> cover;
 
 Player *player = NULL;
 

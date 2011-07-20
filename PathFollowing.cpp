@@ -62,12 +62,12 @@ std::vector<Triple> PathFollowing::getVel(unsigned int ticks, unsigned int delta
                 dir = path.front()->pos - character->pos;
                 d = dir.length();
                 if (d < targetRadius) {
-                        /*for (auto it = path.front()->mods.begin(); it != path.front()->mods.end(); ++it) {
+                        for (auto it = path.front()->mods.begin(); it != path.front()->mods.end(); ++it) {
                                 if (std::get<0>(*it) == character) {
                                         path.front()->mods.erase(it);
                                         break;
                                 }
-                        }*/
+                        }
                         path.erase(path.begin());
                 }
                 steering = dir.normalized();

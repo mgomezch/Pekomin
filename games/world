@@ -10,6 +10,361 @@ player {
         vrot  = 0;
 }
 
+npc_1 {
+        class = Alien;
+        pos.x = 30;
+        pos.y = 0;
+        vectorial {
+                class         = AlienStateMachine;
+                target        = player;
+                maxRotationW  = 0.2;
+                targetRadiusW = 0.25;
+                slowRadiusW   = 1;
+                wanderOffsetW = 1;
+                wanderRadiusW = 7;
+                wanderRateW   = 3.1415;
+                wanderTimeW   = 1000;
+                maxSpeedW     = 0.025;
+                maxSpeedA     = 0.015;
+                targetRadiusA = 5;
+                slowRadiusA   = 10;
+                maxSpeedP     = 0.025;
+                maxSpeedE     = 0.025;
+                maxSpeed      = 0.025;
+                targetRadius  = 0.25;
+                slowRadius    = 1;
+        }
+}
+
+npc_2 {
+        class = Alien;
+        pos.x = 45;
+        pos.y = 0;
+        vectorial {
+                class         = AlienStateMachine;
+                target        = player;
+                maxRotationW  = 0.2;
+                targetRadiusW = 0.25;
+                slowRadiusW   = 1;
+                wanderOffsetW = 1;
+                wanderRadiusW = 7;
+                wanderRateW   = 3.1415;
+                wanderTimeW   = 1000;
+                maxSpeedW     = 0.025;
+                maxSpeedA     = 0.015;
+                targetRadiusA = 5;
+                slowRadiusA   = 10;
+                maxSpeedP     = 0.025;
+                maxSpeedE     = 0.025;
+                maxSpeed      = 0.025;
+                targetRadius  = 0.25;
+                slowRadius    = 1;
+        }
+}
+
+npc_3 {
+        class = Alien;
+        pos.x = 45;
+        pos.y = 0;
+        vectorial {
+                class         = AlienStateMachine;
+                target        = player;
+                maxRotationW  = 0.2;
+                targetRadiusW = 0.25;
+                slowRadiusW   = 1;
+                wanderOffsetW = 1;
+                wanderRadiusW = 7;
+                wanderRateW   = 3.1415;
+                wanderTimeW   = 1000;
+                maxSpeedW     = 0.025;
+                maxSpeedA     = 0.015;
+                targetRadiusA = 5;
+                slowRadiusA   = 10;
+                maxSpeedP     = 0.025;
+                maxSpeedE     = 0.025;
+                maxSpeed      = 0.025;
+                targetRadius  = 0.25;
+                slowRadius    = 1;
+        }
+}
+
+npc_4 {
+        class = Alien;
+        pos.x = 45;
+        pos.y = 0;
+        vectorial {
+                class         = AlienStateMachine;
+                target        = player;
+                maxRotationW  = 0.2;
+                targetRadiusW = 0.25;
+                slowRadiusW   = 1;
+                wanderOffsetW = 1;
+                wanderRadiusW = 7;
+                wanderRateW   = 3.1415;
+                wanderTimeW   = 1000;
+                maxSpeedW     = 0.025;
+                maxSpeedA     = 0.015;
+                targetRadiusA = 5;
+                slowRadiusA   = 10;
+                maxSpeedP     = 0.025;
+                maxSpeedE     = 0.025;
+                maxSpeed      = 0.025;
+                targetRadius  = 0.25;
+                slowRadius    = 1;
+        }
+}
+
+npc_5 {
+        class = Alien;
+        pos.x = 45;
+        pos.y = 0;
+        vectorial {
+                class         = AlienStateMachine;
+                target        = player;
+                maxRotationW  = 0.2;
+                targetRadiusW = 0.25;
+                slowRadiusW   = 1;
+                wanderOffsetW = 1;
+                wanderRadiusW = 7;
+                wanderRateW   = 3.1415;
+                wanderTimeW   = 1000;
+                maxSpeedW     = 0.025;
+                maxSpeedA     = 0.015;
+                targetRadiusA = 5;
+                slowRadiusA   = 10;
+                maxSpeedP     = 0.025;
+                maxSpeedE     = 0.025;
+                maxSpeed      = 0.025;
+                targetRadius  = 0.25;
+                slowRadius    = 1;
+        }
+}
+
+npc_6 {
+        class = Alien;
+        pos.x = 45;
+        pos.y = 0;
+        vectorial {
+                class         = AlienStateMachine;
+                target        = player;
+                maxRotationW  = 0.2;
+                targetRadiusW = 0.25;
+                slowRadiusW   = 1;
+                wanderOffsetW = 1;
+                wanderRadiusW = 7;
+                wanderRateW   = 3.1415;
+                wanderTimeW   = 1000;
+                maxSpeedW     = 0.025;
+                maxSpeedA     = 0.015;
+                targetRadiusA = 5;
+                slowRadiusA   = 10;
+                maxSpeedP     = 0.025;
+                maxSpeedE     = 0.025;
+                maxSpeed      = 0.025;
+                targetRadius  = 0.25;
+                slowRadius    = 1;
+        }
+}
+
+npc_7 {
+        class = Alien;
+        pos.x = 45;
+        pos.y = 0;
+        vectorial {
+                class         = AlienStateMachine;
+                target        = player;
+                maxRotationW  = 0.2;
+                targetRadiusW = 0.25;
+                slowRadiusW   = 1;
+                wanderOffsetW = 1;
+                wanderRadiusW = 7;
+                wanderRateW   = 3.1415;
+                wanderTimeW   = 1000;
+                maxSpeedW     = 0.025;
+                maxSpeedA     = 0.015;
+                targetRadiusA = 5;
+                slowRadiusA   = 10;
+                maxSpeedP     = 0.025;
+                maxSpeedE     = 0.025;
+                maxSpeed      = 0.025;
+                targetRadius  = 0.25;
+                slowRadius    = 1;
+        }
+}
+
+npc_8 {
+        class = Alien;
+        pos.x = 45;
+        pos.y = 0;
+        vectorial {
+                class         = AlienStateMachine;
+                target        = player;
+                maxRotationW  = 0.2;
+                targetRadiusW = 0.25;
+                slowRadiusW   = 1;
+                wanderOffsetW = 1;
+                wanderRadiusW = 7;
+                wanderRateW   = 3.1415;
+                wanderTimeW   = 1000;
+                maxSpeedW     = 0.025;
+                maxSpeedA     = 0.015;
+                targetRadiusA = 5;
+                slowRadiusA   = 10;
+                maxSpeedP     = 0.025;
+                maxSpeedE     = 0.025;
+                maxSpeed      = 0.025;
+                targetRadius  = 0.25;
+                slowRadius    = 1;
+        }
+}
+recovery_point_1 {
+        class = RecoveryPoint;
+        pos.x = 0;
+        pos.y = 0;
+        vectorial {
+                class         = AlienStateMachine;
+                target        = player;
+                maxRotationW  = 0.2;
+                targetRadiusW = 0.25;
+                slowRadiusW   = 1;
+                wanderOffsetW = 1;
+                wanderRadiusW = 7;
+                wanderRateW   = 3.1415;
+                wanderTimeW   = 1000;
+                maxSpeedW     = 0.025;
+                maxSpeedA     = 0.015;
+                targetRadiusA = 5;
+                slowRadiusA   = 10;
+                maxSpeedP     = 0.025;
+                maxSpeedE     = 0.025;
+                maxSpeed      = 0.025;
+                targetRadius  = 0.25;
+                slowRadius    = 1;
+        }
+}
+
+recovery_point_2 {
+        class = RecoveryPoint;
+        pos.x = 0;
+        pos.y = 0;
+        vectorial {
+                class         = AlienStateMachine;
+                target        = player;
+                maxRotationW  = 0.2;
+                targetRadiusW = 0.25;
+                slowRadiusW   = 1;
+                wanderOffsetW = 1;
+                wanderRadiusW = 7;
+                wanderRateW   = 3.1415;
+                wanderTimeW   = 1000;
+                maxSpeedW     = 0.025;
+                maxSpeedA     = 0.015;
+                targetRadiusA = 5;
+                slowRadiusA   = 10;
+                maxSpeedP     = 0.025;
+                maxSpeedE     = 0.025;
+                maxSpeed      = 0.025;
+                targetRadius  = 0.25;
+                slowRadius    = 1;
+        }
+}
+
+recovery_point_3 {
+        class = RecoveryPoint;
+        pos.x = 0;
+        pos.y = 0;
+        vectorial {
+                class         = AlienStateMachine;
+                target        = player;
+                maxRotationW  = 0.2;
+                targetRadiusW = 0.25;
+                slowRadiusW   = 1;
+                wanderOffsetW = 1;
+                wanderRadiusW = 7;
+                wanderRateW   = 3.1415;
+                wanderTimeW   = 1000;
+                maxSpeedW     = 0.025;
+                maxSpeedA     = 0.015;
+                targetRadiusA = 5;
+                slowRadiusA   = 10;
+                maxSpeedP     = 0.025;
+                maxSpeedE     = 0.025;
+                maxSpeed      = 0.025;
+                targetRadius  = 0.25;
+                slowRadius    = 1;
+        }
+}
+
+recovery_point_3 {
+        class = RecoveryPoint;
+        pos.x = 0;
+        pos.y = 0;
+        vectorial {
+                class         = AlienStateMachine;
+                target        = player;
+                maxRotationW  = 0.2;
+                targetRadiusW = 0.25;
+                slowRadiusW   = 1;
+                wanderOffsetW = 1;
+                wanderRadiusW = 7;
+                wanderRateW   = 3.1415;
+                wanderTimeW   = 1000;
+                maxSpeedW     = 0.025;
+                maxSpeedA     = 0.015;
+                targetRadiusA = 5;
+                slowRadiusA   = 10;
+                maxSpeedP     = 0.025;
+                maxSpeedE     = 0.025;
+                maxSpeed      = 0.025;
+                targetRadius  = 0.25;
+                slowRadius    = 1;
+        }
+}
+
+cover_point_1 {
+        class = CoverPoint;
+        pos.x = 0;
+        pos.y = 0;
+        vectorial {
+                class         = AlienStateMachine;
+                target        = player;
+                maxRotationW  = 0.2;
+                targetRadiusW = 0.25;
+                slowRadiusW   = 1;
+                wanderOffsetW = 1;
+                wanderRadiusW = 7;
+                wanderRateW   = 3.1415;
+                wanderTimeW   = 1000;
+                maxSpeedW     = 0.025;
+                maxSpeedA     = 0.015;
+                targetRadiusA = 5;
+                slowRadiusA   = 10;
+                maxSpeedP     = 0.025;
+                maxSpeedE     = 0.025;
+                maxSpeed      = 0.025;
+                targetRadius  = 0.25;
+                slowRadius    = 1;
+        }
+}
+
+cover_point_2 {
+        class = CoverPoint;
+        pos.x = 0;
+        pos.y = 0;
+}
+
+cover_point_3 {
+        class = CoverPoint;
+        pos.x = 0;
+        pos.y = 0;
+}
+
+cover_point_4 {
+        class = CoverPoint;
+        pos.x = 0;
+        pos.y = 0;
+}
+
 wall_left {
         class  = RuntimeSegment;
         pos.x  =   0; pos.y  = -70;
@@ -45,8 +400,8 @@ wall_right_in {
 wall_up {
         class  = RuntimeSegment;
         pos.x  = -100; pos.y  =   0;
-        p1.x   =    0; p1.y   = -60;
-        p2.x   =    0; p2.y   =  60;
+        p1.x   =    0; p1.y   = -70;
+        p2.x   =    0; p2.y   =  70;
         obstacle = true;
 }
 
@@ -85,8 +440,8 @@ wall_up_in_4 {
 wall_down {
         class  = RuntimeSegment;
         pos.x  =  100; pos.y  =   0;
-        p1.x   =    0; p1.y   = -60;
-        p2.x   =    0; p2.y   =  60;
+        p1.x   =    0; p1.y   = -70;
+        p2.x   =    0; p2.y   =  70;
         obstacle = true;
 }
 
