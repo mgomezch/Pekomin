@@ -1,10 +1,12 @@
+#include <iostream>
+
 #include "Node.hpp"
 
 #include "gl.hpp"
 #include <GL/glut.h>
 
 Node::Node(std::string name, Triple pos):
-        Ent(name, pos, 0)
+        Ent(name, pos)
 {}
 
 void Node::add_adj(Node *node) {
@@ -14,7 +16,7 @@ void Node::add_adj(Node *node) {
 bool Node::is_adj(Node *node) {
         Node *n;
 
-        for (unsigned int i = 0; i < adj.size(); i++) {
+        for (unsigned int i = 0, m = adj.size(); i < m; ++i) {
                 n = adj[i];
                 if (n == node) return true;
         }
@@ -41,11 +43,13 @@ void Node::draw() {
                 // TODO: no usar glutSolidSphere!!!
                 glScalef(1, 1, 0.2);
                 glutSolidSphere(0.5, 4, 4);
-//              glCallList(cubo);
-//              glBegin(GL_LINES);
-//                      glVertex3f(0, 0, 0);
-//                      glVertex3f(2, 0, 0);
-//              glEnd();
+#if 0
+                glCallList(cubo);
+                glBegin(GL_LINES);
+                        glVertex3f(0, 0, 0);
+                        glVertex3f(2, 0, 0);
+                glEnd();
+#endif
         glPopMatrix();
 }
 

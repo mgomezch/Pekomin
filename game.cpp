@@ -3,15 +3,18 @@
 #include "Ent.hpp"
 #include "game.hpp"
 #include "Node.hpp"
+#include "Odor.hpp"
 #include "Player.hpp"
-
 #include "Tile.hpp"
 
 std::vector<Node *> nodes;
-std::vector<Ent *> ents;
-
-std::vector<Ent *> obstacles;
+std::vector<Ent  *> obstacles;
 std::vector<Tile *> tiles;
+
+std::list<Ent  *> new_ents;
+std::list<Odor *> new_odors;
+std::list<Ent  *> ents;
+std::list<Odor *> odors;
 
 Player *player = NULL;
 

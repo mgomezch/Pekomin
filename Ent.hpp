@@ -22,6 +22,9 @@ class Ent {
                 bool collides;
                 bool dead;
 
+                Triple new_pos;
+                double new_ang;
+
                 Ent(std::string name = "", Triple pos = Triple(), double ang = 0);
                 virtual ~Ent() = 0;
 
@@ -33,10 +36,6 @@ class Ent {
                 virtual void update() = 0;
 
                 Triple orientation();
-
-        protected:
-                Triple new_pos;
-                double new_ang;
 };
 
 std::tuple<Triple, Triple> points(Ent *e1, Ent *e2);

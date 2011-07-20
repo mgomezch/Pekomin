@@ -8,18 +8,12 @@ class Mobile : public virtual Ent {
         public:
                 Triple vel;
                 double vrot;
-
-                Mobile(
-                                std::string name = "",
-                                Triple pos = Triple(), double  ang = 0,
-                                Triple vel = Triple(), double vrot = 0
-                      );
-
-                virtual void update();
-
-        protected:
                 Triple new_vel;
                 double new_vrot;
+
+                Mobile(std::string name = "", Triple pos = Triple(), double  ang = 0, Triple vel = Triple(), double vrot = 0);
+
+                virtual void update();
 };
 
 std::tuple<Triple, Triple> points(Ent    *e1, Mobile *e2);

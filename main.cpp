@@ -38,6 +38,8 @@ char *game_filename;
 
 Vector axis = Vector(0, 0, 1);
 Ent *ent;
+Odor *odor;
+Segment *obstacle;
 
 void collide(void *client_data, DtObjectRef obj1, DtObjectRef obj2, const DtCollData *coll_data) {
         auto e1 = reinterpret_cast<Ent *>(obj1),
@@ -45,10 +47,12 @@ void collide(void *client_data, DtObjectRef obj1, DtObjectRef obj2, const DtColl
         auto n = coll_data->normal;
 
 #ifdef DEBUG_MAIN
+#if 0
         std::cout << "Colisión entre " << e1->name << " y " << e2->name << std::endl;
         std::cout << "Punto 1: (" << coll_data->point1[0] << ", " << coll_data->point1[1] << ", " << coll_data->point1[2] << ")" << std::endl;
         std::cout << "Punto 2: (" << coll_data->point2[0] << ", " << coll_data->point2[1] << ", " << coll_data->point2[2] << ")" << std::endl;
         std::cout << "Normal : (" << coll_data->normal[0] << ", " << coll_data->normal[1] << ", " << coll_data->normal[2] << ")" << std::endl;
+#endif
 #endif
 
         e1->addNormal(Triple( n[0],  n[1],  n[2]));
@@ -109,6 +113,11 @@ void initJuego() {
         {
                 Behavior *b;
                 Actor    *a;
+
+                obstacles.clear();
+                odors.clear();
+                new_odors.clear();
+                new_ents.clear();
 
                 while (!ents.empty()) {
                         ent = ents.back();
@@ -364,11 +373,12 @@ void display() {
                 }
 
                 if (pass == PASS_LAST) {
-                        for (i = 0, n = ents.size(); i < n; i++) {
+                        for (auto it = ents.begin(); it != ents.end(); ++it) {
                                 glPushMatrix();
-                                        glTranslatef(ents[i]->pos.x, ents[i]->pos.y, ents[i]->pos.z);
-                                        glRotatef((ents[i]->ang * 180.0)/M_PI, 0, 0, 1);
-                                        ents[i]->draw();
+                                        ent = *it;
+                                        glTranslatef(ent->pos.x, ent->pos.y, ent->pos.z);
+                                        glRotatef((ent->ang * 180.0)/M_PI, 0, 0, 1);
+                                        ent->draw();
                                 glPopMatrix();
                         }
 
@@ -875,28 +885,58 @@ void juego(int v) {
                 player->ang  = mapToRange((prz  * M_PI) / 180.0);
                 player->vrot = (pvrz * M_PI) / 180.0;
 
-                for (i = 0, n = ents.size(); i < n; ++i) {
-                        ents[i]->steer(new_time, delta);
+#ifdef DEBUG_MAIN
+                for (auto it = ents.begin(); it != ents.end(); ++it) std::cout << "'" << (*it)->name << "' "; std::cout << std::endl;
+#endif
+
+                for (auto it = ents.begin(); it != ents.end(); ++it) {
+                        (*it)->steer(new_time, delta);
                 }
-                for (i = 0, n = ents.size(); i < n; ++i) {
-                        ents[i]->update();
+                for (auto it = ents.begin(); it != ents.end();) {
+                        ent = *it;
+                        if (!ent->dead) {
+                                ++it;
+                        } else {
+                                if ((obstacle = dynamic_cast<Segment *>(ent)) != NULL) {
+                                        for (auto it_s = obstacles.begin(); it_s != obstacles.end(); ++it_s) {
+                                                if (obstacle == *it_s) obstacles.erase(it_s);
+                                                break;
+                                        }
+                                }
+                                if ((odor = dynamic_cast<Odor *>(ent)) != NULL) {
+                                        for (auto it_o = odors.begin(); it_o != odors.end(); ++it_o) {
+                                                if (odor == *it_o) odors.erase(it_o);
+                                                break;
+                                        }
+                                }
+
+                                delete ent;
+                                it = ents.erase(it);
+                        }
                 }
-                for (i = 0, n = ents.size(); i < n; ++i) {
-                        ent = ents[i];
+                for (auto it = ents.begin(); it != ents.end(); ++it) {
+                        (*it)->update();
+                }
+                for (auto it = ents.begin(); it != ents.end(); ++it) {
+                        ent = *it;
                         dtSelectObject(ent);
                         dtLoadIdentity();
                         auto q = Quaternion(axis, ent->ang);
                         dtRotate(q[0], q[1], q[2], q[3]);
                         dtTranslate(ent->pos.x, ent->pos.y, ent->pos.z);
                 }
+                ents.insert(ents.end(), new_ents.begin(), new_ents.end());
+                new_ents.clear();
+                odors.insert(odors.end(), new_odors.begin(), new_odors.end());
+                new_odors.clear();
                 for (j = 0; j < COLL_MAX_ITERS; ++j) {
 #ifdef DEBUG_MAIN
-                        std::cout << "Collision cycle iteration " << j << std::endl;
+//                      if (j > 0) std::cout << "Collision cycle iteration " << j << std::endl;
 #endif
                         int colls = dtTest();
                         if (colls == 0) break;
-                        for (i = 0, n = ents.size(); i < n; ++i) {
-                                ent = ents[i];
+                        for (auto it = ents.begin(); it != ents.end(); ++it) {
+                                ent = *it;
                                 ent->collide();
                                 dtSelectObject(ent);
                                 dtLoadIdentity();

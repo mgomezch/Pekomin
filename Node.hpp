@@ -1,7 +1,6 @@
 #ifndef NODE_HPP
 #define NODE_HPP
 
-#include <iostream>
 #include <string>
 #include <vector>
 
@@ -10,7 +9,7 @@
 
 class Node : public Ent {
         public:
-                std::vector<Node*> adj;
+                std::vector<Node *> adj;
 
                 Node(std::string name = "", Triple pos = Triple());
 

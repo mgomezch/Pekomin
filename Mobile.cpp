@@ -4,7 +4,9 @@
 Mobile::Mobile(std::string name, Triple pos, double ang, Triple vel, double vrot):
         Ent(name, pos, ang),
         vel(vel),
-        vrot(vrot)
+        vrot(vrot),
+        new_vel(vel),
+        new_vrot(vrot)
 {}
 
 void Mobile::update() {

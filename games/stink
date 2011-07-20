@@ -1,0 +1,52 @@
+player { class = Player; }
+
+stinker {
+        class = RuntimePoint;
+        stink {
+                class     = Stink;
+                stinkTime = 1000;
+                lifetime  = 5000;
+                intensity = 1;
+                spread    = 3;
+        }
+        Wander {
+                class           = Wander;
+                maxRotation     = 0.2;
+                targetRadius    = 0.25;
+                slowRadius      = 1;
+                wanderOffset    = 1;
+                wanderRadius    = 7;
+                wanderRate      = 3.1415;
+                wanderTime      = 600;
+                maxAcceleration = 0.025;
+        }
+}
+
+npc {
+        class = RuntimePoint;
+        pos.x = 30;
+        pos.y = 30;
+
+        look_where_youre_going {
+                class              = LookWhereYoureGoing;
+                maxAngularVelocity = 0.001;
+                targetRadius       = 0.0  ;
+                slowRadius         = 0.5  ;
+        }
+        smell {
+                class    = Smell;
+                maxSpeed = 0.005;
+                range    = 4000 ;
+        }
+        separation {
+                class            = Separation;
+                target           = player;
+                maxSpeed         = 0.005;
+                separationRadius = 5;
+        }
+}
+
+wall_u { class = RuntimeBox; pos.y =  40; sx = 80.0; }
+wall_d { class = RuntimeBox; pos.y = -40; sx = 80.0; }
+wall_l { class = RuntimeBox; pos.x = -40; sy = 75.0; }
+wall_r { class = RuntimeBox; pos.x =  40; sy = 75.0; }
