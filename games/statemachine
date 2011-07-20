@@ -31,6 +31,9 @@ npc_1 {
                 slowRadiusA   = 10;
                 maxSpeedP     = 0.025;
                 maxSpeedE     = 0.025;
+                maxSpeed      = 0.025;
+                targetRadius  = 0.25;
+                slowRadius    = 1;
         }
 }
 
