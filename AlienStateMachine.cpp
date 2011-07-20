@@ -3,7 +3,7 @@
 #include "AlienStateMachine.hpp"
 #include "Triple.hpp"
 #include "game.hpp"
-
+#include "util.hpp"
 #include "Wander.hpp"
 #include "Arrive.hpp"
 #include "Pursue.hpp"
@@ -43,7 +43,10 @@ AlienStateMachine::AlienStateMachine(std::string name    ,
         arrive(new Arrive(name + "Arrive", character, target, maxSpeedA, targetRadiusA, slowRadiusA)),
         pursue(new Pursue(name + "Pursue", character, target, maxSpeedP)),
         evade(new Evade(name + "Evade", character, target, maxSpeedE)),
-        path(new PathFollowing(name + "PathFollowing", character, target, maxSpeed, targetRadius, slowRadius)),
+        maxSpeed(maxSpeed),
+        targetRadius(targetRadius),
+        slowRadius(slowRadius),
+        path(new PathFollowing(name + "PathFollowing", character, dynamic_cast<Mobile *>(cover[0]), maxSpeed, targetRadius, slowRadius)),
         last_ticks(0)
 {
         this->arrive->active = false;
@@ -71,32 +74,43 @@ std::vector<Triple> AlienStateMachine::getVel(unsigned int ticks, unsigned int d
                 std::tie(cp, tp) = points(character, target);
                 distance = (tp - cp).length();
 
-                if (state != States::Wander && dynamic_cast<Alien *>(character)->hp >= 30 && distance > 20) {
-                        std::cout << "Wander" << std::endl;
-                        this->state = States::Wander;
-                        this->wander->active = true ;
-                        this->arrive->active = false;
-                        this->pursue->active = false;
-                        this->evade->active  = false;
-                        this->path->active   = false;
-                }
-                else if (state != States::Path && dynamic_cast<Alien *>(character)->hp < 30) {
-                        std::cout << "PathFollowing" << std::endl;
-                        this->state = States::Path;
-                        this->wander->active = false;
-                        this->arrive->active = false;
-                        this->pursue->active = false;
-                        this->evade->active  = false;
-                        this->path->active   = true ;
-                }
-                else if (state != States::Arrive && dynamic_cast<Alien *>(character)->hp >= 30 && distance <= 20) {
-                        std::cout << "Arrive" << std::endl;
-                        this->state = States::Arrive;
-                        this->wander->active = false;
-                        this->arrive->active = true ;
-                        this->pursue->active = false;
-                        this->evade->active  = false;
-                        this->path->active   = false;
+                if (dynamic_cast<Alien *>(character)->hp >= 30) {
+                        if (distance > 20) {
+                                if (state != States::Wander) {
+                                        std::cout << "Wander" << std::endl;
+                                        this->state = States::Wander;
+                                        this->wander->active = true ;
+                                        this->arrive->active = false;
+                                        this->pursue->active = false;
+                                        this->evade->active  = false;
+                                        if (this->path != NULL) this->path->active   = false;
+                                }
+                        } else {
+                                if (state != States::Arrive) {
+                                        std::cout << "Arrive" << std::endl;
+                                        this->state = States::Arrive;
+                                        this->wander->active = false;
+                                        this->arrive->active = true ;
+                                        this->pursue->active = false;
+                                        this->evade->active  = false;
+                                        if (this->path != NULL) this->path->active   = false;
+                                }
+                        }
+                } else {
+                        if (state != States::Path) {
+                                std::cout << "PathFollowing" << std::endl;
+                                this->state = States::Path;
+                                this->wander->active = false;
+                                this->arrive->active = false;
+                                this->pursue->active = false;
+                                this->evade->active  = false;
+                                if (this->path == NULL) {
+                                        double a = RandBin(0, 3);
+                                        //path = new PathFollowing(name + "PathFollowing", character, dynamic_cast<Mobile *>(cover[static_cast<int>(a)]), maxSpeed, targetRadius, slowRadius);
+                                        this->path->active = true; 
+                                }
+                                if (this->path != NULL) this->path->active == true;
+                        }
                 }
         }
 

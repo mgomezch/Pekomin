@@ -30,6 +30,9 @@ class AlienStateMachine : public virtual DirectKinematicV {
                 Arrive *arrive;
                 Pursue *pursue;
                 Evade *evade;
+                double maxSpeed;
+                double targetRadius;
+                double slowRadius;
                 PathFollowing *path;
                 unsigned int last_ticks;
 

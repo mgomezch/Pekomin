@@ -34,6 +34,35 @@ npc_1 {
                 targetRadius  = 0.25;
                 slowRadius    = 1;
         }
+        eye { class = StaticLookWhereYoureGoing; }
+        separation_player { class = Separation; target = player ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_2  { class = Separation; target = npc_2 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_3  { class = Separation; target = npc_3 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_4  { class = Separation; target = npc_4 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_5  { class = Separation; target = npc_5 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_6  { class = Separation; target = npc_6 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_7  { class = Separation; target = npc_7 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_8  { class = Separation; target = npc_8 ; maxSpeed = 0.005; separationRadius = 4; }
+
+        separation_wall_left { class = DynamicSeparation; target = wall_left ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_left_in  { class = DynamicSeparation; target = wall_left_in ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_right  { class = DynamicSeparation; target = wall_right ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_right_in  { class = DynamicSeparation; target = wall_right_in ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_up  { class = DynamicSeparation; target = wall_up ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_up_in_1  { class = DynamicSeparation; target = wall_up_in_1 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_up_in_2  { class = DynamicSeparation; target = wall_up_in_2 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_up_in_3  { class = DynamicSeparation; target = wall_up_in_3 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_up_in_4  { class = DynamicSeparation; target = wall_up_in_4 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_down  { class = DynamicSeparation; target = wall_down ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_down_in_1  { class = DynamicSeparation; target = wall_down_in_1 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_down_in_2  { class = DynamicSeparation; target = wall_down_in_2 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_down_in_3  { class = DynamicSeparation; target = wall_down_in_3 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_down_in_4  { class = DynamicSeparation; target = wall_down_in_4 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_mobile_1  { class = DynamicSeparation; target = wall_mobile_1 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_mobile_2  { class = DynamicSeparation; target = wall_mobile_2 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_mobile_3  { class = DynamicSeparation; target = wall_mobile_3 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_mobile_4  { class = DynamicSeparation; target = wall_mobile_4 ; minForce = 0.0001; separationRadius = 4; }
+
 }
 
 npc_2 {
@@ -60,6 +89,36 @@ npc_2 {
                 targetRadius  = 0.25;
                 slowRadius    = 1;
         }
+        eye { class = StaticLookWhereYoureGoing; }
+        separation_player { class = Separation; target = player ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_player { class = Separation; target = player ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_1  { class = Separation; target = npc_1 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_3  { class = Separation; target = npc_3 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_4  { class = Separation; target = npc_4 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_5  { class = Separation; target = npc_5 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_6  { class = Separation; target = npc_6 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_7  { class = Separation; target = npc_7 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_8  { class = Separation; target = npc_8 ; maxSpeed = 0.005; separationRadius = 4; }
+
+        separation_wall_left { class = DynamicSeparation; target = wall_left ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_left_in  { class = DynamicSeparation; target = wall_left_in ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_right  { class = DynamicSeparation; target = wall_right ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_right_in  { class = DynamicSeparation; target = wall_right_in ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_up  { class = DynamicSeparation; target = wall_up ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_up_in_1  { class = DynamicSeparation; target = wall_up_in_1 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_up_in_2  { class = DynamicSeparation; target = wall_up_in_2 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_up_in_3  { class = DynamicSeparation; target = wall_up_in_3 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_up_in_4  { class = DynamicSeparation; target = wall_up_in_4 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_down  { class = DynamicSeparation; target = wall_down ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_down_in_1  { class = DynamicSeparation; target = wall_down_in_1 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_down_in_2  { class = DynamicSeparation; target = wall_down_in_2 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_down_in_3  { class = DynamicSeparation; target = wall_down_in_3 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_down_in_4  { class = DynamicSeparation; target = wall_down_in_4 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_mobile_1  { class = DynamicSeparation; target = wall_mobile_1 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_mobile_2  { class = DynamicSeparation; target = wall_mobile_2 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_mobile_3  { class = DynamicSeparation; target = wall_mobile_3 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_mobile_4  { class = DynamicSeparation; target = wall_mobile_4 ; minForce = 0.0001; separationRadius = 4; }
+
 }
 
 npc_3 {
@@ -86,6 +145,36 @@ npc_3 {
                 targetRadius  = 0.25;
                 slowRadius    = 1;
         }
+        eye { class = StaticLookWhereYoureGoing; }
+        separation_player { class = Separation; target = player ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_player { class = Separation; target = player ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_1  { class = Separation; target = npc_1 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_2  { class = Separation; target = npc_2 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_4  { class = Separation; target = npc_4 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_5  { class = Separation; target = npc_5 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_6  { class = Separation; target = npc_6 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_7  { class = Separation; target = npc_7 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_8  { class = Separation; target = npc_8 ; maxSpeed = 0.005; separationRadius = 4; }
+
+        separation_wall_left { class = DynamicSeparation; target = wall_left ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_left_in  { class = DynamicSeparation; target = wall_left_in ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_right  { class = DynamicSeparation; target = wall_right ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_right_in  { class = DynamicSeparation; target = wall_right_in ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_up  { class = DynamicSeparation; target = wall_up ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_up_in_1  { class = DynamicSeparation; target = wall_up_in_1 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_up_in_2  { class = DynamicSeparation; target = wall_up_in_2 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_up_in_3  { class = DynamicSeparation; target = wall_up_in_3 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_up_in_4  { class = DynamicSeparation; target = wall_up_in_4 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_down  { class = DynamicSeparation; target = wall_down ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_down_in_1  { class = DynamicSeparation; target = wall_down_in_1 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_down_in_2  { class = DynamicSeparation; target = wall_down_in_2 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_down_in_3  { class = DynamicSeparation; target = wall_down_in_3 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_down_in_4  { class = DynamicSeparation; target = wall_down_in_4 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_mobile_1  { class = DynamicSeparation; target = wall_mobile_1 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_mobile_2  { class = DynamicSeparation; target = wall_mobile_2 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_mobile_3  { class = DynamicSeparation; target = wall_mobile_3 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_mobile_4  { class = DynamicSeparation; target = wall_mobile_4 ; minForce = 0.0001; separationRadius = 4; }
+
 }
 
 npc_4 {
@@ -112,6 +201,36 @@ npc_4 {
                 targetRadius  = 0.25;
                 slowRadius    = 1;
         }
+        eye { class = StaticLookWhereYoureGoing; }
+        separation_player { class = Separation; target = player ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_player { class = Separation; target = player ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_1  { class = Separation; target = npc_1 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_2  { class = Separation; target = npc_2 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_3  { class = Separation; target = npc_3 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_5  { class = Separation; target = npc_5 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_6  { class = Separation; target = npc_6 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_7  { class = Separation; target = npc_7 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_8  { class = Separation; target = npc_8 ; maxSpeed = 0.005; separationRadius = 4; }
+
+        separation_wall_left { class = DynamicSeparation; target = wall_left ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_left_in  { class = DynamicSeparation; target = wall_left_in ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_right  { class = DynamicSeparation; target = wall_right ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_right_in  { class = DynamicSeparation; target = wall_right_in ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_up  { class = DynamicSeparation; target = wall_up ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_up_in_1  { class = DynamicSeparation; target = wall_up_in_1 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_up_in_2  { class = DynamicSeparation; target = wall_up_in_2 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_up_in_3  { class = DynamicSeparation; target = wall_up_in_3 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_up_in_4  { class = DynamicSeparation; target = wall_up_in_4 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_down  { class = DynamicSeparation; target = wall_down ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_down_in_1  { class = DynamicSeparation; target = wall_down_in_1 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_down_in_2  { class = DynamicSeparation; target = wall_down_in_2 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_down_in_3  { class = DynamicSeparation; target = wall_down_in_3 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_down_in_4  { class = DynamicSeparation; target = wall_down_in_4 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_mobile_1  { class = DynamicSeparation; target = wall_mobile_1 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_mobile_2  { class = DynamicSeparation; target = wall_mobile_2 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_mobile_3  { class = DynamicSeparation; target = wall_mobile_3 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_mobile_4  { class = DynamicSeparation; target = wall_mobile_4 ; minForce = 0.0001; separationRadius = 4; }
+
 }
 
 npc_5 {
@@ -138,6 +257,36 @@ npc_5 {
                 targetRadius  = 0.25;
                 slowRadius    = 1;
         }
+        eye { class = StaticLookWhereYoureGoing; }
+        separation_player { class = Separation; target = player ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_player { class = Separation; target = player ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_1  { class = Separation; target = npc_1 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_2  { class = Separation; target = npc_2 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_3  { class = Separation; target = npc_3 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_4  { class = Separation; target = npc_4 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_6  { class = Separation; target = npc_6 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_7  { class = Separation; target = npc_7 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_8  { class = Separation; target = npc_8 ; maxSpeed = 0.005; separationRadius = 4; }
+
+        separation_wall_left { class = DynamicSeparation; target = wall_left ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_left_in  { class = DynamicSeparation; target = wall_left_in ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_right  { class = DynamicSeparation; target = wall_right ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_right_in  { class = DynamicSeparation; target = wall_right_in ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_up  { class = DynamicSeparation; target = wall_up ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_up_in_1  { class = DynamicSeparation; target = wall_up_in_1 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_up_in_2  { class = DynamicSeparation; target = wall_up_in_2 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_up_in_3  { class = DynamicSeparation; target = wall_up_in_3 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_up_in_4  { class = DynamicSeparation; target = wall_up_in_4 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_down  { class = DynamicSeparation; target = wall_down ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_down_in_1  { class = DynamicSeparation; target = wall_down_in_1 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_down_in_2  { class = DynamicSeparation; target = wall_down_in_2 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_down_in_3  { class = DynamicSeparation; target = wall_down_in_3 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_down_in_4  { class = DynamicSeparation; target = wall_down_in_4 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_mobile_1  { class = DynamicSeparation; target = wall_mobile_1 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_mobile_2  { class = DynamicSeparation; target = wall_mobile_2 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_mobile_3  { class = DynamicSeparation; target = wall_mobile_3 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_mobile_4  { class = DynamicSeparation; target = wall_mobile_4 ; minForce = 0.0001; separationRadius = 4; }
+
 }
 
 npc_6 {
@@ -164,6 +313,36 @@ npc_6 {
                 targetRadius  = 0.25;
                 slowRadius    = 1;
         }
+        eye { class = StaticLookWhereYoureGoing; }
+        separation_player { class = Separation; target = player ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_player { class = Separation; target = player ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_1  { class = Separation; target = npc_1 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_2  { class = Separation; target = npc_2 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_3  { class = Separation; target = npc_3 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_4  { class = Separation; target = npc_4 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_5  { class = Separation; target = npc_5 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_7  { class = Separation; target = npc_7 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_8  { class = Separation; target = npc_8 ; maxSpeed = 0.005; separationRadius = 4; }
+
+        separation_wall_left { class = DynamicSeparation; target = wall_left ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_left_in  { class = DynamicSeparation; target = wall_left_in ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_right  { class = DynamicSeparation; target = wall_right ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_right_in  { class = DynamicSeparation; target = wall_right_in ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_up  { class = DynamicSeparation; target = wall_up ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_up_in_1  { class = DynamicSeparation; target = wall_up_in_1 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_up_in_2  { class = DynamicSeparation; target = wall_up_in_2 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_up_in_3  { class = DynamicSeparation; target = wall_up_in_3 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_up_in_4  { class = DynamicSeparation; target = wall_up_in_4 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_down  { class = DynamicSeparation; target = wall_down ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_down_in_1  { class = DynamicSeparation; target = wall_down_in_1 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_down_in_2  { class = DynamicSeparation; target = wall_down_in_2 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_down_in_3  { class = DynamicSeparation; target = wall_down_in_3 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_down_in_4  { class = DynamicSeparation; target = wall_down_in_4 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_mobile_1  { class = DynamicSeparation; target = wall_mobile_1 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_mobile_2  { class = DynamicSeparation; target = wall_mobile_2 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_mobile_3  { class = DynamicSeparation; target = wall_mobile_3 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_mobile_4  { class = DynamicSeparation; target = wall_mobile_4 ; minForce = 0.0001; separationRadius = 4; }
+
 }
 
 npc_7 {
@@ -190,6 +369,36 @@ npc_7 {
                 targetRadius  = 0.25;
                 slowRadius    = 1;
         }
+        eye { class = StaticLookWhereYoureGoing; }
+        separation_player { class = Separation; target = player ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_player { class = Separation; target = player ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_1  { class = Separation; target = npc_1 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_2  { class = Separation; target = npc_2 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_3  { class = Separation; target = npc_3 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_4  { class = Separation; target = npc_4 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_5  { class = Separation; target = npc_5 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_6  { class = Separation; target = npc_6 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_8  { class = Separation; target = npc_8 ; maxSpeed = 0.005; separationRadius = 4; }
+
+        separation_wall_left { class = DynamicSeparation; target = wall_left ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_left_in  { class = DynamicSeparation; target = wall_left_in ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_right  { class = DynamicSeparation; target = wall_right ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_right_in  { class = DynamicSeparation; target = wall_right_in ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_up  { class = DynamicSeparation; target = wall_up ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_up_in_1  { class = DynamicSeparation; target = wall_up_in_1 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_up_in_2  { class = DynamicSeparation; target = wall_up_in_2 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_up_in_3  { class = DynamicSeparation; target = wall_up_in_3 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_up_in_4  { class = DynamicSeparation; target = wall_up_in_4 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_down  { class = DynamicSeparation; target = wall_down ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_down_in_1  { class = DynamicSeparation; target = wall_down_in_1 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_down_in_2  { class = DynamicSeparation; target = wall_down_in_2 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_down_in_3  { class = DynamicSeparation; target = wall_down_in_3 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_down_in_4  { class = DynamicSeparation; target = wall_down_in_4 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_mobile_1  { class = DynamicSeparation; target = wall_mobile_1 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_mobile_2  { class = DynamicSeparation; target = wall_mobile_2 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_mobile_3  { class = DynamicSeparation; target = wall_mobile_3 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_mobile_4  { class = DynamicSeparation; target = wall_mobile_4 ; minForce = 0.0001; separationRadius = 4; }
+
 }
 
 npc_8 {
@@ -216,7 +425,38 @@ npc_8 {
                 targetRadius  = 0.25;
                 slowRadius    = 1;
         }
+        eye { class = StaticLookWhereYoureGoing; }
+        separation_player { class = Separation; target = player ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_player { class = Separation; target = player ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_1  { class = Separation; target = npc_1 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_2  { class = Separation; target = npc_2 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_3  { class = Separation; target = npc_3 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_4  { class = Separation; target = npc_4 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_5  { class = Separation; target = npc_5 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_6  { class = Separation; target = npc_6 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_7  { class = Separation; target = npc_7 ; maxSpeed = 0.005; separationRadius = 4; }
+
+        separation_wall_left { class = DynamicSeparation; target = wall_left ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_left_in  { class = DynamicSeparation; target = wall_left_in ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_right  { class = DynamicSeparation; target = wall_right ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_right_in  { class = DynamicSeparation; target = wall_right_in ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_up  { class = DynamicSeparation; target = wall_up ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_up_in_1  { class = DynamicSeparation; target = wall_up_in_1 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_up_in_2  { class = DynamicSeparation; target = wall_up_in_2 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_up_in_3  { class = DynamicSeparation; target = wall_up_in_3 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_up_in_4  { class = DynamicSeparation; target = wall_up_in_4 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_down  { class = DynamicSeparation; target = wall_down ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_down_in_1  { class = DynamicSeparation; target = wall_down_in_1 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_down_in_2  { class = DynamicSeparation; target = wall_down_in_2 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_down_in_3  { class = DynamicSeparation; target = wall_down_in_3 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_down_in_4  { class = DynamicSeparation; target = wall_down_in_4 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_mobile_1  { class = DynamicSeparation; target = wall_mobile_1 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_mobile_2  { class = DynamicSeparation; target = wall_mobile_2 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_mobile_3  { class = DynamicSeparation; target = wall_mobile_3 ; minForce = 0.0001; separationRadius = 4; }
+        separation_wall_mobile_4  { class = DynamicSeparation; target = wall_mobile_4 ; minForce = 0.0001; separationRadius = 4; }
+
 }
+
 recovery_point_1 {
         class = RecoveryPoint;
         pos.x = 0;

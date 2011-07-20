@@ -14,16 +14,12 @@ npc_1 {
         class = RuntimePoint;
         pos.x = 0;
         pos.y = 0;
-        wander {
-                class           = Wander;
-                maxRotation     = 0.2;
-                targetRadius    = 0.25;
-                slowRadius      = 1;
-                wanderOffset    = 1;
-                wanderRadius    = 7;
-                wanderRate      = 3.1415;
-                wanderTime      = 1000;
-                maxAcceleration = 0.025;
+        vectorial {
+                class        = Arrive;
+                target       = player;
+                maxSpeed     = 0.01;
+                targetRadius = 2;
+                slowRadius   = 5;
         }
         angular {
                 class = StaticLookWhereYoureGoing;

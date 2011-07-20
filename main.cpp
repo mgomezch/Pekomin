@@ -292,12 +292,13 @@ void initJuego() {
 
                 }
 
-                //4 CoverPoints
-                cover[0]->pos = Triple(mindown + 5, minleft  + 5, 0); //ul
-                cover[1]->pos = Triple(mindown + 5, maxright - 5, 0); //ur
-                cover[2]->pos = Triple(maxup - 5  , minleft  + 5, 0); //dl
-                cover[3]->pos = Triple(maxup - 5  , maxright - 5, 0); //dr
-
+                if (cover.size() > 0) {
+                        //4 CoverPoints
+                        cover[0]->pos = Triple(mindown + 5, minleft  + 5, 0); //ul
+                        cover[1]->pos = Triple(mindown + 5, maxright - 5, 0); //ur
+                        cover[2]->pos = Triple(maxup - 5  , minleft  + 5, 0); //dl
+                        cover[3]->pos = Triple(maxup - 5  , maxright - 5, 0); //dr
+                }
         }
 }
 
