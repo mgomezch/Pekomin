@@ -1,0 +1,311 @@
+player {
+        class = Player;
+        pos.x = 0;
+        pos.y = 0;
+        pos.z = 0;
+        ang   = 0;
+        vel.x = 0;
+        vel.y = 0;
+        vel.z = 0;
+        vrot  = 0;
+}
+
+npc_1 {
+        class = RuntimePoint;
+        pos.x = 0;
+        pos.y = 0;
+        wander {
+                class           = Wander;
+                maxRotation     = 0.2;
+                targetRadius    = 0.25;
+                slowRadius      = 1;
+                wanderOffset    = 1;
+                wanderRadius    = 7;
+                wanderRate      = 3.1415;
+                wanderTime      = 1000;
+                maxAcceleration = 0.025;
+        }
+        angular {
+                class = StaticLookWhereYoureGoing;
+        }
+        separation_npc_2  { class = Separation; target = npc_2 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_3  { class = Separation; target = npc_3 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_4  { class = Separation; target = npc_4 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_5  { class = Separation; target = npc_5 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_6  { class = Separation; target = npc_6 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_7  { class = Separation; target = npc_7 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_8  { class = Separation; target = npc_8 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_9  { class = Separation; target = npc_9 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_10 { class = Separation; target = npc_10; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_11 { class = Separation; target = npc_11; maxSpeed = 0.005; separationRadius = 4; }
+}
+
+npc_2 {
+        class = RuntimePoint;
+        pos.x = 0;
+        pos.y = 5;
+        follow_npc_1 {
+                class         = Follow;
+                target        = npc_1;
+                phantomOffset = 5;
+                maxSpeed      = 0.01;
+                targetRadius  = 0.25;
+                slowRadius    = 1;
+        }
+        angular {
+                class = StaticLookWhereYoureGoing;
+        }
+        separation_npc_1  { class = Separation; target = npc_1 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_3  { class = Separation; target = npc_3 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_4  { class = Separation; target = npc_4 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_5  { class = Separation; target = npc_5 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_6  { class = Separation; target = npc_6 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_7  { class = Separation; target = npc_7 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_8  { class = Separation; target = npc_8 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_9  { class = Separation; target = npc_9 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_10 { class = Separation; target = npc_10; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_11 { class = Separation; target = npc_11; maxSpeed = 0.005; separationRadius = 4; }
+}
+
+npc_3 {
+        class = RuntimePoint;
+        pos.x = 0;
+        pos.y = 10;
+        follow_npc_2 {
+                class         = Follow;
+                target        = npc_2;
+                phantomOffset = 5;
+                maxSpeed      = 0.01;
+                targetRadius  = 0.25;
+                slowRadius    = 1;
+        }
+        angular {
+                class = StaticLookWhereYoureGoing;
+        }
+        separation_npc_1  { class = Separation; target = npc_1 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_2  { class = Separation; target = npc_2 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_4  { class = Separation; target = npc_4 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_5  { class = Separation; target = npc_5 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_6  { class = Separation; target = npc_6 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_7  { class = Separation; target = npc_7 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_8  { class = Separation; target = npc_8 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_9  { class = Separation; target = npc_9 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_10 { class = Separation; target = npc_10; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_11 { class = Separation; target = npc_11; maxSpeed = 0.005; separationRadius = 4; }
+}
+
+npc_4 {
+        class = RuntimePoint;
+        pos.x = 0;
+        pos.y = 15;
+        follow_npc_3 {
+                class         = Follow;
+                target        = npc_3;
+                phantomOffset = 5;
+                maxSpeed      = 0.01;
+                targetRadius  = 0.25;
+                slowRadius    = 1;
+        }
+        angular {
+                class = StaticLookWhereYoureGoing;
+        }
+        separation_npc_1  { class = Separation; target = npc_1 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_2  { class = Separation; target = npc_2 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_3  { class = Separation; target = npc_3 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_5  { class = Separation; target = npc_5 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_6  { class = Separation; target = npc_6 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_7  { class = Separation; target = npc_7 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_8  { class = Separation; target = npc_8 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_9  { class = Separation; target = npc_9 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_10 { class = Separation; target = npc_10; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_11 { class = Separation; target = npc_11; maxSpeed = 0.005; separationRadius = 4; }
+}
+
+npc_5 {
+        class = RuntimePoint;
+        pos.x = 0;
+        pos.y = 20;
+        follow_npc_4 {
+                class         = Follow;
+                target        = npc_4;
+                phantomOffset = 5;
+                maxSpeed      = 0.01;
+                targetRadius  = 0.25;
+                slowRadius   = 1;
+        }
+        angular {
+                class = StaticLookWhereYoureGoing;
+        }
+        separation_npc_1  { class = Separation; target = npc_1 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_2  { class = Separation; target = npc_2 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_3  { class = Separation; target = npc_3 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_4  { class = Separation; target = npc_4 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_6  { class = Separation; target = npc_6 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_7  { class = Separation; target = npc_7 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_8  { class = Separation; target = npc_8 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_9  { class = Separation; target = npc_9 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_10 { class = Separation; target = npc_10; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_11 { class = Separation; target = npc_11; maxSpeed = 0.005; separationRadius = 4; }
+}
+
+npc_6 {
+        class = RuntimePoint;
+        pos.x = 0;
+        pos.y = 25;
+        follow_npc_5 {
+                class         = Follow;
+                target        = npc_5;
+                phantomOffset = 5;
+                maxSpeed      = 0.01;
+                targetRadius  = 0.25;
+                slowRadius    = 1;
+        }
+        angular {
+                class = StaticLookWhereYoureGoing;
+        }
+        separation_npc_1  { class = Separation; target = npc_1 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_2  { class = Separation; target = npc_2 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_3  { class = Separation; target = npc_3 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_4  { class = Separation; target = npc_4 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_5  { class = Separation; target = npc_5 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_7  { class = Separation; target = npc_7 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_8  { class = Separation; target = npc_8 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_9  { class = Separation; target = npc_9 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_10 { class = Separation; target = npc_10; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_11 { class = Separation; target = npc_11; maxSpeed = 0.005; separationRadius = 4; }
+}
+
+npc_7 {
+        class = RuntimePoint;
+        pos.x = 0;
+        pos.y = 30;
+        follow_npc_6 {
+                class         = Follow;
+                target        = npc_6;
+                phantomOffset = 5;
+                maxSpeed      = 0.01;
+                targetRadius  = 0.25;
+                slowRadius    = 1;
+        }
+        angular {
+                class = StaticLookWhereYoureGoing;
+        }
+        separation_npc_1  { class = Separation; target = npc_1 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_2  { class = Separation; target = npc_2 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_3  { class = Separation; target = npc_3 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_4  { class = Separation; target = npc_4 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_5  { class = Separation; target = npc_5 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_6  { class = Separation; target = npc_6 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_8  { class = Separation; target = npc_8 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_9  { class = Separation; target = npc_9 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_10 { class = Separation; target = npc_10; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_11 { class = Separation; target = npc_11; maxSpeed = 0.005; separationRadius = 4; }
+}
+
+npc_8 {
+        class = RuntimePoint;
+        pos.x = 0;
+        pos.y = 35;
+        follow_npc_7 {
+                class         = Follow;
+                target        = npc_7;
+                phantomOffset = 5;
+                maxSpeed      = 0.01;
+                targetRadius  = 0.25;
+                slowRadius    = 1;
+        }
+        angular {
+                class = StaticLookWhereYoureGoing;
+        }
+        separation_npc_1  { class = Separation; target = npc_1 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_2  { class = Separation; target = npc_2 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_3  { class = Separation; target = npc_3 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_4  { class = Separation; target = npc_4 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_5  { class = Separation; target = npc_5 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_6  { class = Separation; target = npc_6 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_7  { class = Separation; target = npc_7 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_9  { class = Separation; target = npc_9 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_10 { class = Separation; target = npc_10; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_11 { class = Separation; target = npc_11; maxSpeed = 0.005; separationRadius = 4; }
+}
+
+npc_9 {
+        class = RuntimePoint;
+        pos.x = 0;
+        pos.y = 40;
+        follow_npc_8 {
+                class         = Follow;
+                target        = npc_8;
+                phantomOffset = 5;
+                maxSpeed      = 0.01;
+                targetRadius  = 0.25;
+                slowRadius    = 1;
+        }
+        angular {
+                class = StaticLookWhereYoureGoing;
+        }
+        separation_npc_1  { class = Separation; target = npc_1 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_2  { class = Separation; target = npc_2 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_3  { class = Separation; target = npc_3 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_4  { class = Separation; target = npc_4 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_5  { class = Separation; target = npc_5 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_6  { class = Separation; target = npc_6 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_7  { class = Separation; target = npc_7 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_8  { class = Separation; target = npc_8 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_10 { class = Separation; target = npc_10; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_11 { class = Separation; target = npc_11; maxSpeed = 0.005; separationRadius = 4; }
+}
+
+npc_10 {
+        class = RuntimePoint;
+        pos.x = 0;
+        pos.y = 45;
+        follow_npc_9 {
+                class         = Follow;
+                target        = npc_9;
+                phantomOffset = 5;
+                maxSpeed      = 0.01;
+                targetRadius  = 0.25;
+                slowRadius    = 1;
+        }
+        angular {
+                class = StaticLookWhereYoureGoing;
+        }
+        separation_npc_1  { class = Separation; target = npc_1 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_2  { class = Separation; target = npc_2 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_3  { class = Separation; target = npc_3 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_4  { class = Separation; target = npc_4 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_5  { class = Separation; target = npc_5 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_6  { class = Separation; target = npc_6 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_7  { class = Separation; target = npc_7 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_8  { class = Separation; target = npc_8 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_9  { class = Separation; target = npc_9 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_11 { class = Separation; target = npc_11; maxSpeed = 0.005; separationRadius = 4; }
+}
+
+npc_11 {
+        class = RuntimePoint;
+        pos.x = 0;
+        pos.y = 50;
+        follow_npc_10 {
+                class         = Follow;
+                target        = npc_10;
+                phantomOffset = 5;
+                maxSpeed      = 0.01;
+                targetRadius  = 0.25;
+                slowRadius    = 1;
+        }
+        angular {
+                class = StaticLookWhereYoureGoing;
+        }
+        separation_npc_1  { class = Separation; target = npc_1 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_2  { class = Separation; target = npc_2 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_3  { class = Separation; target = npc_3 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_4  { class = Separation; target = npc_4 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_5  { class = Separation; target = npc_5 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_6  { class = Separation; target = npc_6 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_7  { class = Separation; target = npc_7 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_8  { class = Separation; target = npc_8 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_9  { class = Separation; target = npc_9 ; maxSpeed = 0.005; separationRadius = 4; }
+        separation_npc_10 { class = Separation; target = npc_10; maxSpeed = 0.005; separationRadius = 4; }
+}

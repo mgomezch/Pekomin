@@ -9,6 +9,7 @@
 #include "Evade.hpp"
 #include "Face.hpp"
 #include "Flock.hpp"
+#include "Follow.hpp"
 #include "KinematicArrive.hpp"
 #include "KinematicSeek.hpp"
 #include "KinematicSeparation.hpp"
@@ -23,6 +24,7 @@
 #include "StaticVelocityMatch.hpp"
 #include "Stink.hpp"
 #include "VelocityMatch.hpp"
+#include "WallCloseStateMachine.hpp"
 #include "Wander.hpp"
 
 #endif

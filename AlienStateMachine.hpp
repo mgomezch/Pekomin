@@ -7,6 +7,11 @@
 #include "Triple.hpp"
 
 class Mobile;
+class Wander;
+class Arrive;
+class Pursue;
+class Evade;
+class PathFollowing;
 
 class AlienStateMachine : public virtual DirectKinematicV {
         public :
@@ -14,13 +19,19 @@ class AlienStateMachine : public virtual DirectKinematicV {
                         Wander,
                         Arrive,
                         Pursue,
-                        Evade
+                        Evade,
+                        Path,
                 };
 
                 Mobile *character;
                 Mobile *target;
                 States state;
-                Behavior *wander, *arrive, *pursue, *evade;
+                Wander *wander;
+                Arrive *arrive;
+                Pursue *pursue;
+                Evade *evade;
+                PathFollowing *path;
+                unsigned int last_ticks;
 
                 AlienStateMachine(std::string name, Mobile *character, Mobile *target,
                         double maxRotationW,
@@ -35,8 +46,13 @@ class AlienStateMachine : public virtual DirectKinematicV {
                         double targetRadiusA,
                         double slowRadiusA,
                         double maxSpeedP,
-                        double maxSpeedE
+                        double maxSpeedE,
+                        double maxSpeed,
+                        double targetRadius,
+                        double slowRadius
                 );
+
+                virtual ~AlienStateMachine();
 
                 virtual std::vector<Triple> getVel(unsigned int ticks, unsigned int delta_ticks);
 };

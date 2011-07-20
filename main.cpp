@@ -4,6 +4,7 @@
 #include <iostream>
 #include <typeinfo>
 #include <vector>
+#include <list>
 
 #include <GL/glut.h>
 #include <sysexits.h>
@@ -35,6 +36,8 @@
 using namespace std;
 
 char *game_filename;
+
+double maxup = 60.0, mindown = -60.0, maxright = 40.0, minleft = -40.0; //default values size of stage
 
 Vector axis = Vector(0, 0, 1);
 Ent *ent;
@@ -174,6 +177,7 @@ void initJuego() {
                 }
 
                 if (type_mesh == 0) {
+                        std::cout << "hola 0" << std::endl;
                         //Basic mesh
                         create_nodes(maxup, mindown, minleft, maxright);
                         Triple t1, t2;
@@ -188,6 +192,7 @@ void initJuego() {
                         }
                 }
                 else if (type_mesh == 1) {
+                        std::cout << "hola 1" << std::endl;
                         //Segment intersection mesh
                         create_nodes(maxup, mindown, minleft, maxright);
                         RuntimeSegment *s1;
@@ -230,28 +235,27 @@ void initJuego() {
 
                         Triple pos1, pos2;
                         for (unsigned int i = 0; i < obstacles.size(); i++) {
-                                pos1 = dynamic_cast<Segment *>(obstacles[i])->v1();
-                                pos2 = dynamic_cast<Segment *>(obstacles[i])->v2();
+                                pos1 = obstacles[i]->v1();
+                                pos2 = obstacles[i]->v2();
                                 for (unsigned int j = 0; j < tiles.size(); j++) {
                                         if (    tiles[j]->pos.x - 2.5 <= pos1.x &&
                                                 tiles[j]->pos.x + 2.5 >= pos1.x &&
                                                 tiles[j]->pos.y - 2.5 <= pos1.y &&
-                                                tiles[j]->pos.y + 2.5 >= pos1.y)
+                                                tiles[j]->pos.y + 2.5 >= pos1.y) {
                                                 tiles[j]->active = false;
-                                        else if (tiles[j]->pos.x - 2.5 <= pos2.x &&
+                                        } else if (tiles[j]->pos.x - 2.5 <= pos2.x &&
                                                 tiles[j]->pos.x + 2.5 >= pos2.x &&
                                                 tiles[j]->pos.y - 2.5 <= pos2.y &&
-                                                tiles[j]->pos.y + 2.5 >= pos2.y)
+                                                tiles[j]->pos.y + 2.5 >= pos2.y) {
                                                 tiles[j]->active = false;
-                                        else {
+                                        } else {
                                                 if (pos1.x == pos2.x) {
                                                         if (tiles[j]->pos.x - 2.5 <= pos1.x &&
                                                             tiles[j]->pos.x + 2.5 >= pos2.x &&
                                                             tiles[j]->pos.y > pos1.y &&
                                                             tiles[j]->pos.y < pos2.y)
                                                                 tiles[j]->active = false;
-                                                }
-                                                else if (pos1.y == pos2.y) {
+                                                } else if (pos1.y == pos2.y) {
                                                         if (tiles[j]->pos.y - 2.5 <= pos1.y &&
                                                             tiles[j]->pos.y + 2.5 >= pos2.y &&
                                                             tiles[j]->pos.x > pos1.x &&
@@ -262,22 +266,51 @@ void initJuego() {
                                 }
                         }
 
-                        for (unsigned int i = 0; i < tiles.size(); i++) {
-                                if (tiles[i]->active)
-                                        nodes.push_back(new Node("", Triple(tiles[i]->pos.x, tiles[i]->pos.y, tiles[i]->pos.z)));
+                        int tam = 0;
+                        if (minleft < 0) tam += (-1 * minleft);
+                        else             tam += minleft;
+                        if (maxright < 0) tam += (-1 * maxright);
+                        else              tam += maxright;
+                        tam /= 5;
+
+                        int j = 0;
+                        int k = 0;
+                        for (unsigned int i = 0; i < tiles.size(); i += 4) {
+                                if (j == 0 && k < tam) {
+                                        k += 4;
+                                        if (tiles[i]->active)
+                                                nodes.push_back(new Node("", Triple(tiles[i]->pos.x, tiles[i]->pos.y, tiles[i]->pos.z)));
+                                        if (k >= tam) j = 1, k = 0;
+                                } else if (j == 1 && k < tam) {
+                                        k += 4;
+                                        if (tiles[i+2]->active)
+                                                nodes.push_back(new Node("", Triple(tiles[i+2]->pos.x, tiles[i+2]->pos.y, tiles[i+2]->pos.z)));
+                                        if (k >= tam) j = 0, k = 0;
+                                }
                         }
 
                         Triple t1, t2;
                         for (unsigned int i = 0; i < nodes.size(); i++) {
                                 for (unsigned int j = i + 1; j < nodes.size(); j++) {
                                         tie(t1, t2) = points(nodes[j], nodes[i]);
-                                        if ((t2 - t1).length() <= 8) {
+                                        if ((t2 - t1).length() <= 16) {
                                                 nodes[i]->add_adj(nodes[j]);
                                                 nodes[j]->add_adj(nodes[i]);
                                         }
                                 }
                         }
                 }
+#if 0
+                //4 CoverPoints
+                cover[0]->pos = Triple(mindown + 5, minleft  + 5, 0); //ul
+                std::cout << "ELEFATNNE" << std::endl;
+                cover[1]->pos = Triple(mindown + 5, maxright - 5, 0); //ur
+                std::cout << "ELEFATNNE" << std::endl;
+                cover[2]->pos = Triple(maxup - 5  , minleft  + 5, 0); //dl
+                std::cout << "ELEFATNNE" << std::endl;
+                cover[3]->pos = Triple(maxup - 5  , maxright - 5, 0); //dr
+                std::cout << "ELEFATNNE" << std::endl;
+#endif
         }
 }
 
@@ -385,39 +418,41 @@ void display() {
                         if (mesh) {
                                 //Triple pos = Triple(0, 0, 0);
                                 glPushMatrix();
-                                        glColor4ub(255, 0, 255, 255);
                                         glTranslatef(0, 0, 0.5);
-                                        for (int i = -60; i <= 40; i = i + 20) {
-                                                for (int j = -40; j <= 20; j = j + 20) {
-                                                glBegin(GL_LINE_LOOP);
-                                                        glLineWidth(100.0);
-                                                        glVertex3f(     i,      j, 0); //-60, -40, 0
-                                                        glVertex3f(     i, j + 20, 0); //-60, -20, 0
-                                                        glVertex3f(i + 20,      j, 0); //-40, -40, 0
-//                                                      pos = (Triple(i, j, 0) + Triple(i, j + 20, 0) + Triple(i + 20, j, 0))/3.0;
-                                                glEnd();
-//                                              glBegin(GL_POINTS);
-//                                                      glVertex3f(pos.x, pos.y, 0);
-//                                              glEnd();
+                                        if (type_mesh != 2) {
+                                                glColor4ub(255, 0, 255, 255);
+                                                for (int i = -60; i <= 40; i = i + 20) {
+                                                        for (int j = -40; j <= 20; j = j + 20) {
+                                                        glBegin(GL_LINE_LOOP);
+                                                                glLineWidth(100.0);
+                                                                glVertex3f(     i,      j, 0); //-60, -40, 0
+                                                                glVertex3f(     i, j + 20, 0); //-60, -20, 0
+                                                                glVertex3f(i + 20,      j, 0); //-40, -40, 0
+        //                                                      pos = (Triple(i, j, 0) + Triple(i, j + 20, 0) + Triple(i + 20, j, 0))/3.0;
+                                                        glEnd();
+        //                                              glBegin(GL_POINTS);
+        //                                                      glVertex3f(pos.x, pos.y, 0);
+        //                                              glEnd();
 
-                                                glBegin(GL_LINE_LOOP);
-                                                        glLineWidth(100.0);
-                                                        glVertex3f(i + 20, j + 20, 0); //-40, -20, 0
-                                                        glVertex3f(i + 20, j     , 0); //-40, -40, 0
-                                                        glVertex3f(i     , j + 20, 0); //-60, -20, 0
-//                                                      pos = (Triple(i + 20, j + 20, 0) + Triple(i + 20, j, 0) + Triple(i, j + 20, 0))/3.0;
-                                                glEnd();
-//                                              glBegin(GL_POINTS);
-//                                                      glVertex3f(pos.x, pos.y, 0);
-//                                              glEnd();
+                                                        glBegin(GL_LINE_LOOP);
+                                                                glLineWidth(100.0);
+                                                                glVertex3f(i + 20, j + 20, 0); //-40, -20, 0
+                                                                glVertex3f(i + 20, j     , 0); //-40, -40, 0
+                                                                glVertex3f(i     , j + 20, 0); //-60, -20, 0
+        //                                                      pos = (Triple(i + 20, j + 20, 0) + Triple(i + 20, j, 0) + Triple(i, j + 20, 0))/3.0;
+                                                        glEnd();
+        //                                              glBegin(GL_POINTS);
+        //                                                      glVertex3f(pos.x, pos.y, 0);
+        //                                              glEnd();
+                                                        }
                                                 }
                                         }
                                         for (unsigned int i = 0; i < nodes.size(); i++) {
-                                                for (unsigned int j = 0; j < nodes[i]->adj.size(); j++) {
+                                                for (auto it = nodes[i]->adj.begin(); it != nodes[i]->adj.end(); ++it) {
                                                         glBegin(GL_LINES);
                                                                 glVertex3f(nodes[i]->pos.x, nodes[i]->pos.y, 0);
 //                                                              glVertex3f(get<0>(nodes[i]->adj[j])->pos.x, get<0>(nodes[i]->adj[j])->pos.y, 0);
-                                                                glVertex3f(nodes[i]->adj[j]->pos.x, nodes[i]->adj[j]->pos.y, 0);
+                                                                glVertex3f((*it)->pos.x, (*it)->pos.y, 0);
                                                         glEnd();
                                                 }
                                                 glPushMatrix();

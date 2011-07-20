@@ -16,13 +16,13 @@
 #endif
 
 Smell::Smell(std::string name, Mobile *character, double maxSpeed, double range):
-        KinematicV(name),
+        DirectKinematicV(name),
         character(character),
         maxSpeed(maxSpeed),
         range(range)
 {}
 
-std::vector<Triple> Smell::getVelIncr(unsigned int ticks, unsigned int delta_ticks) {
+std::vector<Triple> Smell::getVel(unsigned int ticks, unsigned int delta_ticks) {
         Triple steering, dir;
         Triple cp, tp;
         double d, x, f;

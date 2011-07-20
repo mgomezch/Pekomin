@@ -3,12 +3,12 @@
 
 #include <vector>
 
-#include "KinematicV.hpp"
+#include "DirectKinematicV.hpp"
 #include "Triple.hpp"
 
 class Mobile;
 
-class Smell : public virtual KinematicV {
+class Smell : public virtual DirectKinematicV {
         public:
                 Mobile *character;
                 double maxSpeed;
@@ -16,7 +16,7 @@ class Smell : public virtual KinematicV {
 
                 Smell(std::string name, Mobile *character, double maxSpeed, double range);
 
-                virtual std::vector<Triple> getVelIncr(unsigned int ticks, unsigned int delta_ticks);
+                virtual std::vector<Triple> getVel(unsigned int ticks, unsigned int delta_ticks);
 };
 
 #endif

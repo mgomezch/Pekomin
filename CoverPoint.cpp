@@ -1,24 +1,24 @@
 #include <GL/glut.h>
 
 #include "gl.hpp"
-#include "RecoveryPoint.hpp"
+#include "CoverPoint.hpp"
 #include "Triple.hpp"
 
-//#define DEBUG_RECOVERYPOINT
+//#define DEBUG_COVERPOINT
 
-#ifdef DEBUG_RECOVERYPOINT
+#ifdef DEBUG_COVERPOINT
 #       include <iostream>
 #endif
 
-RecoveryPoint::RecoveryPoint(std::string name, Triple pos, double ang, Triple vel, double vrot):
+CoverPoint::CoverPoint(std::string name, Triple pos, double ang, Triple vel, double vrot):
         Actor(name, pos, ang, vel, vrot),
         active(true)
 {}
 
-void RecoveryPoint::draw() {
+void CoverPoint::draw() {
         if (active) {
                 glPushMatrix();
-                        glColor4ub(0, 128, 128, 128);
+                        glColor4ub(105, 105, 105, 128);
                         glTranslatef(0, 0, 0.5);
                         glCallList(cubo_simple);
                 glPopMatrix();

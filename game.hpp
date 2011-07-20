@@ -57,8 +57,10 @@ extern std::list<Odor *> new_odors;
 extern std::list<Ent  *> ents;
 extern std::list<Odor *> odors;
 
-extern std::vector<Ent  *> obstacles;
+extern std::vector<Segment *> obstacles;
 extern std::vector<Tile *> tiles;
+extern std::vector<Ent *> recovery;
+extern std::vector<Ent *> cover;
 
 extern std::vector<Node *> nodes;
 

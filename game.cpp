@@ -8,8 +8,10 @@
 #include "Tile.hpp"
 
 std::vector<Node *> nodes;
-std::vector<Ent  *> obstacles;
+std::vector<Segment *> obstacles;
 std::vector<Tile *> tiles;
+std::vector<Ent *> recovery;
+std::vector<Ent *> cover;
 
 std::list<Ent  *> new_ents;
 std::list<Odor *> new_odors;
