@@ -71,7 +71,7 @@ std::vector<Triple> AlienStateMachine::getVel(unsigned int ticks, unsigned int d
                 std::tie(cp, tp) = points(character, target);
                 distance = (tp - cp).length();
 
-                if (state != States::Wander && distance > 20) {
+                if (state != States::Wander && dynamic_cast<Alien *>(character)->hp >= 30 && distance > 20) {
                         std::cout << "Wander" << std::endl;
                         this->state = States::Wander;
                         this->wander->active = true ;
@@ -89,7 +89,7 @@ std::vector<Triple> AlienStateMachine::getVel(unsigned int ticks, unsigned int d
                         this->evade->active  = false;
                         this->path->active   = true ;
                 }
-                else if (state != States::Arrive && distance <= 20) {
+                else if (state != States::Arrive && dynamic_cast<Alien *>(character)->hp >= 30 && distance <= 20) {
                         std::cout << "Arrive" << std::endl;
                         this->state = States::Arrive;
                         this->wander->active = false;

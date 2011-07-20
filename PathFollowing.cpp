@@ -40,8 +40,8 @@ void PathFollowing::create_Path() {
 
         path = dijkstra(character, begin, end);
 
-        for (unsigned int i = 0; i < path.size(); i++)
-                path[i]->print_node();
+        //for (unsigned int i = 0; i < path.size(); i++)
+        //        path[i]->print_node();
 
         for (unsigned int i = 0; i < path.size(); i++)
                 path[i]->add_mod(character, 500);
