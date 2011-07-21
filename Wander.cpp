@@ -38,9 +38,7 @@ std::vector<Triple> Wander::getVel(unsigned int ticks, unsigned int delta_ticks)
         direction = tp - cp;
         distance = direction.length();
 
-        if ((accum += delta_ticks) > wanderTime) accum = wanderTime;
-
-        if (accum == wanderTime) {
+        if ((accum += delta_ticks) >= wanderTime) {
                 wanderOrientation += RandBin(-1, 1) * wanderRate;
                 target->ang = character->ang + wanderOrientation;
                 target->pos = cp + target->orientation() * wanderRadius;

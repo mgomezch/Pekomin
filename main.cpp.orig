@@ -25,7 +25,7 @@
 #include "Triple.hpp"
 #include "util.hpp"
 
-//#define DEBUG_MAIN
+#define DEBUG_MAIN
 
 #define NO_LIGHTING
 
@@ -300,6 +300,7 @@ void initJuego() {
                                 }
                         }
                 }
+<<<<<<< HEAD
 
                 if (cover.size() > 0) {
                         //4 CoverPoints
@@ -308,6 +309,19 @@ void initJuego() {
                         cover[2]->pos = Triple(maxup - 5  , minleft  + 5, 0); //dl
                         cover[3]->pos = Triple(maxup - 5  , maxright - 5, 0); //dr
                 }
+=======
+#if 0
+                //4 CoverPoints
+                cover[0]->pos = Triple(mindown + 5, minleft  + 5, 0); //ul
+                std::cout << "ELEFATNNE" << std::endl;
+                cover[1]->pos = Triple(mindown + 5, maxright - 5, 0); //ur
+                std::cout << "ELEFATNNE" << std::endl;
+                cover[2]->pos = Triple(maxup - 5  , minleft  + 5, 0); //dl
+                std::cout << "ELEFATNNE" << std::endl;
+                cover[3]->pos = Triple(maxup - 5  , maxright - 5, 0); //dr
+                std::cout << "ELEFATNNE" << std::endl;
+#endif
+>>>>>>> e35fb9176b7b1388f2cea281581e55c6f2319fe3
         }
 }
 
@@ -977,9 +991,9 @@ void juego(int v) {
                                 dtTranslate(ent->pos.x, ent->pos.y, ent->pos.z);
                         }
                 }
-                //if (j == COLL_MAX_ITERS) {
-                //       std::cerr << "WARNING: reached max number of collision cycle iterations without resolving interpenetration" << std::endl;
-                //}
+                if (j == COLL_MAX_ITERS) {
+                        std::cerr << "WARNING: reached max number of collision cycle iterations without resolving interpenetration" << std::endl;
+                }
                 dtProceed();
 
                 if (pbn < N_PBALAS) {

@@ -52,6 +52,8 @@ void Actor::steer(unsigned int ticks, unsigned int delta_ticks) {
         unsigned int i, j, n;
         Triple vdir;
 
+        Void *p_Void;
+
         DirectStaticV    *p_DirectStaticV   ;
         StaticV          *p_StaticV         ;
         DirectKinematicV *p_DirectKinematicV;
@@ -65,16 +67,16 @@ void Actor::steer(unsigned int ticks, unsigned int delta_ticks) {
         DynamicA         *p_DynamicA        ;
 
         std::vector<Triple> v_DirectStaticV   ,
-                       v_StaticV         ,
-                       v_DirectKinematicV,
-                       v_KinematicV      ,
-                       v_DynamicV        ;
+                            v_StaticV         ,
+                            v_DirectKinematicV,
+                            v_KinematicV      ,
+                            v_DynamicV        ;
 
         std::vector<double> v_DirectStaticA   ,
-                       v_StaticA         ,
-                       v_DirectKinematicA,
-                       v_KinematicA      ,
-                       v_DynamicA        ;
+                            v_StaticA         ,
+                            v_DirectKinematicA,
+                            v_KinematicA      ,
+                            v_DynamicA        ;
 
         Triple sum_DirectStaticV    = Triple(0, 0, 0),
                sum_StaticV          = Triple(0, 0, 0),
@@ -106,6 +108,10 @@ void Actor::steer(unsigned int ticks, unsigned int delta_ticks) {
 
         for (i = 0; i < behaviors.size(); i++) {
                 if (!behaviors[i]->active) continue;
+
+                if ((p_Void = dynamic_cast<Void *>(behaviors[i])) != NULL) {
+                        p_Void->run(ticks, delta_ticks);
+                }
 
                 RUN_V_STEERING(DirectStaticV   )
                 RUN_V_STEERING(StaticV         )

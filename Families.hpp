@@ -1,6 +1,8 @@
 #ifndef FAMILIES_HPP
 #define FAMILIES_HPP
 
+#include "Void.hpp"
+
 #include "DirectStaticV.hpp"
 #include "StaticV.hpp"
 #include "DirectKinematicV.hpp"

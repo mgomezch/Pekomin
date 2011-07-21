@@ -3,12 +3,13 @@
 
 #include <GL/glut.h>
 
+#include <list>
 #include <vector>
 
-#include "Node.hpp"
-#include "Player.hpp"
 #include "Ent.hpp"
-
+#include "Node.hpp"
+#include "Odor.hpp"
+#include "Player.hpp"
 #include "Tile.hpp"
 
 #define GRAVEDAD   (-0.0001)
@@ -51,7 +52,10 @@
 #define COSA                3
 
 extern Player *player;
-extern std::vector<Ent *> ents;
+extern std::list<Ent  *> new_ents;
+extern std::list<Odor *> new_odors;
+extern std::list<Ent  *> ents;
+extern std::list<Odor *> odors;
 
 extern std::vector<Segment *> obstacles;
 extern std::vector<Tile *> tiles;

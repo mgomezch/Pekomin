@@ -6,7 +6,7 @@
 #include "Actor.hpp"
 #include "Triple.hpp"
 
-#define ALIEN_DEFAULT_MAX_HP 10
+#define ALIEN_DEFAULT_MAX_HP 100
 
 class Alien : public virtual Actor {
         public:

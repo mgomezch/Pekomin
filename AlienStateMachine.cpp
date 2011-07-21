@@ -47,6 +47,7 @@ AlienStateMachine::AlienStateMachine(std::string name    ,
         targetRadius(targetRadius),
         slowRadius(slowRadius),
         path(new PathFollowing(name + "PathFollowing", character, dynamic_cast<Mobile *>(cover[0]), maxSpeed, targetRadius, slowRadius)),
+        //path(NULL),
         last_ticks(0)
 {
         this->arrive->active = false;
@@ -83,7 +84,8 @@ std::vector<Triple> AlienStateMachine::getVel(unsigned int ticks, unsigned int d
                                         this->arrive->active = false;
                                         this->pursue->active = false;
                                         this->evade->active  = false;
-                                        if (this->path != NULL) this->path->active   = false;
+                                        //if (this->path != NULL) 
+                                        this->path->active = false;
                                 }
                         } else {
                                 if (state != States::Arrive) {
@@ -93,7 +95,8 @@ std::vector<Triple> AlienStateMachine::getVel(unsigned int ticks, unsigned int d
                                         this->arrive->active = true ;
                                         this->pursue->active = false;
                                         this->evade->active  = false;
-                                        if (this->path != NULL) this->path->active   = false;
+                                        //if (this->path != NULL)
+                                         this->path->active = false;
                                 }
                         }
                 } else {
@@ -104,12 +107,15 @@ std::vector<Triple> AlienStateMachine::getVel(unsigned int ticks, unsigned int d
                                 this->arrive->active = false;
                                 this->pursue->active = false;
                                 this->evade->active  = false;
+                                /*double a = RandBin(0, 3);
                                 if (this->path == NULL) {
-                                        double a = RandBin(0, 3);
-                                        //path = new PathFollowing(name + "PathFollowing", character, dynamic_cast<Mobile *>(cover[static_cast<int>(a)]), maxSpeed, targetRadius, slowRadius);
-                                        this->path->active = true; 
+                                        this->path = new PathFollowing(name + "PathFollowing", character, dynamic_cast<Mobile *>(cover[static_cast<int>(a)]), maxSpeed, targetRadius, slowRadius);
+                                        this->path->active = true;
                                 }
-                                if (this->path != NULL) this->path->active == true;
+                                else {
+                                        this->path = new PathFollowing(name + "PathFollowing", character, dynamic_cast<Mobile *>(cover[static_cast<int>(a)]), maxSpeed, targetRadius, slowRadius);
+                                       */ this->path->active = true;
+                                //}
                         }
                 }
         }
@@ -130,7 +136,7 @@ std::vector<Triple> AlienStateMachine::getVel(unsigned int ticks, unsigned int d
                 temp = evade->getVel(ticks, delta_ticks);
                 out.insert(out.begin(), temp.begin(), temp.end());
         }
-        if (this->path->active) {
+        if (/*this->path != NULL && */this->path->active) {
                 temp = path->getVel(ticks, delta_ticks);
                 out.insert(out.begin(), temp.begin(), temp.end());
         }

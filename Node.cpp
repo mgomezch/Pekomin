@@ -8,7 +8,7 @@
 #include "Node.hpp"
 
 Node::Node(std::string name, Triple pos):
-        Ent(name, pos, 0)
+        Ent(name, pos)
 {}
 
 void Node::add_adj(Node *node) {

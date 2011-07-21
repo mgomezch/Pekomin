@@ -419,6 +419,105 @@
 #endif
 
 #ifdef DEBUG_PARSE
+#       define SET_BEHAVIOR_UINT_D(FIELD, DEFAULT)                                                        \
+                unsigned int FIELD ;                                                                      \
+                it_fields = it_b->second->find(string( #FIELD ));                                         \
+                if (it_fields == it_b->second->end()) {                                                   \
+                        std::cout << "parse: Ent '"                                                       \
+                                  << it_e->first                                                          \
+                                  << "' behavior '"                                                       \
+                                  << it_b->first                                                          \
+                                  << "': processing unsigned int field '" #FIELD "' with default value '" \
+                                  << DEFAULT                                                              \
+                                  << "'"                                                                  \
+                                  << std::endl;                                                           \
+                        FIELD = DEFAULT;                                                                  \
+                }                                                                                         \
+                if (sscanf(it_fields->second.c_str(), "%u", & FIELD ) != 1) {                             \
+                        std::cerr << "parse error making Ent '"                                           \
+                                  << it_e->first                                                          \
+                                  << "' behavior '"                                                       \
+                                  << it_b->first                                                          \
+                                  << "': specified field '" #FIELD "' == '"                               \
+                                  << it_fields->second                                                    \
+                                  << "' not a floating-point number"                                      \
+                                  << std::endl;                                                           \
+                        exit(EX_DATAERR);                                                                 \
+                }
+#       define SET_BEHAVIOR_UINT(FIELD)                                                \
+                unsigned int FIELD ;                                                   \
+                it_fields = it_b->second->find(string( #FIELD ));                      \
+                if (it_fields == it_b->second->end()) {                                \
+                        std::cerr << "parse error making Ent '"                        \
+                                  << it_e->first                                       \
+                                  << "' behavior '"                                    \
+                                  << it_b->first                                       \
+                                  << "': required field '" #FIELD "' not specified"    \
+                                  << std::endl;                                        \
+                        exit(EX_DATAERR);                                              \
+                }                                                                      \
+                if (sscanf(it_fields->second.c_str(), "%u", & FIELD ) != 1) {          \
+                        std::cerr << "parse error making Ent '"                        \
+                                  << it_e->first                                       \
+                                  << "' behavior '"                                    \
+                                  << it_b->first                                       \
+                                  << "': specified field '" #FIELD "' == '"            \
+                                  << it_fields->second                                 \
+                                  << "' not a floating-point number"                   \
+                                  << std::endl;                                        \
+                        exit(EX_DATAERR);                                              \
+                }                                                                      \
+                std::cout << "parse: Ent '"                                            \
+                          << it_e->first                                               \
+                          << "' behavior '"                                            \
+                          << it_b->first                                               \
+                          << "': processing unsigned int field " #FIELD " with value " \
+                          << FIELD                                                     \
+                          << std::endl;
+#else
+#       define SET_BEHAVIOR_UINT_D(FIELD, DEFAULT)                            \
+                unsigned int FIELD ;                                          \
+                it_fields = it_b->second->find(string( #FIELD ));             \
+                if (it_fields == it_b->second->end()) {                       \
+                        FIELD = DEFAULT;                                      \
+                }                                                             \
+                if (sscanf(it_fields->second.c_str(), "%u", & FIELD ) != 1) { \
+                        std::cerr << "parse error making Ent '"               \
+                                  << it_e->first                              \
+                                  << "' behavior '"                           \
+                                  << it_b->first                              \
+                                  << "': specified field '" #FIELD "' == '"   \
+                                  << it_fields->second                        \
+                                  << "' not a floating-point number"          \
+                                  << std::endl;                               \
+                        exit(EX_DATAERR);                                     \
+                }
+#       define SET_BEHAVIOR_UINT(FIELD)                                             \
+                unsigned int FIELD ;                                                \
+                it_fields = it_b->second->find(string( #FIELD ));                   \
+                if (it_fields == it_b->second->end()) {                             \
+                        std::cerr << "parse error making Ent '"                     \
+                                  << it_e->first                                    \
+                                  << "' behavior '"                                 \
+                                  << it_b->first                                    \
+                                  << "': required field '" #FIELD "' not specified" \
+                                  << std::endl;                                     \
+                        exit(EX_DATAERR);                                           \
+                }                                                                   \
+                if (sscanf(it_fields->second.c_str(), "%u", & FIELD ) != 1) {       \
+                        std::cerr << "parse error making Ent '"                     \
+                                  << it_e->first                                    \
+                                  << "' behavior '"                                 \
+                                  << it_b->first                                    \
+                                  << "': specified field '" #FIELD "' == '"         \
+                                  << it_fields->second                              \
+                                  << "' not a floating-point number"                \
+                                  << std::endl;                                     \
+                        exit(EX_DATAERR);                                           \
+                }
+#endif
+
+#ifdef DEBUG_PARSE
 #       define SET_BEHAVIOR_DOUBLE_D(FIELD, DEFAULT)                                                \
                 double FIELD ;                                                                      \
                 it_fields = it_b->second->find(string( #FIELD ));                                   \
@@ -780,7 +879,7 @@ void parse(char *s) {
                                 SET_BEHAVIOR_DOUBLE(targetRadius      );
                                 SET_BEHAVIOR_DOUBLE(slowRadius        );
 
-                                SET_P(new Align(it_e->first, character, target, maxAngularVelocity, targetRadius, slowRadius));
+                                SET_P(new Align(it_b->first, character, target, maxAngularVelocity, targetRadius, slowRadius));
                                 continue;
                         }
 
@@ -792,7 +891,7 @@ void parse(char *s) {
                                 SET_BEHAVIOR_DOUBLE(targetRadius);
                                 SET_BEHAVIOR_DOUBLE(slowRadius  );
 
-                                SET_P(new Arrive(it_e->first, character, target, maxSpeed, targetRadius, slowRadius));
+                                SET_P(new Arrive(it_b->first, character, target, maxSpeed, targetRadius, slowRadius));
                                 continue;
                         }
 
@@ -803,7 +902,7 @@ void parse(char *s) {
                                 SET_BEHAVIOR_DOUBLE(maxForce);
                                 SET_BEHAVIOR_DOUBLE(separationRadius);
 
-                                SET_P(new BoundedDynamicSeparation(it_e->first, character, target, maxForce, separationRadius));
+                                SET_P(new BoundedDynamicSeparation(it_b->first, character, target, maxForce, separationRadius));
                                 continue;
                         }
 
@@ -814,7 +913,7 @@ void parse(char *s) {
                                 SET_BEHAVIOR_DOUBLE(minForce);
                                 SET_BEHAVIOR_DOUBLE(separationRadius);
 
-                                SET_P(new DynamicSeparation(it_e->first, character, target, minForce, separationRadius));
+                                SET_P(new DynamicSeparation(it_b->first, character, target, minForce, separationRadius));
                                 continue;
                         }
 
@@ -824,7 +923,7 @@ void parse(char *s) {
                                 SET_BEHAVIOR_TARGET();
                                 SET_BEHAVIOR_DOUBLE(maxSpeed);
 
-                                SET_P(new Evade(it_e->first, character, target, maxSpeed));
+                                SET_P(new Evade(it_b->first, character, target, maxSpeed));
                                 continue;
                         }
 
@@ -836,7 +935,7 @@ void parse(char *s) {
                                 SET_BEHAVIOR_DOUBLE(targetRadius);
                                 SET_BEHAVIOR_DOUBLE(slowRadius);
 
-                                SET_P(new Face(it_e->first, character, target, maxAngularVelocity, targetRadius, slowRadius));
+                                SET_P(new Face(it_b->first, character, target, maxAngularVelocity, targetRadius, slowRadius));
                                 continue;
                         }
 
@@ -852,6 +951,7 @@ void parse(char *s) {
                                 SET_P(new Follow(it_e->first, character, target, phantomOffset, maxSpeed, targetRadius, slowRadius));
                                 continue;
                         }
+
                         // Separation(std::string name, Mobile *character, Mobile *target, double maxSpeed, double separationRadius);
                         if (class_s == string("Separation")) {
                                 SET_BEHAVIOR_CHARACTER();
@@ -859,7 +959,7 @@ void parse(char *s) {
                                 SET_BEHAVIOR_DOUBLE(maxSpeed);
                                 SET_BEHAVIOR_DOUBLE(separationRadius);
 
-                                SET_P(new Separation(it_e->first, character, target, maxSpeed, separationRadius));
+                                SET_P(new Separation(it_b->first, character, target, maxSpeed, separationRadius));
                                 continue;
                         }
 
@@ -870,7 +970,7 @@ void parse(char *s) {
                                 SET_BEHAVIOR_DOUBLE(maxSpeed);
                                 SET_BEHAVIOR_DOUBLE(radius);
 
-                                SET_P(new KinematicArrive(it_e->first, character, target, maxSpeed, radius));
+                                SET_P(new KinematicArrive(it_b->first, character, target, maxSpeed, radius));
                                 continue;
                         }
 
@@ -881,7 +981,7 @@ void parse(char *s) {
                                 SET_BEHAVIOR_DOUBLE(maxSpeed);
                                 SET_BEHAVIOR_DOUBLE(separationRadius);
 
-                                SET_P(new KinematicSeparation(it_e->first, character, target, maxSpeed, separationRadius));
+                                SET_P(new KinematicSeparation(it_b->first, character, target, maxSpeed, separationRadius));
                                 continue;
                         }
 
@@ -891,7 +991,7 @@ void parse(char *s) {
                                 SET_BEHAVIOR_TARGET();
                                 SET_BEHAVIOR_DOUBLE(maxSpeed);
 
-                                SET_P(new KinematicSeek(it_e->first, character, target, maxSpeed));
+                                SET_P(new KinematicSeek(it_b->first, character, target, maxSpeed));
                                 continue;
                         }
 
@@ -902,7 +1002,7 @@ void parse(char *s) {
                                 SET_BEHAVIOR_DOUBLE(maxRotation);
                                 SET_BEHAVIOR_DOUBLE(wanderTime);
 
-                                SET_P(new KinematicWander(it_e->first, character, maxSpeed, maxRotation, wanderTime));
+                                SET_P(new KinematicWander(it_b->first, character, maxSpeed, maxRotation, wanderTime));
                                 continue;
                         }
 
@@ -910,7 +1010,7 @@ void parse(char *s) {
                         if (class_s == string("StaticLookWhereYoureGoing")) {
                                 SET_BEHAVIOR_CHARACTER();
 
-                                SET_P(new StaticLookWhereYoureGoing(it_e->first, character));
+                                SET_P(new StaticLookWhereYoureGoing(it_b->first, character));
                                 continue;
                         }
 
@@ -921,7 +1021,7 @@ void parse(char *s) {
                                 SET_BEHAVIOR_DOUBLE(targetRadius);
                                 SET_BEHAVIOR_DOUBLE(slowRadius);
 
-                                SET_P(new LookWhereYoureGoing(it_e->first, character, maxAngularVelocity, targetRadius, slowRadius));
+                                SET_P(new LookWhereYoureGoing(it_b->first, character, maxAngularVelocity, targetRadius, slowRadius));
                                 continue;
                         }
 
@@ -931,7 +1031,7 @@ void parse(char *s) {
                                 SET_BEHAVIOR_TARGET();
                                 SET_BEHAVIOR_DOUBLE(maxSpeed);
 
-                                SET_P(new Pursue(it_e->first, character, target, maxSpeed));
+                                SET_P(new Pursue(it_b->first, character, target, maxSpeed));
                                 continue;
                         }
 
@@ -941,7 +1041,7 @@ void parse(char *s) {
                                 SET_BEHAVIOR_TARGET();
                                 SET_BEHAVIOR_DOUBLE(maxSpeed);
 
-                                SET_P(new Seek(it_e->first, character, target, maxSpeed));
+                                SET_P(new Seek(it_b->first, character, target, maxSpeed));
                                 continue;
                         }
 
@@ -950,7 +1050,7 @@ void parse(char *s) {
                                 SET_BEHAVIOR_CHARACTER();
                                 SET_BEHAVIOR_TARGET();
 
-                                SET_P(new StaticVelocityMatch(it_e->first, character, target));
+                                SET_P(new StaticVelocityMatch(it_b->first, character, target));
                                 continue;
                         }
 
@@ -960,7 +1060,7 @@ void parse(char *s) {
                                 SET_BEHAVIOR_TARGET();
                                 SET_BEHAVIOR_DOUBLE(maxAcceleration);
 
-                                SET_P(new VelocityMatch(it_e->first, character, target, maxAcceleration));
+                                SET_P(new VelocityMatch(it_b->first, character, target, maxAcceleration));
                                 continue;
                         }
 
@@ -976,7 +1076,7 @@ void parse(char *s) {
                                 SET_BEHAVIOR_DOUBLE(wanderTime);
                                 SET_BEHAVIOR_DOUBLE(maxAcceleration);
 
-                                SET_P(new Wander(it_e->first, character, maxRotation, targetRadius, slowRadius, wanderOffset, wanderRadius, wanderRate, wanderTime, maxAcceleration));
+                                SET_P(new Wander(it_b->first, character, maxRotation, targetRadius, slowRadius, wanderOffset, wanderRadius, wanderRate, wanderTime, maxAcceleration));
                                 continue;
                         }
 
@@ -988,7 +1088,29 @@ void parse(char *s) {
                                 SET_BEHAVIOR_DOUBLE(targetRadius);
                                 SET_BEHAVIOR_DOUBLE(slowRadius);
 
-                                SET_P(new PathFollowing(it_e->first, character, target, maxSpeed, targetRadius, slowRadius));
+                                SET_P(new PathFollowing(it_b->first, character, target, maxSpeed, targetRadius, slowRadius));
+                                continue;
+                        }
+
+                        // Stink(std::string name, Mobile *character, double maxSpeed, double range);
+                        if (class_s == string("Stink")) {
+                                SET_BEHAVIOR_CHARACTER();
+                                SET_BEHAVIOR_UINT(stinkTime);
+                                SET_BEHAVIOR_UINT(lifetime);
+                                SET_BEHAVIOR_DOUBLE(intensity);
+                                SET_BEHAVIOR_DOUBLE(spread);
+
+                                SET_P(new Stink(it_b->first, character, stinkTime, lifetime, intensity, spread));
+                                continue;
+                        }
+
+                        // Smell(std::string name, Mobile *character, double maxSpeed, double range);
+                        if (class_s == string("Smell")) {
+                                SET_BEHAVIOR_CHARACTER();
+                                SET_BEHAVIOR_DOUBLE(maxSpeed);
+                                SET_BEHAVIOR_DOUBLE(range);
+
+                                SET_P(new Smell(it_b->first, character, maxSpeed, range));
                                 continue;
                         }
 

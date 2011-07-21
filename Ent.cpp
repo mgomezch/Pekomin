@@ -37,8 +37,11 @@ Ent::Ent(std::string name, Triple pos, double ang):
         name(name),
         pos(pos),
         ang(ang),
+        normals(std::vector<Triple>()),
         collides(false),
-        dead(false)
+        dead(false),
+        new_pos(pos),
+        new_ang(ang)
 {}
 
 Ent::~Ent() {}
