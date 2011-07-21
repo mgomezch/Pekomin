@@ -10,6 +10,7 @@ class Mobile : public virtual Ent {
                 double vrot;
                 Triple new_vel;
                 double new_vrot;
+                bool active;
 
                 Mobile(std::string name = "", Triple pos = Triple(), double  ang = 0, Triple vel = Triple(), double vrot = 0);
 

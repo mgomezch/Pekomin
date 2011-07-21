@@ -951,6 +951,17 @@ void parse(char *s) {
                                 SET_P(new Follow(it_e->first, character, target, phantomOffset, maxSpeed, targetRadius, slowRadius));
                                 continue;
                         }
+                        // Heal(std::string name, Mobile *character, Mobile *target, double healTime, double healRadius);
+                        if (class_s == string("Heal")) {
+                                SET_BEHAVIOR_CHARACTER();
+                                SET_BEHAVIOR_TARGET();
+                                SET_BEHAVIOR_DOUBLE(healTime);
+                                SET_BEHAVIOR_DOUBLE(healRadius);
+
+                                SET_P(new Heal(it_e->first, character, target, healTime, healRadius));
+
+                                continue;
+                        }
 
                         // Separation(std::string name, Mobile *character, Mobile *target, double maxSpeed, double separationRadius);
                         if (class_s == string("Separation")) {

@@ -10,6 +10,7 @@
 #include "Face.hpp"
 #include "Flock.hpp"
 #include "Follow.hpp"
+#include "Heal.hpp"
 #include "KinematicArrive.hpp"
 #include "KinematicSeek.hpp"
 #include "KinematicSeparation.hpp"

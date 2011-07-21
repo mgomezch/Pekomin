@@ -18,7 +18,7 @@ Evade::Evade(std::string name, Mobile *character, Mobile *target, double maxSpee
 std::vector<Triple> Evade::getVel(unsigned int ticks, unsigned int delta_ticks) {
         Triple steering;
         Triple direction;
-        double distance, targetRadius = 5.0, speed, prediction;
+        double distance, targetRadius = 1.0, speed, prediction;
         Triple cp, tp;
 
         if (character->vel.length() == 0) {

@@ -6,7 +6,7 @@
 #include "Odor.hpp"
 #include "Stink.hpp"
 
-#define DEBUG_STINK
+//#define DEBUG_STINK
 
 #ifdef DEBUG_STINK
 #       include <iostream>
