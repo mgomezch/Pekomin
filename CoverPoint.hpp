@@ -6,7 +6,6 @@
 
 class CoverPoint : public virtual Actor {
         public:
-                bool active;
 
                 CoverPoint(
                                 std::string name = "",

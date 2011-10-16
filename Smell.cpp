@@ -7,7 +7,7 @@
 #include "Smell.hpp"
 #include "Triple.hpp"
 
-#define DEBUG_SMELL
+//#define DEBUG_SMELL
 
 #ifdef DEBUG_SMELL
 #       include <iostream>

@@ -6,7 +6,6 @@
 
 class RecoveryPoint : public virtual Actor {
         public:
-                bool active;
 
                 RecoveryPoint(
                                 std::string name = "",

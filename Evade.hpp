@@ -14,7 +14,7 @@ class Evade : public virtual DirectKinematicV {
                 Mobile *target;
                 double maxSpeed;
 
-                static const double maxPrediction = 10;
+                static const double maxPrediction = 0.01;
 
                 Evade(std::string name, Mobile *character, Mobile *target, double maxSpeed);
 

@@ -11,8 +11,7 @@
 #endif
 
 CoverPoint::CoverPoint(std::string name, Triple pos, double ang, Triple vel, double vrot):
-        Actor(name, pos, ang, vel, vrot),
-        active(true)
+        Actor(name, pos, ang, vel, vrot)
 {}
 
 void CoverPoint::draw() {

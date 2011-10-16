@@ -6,7 +6,8 @@ Mobile::Mobile(std::string name, Triple pos, double ang, Triple vel, double vrot
         vel(vel),
         vrot(vrot),
         new_vel(vel),
-        new_vrot(vrot)
+        new_vrot(vrot),
+        active(true)
 {}
 
 void Mobile::update() {

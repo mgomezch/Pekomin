@@ -33,7 +33,7 @@ class AlienStateMachine : public virtual DirectKinematicV {
                 double maxSpeed;
                 double targetRadius;
                 double slowRadius;
-                PathFollowing *path;
+                std::vector<PathFollowing *> paths;
                 unsigned int last_ticks;
 
                 AlienStateMachine(std::string name, Mobile *character, Mobile *target,
