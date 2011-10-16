@@ -31,27 +31,27 @@ class Ent {
                 void addNormal(const Triple &n);
                 void collide();
 
-                virtual void draw() = 0;
+                virtual void draw() const = 0;
                 virtual void steer(unsigned int ticks, unsigned int delta_ticks) = 0;
                 virtual void update() = 0;
 
-                Triple orientation();
+                const Triple orientation() const;
 };
 
-std::tuple<Triple, Triple> points(Ent *e1, Ent *e2);
+const std::tuple<const Triple, const Triple> points(const Ent * const e1, const Ent * const e2);
 
-std::tuple<Triple, Triple> points(Segment      *s, SurfacePlane *f);
-std::tuple<Triple, Triple> points(Segment      *s, VolumePlane  *v);
-std::tuple<Triple, Triple> points(Segment      *s, BBox          *b);
-std::tuple<Triple, Triple> points(SurfacePlane *f, VolumePlane  *v);
-std::tuple<Triple, Triple> points(SurfacePlane *f, BBox          *b);
-std::tuple<Triple, Triple> points(VolumePlane  *v, BBox          *b);
+const std::tuple<const Triple, const Triple> points(const Segment      * const s, SurfacePlane * const f);
+const std::tuple<const Triple, const Triple> points(const Segment      * const s, VolumePlane  * const v);
+const std::tuple<const Triple, const Triple> points(const Segment      * const s, BBox          * const b);
+const std::tuple<const Triple, const Triple> points(const SurfacePlane * const f, VolumePlane  * const v);
+const std::tuple<const Triple, const Triple> points(const SurfacePlane * const f, BBox          * const b);
+const std::tuple<const Triple, const Triple> points(const VolumePlane  * const v, BBox          * const b);
 
-std::tuple<Triple, Triple> points(SurfacePlane *p, Segment      *s);
-std::tuple<Triple, Triple> points(VolumePlane  *p, Segment      *s);
-std::tuple<Triple, Triple> points(BBox          *s, Segment      *b);
-std::tuple<Triple, Triple> points(VolumePlane  *v, SurfacePlane *s);
-std::tuple<Triple, Triple> points(BBox          *b, SurfacePlane *s);
-std::tuple<Triple, Triple> points(BBox          *b, VolumePlane  *v);
+const std::tuple<const Triple, const Triple> points(const SurfacePlane * const p, Segment      * const s);
+const std::tuple<const Triple, const Triple> points(const VolumePlane  * const p, Segment      * const s);
+const std::tuple<const Triple, const Triple> points(const BBox          * const s, Segment      * const b);
+const std::tuple<const Triple, const Triple> points(const VolumePlane  * const v, SurfacePlane * const s);
+const std::tuple<const Triple, const Triple> points(const BBox          * const b, SurfacePlane * const s);
+const std::tuple<const Triple, const Triple> points(const BBox          * const b, VolumePlane  * const v);
 
 #endif

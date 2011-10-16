@@ -15,13 +15,13 @@ Segment::Segment(std::string name, Triple pos, double ang, Triple vel, double vr
         p2(p2)
 {}
 
-Triple Segment::v1() {
+Triple Segment::v1() const {
         return this->pos + Triple(this->p1.x * cos(this->ang) - this->p1.y * sin(this->ang),
                                   this->p1.x * sin(this->ang) + this->p1.y * cos(this->ang),
                                   this->p1.z);
 }
 
-Triple Segment::v2() {
+Triple Segment::v2() const {
         return this->pos + Triple(this->p2.x * cos(this->ang) - this->p2.y * sin(this->ang),
                                   this->p2.x * sin(this->ang) + this->p2.y * cos(this->ang),
                                   this->p2.z);

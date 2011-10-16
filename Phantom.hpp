@@ -5,7 +5,7 @@
 
 class Phantom : public RuntimePoint {
         public:
-                virtual void draw();
+                virtual void draw() const;
 };
 
 #endif

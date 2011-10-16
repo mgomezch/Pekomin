@@ -16,7 +16,7 @@ class RuntimeBox : public virtual RuntimePoint, public virtual BBox {
                           );
                 // TODO: destructor!
 
-                virtual void draw();
+                virtual void draw() const;
 };
 
 #endif

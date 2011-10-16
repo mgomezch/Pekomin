@@ -72,7 +72,7 @@ void Player::steer(unsigned int ticks, unsigned int delta_ticks) {
 
 void Player::update() {}
 
-void Player::draw() {
+void Player::draw() const {
         glPushMatrix();
                 glColor4ub(0, 255, 0, 255);
                 glTranslatef(0, 0, 0.5);

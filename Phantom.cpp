@@ -7,7 +7,7 @@
 #       include <GL/glut.h>
 #endif
 
-void Phantom::draw() {
+void Phantom::draw() const {
 #ifdef DEBUG_PHANTOM
         glColor3ub(255, 0, 255);
         glCallList(cubo);

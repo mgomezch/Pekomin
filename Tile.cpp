@@ -7,12 +7,13 @@ Tile::Tile(Triple pos) {
         this->active = true;
 }
 
-void Tile::draw() {
+void Tile::draw() const {
         glPushMatrix();
-                if (active)
+                if (active) {
                         glColor4ub(0, 139, 139, 200);
-                else 
+                } else {
                         glColor4ub(143, 188, 143, 200);
+                }
                 glCallList(cuadrado_simple);
         glPopMatrix();
 }

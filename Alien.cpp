@@ -16,7 +16,7 @@ Alien::Alien(std::string name, Triple pos, double ang, Triple vel, double vrot, 
         hp(hpmax)
 {}
 
-void Alien::draw() {
+void Alien::draw() const {
         glPushMatrix();
                 glColor4ub(255, 0, 0, 255);
                 glTranslatef(0, 0, 0.5);

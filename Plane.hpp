@@ -18,8 +18,8 @@ class Plane : public virtual Mobile {
                                 Triple pp = Triple(), Triple n = Triple(0, 0, 1)
                      );
 
-                Triple normal();
-                Triple point();
+                Triple normal() const;
+                Triple point() const;
 };
 
 #endif

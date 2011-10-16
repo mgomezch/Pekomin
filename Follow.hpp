@@ -14,10 +14,10 @@ class Follow : public virtual DirectKinematicV {
         public:
                 Mobile *character;
                 Mobile *target;
-                Phantom marcus;
+                Phantom marcus; // TODO: change name
                 double phantomOffset;
 
-                Arrive * arrive;
+                Arrive *arrive;
 
                 Follow(std::string name, Mobile *character, Mobile *target, double phantomOffset, double maxSpeed, double targetRadius, double slowRadius);
 

@@ -14,7 +14,7 @@ RuntimePoint::RuntimePoint(std::string name, Triple pos, double ang, Triple vel,
         Actor(name, pos, ang, vel, vrot)
 {}
 
-void RuntimePoint::draw() {
+void RuntimePoint::draw() const {
         glPushMatrix();
                 glColor4ub(255, 0, 0, 255);
                 glTranslatef(0, 0, 0.5);

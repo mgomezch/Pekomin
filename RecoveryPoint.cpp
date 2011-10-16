@@ -15,7 +15,7 @@ RecoveryPoint::RecoveryPoint(std::string name, Triple pos, double ang, Triple ve
         active(true)
 {}
 
-void RecoveryPoint::draw() {
+void RecoveryPoint::draw() const {
         if (active) {
                 glPushMatrix();
                         glColor4ub(0, 128, 128, 128);

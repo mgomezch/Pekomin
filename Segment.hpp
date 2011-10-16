@@ -18,8 +18,8 @@ class Segment : public virtual Mobile {
                                 Triple p2 = Triple( 1, 0, 0)
                        );
 
-                Triple v1();
-                Triple v2();
+                Triple v1() const;
+                Triple v2() const;
 };
 
 std::tuple<Triple, Triple> points(Segment *, Ent     *);

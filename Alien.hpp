@@ -15,7 +15,7 @@ class Alien : public virtual Actor {
 
                 Alien(std::string name = "", Triple pos = Triple(), double ang = 0, Triple vel = Triple(), double vrot = 0, int hpmax = ALIEN_DEFAULT_MAX_HP);
 
-                virtual void draw();
+                virtual void draw() const;
 };
 
 #endif

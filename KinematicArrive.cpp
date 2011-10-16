@@ -4,6 +4,8 @@
 #include "KinematicArrive.hpp"
 #include "Triple.hpp"
 
+const double KinematicArrive::timeToTarget;
+
 KinematicArrive::KinematicArrive(std::string name, Ent *character, Ent *target, double maxSpeed, double radius):
         DirectKinematicV(name),
         character(character),
