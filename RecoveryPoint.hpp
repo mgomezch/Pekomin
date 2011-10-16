@@ -13,7 +13,7 @@ class RecoveryPoint : public virtual Actor {
                                 Triple vel = Triple(), double vrot = 0
                 );
 
-                virtual void draw();
+                virtual void draw() const;
 };
 
 #endif

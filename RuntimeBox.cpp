@@ -15,7 +15,7 @@ RuntimeBox::RuntimeBox(std::string name, Triple pos, double ang, Triple vel, dou
         BBox(name, pos, ang, vel, vrot, sx, sy, sz)
 {}
 
-void RuntimeBox::draw() {
+void RuntimeBox::draw() const {
         Triple c = this->pos;
 
         glPushMatrix();

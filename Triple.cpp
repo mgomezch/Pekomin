@@ -1,6 +1,7 @@
 #include <cmath>
 #include <iostream>
 #include <string>
+#include <sstream>
 
 #include <cstdio>
 #include <cstdlib>
@@ -10,7 +11,7 @@
 
 using namespace std;
 
-Triple Triple::operator+(Triple t) {
+Triple const Triple::operator+(Triple const &t) const {
         Triple r = *this;
         r.x += t.x;
         r.y += t.y;
@@ -18,7 +19,7 @@ Triple Triple::operator+(Triple t) {
         return r;
 }
 
-Triple Triple::operator+(double f) {
+Triple const Triple::operator+(double const &f) const {
         Triple r = *this;
         r.x += f;
         r.y += f;
@@ -26,7 +27,7 @@ Triple Triple::operator+(double f) {
         return r;
 }
 
-Triple Triple::operator-() {
+Triple const Triple::operator-() const {
         Triple r = *this;
         r.x = -r.x;
         r.y = -r.y;
@@ -34,7 +35,7 @@ Triple Triple::operator-() {
         return r;
 }
 
-Triple Triple::operator-(Triple t) {
+Triple const Triple::operator-(Triple const &t) const {
         Triple r = *this;
         r.x -= t.x;
         r.y -= t.y;
@@ -42,7 +43,7 @@ Triple Triple::operator-(Triple t) {
         return r;
 }
 
-Triple Triple::operator-(double f) {
+Triple const Triple::operator-(double const &f) const {
         Triple r = *this;
         r.x -= f;
         r.y -= f;
@@ -50,7 +51,7 @@ Triple Triple::operator-(double f) {
         return r;
 }
 
-Triple Triple::operator*(Triple t) {
+Triple const Triple::operator*(Triple const &t) const {
         Triple r = *this;
         r.x *= t.x;
         r.y *= t.y;
@@ -58,7 +59,7 @@ Triple Triple::operator*(Triple t) {
         return r;
 }
 
-Triple Triple::operator*(double f) {
+Triple const Triple::operator*(double const &f) const {
         Triple r = *this;
         r.x *= f;
         r.y *= f;
@@ -66,110 +67,89 @@ Triple Triple::operator*(double f) {
         return r;
 }
 
-Triple Triple::operator/(double f) {
-        Triple r = *this;
-        r.x /= f;
-        r.y /= f;
-        r.z /= f;
-        return r;
+Triple const Triple::operator/(double const &f) const {
+        return Triple(this->x / f, this->y / f, this->z / f);
 }
 
-Triple& Triple::operator=(double f) {
+Triple& Triple::operator = (double const &f) {
         this->x = f;
         this->y = f;
         this->z = f;
         return *this;
 }
 
-Triple& Triple::operator+=(const Triple &t) {
+Triple& Triple::operator += (Triple const &t) {
         this->x += t.x;
         this->y += t.y;
         this->z += t.z;
         return *this;
 }
 
-Triple& Triple::operator+=(double f) {
+Triple& Triple::operator += (double const &f) {
         this->x += f;
         this->y += f;
         this->z += f;
         return *this;
 }
 
-Triple& Triple::operator-=(const Triple &t) {
+Triple& Triple::operator -= (Triple const &t) {
         this->x -= t.x;
-
         this->y -= t.y;
         this->z -= t.z;
         return *this;
 }
 
-Triple& Triple::operator-=(double f) {
+Triple& Triple::operator-=(double const &f) {
         this->x -= f;
         this->y -= f;
         this->z -= f;
         return *this;
 }
 
-Triple& Triple::operator*=(double f) {
+Triple& Triple::operator*=(double const &f) {
         this->x *= f;
         this->y *= f;
         this->z *= f;
         return *this;
 }
 
-Triple& Triple::operator/=(double f) {
+Triple& Triple::operator/=(double const &f) {
         this->x /= f;
         this->y /= f;
         this->z /= f;
         return *this;
 }
 
-double Triple::dot(Triple t) {
+double Triple::dot(Triple const &t) const {
         return this->x*t.x + this->y*t.y + this->z*t.z;
 }
 
-Triple Triple::cross(Triple t) {
-        Triple r = *this;
-        r.x = this->y*t.z - this->z*t.y;
-        r.y = this->z*t.x - this->x*t.z;
-        r.z = this->x*t.y - this->y*t.x;
-        return r;
+Triple const Triple::cross(Triple const &t) const {
+        return Triple(this->y*t.z - this->z*t.y, this->z*t.x - this->x*t.z, this->x*t.y - this->y*t.x);
 }
 
-double Triple::length() {
-        return sqrt(length_2());
+double Triple::length() const {
+        return sqrt(this->length_2());
 }
 
-double Triple::length_2() {
+double Triple::length_2() const {
         return this->x*this->x + this->y*this->y + this->z*this->z;
 }
 
-Triple Triple::normalized() {
-        return (*this) / length();
+Triple const Triple::normalized() const {
+        return (*this)/this->length();
 }
 
 Triple& Triple::normalize() {
-        double l = length();
-        this->x /= l;
-        this->y /= l;
-        this->z /= l;
-        return *this;
+        return (*this) /= this->length();
 }
 
-double Triple::ang_xy() {
+double Triple::ang_xy() const {
         return atan2(this->y, this->x);
 }
 
-string Triple::to_string() {
-        char *s;
-        string r;
-
-        if (asprintf(&s, "(%f, %f, %f)", x, y, z) == -1) {
-                std::cerr << "ERROR: Triple::to_string(): cannot allocate output string." << std::endl;
-                exit(EX_OSERR);
-        }
-        r = string(s);
-        free(s);
-
-        return r;
+string const Triple::to_string() const {
+        stringstream str;
+        str << "(" << x << ", " << y << ", " << z << ")";
+        return str.str();
 }

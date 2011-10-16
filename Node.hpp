@@ -21,7 +21,7 @@ class Node : public Ent {
                 void print_node();
                 void add_mod(Ent *e, double c);
 
-                virtual void draw();
+                virtual void draw() const;
                 virtual void steer(unsigned int ticks, unsigned int delta_ticks);
                 virtual void update();
 };

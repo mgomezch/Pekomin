@@ -26,7 +26,7 @@ class Player : public virtual RuntimePoint {
                       );
                 // TODO: destructor!
 
-                virtual void draw();
+                virtual void draw() const;
                 virtual void steer(unsigned int ticks, unsigned int delta_ticks);
                 virtual void update();
 };

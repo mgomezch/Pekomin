@@ -637,7 +637,7 @@ using std::string;
 unordered_map<string, Mobile *> entses;
 unordered_map<string, unordered_map<string, unordered_map<string, string> *> *> behaviorses;
 
-void parse_r(char *s, int chars) {
+void parse_r(char const * const s, int chars) {
         double d;
         char   *name  , *type  , *field  , *value  ;
         string  name_s,  type_s,  field_s,  value_s, ent_class;
@@ -647,7 +647,7 @@ void parse_r(char *s, int chars) {
         Mobile *ent;
 
 #ifdef DEBUG_PARSE
-        std::cout << "parse: starting at " << static_cast<void *>(s) << " + " << chars << std::endl;
+        std::cout << "parse: starting at " << static_cast<void const * const>(s) << " + " << chars << std::endl;
 #endif
 
         switch (sscanf(s + chars, " %ms %n", &name, &nextchars)) {
@@ -849,7 +849,7 @@ void parse_r(char *s, int chars) {
         parse_r(s, chars);
 }
 
-void parse(char *s) {
+void parse(char const *s) {
         string class_s;
         unordered_map<string, string  >::const_iterator it_fields;
         unordered_map<string, Mobile *>::const_iterator it_entses;

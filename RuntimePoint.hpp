@@ -15,7 +15,7 @@ class RuntimePoint : public virtual Actor {
                             );
                 // TODO: destructor!
 
-                virtual void draw();
+                virtual void draw() const;
 };
 
 #endif

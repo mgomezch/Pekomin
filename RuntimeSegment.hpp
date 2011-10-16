@@ -18,7 +18,7 @@ class RuntimeSegment : public virtual RuntimePoint, public virtual Segment {
                               );
                 // TODO: destructor!
 
-                virtual void draw();
+                virtual void draw() const;
 };
 
 #endif

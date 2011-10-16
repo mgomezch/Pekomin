@@ -14,7 +14,7 @@ CoverPoint::CoverPoint(std::string name, Triple pos, double ang, Triple vel, dou
         Actor(name, pos, ang, vel, vrot)
 {}
 
-void CoverPoint::draw() {
+void CoverPoint::draw() const {
         if (active) {
                 glPushMatrix();
                         glColor4ub(105, 105, 105, 128);

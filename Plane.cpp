@@ -14,13 +14,13 @@ Plane::Plane(std::string name, Triple pos, double ang, Triple vel, double vrot, 
         n(n)
 {}
 
-Triple Plane::point() {
+Triple Plane::point() const {
         return this->pos + Triple(this->pp.x * cos(this->ang) - this->pp.y * sin(this->ang),
                                   this->pp.x * sin(this->ang) + this->pp.y * cos(this->ang),
                                   this->pp.z);
 }
 
-Triple Plane::normal() {
+Triple Plane::normal() const {
         return Triple(this->n.x * cos(this->ang) - this->n.y * sin(this->ang),
                       this->n.x * sin(this->ang) + this->n.y * cos(this->ang),
                       this->n.z);

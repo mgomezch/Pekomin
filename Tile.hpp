@@ -10,7 +10,7 @@ class Tile {
 
                 Tile(Triple pos = Triple());
 
-                void draw();
+                void draw() const;
 };
 
 #endif

@@ -15,7 +15,7 @@ RuntimeSegment::RuntimeSegment(std::string name, Triple pos, double ang, Triple 
         Segment(name, pos, ang, vel, vrot, p1, p2)
 {}
 
-void RuntimeSegment::draw() {
+void RuntimeSegment::draw() const {
         Triple d = (p2 - p1);
         Triple c = (p1 + p2)/2.0;
         double s = d.length();

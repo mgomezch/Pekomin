@@ -36,24 +36,26 @@ void Node::print_adj() {
         }
 }
 
-void Node::add_mod(Ent *e, double c){
+void Node::add_mod(Ent *e, double c) {
         std::tuple<Ent *, double> mod;
         std::get<0>(mod) = e;
         std::get<1>(mod) = c;
         mods.push_back(mod);
 }
 
-void Node::draw() {
+void Node::draw() const {
         glPushMatrix();
                 glColor4ub(255, 255, 0, 255);
                 // TODO: no usar glutSolidSphere!!!
                 glScalef(1, 1, 0.2);
                 glutSolidSphere(0.5, 4, 4);
-//              glCallList(cubo);
-//              glBegin(GL_LINES);
-//                      glVertex3f(0, 0, 0);
-//                      glVertex3f(2, 0, 0);
-//              glEnd();
+#if 0
+                glCallList(cubo);
+                glBegin(GL_LINES);
+                        glVertex3f(0, 0, 0);
+                        glVertex3f(2, 0, 0);
+                glEnd();
+#endif
         glPopMatrix();
 }
 

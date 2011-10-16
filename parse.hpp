@@ -1,6 +1,6 @@
 #ifndef PARSE_HPP
 #define PARSE_HPP
 
-void parse(char *);
+void parse(char const *);
 
 #endif

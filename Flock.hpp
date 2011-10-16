@@ -17,7 +17,7 @@ class Flock : public virtual KinematicV {
 
                 Mobile* target;
                 unsigned int accum;
-               std::vector<Mobile*> boids;
+                std::vector<Mobile*> boids;
 
                 Flock(std::string name, Mobile *character, double targetRadius, double slowRadius, double flockRadius, double maxAcceleration);
 

@@ -19,7 +19,7 @@ class Odor : public Ent {
 
                 Odor(std::string name = "", Triple pos = Triple(), unsigned int lifetime = DEFAULT_ODOR_LIFETIME, double intensity = DEFAULT_ODOR_INTENSITY, double spread = DEFAULT_ODOR_SPREAD);
 
-                virtual void draw();
+                virtual void draw() const;
                 virtual void steer(unsigned int ticks, unsigned int delta_ticks);
                 virtual void update();
 };

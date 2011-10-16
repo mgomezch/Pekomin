@@ -11,7 +11,7 @@ Odor::Odor(std::string name, Triple pos, unsigned int lifetime, double intensity
         accum(0)
 {}
 
-void Odor::draw() {
+void Odor::draw() const {
         double s = 10.0*(spread*static_cast<double>(this->accum))/static_cast<double>(this->lifetime);
         glPushMatrix();
                 glColor4ub(0, 255, 0, 255 - static_cast<int>(255.0*static_cast<double>(this->accum))/static_cast<double>(this->lifetime));

@@ -7,32 +7,35 @@ class Triple {
         public:
                 double x, y, z;
 
-                Triple() : x(0), y(0), z(0) {}
-                Triple(double K) : x(K), y(K), z(K) {}
-                Triple(double X, double Y, double Z) : x(X), y(Y), z(Z) {}
-                Triple  operator + (Triple);
-                Triple  operator + (double);
-                Triple  operator - ();
-                Triple  operator - (Triple);
-                Triple  operator - (double);
-                Triple  operator * (Triple);
-                Triple  operator * (double);
-                Triple  operator / (double);
-                Triple& operator = (double);
-                Triple& operator +=(const Triple &);
-                Triple& operator +=(double);
-                Triple& operator -=(const Triple &);
-                Triple& operator -=(double);
-                Triple& operator *=(double);
-                Triple& operator /=(double);
-                Triple& normalize();
-                double dot(Triple t);
-                Triple cross(Triple t);
-                double length();
-                double length_2();
-                Triple normalized();
-                double ang_xy();
-                std::string to_string();
+                Triple(                                                 ) : x(0), y(0), z(0) {}
+                Triple(double const &k                                  ) : x(k), y(k), z(k) {}
+                Triple(double const &x, double const &y, double const &z) : x(x), y(y), z(z) {}
+
+                std::string const to_string() const;
+
+                Triple const operator + (Triple const &) const;
+                Triple const operator + (double const &) const;
+                Triple const operator - (              ) const;
+                Triple const operator - (Triple const &) const;
+                Triple const operator - (double const &) const;
+                Triple const operator * (Triple const &) const;
+                Triple const operator * (double const &) const;
+                Triple const operator / (double const &) const;
+                Triple const normalized (              ) const;
+                Triple const cross      (Triple const &) const;
+                double       dot        (Triple const &) const;
+                double       length     (              ) const;
+                double       length_2   (              ) const;
+                double       ang_xy     (              ) const;
+
+                Triple & operator  = (double const &);
+                Triple & operator += (Triple const &);
+                Triple & operator += (double const &);
+                Triple & operator -= (Triple const &);
+                Triple & operator -= (double const &);
+                Triple & operator *= (double const &);
+                Triple & operator /= (double const &);
+                Triple & normalize   (              );
 };
 
 #endif
