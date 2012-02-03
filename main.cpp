@@ -468,6 +468,8 @@ void display() {
                         }
                 }
 
+                glCallList(teclado);
+
                 /* Balas del jugador */
                 for (i = 0; i < N_PBALAS; i++) if (pb[i] && pbl[i] == level) {
                         glPushMatrix();

@@ -11,6 +11,7 @@ int cuadrado        = -1,
     cuadrado_simple = -1,
     cubo            = -1,
     cubo_simple     = -1,
+    teclado         = -1,
     checker         = -1,
     borde           = -1,
     light_cone      = -1,
@@ -172,21 +173,22 @@ void buildLists() {
         loadPNG((char *)"png/cielo.png", &tw, &th, &ta, &tcielo_img);
         glTexImage2D(GL_TEXTURE_2D, 0, ta ? 4 : 3, tw, th, 0, ta ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, tcielo_img);
 
-        if ((cuadrado = glGenLists(N_LISTS + 12)) == 0) {
-                fprintf(stderr, "error: glGenLists(%d) == 0\n", N_LISTS + 12);
+        if ((cuadrado = glGenLists(N_LISTS + 13)) == 0) {
+                fprintf(stderr, "error: glGenLists(%d) == 0\n", N_LISTS + 13);
                 exit(EX_OSERR);
         }
         cuadrado_hd     = cuadrado +  1;
         cuadrado_simple = cuadrado +  2;
         cubo            = cuadrado +  3;
         cubo_simple     = cuadrado +  4;
-        checker         = cuadrado +  5;
-        borde           = cuadrado +  6;
-        bala            = cuadrado +  7;
-        segmento        = cuadrado +  8;
-        barra           = cuadrado +  9;
-        cielo           = cuadrado + 10;
-        for (i = 0; i <= 11; i++) {
+        teclado         = cuadrado +  5;
+        checker         = cuadrado +  6;
+        borde           = cuadrado +  7;
+        bala            = cuadrado +  8;
+        segmento        = cuadrado +  9;
+        barra           = cuadrado + 10;
+        cielo           = cuadrado + 11;
+        for (i = 0; i <= 12; i++) {
                 segs[i] = cuadrado + N_LISTS + i;
         }
 
@@ -310,6 +312,46 @@ void buildLists() {
                         glTranslatef(-0.5, 0, 0);
                         glRotatef(-90, 0, 1, 0);
                         glCallList(cuadrado_simple);
+                glPopMatrix();
+        glEndList();
+
+        glNewList(teclado, GL_COMPILE);
+                glPushMatrix();
+                        // Blancas
+                        glColor4ub(255, 255, 255, 255);
+                        glPushMatrix();
+                                for (int i = 0; i < 7; ++i) {
+                                        glPushMatrix();
+                                                glScalef(1, 1, 10);
+                                                glCallList(cubo);
+                                        glPopMatrix();
+                                        glTranslatef(1.25, 0, 0);
+                                }
+                        glPopMatrix();
+
+                        // Primeras dos negras
+                        glColor4ub(0, 0, 0, 255);
+                        glTranslatef(0.75, 0.5, 0);
+                        glPushMatrix();
+                                for (int i = 0; i < 2; ++i) {
+                                        glPushMatrix();
+                                                glScalef(0.5, 1, 5);
+                                                glCallList(cubo_simple);
+                                        glPopMatrix();
+                                        glTranslatef(1.25, 0, 0);
+                                }
+                                glTranslatef(1.25, 0, 0);
+                                for (int i = 0; i < 3; ++i) {
+                                        glPushMatrix();
+                                                glScalef(0.5, 1, 5);
+                                                glCallList(cubo_simple);
+                                        glPopMatrix();
+                                        glTranslatef(1.25, 0, 0);
+                                }
+                        glPopMatrix();
+
+                        // Últimas tres negras
+                        glColor4ub(255, 0, 0, 255);
                 glPopMatrix();
         glEndList();
 
