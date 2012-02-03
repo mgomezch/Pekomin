@@ -329,10 +329,10 @@ void buildLists() {
                                 }
                         glPopMatrix();
 
-                        // Primeras dos negras
                         glColor4ub(0, 0, 0, 255);
                         glTranslatef(0.75, 0.5, 0);
                         glPushMatrix();
+                                // Primeras dos negras
                                 for (int i = 0; i < 2; ++i) {
                                         glPushMatrix();
                                                 glScalef(0.5, 1, 5);
