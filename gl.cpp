@@ -340,6 +340,8 @@ void buildLists() {
                                         glPopMatrix();
                                         glTranslatef(1.25, 0, 0);
                                 }
+
+                                // Últimas tres negras
                                 glTranslatef(1.25, 0, 0);
                                 for (int i = 0; i < 3; ++i) {
                                         glPushMatrix();
@@ -349,9 +351,6 @@ void buildLists() {
                                         glTranslatef(1.25, 0, 0);
                                 }
                         glPopMatrix();
-
-                        // Últimas tres negras
-                        glColor4ub(255, 0, 0, 255);
                 glPopMatrix();
         glEndList();
 
