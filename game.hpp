@@ -7,10 +7,13 @@
 #include <vector>
 
 #include "Ent.hpp"
-#include "Node.hpp"
 #include "Odor.hpp"
 #include "Player.hpp"
-#include "Tile.hpp"
+
+#if PEKOMIN_GRAFO
+#       include "Node.hpp"
+#       include "Tile.hpp"
+#endif
 
 #define GRAVEDAD   (-0.0001)
 
@@ -58,11 +61,13 @@ extern std::list<Ent  *> ents;
 extern std::list<Odor *> odors;
 
 extern std::vector<Segment *> obstacles;
-extern std::vector<Tile *> tiles;
 extern std::vector<Ent *> recovery;
 extern std::vector<Ent *> cover;
 
+#if PEKOMIN_GRAFO
 extern std::vector<Node *> nodes;
+extern std::vector<Tile *> tiles;
+#endif
 
 enum cam_enum {
         CAM_STATIC_OVERHEAD = 0,
@@ -90,7 +95,7 @@ enum levels {
         LEVEL_SKY,
         LEVEL_SPACE
 };
-#define START_LEVEL LEVEL_SPACE
+#define START_LEVEL LEVEL_DESERT
 #define N_LEVELS 3
 
 extern double aspectratio;

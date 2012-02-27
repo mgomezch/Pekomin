@@ -1,6 +1,8 @@
 #ifndef ALIEN_HPP
 #define ALIEN_HPP
 
+#if PEKOMIN_GRAFO
+
 #include <vector>
 
 #include "Actor.hpp"
@@ -17,5 +19,7 @@ class Alien : public virtual Actor {
 
                 virtual void draw() const;
 };
+
+#endif
 
 #endif

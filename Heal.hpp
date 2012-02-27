@@ -1,6 +1,8 @@
 #ifndef HEAL_HPP
 #define HEAL_HPP
 
+#if PEKOMIN_GRAFO
+
 #include "Void.hpp"
 
 class Mobile;
@@ -19,5 +21,7 @@ class Heal : public virtual Void {
         private:
                 unsigned int accum;
 };
+
+#endif
 
 #endif

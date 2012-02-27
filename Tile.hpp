@@ -1,6 +1,8 @@
 #ifndef TILE_HPP
 #define TILE_HPP
 
+#if PEKOMIN_GRAFO
+
 #include "Triple.hpp"
 
 class Tile {
@@ -12,5 +14,7 @@ class Tile {
 
                 void draw() const;
 };
+
+#endif
 
 #endif

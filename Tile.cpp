@@ -1,3 +1,5 @@
+#if PEKOMIN_GRAFO
+
 #include "Tile.hpp"
 #include "Triple.hpp"
 #include "gl.hpp"
@@ -17,3 +19,5 @@ void Tile::draw() const {
                 glCallList(cuadrado_simple);
         glPopMatrix();
 }
+
+#endif

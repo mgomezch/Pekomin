@@ -1,3 +1,5 @@
+#if PEKOMIN_GRAFO
+
 #include <vector>
 #include <tuple>
 #include <iostream>
@@ -66,3 +68,5 @@ void Node::update() {}
 std::tuple<Triple, Triple> points(Node *n1, Node *n2) {
         return std::make_tuple(n1->pos, n2->pos);
 }
+
+#endif

@@ -2,14 +2,20 @@
 
 #include "Ent.hpp"
 #include "game.hpp"
-#include "Node.hpp"
 #include "Odor.hpp"
 #include "Player.hpp"
-#include "Tile.hpp"
 
+#if PEKOMIN_GRAFO
+#       include "Node.hpp"
+#       include "Tile.hpp"
+#endif
+
+#if PEKOMIN_GRAFO
 std::vector<Node *> nodes;
-std::vector<Segment *> obstacles;
 std::vector<Tile *> tiles;
+#endif
+
+std::vector<Segment *> obstacles;
 std::vector<Ent *> recovery;
 std::vector<Ent *> cover;
 

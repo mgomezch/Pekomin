@@ -1,3 +1,5 @@
+#if PEKOMIN_GRAFO
+
 #include "Alien.hpp"
 #include "Mobile.hpp"
 #include "AlienStateMachine.hpp"
@@ -170,3 +172,5 @@ std::vector<Triple> AlienStateMachine::getVel(unsigned int ticks, unsigned int d
 
         return out;
 }
+
+#endif

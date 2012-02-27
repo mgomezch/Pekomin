@@ -1,3 +1,5 @@
+#if PEKOMIN_GRAFO
+
 #include "Mobile.hpp"
 #include "Alien.hpp"
 #include "Heal.hpp"
@@ -35,3 +37,5 @@ void Heal::run(unsigned int ticks, unsigned int delta_ticks) {
                 }
         }
 }
+
+#endif

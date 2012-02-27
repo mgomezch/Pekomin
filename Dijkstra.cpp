@@ -1,3 +1,5 @@
+#if PEKOMIN_GRAFO
+
 #include <tuple>
 #include <vector>
 
@@ -67,3 +69,5 @@ double distanceNode(Ent *e, Node *n1, Node *n2) {
 
         return sum + (n2->pos - n1->pos).length();
 }
+
+#endif

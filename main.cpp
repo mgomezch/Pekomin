@@ -14,14 +14,18 @@
 #include <3D/Quaternion.h>
 #include <SOLID/solid.h>
 
-#include "Alien.hpp"
+//#include "Alien.hpp"
 #include "Behavior.hpp"
 #include "game.hpp"
 #include "gl.hpp"
-#include "Node.hpp" // cosas del grafo // TODO: quitar cuando el grafo lo maneje el parser
+
+#if PEKOMIN_GRAFO
+#       include "Node.hpp" // cosas del grafo // TODO: quitar cuando el grafo lo maneje el parser
+#       include "Tile.hpp"
+#endif
+
 #include "parse.hpp"
 #include "RuntimeSegment.hpp"
-#include "Tile.hpp"
 #include "Triple.hpp"
 #include "util.hpp"
 
@@ -62,7 +66,9 @@ void collide(void *client_data, DtObjectRef obj1, DtObjectRef obj2, const DtColl
         e2->addNormal(Triple(-n[0], -n[1], -n[2]));
 }
 
+#if PEKOMIN_GRAFO
 int type_mesh;
+#endif
 
 int power(int b, unsigned int e) {
         int r;
@@ -72,6 +78,7 @@ int power(int b, unsigned int e) {
         return r;
 }
 
+#if PEKOMIN_GRAFO
 void create_nodes(double up, double down, double left, double right) {
         for (int i = down; i <= up - 20; i = i + 20) {
                 for (int j = left; j <= right - 20; j = j + 20) {
@@ -80,6 +87,7 @@ void create_nodes(double up, double down, double left, double right) {
                 }
         }
 }
+#endif
 
 void initJuego() {
         nboom = 0;
@@ -91,7 +99,10 @@ void initJuego() {
         level     = START_LEVEL;
         cam_old_t = 0;
         retract   = 1;
+
+#if PEKOMIN_GRAFO
         mesh      = false;
+#endif
 
         px   = 0;
         py   = 0;
@@ -163,6 +174,7 @@ void initJuego() {
                         parse(buf);
                 }
 
+#if PEKOMIN_GRAFO
                 //Limitar mapa mundo
                 double maxup = 60.0, mindown = -60.0, maxright = 40.0, minleft = -40.0; //default values
                 if (obstacles.size() > 0) {
@@ -190,8 +202,7 @@ void initJuego() {
                                         }
                                 }
                         }
-                }
-                else if (type_mesh == 1) {
+                } else if (type_mesh == 1) {
                         std::cout << "hola 1" << std::endl;
                         //Segment intersection mesh
                         create_nodes(maxup, mindown, minleft, maxright);
@@ -217,8 +228,7 @@ void initJuego() {
                                         }
                                 }
                         }
-                }
-                else if (type_mesh == 2) {
+                } else if (type_mesh == 2) {
                         //Tile Mesh
                         double ix, jy;
                         for (int i = mindown; i <= maxup; i += 5) {
@@ -308,6 +318,7 @@ void initJuego() {
                         cover[2]->pos = Triple(maxup - 5  , minleft  + 5, 0); //dl
                         cover[3]->pos = Triple(maxup - 5  , maxright - 5, 0); //dr
                 }
+#endif
         }
 }
 
@@ -412,6 +423,7 @@ void display() {
                                 glPopMatrix();
                         }
 
+#if PEKOMIN_GRAFO
                         if (mesh) {
                                 //Triple pos = Triple(0, 0, 0);
                                 glPushMatrix();
@@ -444,6 +456,7 @@ void display() {
                                                         }
                                                 }
                                         }
+
                                         for (unsigned int i = 0; i < nodes.size(); i++) {
                                                 for (auto it = nodes[i]->adj.begin(); it != nodes[i]->adj.end(); ++it) {
                                                         glBegin(GL_LINES);
@@ -466,9 +479,8 @@ void display() {
                                         }
                                 glPopMatrix();
                         }
+#endif
                 }
-
-                glCallList(teclado);
 
                 /* Balas del jugador */
                 for (i = 0; i < N_PBALAS; i++) if (pb[i] && pbl[i] == level) {
@@ -820,7 +832,11 @@ void keydown(unsigned char key, int mx, int my) {
         else if (key == key_shoot       ) keystate_shoot        = player->control_shoot = true;
         else if (key == key_reload      ) keystate_reload       = true;
         else if (key == key_jump        ) keystate_jump         = player->control_jump  = true;
+
+#if PEKOMIN_GRAFO
         else if (key == key_mesh) mesh ^= 1;
+#endif
+
         else if (key == key_pause) {
                 frozen ^= 1;
 #ifdef DEBUG_MAIN
@@ -1350,6 +1366,7 @@ int main(int argc, char **argv) {
         dtSetDefaultResponse(&collide, DT_SMART_RESPONSE, NULL);
 
         // TODO: use getopt, implement a decent set of command-line arguments; figure out how glutInit rapes argv
+#if PEKOMIN_GRAFO
         if (argc == 3) {
                 type_mesh = atoi(argv[1]);
                 game_filename = argv[2];
@@ -1366,6 +1383,9 @@ int main(int argc, char **argv) {
                 type_mesh = 0;
                 game_filename = NULL;
         }
+#else
+        game_filename = (argc >= 2 ? argv[1] : NULL);
+#endif
         initJuego();
 
         blur = false;

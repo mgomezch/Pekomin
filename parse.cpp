@@ -11,7 +11,6 @@
 #include <SOLID/solid.h>
 
 #include "Actor.hpp"
-#include "Alien.hpp"
 #include "Behaviors.hpp"
 #include "game.hpp"
 #include "Mobile.hpp"
@@ -21,8 +20,12 @@
 #include "RuntimePoint.hpp"
 #include "RuntimeSegment.hpp"
 #include "RuntimeBox.hpp"
+
+#if PEKOMIN_GRAFO
+#include "Alien.hpp"
 #include "RecoveryPoint.hpp"
 #include "CoverPoint.hpp"
+#endif
 
 #define DEBUG_PARSE
 
@@ -753,6 +756,8 @@ void parse_r(char const * const s, int chars) {
                         ent = player = new Player();
                 }
                 else if (ent_class == string("Phantom")) ent = new Phantom();
+
+#if PEKOMIN_GRAFO
                 else if (ent_class == string("Alien"  )) ent = new Alien();
                 else if (ent_class == string("RecoveryPoint")) {
                         ent = new RecoveryPoint();
@@ -762,6 +767,8 @@ void parse_r(char const * const s, int chars) {
                         ent = new CoverPoint();
                         cover.push_back(ent);
                 }
+#endif
+
                 else if (ent_class == string("RuntimePoint")) {
                         ent = new RuntimePoint(); // TODO: gráficos
                 } else if (ent_class == string("RuntimeSegment")) {
@@ -815,7 +822,16 @@ void parse_r(char const * const s, int chars) {
         SET_ENT_FIELD_DOUBLE_D(vrot , 0);
         SET_ENT_FIELD_BOOL_D(collides, false);
 
-        if (ent_class == "RuntimePoint" || ent_class == "Alien" || ent_class == "Phantom" || ent_class == "Player") {
+        if (
+                   ent_class == "RuntimePoint"
+
+#if PEKOMIN_GRAFO
+                || ent_class == "Alien"
+#endif
+
+                || ent_class == "Phantom"
+                || ent_class == "Player"
+        ) {
                 DtShapeRef shape = dtNewComplexShape();
                         dtBegin(DT_SIMPLEX);
                                 dtVertex(ent->pos.x, ent->pos.y, ent->pos.z);
@@ -951,6 +967,8 @@ void parse(char const *s) {
                                 SET_P(new Follow(it_e->first, character, target, phantomOffset, maxSpeed, targetRadius, slowRadius));
                                 continue;
                         }
+
+#if PEKOMIN_GRAFO
                         // Heal(std::string name, Mobile *character, Mobile *target, double healTime, double healRadius);
                         if (class_s == string("Heal")) {
                                 SET_BEHAVIOR_CHARACTER();
@@ -962,6 +980,7 @@ void parse(char const *s) {
 
                                 continue;
                         }
+#endif
 
                         // Separation(std::string name, Mobile *character, Mobile *target, double maxSpeed, double separationRadius);
                         if (class_s == string("Separation")) {
@@ -1091,6 +1110,7 @@ void parse(char const *s) {
                                 continue;
                         }
 
+#if PEKOMIN_GRAFO
                         // PathFollowing(std::string name, Mobile *character, Mobile *target, double maxSpeed, double targetRadius, double slowRadius);
                         if (class_s == string("PathFollowing")) {
                                 SET_BEHAVIOR_CHARACTER();
@@ -1102,6 +1122,7 @@ void parse(char const *s) {
                                 SET_P(new PathFollowing(it_b->first, character, target, maxSpeed, targetRadius, slowRadius));
                                 continue;
                         }
+#endif
 
                         // Stink(std::string name, Mobile *character, double maxSpeed, double range);
                         if (class_s == string("Stink")) {
@@ -1125,6 +1146,7 @@ void parse(char const *s) {
                                 continue;
                         }
 
+#if PEKOMIN_GRAFO
                         // AlienStateMachine // TODO: firma
                         if (class_s == string("AlienStateMachine")) {
                                 SET_BEHAVIOR_CHARACTER();
@@ -1149,6 +1171,7 @@ void parse(char const *s) {
                                 SET_P(new AlienStateMachine(it_e->first, character, target, maxRotationW, targetRadiusW, slowRadiusW, wanderOffsetW, wanderRadiusW, wanderRateW, wanderTimeW, maxSpeedW, maxSpeedA, targetRadiusA, slowRadiusA, maxSpeedP, maxSpeedE, maxSpeed, targetRadius, slowRadius));
                                 continue;
                         }
+#endif
 
                         // WallCloseStateMachine // TODO: firma
                         if (class_s == string("WallCloseStateMachine")) {

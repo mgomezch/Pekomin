@@ -1,3 +1,5 @@
+#if PEKOMIN_GRAFO
+
 #include <GL/glut.h>
 
 #include "gl.hpp"
@@ -27,3 +29,5 @@ void Alien::draw() const {
                 glEnd();
         glPopMatrix();
 }
+
+#endif

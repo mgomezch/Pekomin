@@ -1,6 +1,8 @@
 #ifndef ALIENSTATEMACHINE_HPP
 #define ALIENSTATEMACHINE_HPP
 
+#if PEKOMIN_GRAFO
+
 #include <vector>
 
 #include "DirectKinematicV.hpp"
@@ -59,5 +61,7 @@ class AlienStateMachine : public virtual DirectKinematicV {
 
                 virtual std::vector<Triple> getVel(unsigned int ticks, unsigned int delta_ticks);
 };
+
+#endif
 
 #endif

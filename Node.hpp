@@ -1,3 +1,5 @@
+#if PEKOMIN_GRAFO
+
 #ifndef NODE_HPP
 #define NODE_HPP
 
@@ -27,5 +29,7 @@ class Node : public Ent {
 };
 
 std::tuple<Triple, Triple> points(Node *n1, Node *n2);
+
+#endif
 
 #endif

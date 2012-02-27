@@ -1,6 +1,8 @@
 #ifndef PATHFOLLOWING_HPP
 #define PATHFOLLOWING_HPP
 
+#if PEKOMIN_GRAFO
+
 #include <vector>
 
 #include "DirectKinematicV.hpp"
@@ -28,5 +30,7 @@ class PathFollowing : public virtual DirectKinematicV {
 
                 virtual std::vector<Triple> getVel(unsigned int ticks, unsigned int delta_ticks);
 };
+
+#endif
 
 #endif

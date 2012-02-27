@@ -1,3 +1,5 @@
+#if PEKOMIN_GRAFO
+
 #include <vector>
 
 #include "Dijkstra.hpp"
@@ -93,3 +95,5 @@ std::vector<Triple> PathFollowing::getVel(unsigned int ticks, unsigned int delta
 
         return std::vector<Triple>(1, steering);
 }
+
+#endif

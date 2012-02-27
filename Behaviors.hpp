@@ -1,7 +1,11 @@
 #ifndef BEHAVIORS_HPP
 #define BEHAVIORS_HPP
 
-#include "AlienStateMachine.hpp"
+#if PEKOMIN_GRAFO
+#       include "AlienStateMachine.hpp"
+#       include "Heal.hpp"
+#endif
+
 #include "Align.hpp"
 #include "Arrive.hpp"
 #include "BoundedDynamicSeparation.hpp"
@@ -10,7 +14,6 @@
 #include "Face.hpp"
 #include "Flock.hpp"
 #include "Follow.hpp"
-#include "Heal.hpp"
 #include "KinematicArrive.hpp"
 #include "KinematicSeek.hpp"
 #include "KinematicSeparation.hpp"
