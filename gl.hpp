@@ -9,6 +9,8 @@
 #define N_DIVS             10
 #define N_DIVS_HD          30
 
+#define PEKOMIN_SELECT_BUFFER_SIZE 1024
+
 extern int cuadrado,
            cuadrado_hd,
            cuadrado_simple,

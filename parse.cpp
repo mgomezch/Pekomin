@@ -781,6 +781,7 @@ void parse_r(char const * const s, int chars) {
                         SET_SEGMENT_FIELD_DOUBLE_D(p2.y,  0);
                         SET_SEGMENT_FIELD_DOUBLE_D(p2.z,  0);
 
+#if PEKOMIN_GRAFO
                         it = fields.find(string("obstacle"));
                         if (it != fields.end()) {
 #ifdef DEBUG_PARSE
@@ -792,6 +793,7 @@ void parse_r(char const * const s, int chars) {
                                         exit(EX_DATAERR);
                                 }
                         }
+#endif
 
                         ent = rs;
                 } else if (ent_class == string("RuntimeBox")) {

@@ -1,3 +1,5 @@
+#if PEKOMIN_GRAFO
+
 #include <GL/glut.h>
 
 #include "gl.hpp"
@@ -23,3 +25,5 @@ void CoverPoint::draw() const {
                 glPopMatrix();
         }
 }
+
+#endif

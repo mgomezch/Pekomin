@@ -60,13 +60,12 @@ extern std::list<Odor *> new_odors;
 extern std::list<Ent  *> ents;
 extern std::list<Odor *> odors;
 
-extern std::vector<Segment *> obstacles;
-extern std::vector<Ent *> recovery;
-extern std::vector<Ent *> cover;
-
 #if PEKOMIN_GRAFO
-extern std::vector<Node *> nodes;
-extern std::vector<Tile *> tiles;
+extern std::vector<Node    *> nodes;
+extern std::vector<Tile    *> tiles;
+extern std::vector<Segment *> obstacles;
+extern std::vector<Ent     *> recovery;
+extern std::vector<Ent     *> cover;
 #endif
 
 enum cam_enum {
@@ -161,6 +160,13 @@ extern bool keystate_l           ;
 extern bool keystate_r           ;
 extern bool keystate_u           ;
 extern bool keystate_d           ;
+
+extern bool btnstate_left        ;
+extern bool btnstate_middle      ;
+extern bool btnstate_right       ;
+
+extern unsigned int mouse_x;
+extern unsigned int mouse_y;
 
 extern unsigned int cosa;
 extern unsigned int cam;

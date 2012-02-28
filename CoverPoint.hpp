@@ -1,6 +1,8 @@
 #ifndef COVERPOINT_HPP
 #define COVERPOINT_HPP
 
+#if PEKOMIN_GRAFO
+
 #include "Actor.hpp"
 #include "Triple.hpp"
 
@@ -15,5 +17,7 @@ class CoverPoint : public virtual Actor {
 
                 virtual void draw() const;
 };
+
+#endif
 
 #endif

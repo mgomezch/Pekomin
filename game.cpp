@@ -11,13 +11,12 @@
 #endif
 
 #if PEKOMIN_GRAFO
-std::vector<Node *> nodes;
-std::vector<Tile *> tiles;
-#endif
-
+std::vector<Node    *> nodes;
+std::vector<Tile    *> tiles;
 std::vector<Segment *> obstacles;
-std::vector<Ent *> recovery;
-std::vector<Ent *> cover;
+std::vector<Ent     *> recovery;
+std::vector<Ent     *> cover;
+#endif
 
 std::list<Ent  *> new_ents;
 std::list<Odor *> new_odors;
@@ -95,6 +94,13 @@ bool keystate_l            = false;
 bool keystate_r            = false;
 bool keystate_u            = false;
 bool keystate_d            = false;
+
+bool btnstate_left         = false;
+bool btnstate_middle       = false;
+bool btnstate_right        = false;
+
+unsigned int mouse_x = 0;
+unsigned int mouse_y = 0;
 
 unsigned int cosa = 0;
 unsigned int cam  = 0;

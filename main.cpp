@@ -29,13 +29,15 @@
 #include "Triple.hpp"
 #include "util.hpp"
 
-//#define DEBUG_MAIN
+#define DEBUG_MAIN
 
 #define NO_LIGHTING
 
 #define BUFSIZE 1024*1024
 #define DEFAULT_GAME_FILENAME "games/default"
 #define COLL_MAX_ITERS 10
+
+#define PEKOMIN_HUD_ELEM_BASE 1024
 
 using namespace std;
 
@@ -46,7 +48,10 @@ double maxup = 60.0, mindown = -60.0, maxright = 40.0, minleft = -40.0; //defaul
 Vector axis = Vector(0, 0, 1);
 Ent *ent;
 Odor *odor;
+
+#if PEKOMIN_GRAFO
 Segment *obstacle;
+#endif
 
 void collide(void *client_data, DtObjectRef obj1, DtObjectRef obj2, const DtCollData *coll_data) {
         auto e1 = reinterpret_cast<Ent *>(obj1),
@@ -128,7 +133,10 @@ void initJuego() {
                 Behavior *b;
                 Actor    *a;
 
+#if PEKOMIN_GRAFO
                 obstacles.clear();
+#endif
+
                 odors.clear();
                 new_odors.clear();
                 new_ents.clear();
@@ -320,6 +328,53 @@ void initJuego() {
                 }
 #endif
         }
+}
+
+void drawHUD(GLuint active_hud_elem) {
+        GLuint hud_elem = PEKOMIN_HUD_ELEM_BASE;
+
+        // Score
+        for (i = 0; i < DIGITS_SCORE; i++) {
+                glLoadName(hud_elem);
+                glPushMatrix();
+                        glTranslatef(0, 9.2, 0);
+                        glScalef(0.1, 0.1, 0.1);
+                        glTranslatef((((DIGITS_SCORE + 1) / 2.0) - i - 0.5) * (W_SEGMENT + 4.0 * W_SEGMENT_T), 0, 0);
+                        if (active_hud_elem == hud_elem) glScalef(1.1, 1.1, 1.1);
+                        glCallList(segs[(std::abs(pts) / power(10, i)) % 10]);
+                glPopMatrix();
+                ++hud_elem;
+        }
+
+#if 0
+        // Lives
+        for (i = 0; i < lives - 1; i++) {
+                glLoadName(hud_elem);
+                glPushMatrix();
+                        glTranslatef(-12.25 + 2.1 * i, 8.5, 0);
+                        glScalef(0.5, 0.5, 0.5);
+                        if (active_hud_elem == hud_elem) glScalef(1.1, 1.1, 1.1);
+                        glCallList(tanque);
+                glPopMatrix();
+                ++hud_elem;
+        }
+#endif
+
+        //glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+        //glBindTexture(GL_TEXTURE_2D, tbrushmetal);
+        //glEnable(GL_TEXTURE_2D);
+        for (i = 0; i < balas; i++) {
+                glLoadName(hud_elem);
+                glPushMatrix();
+                        glTranslatef(-12.25 + 0.8 * i, 8.5, 0);
+                        glScalef(1, 2, 1);
+                        glColor4ub(255, 255, 255, 255);
+                        if (active_hud_elem == hud_elem) glScalef(1.1, 1.1, 1.1);
+                        glCallList(bala);
+                glPopMatrix();
+                ++hud_elem;
+        }
+        //glDisable(GL_TEXTURE_2D);
 }
 
 void display() {
@@ -699,8 +754,21 @@ void display() {
 
                 glClear(GL_DEPTH_BUFFER_BIT);
 
+
+
+                GLuint sbuf[PEKOMIN_SELECT_BUFFER_SIZE] = {0};
+                GLint hits, view[4];
+
+                glSelectBuffer(PEKOMIN_SELECT_BUFFER_SIZE, sbuf);
+                glGetIntegerv(GL_VIEWPORT, view);
+                glRenderMode(GL_SELECT);
+                glInitNames();
+                glPushName(0);
+
                 glMatrixMode(GL_PROJECTION);
                 glLoadIdentity();
+                gluPickMatrix(mouse_x, wh - mouse_y, 10.0, 10.0, view);
+
                 if (ww <= wh) {
                         glOrtho(-10.0, 10.0, -10.0 / aspectratio, 10.0 / aspectratio, 1.0, -1.0);
                 } else {
@@ -710,39 +778,53 @@ void display() {
                 glMatrixMode(GL_MODELVIEW);
                 glLoadIdentity();
 
-                // Score
-                for (i = 0; i < DIGITS_SCORE; i++) {
-                        glPushMatrix();
-                                glTranslatef(0, 9.2, 0);
-                                glScalef(0.1, 0.1, 0.1);
-                                glTranslatef((((DIGITS_SCORE + 1) / 2.0) - i - 0.5) * (W_SEGMENT + 4.0 * W_SEGMENT_T), 0, 0);
-                                glCallList(segs[(std::abs(pts) / power(10, i)) % 10]);
-                        glPopMatrix();
+                drawHUD(-1);
+
+                glMatrixMode(GL_PROJECTION);
+                glLoadIdentity();
+                if (ww <= wh) {
+                        glOrtho(-10.0, 10.0, -10.0 / aspectratio, 10.0 / aspectratio, 1.0, -1.0);
+                } else {
+                        glOrtho(-10.0 * aspectratio, 10.0 * aspectratio, -10.0, 10.0, 1.0, -1.0);
                 }
 
-                // Vidas
-#if 0
-                for (i = 0; i < lives - 1; i++) {
-                        glPushMatrix();
-                                glTranslatef(-12.25 + 2.1 * i, 8.5, 0);
-                                glScalef(0.5, 0.5, 0.5);
-                                glCallList(tanque);
-                        glPopMatrix();
-                }
+                hits = glRenderMode(GL_RENDER);
+
+#ifdef DEBUG_MAIN
+                if (hits > 0) std::cerr << "HUD hits == " << hits << "; mouse at (" << mouse_x << ", " << mouse_y << ")"<< std::endl;
 #endif
 
-                //glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
-                //glBindTexture(GL_TEXTURE_2D, tbrushmetal);
-                //glEnable(GL_TEXTURE_2D);
-                for (i = 0; i < balas; i++) {
-                        glPushMatrix();
-                                glTranslatef(-12.25 + 0.8 * i, 8.5, 0);
-                                glScalef(1, 2, 1);
-                                glColor4ub(255, 255, 255, 255);
-                                glCallList(bala);
-                        glPopMatrix();
+                long int active_hud_elem = -1;
+
+                if (hits > 0) {
+                        long int active_hud_elem_depth = sbuf[1];
+                        active_hud_elem = sbuf[3];
+                        for (i = 1; static_cast<signed int>(i) < hits; ++i) {
+                                if (active_hud_elem_depth < static_cast<long int>(sbuf[4*i + 1])) {
+                                        active_hud_elem_depth = sbuf[4*i + 1];
+                                        active_hud_elem       = sbuf[4*i + 3];
+                                }
+#ifdef DEBUG_MAIN
+#if 0
+                                std::cout
+                                        << "number == " << sbuf[i * 4    ]
+                                        << ", zmin == " << sbuf[i * 4 + 1]
+                                        << ", zmax == " << sbuf[i * 4 + 2]
+                                        << ", name == " << sbuf[i * 4 + 3]
+                                        << std::endl;
+#endif
+#endif
+                        }
                 }
-                //glDisable(GL_TEXTURE_2D);
+
+                glMatrixMode(GL_MODELVIEW);
+                glLoadIdentity();
+
+#ifdef DEBUG_MAIN
+                if (active_hud_elem != -1) std::cerr << "active element is " << active_hud_elem << std::endl;
+#endif
+
+                drawHUD(active_hud_elem);
         }
 
         switch (pass) {
@@ -875,6 +957,20 @@ void keydown(unsigned char key, int mx, int my) {
         else if (key == 27) exit(EX_OK);
 }
 
+void mousemove(int x, int y) {
+        mouse_x = x;
+        mouse_y = y;
+}
+
+void mouseclick(int button, int state, int x, int y) {
+        mousemove(x,y);
+        switch (button) {
+                case GLUT_LEFT_BUTTON  : btnstate_left   = (state == GLUT_DOWN); break;
+                case GLUT_MIDDLE_BUTTON: btnstate_middle = (state == GLUT_DOWN); break;
+                case GLUT_RIGHT_BUTTON : btnstate_right  = (state == GLUT_DOWN); break;
+        }
+}
+
 void juego(int v) {
         new_time = glutGet(GLUT_ELAPSED_TIME);
         delta = new_time - old_time;
@@ -936,7 +1032,9 @@ void juego(int v) {
                 player->vrot = (pvrz * M_PI) / 180.0;
 
 #ifdef DEBUG_MAIN
+#if 0
                 for (auto it = ents.begin(); it != ents.end(); ++it) std::cout << "'" << (*it)->name << "' "; std::cout << std::endl;
+#endif
 #endif
 
                 for (auto it = ents.begin(); it != ents.end(); ++it) {
@@ -947,12 +1045,16 @@ void juego(int v) {
                         if (!ent->dead) {
                                 ++it;
                         } else {
+
+#if PEKOMIN_GRAFO
                                 if ((obstacle = dynamic_cast<Segment *>(ent)) != NULL) {
                                         for (auto it_s = obstacles.begin(); it_s != obstacles.end(); ++it_s) {
                                                 if (obstacle == *it_s) obstacles.erase(it_s);
                                                 break;
                                         }
                                 }
+#endif
+
                                 if ((odor = dynamic_cast<Odor *>(ent)) != NULL) {
                                         for (auto it_o = odors.begin(); it_o != odors.end(); ++it_o) {
                                                 if (odor == *it_o) odors.erase(it_o);
@@ -1389,12 +1491,17 @@ int main(int argc, char **argv) {
         initJuego();
 
         blur = false;
-        glutDisplayFunc(realDisplay);
-        glutReshapeFunc(reshape);
-        glutKeyboardFunc(keydown);
-        glutKeyboardUpFunc(keyup);
-        glutSpecialFunc(skeydown);
-        glutSpecialUpFunc(skeyup);
+
+        glutDisplayFunc      (realDisplay);
+        glutKeyboardFunc     (keydown    );
+        glutKeyboardUpFunc   (keyup      );
+        glutMotionFunc       (mousemove  );
+        glutMouseFunc        (mouseclick );
+        glutPassiveMotionFunc(mousemove  );
+        glutReshapeFunc      (reshape    );
+        glutSpecialFunc      (skeydown   );
+        glutSpecialUpFunc    (skeyup     );
+
         max_frame_delay = 1000.0/60.0;
         for (i = 0; i < N_DELTAS; i++) deltas[i] = 0;
         glutTimerFunc(max_frame_delay, juego, 0);
