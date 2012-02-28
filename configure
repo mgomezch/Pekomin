@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-MAIN_NAME = "pekomin"
+MAIN_NAME = "tamagotchi"
 
 out = File::read("Makefile.header")
 
@@ -11,7 +11,7 @@ closed = []
 until open.empty? do
         cur = open.pop()
         curdeps = File::read(cur).lines.inject([]) do |acc, l|
-                if l.match /#include "([^"]*)"\n/ then acc.push($1) end
+                if l.match /^\s*#\s*include "([^"]*)"\n/ then acc.push($1) end
                 acc
         end
         directdeps[cur] = curdeps

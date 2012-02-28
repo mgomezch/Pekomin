@@ -14,20 +14,25 @@
 #include <3D/Quaternion.h>
 #include <SOLID/solid.h>
 
-//#include "Alien.hpp"
-#include "Behavior.hpp"
-#include "game.hpp"
-#include "gl.hpp"
 
 #if PEKOMIN_GRAFO
 #       include "Node.hpp" // cosas del grafo // TODO: quitar cuando el grafo lo maneje el parser
 #       include "Tile.hpp"
 #endif
 
+//#include "Alien.hpp"
+#include "Behavior.hpp"
+#include "Ent.hpp"
+#include "FilledWindow.hpp"
+#include "game.hpp"
+#include "gl.hpp"
+#include "HUDElement.hpp"
 #include "parse.hpp"
 #include "RuntimeSegment.hpp"
+#include "Tab.hpp"
 #include "Triple.hpp"
 #include "util.hpp"
+#include "Window.hpp"
 
 #define DEBUG_MAIN
 
@@ -38,6 +43,7 @@
 #define COLL_MAX_ITERS 10
 
 #define PEKOMIN_HUD_ELEM_BASE 1024
+#define PEKOMIN_HUD_HIGHLIGHT_SCALE 1.05
 
 using namespace std;
 
@@ -47,7 +53,10 @@ double maxup = 60.0, mindown = -60.0, maxright = 40.0, minleft = -40.0; //defaul
 
 Vector axis = Vector(0, 0, 1);
 Ent *ent;
+HUDElement *hud_elem;
 Odor *odor;
+
+std::list<std::function<void(void)>> yarr; // FIXME: no ser tan pirata
 
 #if PEKOMIN_GRAFO
 Segment *obstacle;
@@ -130,8 +139,10 @@ void initJuego() {
         balas = BALAS;
 
         {
-                Behavior *b;
-                Actor    *a;
+                Behavior   * b;
+                Actor      * a;
+                Window     * w;
+                HUDElement * c;
 
 #if PEKOMIN_GRAFO
                 obstacles.clear();
@@ -155,6 +166,22 @@ void initJuego() {
 
                         delete ent;
                 }
+
+                while (!hud_elems.empty()) {
+                        hud_elem = hud_elems.back();
+                        hud_elems.pop_back();
+                        // TODO: hacer lo mismo pa otros tipos de runtime
+                        if ((w = dynamic_cast<Window *>(hud_elem)) != NULL) {
+                                while (!w->children.empty()) {
+                                        c = w->children.back();
+                                        w->children.pop_back();
+                                        delete c;
+                                }
+                        }
+
+                        delete hud_elem;
+                }
+
                 player = NULL;
 
                 {
@@ -181,6 +208,81 @@ void initJuego() {
                         buf[pos] = '\0';
                         parse(buf);
                 }
+
+                hud_elems.push_back(new FilledWindow("ventanita", 15, 15, 20, 96, 20, 250));
+                hud_elems.back()->pos.z = -1;
+
+                hud_elems.back()->rightclick = [](HUDElement * self){
+                        static bool visible = true;
+                        self->pos.y = 100;
+                        visible ^= 1;
+
+                        Tab * tabcito;
+                        FilledWindow * ventanita;
+
+#define PEKOMIN_TABCITO_REGISTRO(n, i, f, d, br, bg, bb)                                                     \
+        tabcito = new Tab("tabcito de registro " #n , 8, 15, 1, (i), (f), 0, 96, 0, 200);                    \
+        ventanita = new FilledWindow("botón del tabcito de registro " #n , 0.8, 0.8, (br), (bg), (bb), 255); \
+        ventanita->pos.z = -0.05;                                                                            \
+        tabcito->header->children.push_back(ventanita);                                                      \
+        yarr.push_back([tabcito]() {                                                                         \
+                tabcito->pos.z = (d);                                                                        \
+                tabcito->set_opacity(200);                                                                   \
+        });                                                                                                  \
+        tabcito->pos.x = 5;                                                                                  \
+        tabcito->pos.z = (d);                                                                                \
+        tabcito->set_leftclick([](HUDElement * self) {                                                       \
+                static bool visible = false;                                                                 \
+                                                                                                             \
+                for (auto it = yarr.begin(); it != yarr.end(); ++it) {                                       \
+                        (*it)();                                                                             \
+                }                                                                                            \
+                                                                                                             \
+                self->pos.z = 0;                                                                             \
+                dynamic_cast<Tab *>(self)->set_opacity(255);                                                 \
+                visible ^= 1;                                                                                \
+        });                                                                                                  \
+        hud_elems.push_back(tabcito);
+
+#define PEKOMIN_SEP 0.01
+                        PEKOMIN_TABCITO_REGISTRO(1, 0.0              , 0.2 - PEKOMIN_SEP, 0.1, 255,   0,   0); // Rojo
+                        PEKOMIN_TABCITO_REGISTRO(2, 0.2 + PEKOMIN_SEP, 0.4 - PEKOMIN_SEP, 0.2,   0, 255,   0); // Verde
+                        PEKOMIN_TABCITO_REGISTRO(3, 0.4 + PEKOMIN_SEP, 0.6 - PEKOMIN_SEP, 0.3,   0,   0, 255); // Azul
+                        PEKOMIN_TABCITO_REGISTRO(4, 0.6 + PEKOMIN_SEP, 0.8 - PEKOMIN_SEP, 0.4,   0, 255, 255); // Amarillo
+                        PEKOMIN_TABCITO_REGISTRO(5, 0.8 + PEKOMIN_SEP, 1.0              , 0.5, 255,   0, 255); // ?
+#undef PEKOMIN_SEP
+#undef PEKOMIN_TABCITO_REGISTRO
+
+                };
+
+                hud_elems.back()->leftclick = [](HUDElement * self){
+                        static bool visible = true;
+                        self->pos.y = 100;
+                        visible ^= 1;
+
+                        Tab * tabcito;
+
+#define PEKOMIN_TABCITO_NORMAL(n, i, f)                                            \
+        tabcito = new Tab("tabcito normal " n, 20, 6, 3, (i), (f), 0, 96, 0, 200); \
+        tabcito->pos.y = -13;                                                      \
+        tabcito->pos.z = -0.1;                                                     \
+        tabcito->set_leftclick([](HUDElement * self) {                             \
+                static bool visible = false;                                       \
+                self->pos.y = (visible ? -13 : -8);                                \
+                self->pos.z = (visible ?   1 : -1);                                \
+                dynamic_cast<Tab *>(self)->set_opacity(visible ? 200 : 255);       \
+                visible ^= 1;                                                      \
+        });                                                                        \
+        hud_elems.push_back(tabcito);
+
+#define PEKOMIN_TABCITO_NORMAL_SEP 0.005
+                        PEKOMIN_TABCITO_NORMAL("izquierdo", 0.00                             , 0.25 - PEKOMIN_TABCITO_NORMAL_SEP);
+                        PEKOMIN_TABCITO_NORMAL("medio"    , 0.25 + PEKOMIN_TABCITO_NORMAL_SEP, 0.75 - PEKOMIN_TABCITO_NORMAL_SEP);
+                        PEKOMIN_TABCITO_NORMAL("derecho"  , 0.75 + PEKOMIN_TABCITO_NORMAL_SEP, 1.00                             );
+#undef PEKOMIN_TABCITO_NORMAL_SEP
+#undef PEKOMIN_TABCITO_NORMAL
+
+                };
 
 #if PEKOMIN_GRAFO
                 //Limitar mapa mundo
@@ -323,58 +425,71 @@ void initJuego() {
                         //4 CoverPoints
                         cover[0]->pos = Triple(mindown + 5, minleft  + 5, 0); //ul
                         cover[1]->pos = Triple(mindown + 5, maxright - 5, 0); //ur
-                        cover[2]->pos = Triple(maxup - 5  , minleft  + 5, 0); //dl
-                        cover[3]->pos = Triple(maxup - 5  , maxright - 5, 0); //dr
+                        cover[2]->pos = Triple(maxup   - 5, minleft  + 5, 0); //dl
+                        cover[3]->pos = Triple(maxup   - 5, maxright - 5, 0); //dr
                 }
 #endif
         }
 }
 
 void drawHUD(GLuint active_hud_elem) {
-        GLuint hud_elem = PEKOMIN_HUD_ELEM_BASE;
+//      GLuint hud_elem_n = PEKOMIN_HUD_ELEM_BASE;
 
+        for (auto it = hud_elems.begin(); it != hud_elems.end(); ++it) {
+                if ((*it)->visible) {
+                        glPushMatrix();
+                                glTranslatef((*it)->pos.x, (*it)->pos.y, (*it)->pos.z);
+                                glRotatef(((*it)->ang * 180.0)/M_PI, 0, 0, 1);
+                                if ((*it)->identify(active_hud_elem)) {
+                                        glScalef(PEKOMIN_HUD_HIGHLIGHT_SCALE, PEKOMIN_HUD_HIGHLIGHT_SCALE, PEKOMIN_HUD_HIGHLIGHT_SCALE);
+                                }
+                                (*it)->draw();
+                        glPopMatrix();
+                }
+        }
+
+#if 0
         // Score
         for (i = 0; i < DIGITS_SCORE; i++) {
-                glLoadName(hud_elem);
+                glLoadName(hud_elem_n);
                 glPushMatrix();
                         glTranslatef(0, 9.2, 0);
                         glScalef(0.1, 0.1, 0.1);
                         glTranslatef((((DIGITS_SCORE + 1) / 2.0) - i - 0.5) * (W_SEGMENT + 4.0 * W_SEGMENT_T), 0, 0);
-                        if (active_hud_elem == hud_elem) glScalef(1.1, 1.1, 1.1);
+                        if (active_hud_elem == hud_elem_n) glScalef(PEKOMIN_HUD_HIGHLIGHT_SCALE, PEKOMIN_HUD_HIGHLIGHT_SCALE, PEKOMIN_HUD_HIGHLIGHT_SCALE);
                         glCallList(segs[(std::abs(pts) / power(10, i)) % 10]);
                 glPopMatrix();
-                ++hud_elem;
+                ++hud_elem_n;
         }
 
-#if 0
         // Lives
         for (i = 0; i < lives - 1; i++) {
-                glLoadName(hud_elem);
+                glLoadName(hud_elem_n);
                 glPushMatrix();
                         glTranslatef(-12.25 + 2.1 * i, 8.5, 0);
                         glScalef(0.5, 0.5, 0.5);
-                        if (active_hud_elem == hud_elem) glScalef(1.1, 1.1, 1.1);
+                        if (active_hud_elem == hud_elem_n) glScalef(PEKOMIN_HUD_HIGHLIGHT_SCALE, PEKOMIN_HUD_HIGHLIGHT_SCALE, PEKOMIN_HUD_HIGHLIGHT_SCALE);
                         glCallList(tanque);
                 glPopMatrix();
-                ++hud_elem;
+                ++hud_elem_n;
         }
-#endif
 
         //glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
         //glBindTexture(GL_TEXTURE_2D, tbrushmetal);
         //glEnable(GL_TEXTURE_2D);
         for (i = 0; i < balas; i++) {
-                glLoadName(hud_elem);
+                glLoadName(hud_elem_n);
                 glPushMatrix();
                         glTranslatef(-12.25 + 0.8 * i, 8.5, 0);
                         glScalef(1, 2, 1);
                         glColor4ub(255, 255, 255, 255);
-                        if (active_hud_elem == hud_elem) glScalef(1.1, 1.1, 1.1);
+                        if (active_hud_elem == hud_elem_n) glScalef(PEKOMIN_HUD_HIGHLIGHT_SCALE, PEKOMIN_HUD_HIGHLIGHT_SCALE, PEKOMIN_HUD_HIGHLIGHT_SCALE);
                         glCallList(bala);
                 glPopMatrix();
-                ++hud_elem;
+                ++hud_elem_n;
         }
         //glDisable(GL_TEXTURE_2D);
+#endif
 }
 
 void display() {
@@ -457,6 +572,7 @@ void display() {
                 glLightfv(GL_LIGHT0, GL_POSITION, light_pos);
                 glEnable(GL_LIGHT0);
 
+#if 0
                 if (pass == PASS_LAST) {
                         glPushMatrix();
                                 glScalef(5, 5, 5);
@@ -467,6 +583,7 @@ void display() {
                                 glCallList(checker);
                         glPopMatrix();
                 }
+#endif
 
                 if (pass == PASS_LAST) {
                         for (auto it = ents.begin(); it != ents.end(); ++it) {
@@ -767,7 +884,7 @@ void display() {
 
                 glMatrixMode(GL_PROJECTION);
                 glLoadIdentity();
-                gluPickMatrix(mouse_x, wh - mouse_y, 10.0, 10.0, view);
+                gluPickMatrix(mouse_x, wh - mouse_y, 1.0, 1.0, view);
 
                 if (ww <= wh) {
                         glOrtho(-10.0, 10.0, -10.0 / aspectratio, 10.0 / aspectratio, 1.0, -1.0);
@@ -791,7 +908,9 @@ void display() {
                 hits = glRenderMode(GL_RENDER);
 
 #ifdef DEBUG_MAIN
+#if 0
                 if (hits > 0) std::cerr << "HUD hits == " << hits << "; mouse at (" << mouse_x << ", " << mouse_y << ")"<< std::endl;
+#endif
 #endif
 
                 long int active_hud_elem = -1;
@@ -821,8 +940,25 @@ void display() {
                 glLoadIdentity();
 
 #ifdef DEBUG_MAIN
+#if 0
                 if (active_hud_elem != -1) std::cerr << "active element is " << active_hud_elem << std::endl;
 #endif
+#endif
+
+#define PEKOMIN_BTN_CALL_CALLBACK(button)                                                          \
+        if (btnclick_ ## button) {                                                                 \
+                for (auto it = hud_elems.begin(); it != hud_elems.end(); ++it) {                   \
+                        if ((*it)->identify(active_hud_elem)) {                                    \
+                                if ((*it)-> button ## click != NULL) (*it)-> button ## click(*it); \
+                        }                                                                          \
+                }                                                                                  \
+                                                                                                   \
+                btnclick_ ## button = false;                                                       \
+        }
+
+                PEKOMIN_BTN_CALL_CALLBACK(left  );
+                PEKOMIN_BTN_CALL_CALLBACK(middle);
+                PEKOMIN_BTN_CALL_CALLBACK(right );
 
                 drawHUD(active_hud_elem);
         }
@@ -964,10 +1100,11 @@ void mousemove(int x, int y) {
 
 void mouseclick(int button, int state, int x, int y) {
         mousemove(x,y);
+
         switch (button) {
-                case GLUT_LEFT_BUTTON  : btnstate_left   = (state == GLUT_DOWN); break;
-                case GLUT_MIDDLE_BUTTON: btnstate_middle = (state == GLUT_DOWN); break;
-                case GLUT_RIGHT_BUTTON : btnstate_right  = (state == GLUT_DOWN); break;
+                case GLUT_LEFT_BUTTON  : btnstate_left   = (state == GLUT_DOWN); if (state == GLUT_DOWN) btnclick_left   = true; break;
+                case GLUT_MIDDLE_BUTTON: btnstate_middle = (state == GLUT_DOWN); if (state == GLUT_DOWN) btnclick_middle = true; break;
+                case GLUT_RIGHT_BUTTON : btnstate_right  = (state == GLUT_DOWN); if (state == GLUT_DOWN) btnclick_right  = true; break;
         }
 }
 
@@ -1450,7 +1587,7 @@ int main(int argc, char **argv) {
                             GLUT_DEPTH     |
                             GLUT_LUMINANCE |
                             GLUT_MULTISAMPLE);
-        glutCreateWindow("Pekomin");
+        glutCreateWindow("Tamagotchi");
         glutIgnoreKeyRepeat(1);
 
         {

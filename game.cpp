@@ -1,6 +1,7 @@
 #include <GL/glut.h>
 
 #include "Ent.hpp"
+#include "HUDElement.hpp"
 #include "game.hpp"
 #include "Odor.hpp"
 #include "Player.hpp"
@@ -18,15 +19,16 @@ std::vector<Ent     *> recovery;
 std::vector<Ent     *> cover;
 #endif
 
-std::list<Ent  *> new_ents;
-std::list<Odor *> new_odors;
-std::list<Ent  *> ents;
-std::list<Odor *> odors;
+std::list<Ent        *> new_ents;
+std::list<Odor       *> new_odors;
+std::list<Ent        *> ents;
+std::list<Odor       *> odors;
+std::list<HUDElement *> hud_elems;
 
 Player *player = NULL;
 
 unsigned int ww   = 512;
-unsigned int wh   = 384;
+unsigned int wh   = 512;
 unsigned int pass = 0;
 
 unsigned int level = 0;
@@ -98,6 +100,10 @@ bool keystate_d            = false;
 bool btnstate_left         = false;
 bool btnstate_middle       = false;
 bool btnstate_right        = false;
+
+bool btnclick_left         = false;
+bool btnclick_middle       = false;
+bool btnclick_right        = false;
 
 unsigned int mouse_x = 0;
 unsigned int mouse_y = 0;

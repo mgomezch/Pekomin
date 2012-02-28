@@ -7,6 +7,7 @@
 #include <vector>
 
 #include "Ent.hpp"
+#include "HUDElement.hpp"
 #include "Odor.hpp"
 #include "Player.hpp"
 
@@ -55,10 +56,11 @@
 #define COSA                3
 
 extern Player *player;
-extern std::list<Ent  *> new_ents;
-extern std::list<Odor *> new_odors;
-extern std::list<Ent  *> ents;
-extern std::list<Odor *> odors;
+extern std::list<Ent        *> new_ents;
+extern std::list<Odor       *> new_odors;
+extern std::list<Ent        *> ents;
+extern std::list<Odor       *> odors;
+extern std::list<HUDElement *> hud_elems;
 
 #if PEKOMIN_GRAFO
 extern std::vector<Node    *> nodes;
@@ -164,6 +166,10 @@ extern bool keystate_d           ;
 extern bool btnstate_left        ;
 extern bool btnstate_middle      ;
 extern bool btnstate_right       ;
+
+extern bool btnclick_left        ;
+extern bool btnclick_middle      ;
+extern bool btnclick_right       ;
 
 extern unsigned int mouse_x;
 extern unsigned int mouse_y;

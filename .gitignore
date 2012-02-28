@@ -1,6 +1,7 @@
 *~
-.*.swp*
+.*.swp
 *.o
-/pekomin
-/Makefile
+pekomin
+tamagotchi
+Makefile
 tags
