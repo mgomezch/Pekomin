@@ -86,7 +86,7 @@ void Tab::set_middleclick(std::function<void(HUDElement *)> callback) { middlecl
 void Tab::set_rightclick (std::function<void(HUDElement *)> callback) { rightclick  = header->rightclick  = contents->rightclick  = callback; }
 
 bool Tab::identify(GLuint uid) {
-        return FilledWindow::identify(uid) || header->identify(uid) || contents->identify(uid); // TODO: ver todos los hijos
+        return FilledWindow::identify(uid) || header->identify(uid) || contents->identify(uid);
 }
 
 void Tab::set_color(

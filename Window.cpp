@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <cmath>
 #include <string>
 
@@ -28,5 +29,13 @@ void Window::update() {
 }
 
 bool Window::identify(GLuint uid) {
-        return HUDElement::identify(uid); // TODO: ver todos los hijos
+        return
+                std::accumulate(
+                        children.begin(),
+                        children.end(),
+                        HUDElement::identify(uid),
+                        [uid](bool acc, HUDElement * x) {
+                                return acc || x->identify(uid);
+                        }
+                );
 }

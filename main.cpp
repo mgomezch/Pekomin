@@ -43,7 +43,7 @@
 #define COLL_MAX_ITERS 10
 
 #define PEKOMIN_HUD_ELEM_BASE 1024
-#define PEKOMIN_HUD_HIGHLIGHT_SCALE 1.05
+#define PEKOMIN_HUD_HIGHLIGHT_SCALE 1.025
 
 using namespace std;
 
@@ -220,11 +220,47 @@ void initJuego() {
                         Tab * tabcito;
                         FilledWindow * ventanita;
 
+#define PEKOMIN_SUBVENTANAS_REGISTRO(n, move_x, move_y)     \
+        fw = new FilledWindow(n, 3, 4, 255, 255, 255, 255); \
+        fw->pos.x = 2*(move_x);                             \
+        fw->pos.y = 4*(move_y);                             \
+        t->contents->children.push_back(fw);
+
+#define PEKOMIN_TAB_REGISTRO_NORMAL(n)                                                         \
+        [](Tab * t) {                                                                          \
+                FilledWindow * fw;                                                             \
+                PEKOMIN_SUBVENTANAS_REGISTRO("izquierda abajo  tab de registro " #n , -1, -1); \
+                PEKOMIN_SUBVENTANAS_REGISTRO("derecha   abajo  tab de registro " #n ,  1, -1); \
+                PEKOMIN_SUBVENTANAS_REGISTRO("izquierda arriba tab de registro " #n , -1,  1); \
+                PEKOMIN_SUBVENTANAS_REGISTRO("derecha   arriba tab de registro " #n ,  1,  1); \
+        }
+
+                        std::vector<std::function<void(Tab *)>> tabcito_funcs = {
+                                PEKOMIN_TAB_REGISTRO_NORMAL(1),
+                                PEKOMIN_TAB_REGISTRO_NORMAL(2),
+                                PEKOMIN_TAB_REGISTRO_NORMAL(3),
+                                PEKOMIN_TAB_REGISTRO_NORMAL(4),
+
+#undef PEKOMIN_TAB_REGISTRO_NORMAL
+#undef PEKOMIN_SUBVENTANAS_REGISTRO
+
+                                [](Tab * t) {
+                                        FilledWindow * fw;
+                                        for (int i = 0; i < 6; ++i) {
+                                                fw = new FilledWindow(std::string("campo del tab de perfil") + std::string(i, 'I'), 3, 1, 255, 255, 255, 255);
+                                                fw->pos.x = 1.5;
+                                                fw->pos.y = 5 - 2*i;
+                                                t->contents->children.push_back(fw);
+                                        }
+                                }
+                        };
+
 #define PEKOMIN_TABCITO_REGISTRO(n, i, f, d, br, bg, bb)                                                     \
         tabcito = new Tab("tabcito de registro " #n , 8, 15, 1, (i), (f), 0, 96, 0, 200);                    \
         ventanita = new FilledWindow("botón del tabcito de registro " #n , 0.8, 0.8, (br), (bg), (bb), 255); \
         ventanita->pos.z = -0.05;                                                                            \
         tabcito->header->children.push_back(ventanita);                                                      \
+        tabcito_funcs[(n)](tabcito);                                                                         \
         yarr.push_back([tabcito]() {                                                                         \
                 tabcito->pos.z = (d);                                                                        \
                 tabcito->set_opacity(200);                                                                   \
@@ -245,11 +281,11 @@ void initJuego() {
         hud_elems.push_back(tabcito);
 
 #define PEKOMIN_SEP 0.01
-                        PEKOMIN_TABCITO_REGISTRO(1, 0.0              , 0.2 - PEKOMIN_SEP, 0.1, 255,   0,   0); // Rojo
-                        PEKOMIN_TABCITO_REGISTRO(2, 0.2 + PEKOMIN_SEP, 0.4 - PEKOMIN_SEP, 0.2,   0, 255,   0); // Verde
-                        PEKOMIN_TABCITO_REGISTRO(3, 0.4 + PEKOMIN_SEP, 0.6 - PEKOMIN_SEP, 0.3,   0,   0, 255); // Azul
-                        PEKOMIN_TABCITO_REGISTRO(4, 0.6 + PEKOMIN_SEP, 0.8 - PEKOMIN_SEP, 0.4,   0, 255, 255); // Amarillo
-                        PEKOMIN_TABCITO_REGISTRO(5, 0.8 + PEKOMIN_SEP, 1.0              , 0.5, 255,   0, 255); // ?
+                        PEKOMIN_TABCITO_REGISTRO(0, 0.0              , 0.2 - PEKOMIN_SEP, 0.1, 255,   0,   0); // Rojo
+                        PEKOMIN_TABCITO_REGISTRO(1, 0.2 + PEKOMIN_SEP, 0.4 - PEKOMIN_SEP, 0.2,   0, 255,   0); // Verde
+                        PEKOMIN_TABCITO_REGISTRO(2, 0.4 + PEKOMIN_SEP, 0.6 - PEKOMIN_SEP, 0.3,   0,   0, 255); // Azul
+                        PEKOMIN_TABCITO_REGISTRO(3, 0.6 + PEKOMIN_SEP, 0.8 - PEKOMIN_SEP, 0.4,   0, 255, 255); // Amarillo
+                        PEKOMIN_TABCITO_REGISTRO(4, 0.8 + PEKOMIN_SEP, 1.0              , 0.5, 255,   0, 255); // ?
 #undef PEKOMIN_SEP
 #undef PEKOMIN_TABCITO_REGISTRO
 
@@ -262,24 +298,24 @@ void initJuego() {
 
                         Tab * tabcito;
 
-#define PEKOMIN_TABCITO_NORMAL(n, i, f)                                            \
+#define PEKOMIN_TABCITO_NORMAL(n, i, f, d)                                         \
         tabcito = new Tab("tabcito normal " n, 20, 6, 3, (i), (f), 0, 96, 0, 200); \
         tabcito->pos.y = -13;                                                      \
-        tabcito->pos.z = -0.1;                                                     \
+        tabcito->pos.z = (d);                                                      \
         tabcito->set_leftclick([](HUDElement * self) {                             \
                 static bool visible = false;                                       \
                 self->pos.y = (visible ? -13 : -8);                                \
-                self->pos.z = (visible ?   1 : -1);                                \
+                self->pos.z = (visible ? (d) :  0);                                \
                 dynamic_cast<Tab *>(self)->set_opacity(visible ? 200 : 255);       \
                 visible ^= 1;                                                      \
         });                                                                        \
         hud_elems.push_back(tabcito);
 
-#define PEKOMIN_TABCITO_NORMAL_SEP 0.005
-                        PEKOMIN_TABCITO_NORMAL("izquierdo", 0.00                             , 0.25 - PEKOMIN_TABCITO_NORMAL_SEP);
-                        PEKOMIN_TABCITO_NORMAL("medio"    , 0.25 + PEKOMIN_TABCITO_NORMAL_SEP, 0.75 - PEKOMIN_TABCITO_NORMAL_SEP);
-                        PEKOMIN_TABCITO_NORMAL("derecho"  , 0.75 + PEKOMIN_TABCITO_NORMAL_SEP, 1.00                             );
-#undef PEKOMIN_TABCITO_NORMAL_SEP
+#define PEKOMIN_SEP 0.005
+                        PEKOMIN_TABCITO_NORMAL("izquierdo", 0.00              , 0.25 - PEKOMIN_SEP, 0.1);
+                        PEKOMIN_TABCITO_NORMAL("medio"    , 0.25 + PEKOMIN_SEP, 0.75 - PEKOMIN_SEP, 0.2);
+                        PEKOMIN_TABCITO_NORMAL("derecho"  , 0.75 + PEKOMIN_SEP, 1.00              , 0.3);
+#undef PEKOMIN_SEP
 #undef PEKOMIN_TABCITO_NORMAL
 
                 };
@@ -916,15 +952,14 @@ void display() {
                 long int active_hud_elem = -1;
 
                 if (hits > 0) {
-                        long int active_hud_elem_depth = sbuf[1];
+                        GLuint active_hud_elem_depth = sbuf[1];
                         active_hud_elem = sbuf[3];
                         for (i = 1; static_cast<signed int>(i) < hits; ++i) {
-                                if (active_hud_elem_depth < static_cast<long int>(sbuf[4*i + 1])) {
+                                if (active_hud_elem_depth > sbuf[4*i + 1]) {
                                         active_hud_elem_depth = sbuf[4*i + 1];
                                         active_hud_elem       = sbuf[4*i + 3];
                                 }
 #ifdef DEBUG_MAIN
-#if 0
                                 std::cout
                                         << "number == " << sbuf[i * 4    ]
                                         << ", zmin == " << sbuf[i * 4 + 1]
@@ -932,8 +967,8 @@ void display() {
                                         << ", name == " << sbuf[i * 4 + 3]
                                         << std::endl;
 #endif
-#endif
                         }
+                        std::cout << "active_hud_elem_depth == " << active_hud_elem_depth << std::endl;
                 }
 
                 glMatrixMode(GL_MODELVIEW);
