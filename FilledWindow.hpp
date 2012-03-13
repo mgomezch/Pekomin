@@ -15,7 +15,7 @@ class FilledWindow : public virtual Window {
 
                 FilledWindow(
                         double                   p_width                                         ,
-                        double                   p_heigh                                         ,
+                        double                   p_height                                        ,
                         GLubyte                  p_r            = 255                            ,
                         GLubyte                  p_g            = 255                            ,
                         GLubyte                  p_b            = 255                            ,

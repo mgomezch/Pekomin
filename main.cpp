@@ -1,7 +1,7 @@
 #include <cmath>
 #include <cstdio>
 #include <cstdlib>
-#include <GL/glut.h>
+#include <GL/freeglut.h>
 #include <iostream>
 #include <list>
 #include <sysexits.h>
@@ -26,8 +26,10 @@
 #include "HUDElement.hpp"
 #include "Window.hpp"
 #include "FilledWindow.hpp"
-#include "Tab.hpp"
 #include "Tabs.hpp"
+#include "Tab.hpp"
+#include "Label.hpp"
+#include "Image.hpp"
 
 #include "game.hpp"
 #include "gl.hpp"
@@ -57,7 +59,7 @@ Ent        * ent;
 HUDElement * hud_elem;
 Odor       * odor;
 
-std::list<std::function<void(void)>> yarr; // FIXME: no ser tan pirata
+//std::list<std::function<void(void)>> yarr; // FIXME: no ser tan pirata
 
 #if PEKOMIN_GRAFO
 Segment *obstacle;
@@ -142,8 +144,6 @@ void initJuego() {
         {
                 Behavior   * b;
                 Actor      * a;
-                Window     * w;
-                HUDElement * c;
 
 #if PEKOMIN_GRAFO
                 obstacles.clear();
@@ -168,6 +168,7 @@ void initJuego() {
                         delete ent;
                 }
 
+#if 0
                 while (!hud_elems.empty()) {
                         hud_elem = hud_elems.back();
                         hud_elems.pop_back();
@@ -182,6 +183,8 @@ void initJuego() {
 
                         delete hud_elem;
                 }
+#endif
+                hud_states.clear(); // FIXME: yarrrr
 
                 player = NULL;
 
@@ -210,6 +213,7 @@ void initJuego() {
                         parse(buf);
                 }
 
+#if 0
                 yarr.clear();
 
                 hud_elems.push_back(
@@ -369,26 +373,144 @@ void initJuego() {
 #undef PEKOMIN_TABCITO_NORMAL
 
                 });
+#endif
 
                 {
-                        Tabs * tabcitos =
-                                new Tabs(
-                                        8, 4,
-                                        1,
-                                        5,
-                                        120, 0, 120, 255,
+                        Image * img;
+                        Label * l  ;
+                        {
+                                hud_state = HUDState::Inicio;
+                                hud_states.push_back(new std::list<HUDElement *>());
+
+                                FilledWindow * fw = new FilledWindow(
+                                        24, 18,
+                                        20, 96, 20, 250,
                                         HUDElement::Highlighting::scale_wobble,
                                         nullptr,
-                                        "prueba",
+                                        "inicial",
                                         HUDElement::Visibility::visible
                                 );
 
-                        tabcitos->headers[0]->set_color(255,   0,   0); tabcitos->pages[0]->set_color(255,   0,   0);
-                        tabcitos->headers[1]->set_color(  0, 255,   0); tabcitos->pages[1]->set_color(  0, 255,   0);
-                        tabcitos->headers[2]->set_color(  0,   0, 255); tabcitos->pages[2]->set_color(  0,   0, 255);
-                        tabcitos->headers[3]->set_color(255,   0, 255); tabcitos->pages[3]->set_color(255,   0, 255);
-                        tabcitos->headers[4]->set_color(  0, 255, 255); tabcitos->pages[4]->set_color(  0, 255, 255);
-                        hud_elems.push_back(tabcitos);
+                                l = new Label(
+                                        "Bienvenido a",
+                                        0.025, 5,
+                                        0, 0, 0, 255,
+                                        Label::Alignment::center,
+                                        HUDElement::Highlighting::scale_wobble,
+                                        fw,
+                                        "título (línea 1)",
+                                        HUDElement::Visibility::visible,
+                                        Triple(0, 3.5, -0.1)
+                                );
+                                fw->children.push_back(l);
+
+                                l = new Label(
+                                        "Tamagotchi",
+                                        0.025, 5,
+                                        0, 0, 0, 255,
+                                        Label::Alignment::center,
+                                        HUDElement::Highlighting::scale_wobble,
+                                        fw,
+                                        "título (línea 2)",
+                                        HUDElement::Visibility::visible,
+                                        Triple(0, 2, -0.1)
+                                );
+                                fw->children.push_back(l);
+
+                                img = new Image(
+                                        "tamagotchi_icons/mantenimiento/aceptar.png",
+                                        2, 2,
+                                        255,
+                                        HUDElement::Highlighting::scale_wobble,
+                                        fw,
+                                        "inicio->aceptar",
+                                        HUDElement::Visibility::visible,
+                                        Triple(0, -1, -0.1)
+                                );
+                                fw->children.push_back(img);
+
+                                fw->set_callback_leftclick ([](HUDElement * self) { hud_state = HUDState::Juego   ; });
+                                fw->set_callback_rightclick([](HUDElement * self) { hud_state = HUDState::Registro; });
+
+                                hud_states[HUDSTATE]->push_back(fw);
+                        }
+
+                        {
+                                hud_state = HUDState::Registro;
+                                hud_states.push_back(new std::list<HUDElement *>());
+
+                                Tabs * tabcitos = new Tabs(
+                                        14, 16,
+                                        1,
+                                        nullptr, nullptr,
+                                        5,
+                                        20, 96, 20, 255,
+                                        Tabs::Autohide::no,
+                                        HUDElement::Highlighting::scale_wobble,
+                                        nullptr,
+                                        "tabs de registro",
+                                        HUDElement::Visibility::visible,
+                                        Triple(9, -0.5, 0)
+                                );
+
+                                tabcitos->headers[0]->children.push_back(new FilledWindow(1, 1, 255,   0,   0, 200, HUDElement::Highlighting::scale_wobble, tabcitos->headers[0], "tab[0]->header", HUDElement::Visibility::visible));
+                                tabcitos->headers[1]->children.push_back(new FilledWindow(1, 1,   0, 255,   0, 200, HUDElement::Highlighting::scale_wobble, tabcitos->headers[0], "tab[0]->header", HUDElement::Visibility::visible));
+                                tabcitos->headers[2]->children.push_back(new FilledWindow(1, 1,   0,   0, 255, 200, HUDElement::Highlighting::scale_wobble, tabcitos->headers[0], "tab[0]->header", HUDElement::Visibility::visible));
+                                tabcitos->headers[3]->children.push_back(new FilledWindow(1, 1, 255,   0, 255, 200, HUDElement::Highlighting::scale_wobble, tabcitos->headers[0], "tab[0]->header", HUDElement::Visibility::visible));
+                                tabcitos->headers[4]->children.push_back(new FilledWindow(1, 1, 255, 255,   0, 200, HUDElement::Highlighting::scale_wobble, tabcitos->headers[0], "tab[0]->header", HUDElement::Visibility::visible));
+
+                                tabcitos->pages[0]->children.push_back(new Label("Tab 0", 0.025, 5, 0, 0, 0, 255, Label::Alignment::center, HUDElement::Highlighting::scale_wobble, tabcitos->pages[0]));
+                                tabcitos->pages[1]->children.push_back(new Label("Tab 1", 0.025, 5, 0, 0, 0, 255, Label::Alignment::center, HUDElement::Highlighting::scale_wobble, tabcitos->pages[0]));
+                                tabcitos->pages[2]->children.push_back(new Label("Tab 2", 0.025, 5, 0, 0, 0, 255, Label::Alignment::center, HUDElement::Highlighting::scale_wobble, tabcitos->pages[0]));
+                                tabcitos->pages[3]->children.push_back(new Label("Tab 3", 0.025, 5, 0, 0, 0, 255, Label::Alignment::center, HUDElement::Highlighting::scale_wobble, tabcitos->pages[0]));
+                                tabcitos->pages[4]->children.push_back(new Label("Tab 4", 0.025, 5, 0, 0, 0, 255, Label::Alignment::center, HUDElement::Highlighting::scale_wobble, tabcitos->pages[0]));
+
+                                tabcitos->active_page = 0;
+
+                                hud_states[HUDSTATE]->push_back(tabcitos);
+                        }
+
+                        {
+                                hud_state = HUDState::Juego;
+                                hud_states.push_back(new std::list<HUDElement *>());
+
+                                Tabs * tabcitos = new Tabs(
+                                        32, 6,
+                                        2,
+#define PEKOMIN_DRAWER_TABS_HEADER_CALLBACK(visibility, op)                              \
+        [](HUDElement * e) {                                                             \
+                auto ts = dynamic_cast<Tabs *>(e);                                       \
+                std::for_each(                                                           \
+                        ts->headers.begin(),                                             \
+                        ts->headers.end  (),                                             \
+                        [](FilledWindow * h) { h->visible = visibility; }                \
+                );                                                                       \
+                ts->headers[ts->active_page]->visible = HUDElement::Visibility::visible; \
+                ts->headers[ts->active_page]->pos.y op ts->height;                       \
+                ts->pages  [ts->active_page]->pos.y op ts->height;                       \
+        }
+                                        PEKOMIN_DRAWER_TABS_HEADER_CALLBACK(HUDElement::Visibility::hidden , +=),
+                                        PEKOMIN_DRAWER_TABS_HEADER_CALLBACK(HUDElement::Visibility::visible, -=),
+#undef PEKOMIN_DRAWER_TABS_CALLBACK
+                                        3,
+                                        20, 96, 20, 255,
+                                        Tabs::Autohide::yes,
+                                        HUDElement::Highlighting::scale_wobble,
+                                        nullptr,
+                                        "tabs de abajo",
+                                        HUDElement::Visibility::visible,
+                                        Triple(0, -13, 0)
+                                );
+
+                                hud_states[HUDSTATE]->push_back(tabcitos);
+                        }
+
+                        {
+                                hud_state = HUDState::Relaciones;
+                                hud_states.push_back(new std::list<HUDElement *>());
+                        }
+
+                        hud_state = HUDState::Inicio;
                 }
 
 #if PEKOMIN_GRAFO
@@ -543,8 +665,8 @@ void drawHUD(GLuint active_hud_elem) {
 //      GLuint hud_elem_n = PEKOMIN_HUD_ELEM_BASE;
 
         std::for_each(
-                hud_elems.begin(),
-                hud_elems.end(),
+                hud_states[HUDSTATE]->begin(),
+                hud_states[HUDSTATE]->end(),
                 [active_hud_elem](HUDElement * it) {
                         if (it->visible != HUDElement::Visibility::hidden) {
                                 glPushMatrix();
@@ -1094,8 +1216,8 @@ void display() {
 #define PEKOMIN_CALL_CALLBACK(event)                                            \
         if (newevent_##event) {                                                 \
                 std::for_each(                                                  \
-                        hud_elems.begin(),                                      \
-                        hud_elems.end(),                                        \
+                        hud_states[HUDSTATE]->begin(),                          \
+                        hud_states[HUDSTATE]->end(),                            \
                         [active_hud_elem](HUDElement * it) {                    \
                                 HUDElement * p = it->contains(active_hud_elem); \
                                 while (p != nullptr) {                          \

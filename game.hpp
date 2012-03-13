@@ -1,7 +1,7 @@
 #ifndef GAME_HPP
 #define GAME_HPP
 
-#include <GL/glut.h>
+#include <GL/freeglut.h>
 
 #include <list>
 #include <vector>
@@ -55,12 +55,21 @@
 #define N_DELTAS           50
 #define COSA                3
 
-extern Player *player;
-extern std::list<Ent        *> new_ents;
-extern std::list<Odor       *> new_odors;
-extern std::list<Ent        *> ents;
-extern std::list<Odor       *> odors;
-extern std::list<HUDElement *> hud_elems;
+extern Player * player;
+extern std::list  <Ent                     *> new_ents;
+extern std::list  <Odor                    *> new_odors;
+extern std::list  <Ent                     *> ents;
+extern std::list  <Odor                    *> odors;
+extern std::vector<std::list<HUDElement *> *> hud_states;
+
+enum class HUDState : unsigned int {
+        Inicio,
+        Registro,
+        Juego,
+        Relaciones
+};
+extern HUDState hud_state;
+#define HUDSTATE static_cast<unsigned int>(hud_state)
 
 #if PEKOMIN_GRAFO
 extern std::vector<Node    *> nodes;

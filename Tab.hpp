@@ -17,7 +17,7 @@ class Tab : public virtual FilledWindow {
 
                 Tab(
                         double                   p_width                                             ,
-                        double                   p_heigh                                             ,
+                        double                   p_height                                            ,
                         double                   p_header_height                                     ,
                         double                   p_header_start_pct                                  ,
                         double                   p_header_end_pct                                    ,

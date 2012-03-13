@@ -4,7 +4,7 @@
 #define DEBUG_PHANTOM
 
 #ifdef DEBUG_PHANTOM
-#       include <GL/glut.h>
+#       include <GL/freeglut.h>
 #endif
 
 void Phantom::draw() const {

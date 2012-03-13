@@ -1,7 +1,7 @@
 #ifndef GL_HPP
 #define GL_HPP
 
-#include <GL/glut.h>
+#include <GL/freeglut.h>
 
 #define N_SLICES_RINGBASE   6
 #define N_SLICES           12
@@ -56,7 +56,7 @@ extern GLuint tstars, tdesert, tcielo;
 extern GLuint tblur;
 extern int tw, th, ta;
 
-int loadPNG(char *name, int *outWidth, int *outHeight, int *outHasAlpha, GLubyte **outData);
+int loadPNG(const char * name, int * outWidth, int * outHeight, int * outHasAlpha, GLubyte ** outData);
 
 void buildLists();
 

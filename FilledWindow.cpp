@@ -54,18 +54,17 @@ void FilledWindow::draw(GLuint active_hud_elem) const {
                                 && is(active_hud_elem)
                         ) {
                                 glScalef(
-                                        1 + PEKOMIN_HUD_HIGHLIGHT_SCALE * cos(PEKOMIN_HUD_HIGHLIGHT_SPEED * new_time) / width,
+                                        1 + PEKOMIN_HUD_HIGHLIGHT_SCALE * cos(PEKOMIN_HUD_HIGHLIGHT_SPEED * new_time) / width ,
                                         1 + PEKOMIN_HUD_HIGHLIGHT_SCALE * cos(PEKOMIN_HUD_HIGHLIGHT_SPEED * new_time) / height,
                                         1
                                 );
                         }
-                        glPushName(select_uid);
-                                glPushMatrix();
-                                        glScalef(width, height, 1);
-                                        glColor4ubv(color);
-                                        glCallList(cuadrado_simple);
-                                glPopMatrix();
-                        glPopName();
+
+                        glPushMatrix();
+                                glScalef(width, height, 1);
+                                glColor4ubv(color);
+                                glCallList(cuadrado_simple);
+                        glPopMatrix();
                 glPopName();
 
                 Window::draw(active_hud_elem);

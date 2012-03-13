@@ -4,7 +4,7 @@
 #include <tuple>
 #include <iostream>
 
-#include <GL/glut.h>
+#include <GL/freeglut.h>
 #include "gl.hpp"
 
 #include "Node.hpp"

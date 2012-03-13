@@ -67,7 +67,7 @@ int tw = 0,
     th = 0,
     ta = 0;
 
-int loadPNG(char *name, int *outWidth, int *outHeight, int *outHasAlpha, GLubyte **outData) {
+int loadPNG(const char * name, int * outWidth, int * outHeight, int * outHasAlpha, GLubyte ** outData) {
         int i;
         png_structp png_ptr;
         png_infop info_ptr;
@@ -154,7 +154,7 @@ void buildLists() {
         glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
         glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        loadPNG((char *)"png/stars.png", &tw, &th, &ta, &tstars_img);
+        loadPNG("png/stars.png", &tw, &th, &ta, &tstars_img);
         glTexImage2D(GL_TEXTURE_2D, 0, ta ? 4 : 3, tw, th, 0, ta ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, tstars_img);
 
         glGenTextures(1, &tdesert);
@@ -163,7 +163,7 @@ void buildLists() {
         glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
         glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        loadPNG((char *)"png/desert.png", &tw, &th, &ta, &tdesert_img);
+        loadPNG("png/desert.png", &tw, &th, &ta, &tdesert_img);
         glTexImage2D(GL_TEXTURE_2D, 0, ta ? 4 : 3, tw, th, 0, ta ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, tdesert_img);
 
         glGenTextures(1, &tcielo);
@@ -172,7 +172,7 @@ void buildLists() {
         glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
         glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        loadPNG((char *)"png/cielo.png", &tw, &th, &ta, &tcielo_img);
+        loadPNG("png/cielo.png", &tw, &th, &ta, &tcielo_img);
         glTexImage2D(GL_TEXTURE_2D, 0, ta ? 4 : 3, tw, th, 0, ta ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, tcielo_img);
 
         if ((cuadrado = glGenLists(N_LISTS + 13)) == 0) {

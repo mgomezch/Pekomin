@@ -1,7 +1,7 @@
 #include "Odor.hpp"
 
 #include "gl.hpp"
-#include <GL/glut.h>
+#include <GL/freeglut.h>
 
 Odor::Odor(std::string name, Triple pos, unsigned int lifetime, double intensity, double spread):
         Ent(name, pos),

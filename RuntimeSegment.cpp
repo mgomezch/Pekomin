@@ -1,5 +1,5 @@
 #include <cmath>
-#include <GL/glut.h>
+#include <GL/freeglut.h>
 
 #include "gl.hpp"
 #include "RuntimeSegment.hpp"

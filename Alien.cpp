@@ -1,6 +1,6 @@
 #if PEKOMIN_GRAFO
 
-#include <GL/glut.h>
+#include <GL/freeglut.h>
 
 #include "gl.hpp"
 #include "Alien.hpp"

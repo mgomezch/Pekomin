@@ -1,4 +1,4 @@
-#include <GL/glut.h>
+#include <GL/freeglut.h>
 
 #include "Ent.hpp"
 #include "HUDElement.hpp"
@@ -19,11 +19,12 @@ std::vector<Ent     *> recovery;
 std::vector<Ent     *> cover;
 #endif
 
-std::list<Ent        *> new_ents;
-std::list<Odor       *> new_odors;
-std::list<Ent        *> ents;
-std::list<Odor       *> odors;
-std::list<HUDElement *> hud_elems;
+std::list<Ent                       *> new_ents;
+std::list<Odor                      *> new_odors;
+std::list<Ent                       *> ents;
+std::list<Odor                      *> odors;
+std::vector<std::list<HUDElement *> *> hud_states;
+HUDState hud_state;
 
 Player *player = NULL;
 
