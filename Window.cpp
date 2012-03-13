@@ -1,41 +1,75 @@
 #include <algorithm>
 #include <cmath>
+#include <GL/gl.h>
 #include <string>
 
+#include "game.hpp"
+#include "gl.hpp"
 #include "HUDElement.hpp"
+#include "Triple.hpp"
 #include "Window.hpp"
 
-Window::Window(std::string name):
-        HUDElement(name)
+Window::Window(
+        HUDElement::Highlighting p_highlighting,
+        HUDElement *             p_parent      ,
+        std::string              p_name        ,
+        HUDElement::Visibility   p_visible     ,
+        Triple                   p_pos         ,
+        double                   p_ang
+):
+        HUDElement(
+                p_highlighting,
+                p_parent      ,
+                p_name        ,
+                p_visible     ,
+                p_pos         ,
+                p_ang
+        )
 {}
 
-void Window::draw() const {
-        for (auto it = children.begin(); it != children.end(); ++it) {
-                HUDElement * child;
+void Window::draw(GLuint active_hud_elem) const {
+        if (visible == HUDElement::Visibility::hidden) return;
 
-                glPushMatrix();
-                        child = *it;
-                        glTranslatef(child->pos.x, child->pos.y, child->pos.z);
-                        glRotatef((child->ang * 180.0)/M_PI, 0, 0, 1);
-                        child->draw();
-                glPopMatrix();
-        }
+        glPushMatrix();
+                std::for_each(
+                        children.begin(),
+                        children.end(),
+                        [active_hud_elem](HUDElement * c) {
+                                glPushMatrix();
+                                        glTranslatef(
+                                                c->pos.x,
+                                                c->pos.y,
+                                                c->pos.z
+                                        );
+                                        glRotatef(
+                                                (c->ang * 180.0)/M_PI,
+                                                0, 0, 1
+                                        );
+                                        c->draw(active_hud_elem);
+                                glPopMatrix();
+                        }
+                );
+        glPopMatrix();
 }
 
 void Window::update() {
-        for (auto it = children.begin(); it != children.end(); ++it) {
-                (*it)->update();
-        }
+        std::for_each(
+                children.begin(),
+                children.end(),
+                [](HUDElement * c) {
+                        c->update();
+                }
+        );
 }
 
-bool Window::identify(GLuint uid) {
-        return
-                std::accumulate(
-                        children.begin(),
-                        children.end(),
-                        HUDElement::identify(uid),
-                        [uid](bool acc, HUDElement * x) {
-                                return acc || x->identify(uid);
-                        }
-                );
+HUDElement * Window::contains(GLuint uid) const {
+        HUDElement * p;
+
+        if ((p = HUDElement::contains(uid))) return p;
+
+        for (auto it = children.begin(); it != children.end(); ++it) {
+                if ((p = (*it)->contains(uid))) return p;
+        }
+
+        return nullptr;
 }

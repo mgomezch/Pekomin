@@ -3,8 +3,9 @@
 
 #include <GL/gl.h>
 #include <list>
+#include <string>
 
-#include "FilledWindow.hpp"
+#include "Triple.hpp"
 #include "Window.hpp"
 
 class FilledWindow : public virtual Window {
@@ -13,20 +14,29 @@ class FilledWindow : public virtual Window {
                 GLubyte color[4];
 
                 FilledWindow(
-                        std::string name,
-                        double width,
-                        double heigh,
-                        GLubyte r = 255,
-                        GLubyte g = 255,
-                        GLubyte b = 255,
-                        GLubyte a = 255
+                        double                   p_width                                         ,
+                        double                   p_heigh                                         ,
+                        GLubyte                  p_r            = 255                            ,
+                        GLubyte                  p_g            = 255                            ,
+                        GLubyte                  p_b            = 255                            ,
+                        GLubyte                  p_a            = 255                            ,
+                        HUDElement::Highlighting p_highlighting = HUDElement::Highlighting::none ,
+                        HUDElement *             p_parent       = nullptr                        ,
+                        std::string              p_name         = ""                             ,
+                        HUDElement::Visibility   p_visible      = HUDElement::Visibility::visible,
+                        Triple                   p_pos          = Triple()                       ,
+                        double                   p_ang          = 0
                 );
 
-                virtual void draw() const;
+                virtual void draw(GLuint active_hud_elem) const;
 
-                virtual void set_color(GLubyte r, GLubyte g, GLubyte b, GLubyte a = 255);
+                virtual FilledWindow & set_color(
+                        GLubyte r,
+                        GLubyte g,
+                        GLubyte b
+                );
 
-                virtual void set_opacity(GLubyte a);
+                virtual FilledWindow & set_opacity(GLubyte a);
 };
 
 #endif

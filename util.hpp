@@ -1,5 +1,7 @@
-#ifndef UTIL_HPP
-#define UTIL_HPP
+#ifndef PEKOMIN_UTIL_HPP
+#define PEKOMIN_UTIL_HPP
+
+#define PEKOMIN_ABS(x) ((x) >= 0 ? (x) : -(x))
 
 double randomBinomial();
 double RandBin(double fMin, double fMax);

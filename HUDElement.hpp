@@ -4,47 +4,63 @@
 #include <functional>
 #include <GL/gl.h>
 #include <string>
-#include <tuple>
-#include <vector>
 
+#include "events.hpp"
 #include "Triple.hpp"
+
+class HUDElement;
+
+typedef std::function<void (HUDElement *)> HUDCallback_t;
 
 class HUDElement {
         public:
-                std::string name;
-                Triple pos;
-                double ang;
+                enum class Visibility : unsigned int {
+                        visible,
+                        hidden
+                };
 
-                Triple new_pos;
-                double new_ang;
+                enum class Highlighting : unsigned int {
+                        none,
+                        scale_wobble
+                };
 
-                std::function<void(HUDElement *)> leftclick;
-                std::function<void(HUDElement *)> middleclick;
-                std::function<void(HUDElement *)> rightclick;
+                Highlighting highlighting;
+                HUDElement * parent      ;
+                std::string  name        ;
+                Visibility   visible     ;
+                Triple       pos         ;
+                double       ang         ;
 
-                bool visible;
+                Triple       new_pos     ;
+                double       new_ang     ;
+
+#define PEKOMIN_DECLARE_CALLBACK_MEMBER(event) HUDCallback_t callback_##event;
+                PEKOMIN_EVENTS(PEKOMIN_DECLARE_CALLBACK_MEMBER)
+#undef PEKOMIN_DECLARE_CALLBACK_MEMBER
 
                 GLuint select_uid;
 
                 HUDElement(
-                        std::string name    = "",
-                        Triple      pos     = Triple(),
-                        double      ang     = 0,
-                        bool        visible = true
+                        Highlighting p_highlighting = Highlighting::none ,
+                        HUDElement * p_parent       = nullptr            ,
+                        std::string  p_name         = ""                 ,
+                        Visibility   p_visible      = Visibility::visible,
+                        Triple       p_pos          = Triple()           ,
+                        double       p_ang          = 0
                 );
 
                 virtual ~HUDElement() = 0;
 
-                virtual void draw() const = 0;
+                virtual void draw(GLuint active_hud_elem) const = 0;
                 virtual void update() = 0;
 
-                const Triple orientation() const;
+#define PEKOMIN_DECLARE_CALLBACK_SETTER(event) HUDElement & set_callback_##event(HUDCallback_t cb);
+                PEKOMIN_EVENTS(PEKOMIN_DECLARE_CALLBACK_SETTER)
+#undef PEKOMIN_DECLARE_CALLBACK_SETTER
 
-                virtual void set_leftclick  (std::function<void(HUDElement *)>);
-                virtual void set_middleclick(std::function<void(HUDElement *)>);
-                virtual void set_rightclick (std::function<void(HUDElement *)>);
+                virtual HUDElement * is(GLuint uid) const;
 
-                virtual bool identify(GLuint uid);
+                virtual HUDElement * contains(GLuint uid) const;
 };
 
 #endif

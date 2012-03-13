@@ -9,7 +9,12 @@
 #define N_DIVS             10
 #define N_DIVS_HD          30
 
-#define PEKOMIN_SELECT_BUFFER_SIZE 1024
+#define PEKOMIN_SELECT_BUFFER_SIZE 4096
+
+#define PEKOMIN_HUD_HIGHLIGHT_SCALE 0.05
+#define PEKOMIN_HUD_HIGHLIGHT_SPEED 0.0125
+
+extern GLuint sbuf[PEKOMIN_SELECT_BUFFER_SIZE];
 
 extern int cuadrado,
            cuadrado_hd,

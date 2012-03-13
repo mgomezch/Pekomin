@@ -6,6 +6,8 @@
 #include "game.hpp"
 #include "gl.hpp"
 
+GLuint sbuf[PEKOMIN_SELECT_BUFFER_SIZE];
+
 int cuadrado        = -1,
     cuadrado_hd     = -1,
     cuadrado_simple = -1,

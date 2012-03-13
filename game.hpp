@@ -71,17 +71,25 @@ extern std::vector<Ent     *> cover;
 #endif
 
 enum cam_enum {
+#if 0
         CAM_STATIC_OVERHEAD = 0,
         CAM_OVERHEAD,
         CAM_FPS,
+#endif
         CAM_TPS,
         CAM_MANUAL
 };
+#if 0
 #define N_CAMS 5
+#endif
+#define N_CAMS 2
 
-extern unsigned int ww;
-extern unsigned int wh;
-extern unsigned int pass;
+extern unsigned int old_ww    ;
+extern unsigned int old_wh    ;
+extern unsigned int ww        ;
+extern unsigned int wh        ;
+extern unsigned int pass      ;
+extern bool         fullscreen;
 
 enum passes {
         PASS_BLUR = 0,
@@ -167,9 +175,9 @@ extern bool btnstate_left        ;
 extern bool btnstate_middle      ;
 extern bool btnstate_right       ;
 
-extern bool btnclick_left        ;
-extern bool btnclick_middle      ;
-extern bool btnclick_right       ;
+extern bool newevent_leftclick   ;
+extern bool newevent_middleclick ;
+extern bool newevent_rightclick  ;
 
 extern unsigned int mouse_x;
 extern unsigned int mouse_y;

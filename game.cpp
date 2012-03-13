@@ -27,29 +27,32 @@ std::list<HUDElement *> hud_elems;
 
 Player *player = NULL;
 
-unsigned int ww   = 512;
-unsigned int wh   = 512;
-unsigned int pass = 0;
+unsigned int old_ww            ;
+unsigned int old_wh            ;
+unsigned int pass       = 0    ;
+unsigned int ww         = 512  ;
+unsigned int wh         = 512  ;
+bool         fullscreen = false;
 
 unsigned int level = 0;
 
-double aspectratio = 4.0/3.0;
-double fov         =    60.0;
-double znear       =    0.01;
-double zfar        =  1000.0;
-double cam_x       =     0.0;
-double cam_y       =     0.0;
-double cam_z       =     0.0;
-double cam_rotx    =     0.0;
-double cam_roty    =     0.0;
+double aspectratio = 4.0/3.0 ;
+double fov         =    60.0 ;
+double znear       =     0.01;
+double zfar        =  1000.0 ;
+double cam_x       =     0.0 ;
+double cam_y       =     0.0 ;
+double cam_z       =     0.0 ;
+double cam_rotx    =     0.0 ;
+double cam_roty    =     0.0 ;
 
-double retract       = 0;
-double cam_old_x     = 0;
-double cam_old_y     = 0;
-double cam_old_z     = 0;
-double cam_old_rotx  = 0;
-double cam_old_roty  = 0;
-int    cam_old_t     = 0;
+double retract       = 0    ;
+double cam_old_x     = 0    ;
+double cam_old_y     = 0    ;
+double cam_old_z     = 0    ;
+double cam_old_rotx  = 0    ;
+double cam_old_roty  = 0    ;
+int    cam_old_t     = 0    ;
 bool   cam_old_adj   = false;
 
 int key_fwd          =  'w';
@@ -101,9 +104,9 @@ bool btnstate_left         = false;
 bool btnstate_middle       = false;
 bool btnstate_right        = false;
 
-bool btnclick_left         = false;
-bool btnclick_middle       = false;
-bool btnclick_right        = false;
+bool newevent_leftclick    = false;
+bool newevent_middleclick  = false;
+bool newevent_rightclick   = false;
 
 unsigned int mouse_x = 0;
 unsigned int mouse_y = 0;

@@ -1,38 +1,39 @@
 #include <cmath>
 #include <cstdio>
 #include <cstdlib>
-#include <iostream>
-#include <typeinfo>
-#include <vector>
-#include <list>
-
 #include <GL/glut.h>
+#include <iostream>
+#include <list>
 #include <sysexits.h>
 #include <sys/time.h>
+#include <typeinfo>
+#include <vector>
 
 #include <3D/Point.h>
 #include <3D/Quaternion.h>
 #include <SOLID/solid.h>
 
+#include "Behavior.hpp"
+#include "Ent.hpp"
+#include "RuntimeSegment.hpp"
+//#include "Alien.hpp"
 
 #if PEKOMIN_GRAFO
 #       include "Node.hpp" // cosas del grafo // TODO: quitar cuando el grafo lo maneje el parser
 #       include "Tile.hpp"
 #endif
 
-//#include "Alien.hpp"
-#include "Behavior.hpp"
-#include "Ent.hpp"
+#include "HUDElement.hpp"
+#include "Window.hpp"
 #include "FilledWindow.hpp"
+#include "Tab.hpp"
+#include "Tabs.hpp"
+
 #include "game.hpp"
 #include "gl.hpp"
-#include "HUDElement.hpp"
 #include "parse.hpp"
-#include "RuntimeSegment.hpp"
-#include "Tab.hpp"
 #include "Triple.hpp"
 #include "util.hpp"
-#include "Window.hpp"
 
 #define DEBUG_MAIN
 
@@ -43,7 +44,6 @@
 #define COLL_MAX_ITERS 10
 
 #define PEKOMIN_HUD_ELEM_BASE 1024
-#define PEKOMIN_HUD_HIGHLIGHT_SCALE 1.025
 
 using namespace std;
 
@@ -52,9 +52,10 @@ char *game_filename;
 double maxup = 60.0, mindown = -60.0, maxright = 40.0, minleft = -40.0; //default values size of stage
 
 Vector axis = Vector(0, 0, 1);
-Ent *ent;
-HUDElement *hud_elem;
-Odor *odor;
+
+Ent        * ent;
+HUDElement * hud_elem;
+Odor       * odor;
 
 std::list<std::function<void(void)>> yarr; // FIXME: no ser tan pirata
 
@@ -63,21 +64,21 @@ Segment *obstacle;
 #endif
 
 void collide(void *client_data, DtObjectRef obj1, DtObjectRef obj2, const DtCollData *coll_data) {
+#if 0
         auto e1 = reinterpret_cast<Ent *>(obj1),
              e2 = reinterpret_cast<Ent *>(obj2);
         auto n = coll_data->normal;
 
 #ifdef DEBUG_MAIN
-#if 0
         std::cout << "Colisión entre " << e1->name << " y " << e2->name << std::endl;
         std::cout << "Punto 1: (" << coll_data->point1[0] << ", " << coll_data->point1[1] << ", " << coll_data->point1[2] << ")" << std::endl;
         std::cout << "Punto 2: (" << coll_data->point2[0] << ", " << coll_data->point2[1] << ", " << coll_data->point2[2] << ")" << std::endl;
         std::cout << "Normal : (" << coll_data->normal[0] << ", " << coll_data->normal[1] << ", " << coll_data->normal[2] << ")" << std::endl;
 #endif
-#endif
 
         e1->addNormal(Triple( n[0],  n[1],  n[2]));
         e2->addNormal(Triple(-n[0], -n[1], -n[2]));
+#endif
 }
 
 #if PEKOMIN_GRAFO
@@ -170,7 +171,7 @@ void initJuego() {
                 while (!hud_elems.empty()) {
                         hud_elem = hud_elems.back();
                         hud_elems.pop_back();
-                        // TODO: hacer lo mismo pa otros tipos de runtime
+                        // TODO: tener un std::stack de HUDElements creados dinámicamente para borrarlos en orden inverso de creación
                         if ((w = dynamic_cast<Window *>(hud_elem)) != NULL) {
                                 while (!w->children.empty()) {
                                         c = w->children.back();
@@ -209,10 +210,21 @@ void initJuego() {
                         parse(buf);
                 }
 
-                hud_elems.push_back(new FilledWindow("ventanita", 15, 15, 20, 96, 20, 250));
-                hud_elems.back()->pos.z = -1;
+                yarr.clear();
 
-                hud_elems.back()->rightclick = [](HUDElement * self){
+                hud_elems.push_back(
+                        new FilledWindow(
+                                15, 15,
+                                20, 96, 20, 250,
+                                HUDElement::Highlighting::scale_wobble,
+                                nullptr,
+                                "ventanita",
+                                HUDElement::Visibility::visible,
+                                Triple(0, 0, -1)
+                        )
+                );
+
+                hud_elems.back()->set_callback_rightclick([](HUDElement * self) {
                         static bool visible = true;
                         self->pos.y = 100;
                         visible ^= 1;
@@ -220,19 +232,29 @@ void initJuego() {
                         Tab * tabcito;
                         FilledWindow * ventanita;
 
-#define PEKOMIN_SUBVENTANAS_REGISTRO(n, move_x, move_y)     \
-        fw = new FilledWindow(n, 3, 4, 255, 255, 255, 255); \
-        fw->pos.x = 2*(move_x);                             \
-        fw->pos.y = 4*(move_y);                             \
-        t->contents->children.push_back(fw);
+#define PEKOMIN_SUBVENTANAS_REGISTRO(name, move_x, move_y)      \
+        t->children.push_back(                                  \
+                new FilledWindow(                               \
+                        3, 4,                                   \
+                        255, 255, 255, 255,                     \
+                        HUDElement::Highlighting::scale_wobble, \
+                        t,                                      \
+                        name,                                   \
+                        HUDElement::Visibility::visible,        \
+                        Triple(                                 \
+                                2*(move_x),                     \
+                                4*(move_y),                     \
+                                -0.01                           \
+                        )                                       \
+                )                                               \
+        );
 
-#define PEKOMIN_TAB_REGISTRO_NORMAL(n)                                                         \
-        [](Tab * t) {                                                                          \
-                FilledWindow * fw;                                                             \
-                PEKOMIN_SUBVENTANAS_REGISTRO("izquierda abajo  tab de registro " #n , -1, -1); \
-                PEKOMIN_SUBVENTANAS_REGISTRO("derecha   abajo  tab de registro " #n ,  1, -1); \
-                PEKOMIN_SUBVENTANAS_REGISTRO("izquierda arriba tab de registro " #n , -1,  1); \
-                PEKOMIN_SUBVENTANAS_REGISTRO("derecha   arriba tab de registro " #n ,  1,  1); \
+#define PEKOMIN_TAB_REGISTRO_NORMAL(name)                                                               \
+        [](Tab * t) {                                                                                   \
+                PEKOMIN_SUBVENTANAS_REGISTRO("botón izquierda abajo  tab de registro " #name , -1, -1); \
+                PEKOMIN_SUBVENTANAS_REGISTRO("botón derecha   abajo  tab de registro " #name ,  1, -1); \
+                PEKOMIN_SUBVENTANAS_REGISTRO("botón izquierda arriba tab de registro " #name , -1,  1); \
+                PEKOMIN_SUBVENTANAS_REGISTRO("botón derecha   arriba tab de registro " #name ,  1,  1); \
         }
 
                         std::vector<std::function<void(Tab *)>> tabcito_funcs = {
@@ -245,39 +267,59 @@ void initJuego() {
 #undef PEKOMIN_SUBVENTANAS_REGISTRO
 
                                 [](Tab * t) {
-                                        FilledWindow * fw;
                                         for (int i = 0; i < 6; ++i) {
-                                                fw = new FilledWindow(std::string("campo del tab de perfil") + std::string(i, 'I'), 3, 1, 255, 255, 255, 255);
-                                                fw->pos.x = 1.5;
-                                                fw->pos.y = 5 - 2*i;
-                                                t->contents->children.push_back(fw);
+                                                t->children.push_back(
+                                                        new FilledWindow(
+                                                                3, 1,
+                                                                255, 255, 255, 255,
+                                                                HUDElement::Highlighting::scale_wobble,
+                                                                t,
+                                                                std::string("campo del tab de perfil ") + std::string(i, 'I'),
+                                                                HUDElement::Visibility::visible,
+                                                                Triple(1.5, 5 - 2*i, -0.01)
+                                                        )
+                                                );
                                         }
                                 }
                         };
 
-#define PEKOMIN_TABCITO_REGISTRO(n, i, f, d, br, bg, bb)                                                     \
-        tabcito = new Tab("tabcito de registro " #n , 8, 15, 1, (i), (f), 0, 96, 0, 200);                    \
-        ventanita = new FilledWindow("botón del tabcito de registro " #n , 0.8, 0.8, (br), (bg), (bb), 255); \
-        ventanita->pos.z = -0.05;                                                                            \
-        tabcito->header->children.push_back(ventanita);                                                      \
-        tabcito_funcs[(n)](tabcito);                                                                         \
-        yarr.push_back([tabcito]() {                                                                         \
-                tabcito->pos.z = (d);                                                                        \
-                tabcito->set_opacity(200);                                                                   \
-        });                                                                                                  \
-        tabcito->pos.x = 5;                                                                                  \
-        tabcito->pos.z = (d);                                                                                \
-        tabcito->set_leftclick([](HUDElement * self) {                                                       \
-                static bool visible = false;                                                                 \
-                                                                                                             \
-                for (auto it = yarr.begin(); it != yarr.end(); ++it) {                                       \
-                        (*it)();                                                                             \
-                }                                                                                            \
-                                                                                                             \
-                self->pos.z = 0;                                                                             \
-                dynamic_cast<Tab *>(self)->set_opacity(255);                                                 \
-                visible ^= 1;                                                                                \
-        });                                                                                                  \
+#define PEKOMIN_TABCITO_REGISTRO(n, i, f, d, br, bg, bb)               \
+        tabcito = new Tab(                                             \
+                8, 15,                                                 \
+                1, (i), (f),                                           \
+                0, 96, 0, 200,                                         \
+                HUDElement::Highlighting::none,                        \
+                nullptr,                                               \
+                "tabcito de registro " #n,                             \
+                HUDElement::Visibility::visible,                       \
+                Triple(5, 0, (d))                                      \
+        );                                                             \
+        ventanita = new FilledWindow(                                  \
+                0.8, 0.8,                                              \
+                (br), (bg), (bb), 255,                                 \
+                HUDElement::Highlighting::scale_wobble,                \
+                tabcito->header,                                       \
+                "botón del tabcito de registro " #n ,                  \
+                HUDElement::Visibility::visible,                       \
+                Triple(0, 0, -0.05)                                    \
+        );                                                             \
+        tabcito->header->children.push_back(ventanita);                \
+        tabcito_funcs[(n)](tabcito);                                   \
+        yarr.push_back([tabcito]() {                                   \
+                tabcito->pos.z = (d);                                  \
+                tabcito->set_opacity(200);                             \
+        });                                                            \
+        tabcito->set_callback_leftclick([](HUDElement * self) {        \
+                static bool visible = false;                           \
+                                                                       \
+                for (auto it = yarr.begin(); it != yarr.end(); ++it) { \
+                        (*it)();                                       \
+                }                                                      \
+                                                                       \
+                self->pos.z = 0.05;                                    \
+                dynamic_cast<Tab *>(self)->set_opacity(255);           \
+                visible ^= 1;                                          \
+        });                                                            \
         hud_elems.push_back(tabcito);
 
 #define PEKOMIN_SEP 0.01
@@ -285,30 +327,38 @@ void initJuego() {
                         PEKOMIN_TABCITO_REGISTRO(1, 0.2 + PEKOMIN_SEP, 0.4 - PEKOMIN_SEP, 0.2,   0, 255,   0); // Verde
                         PEKOMIN_TABCITO_REGISTRO(2, 0.4 + PEKOMIN_SEP, 0.6 - PEKOMIN_SEP, 0.3,   0,   0, 255); // Azul
                         PEKOMIN_TABCITO_REGISTRO(3, 0.6 + PEKOMIN_SEP, 0.8 - PEKOMIN_SEP, 0.4,   0, 255, 255); // Amarillo
-                        PEKOMIN_TABCITO_REGISTRO(4, 0.8 + PEKOMIN_SEP, 1.0              , 0.5, 255,   0, 255); // ?
+                        PEKOMIN_TABCITO_REGISTRO(4, 0.8 + PEKOMIN_SEP, 1.0              , 0.5, 255,   0, 255); // Magenta
 #undef PEKOMIN_SEP
 #undef PEKOMIN_TABCITO_REGISTRO
 
-                };
+                });
 
-                hud_elems.back()->leftclick = [](HUDElement * self){
+                hud_elems.back()->set_callback_leftclick([](HUDElement * self) {
                         static bool visible = true;
                         self->pos.y = 100;
                         visible ^= 1;
 
                         Tab * tabcito;
 
-#define PEKOMIN_TABCITO_NORMAL(n, i, f, d)                                         \
-        tabcito = new Tab("tabcito normal " n, 20, 6, 3, (i), (f), 0, 96, 0, 200); \
-        tabcito->pos.y = -13;                                                      \
-        tabcito->pos.z = (d);                                                      \
-        tabcito->set_leftclick([](HUDElement * self) {                             \
-                static bool visible = false;                                       \
-                self->pos.y = (visible ? -13 : -8);                                \
-                self->pos.z = (visible ? (d) :  0);                                \
-                dynamic_cast<Tab *>(self)->set_opacity(visible ? 200 : 255);       \
-                visible ^= 1;                                                      \
-        });                                                                        \
+#define PEKOMIN_TABCITO_NORMAL(n, i, f, d)                                   \
+        tabcito = new Tab(                                                   \
+                20, 6,                                                       \
+                3, (i), (f),                                                 \
+                0, 96, 0, 200,                                               \
+                HUDElement::Highlighting::none,                              \
+                nullptr,                                                     \
+                "tabcito normal " n,                                         \
+                HUDElement::Visibility::visible                              \
+        );                                                                   \
+        tabcito->pos.y = -13;                                                \
+        tabcito->pos.z = (d);                                                \
+        tabcito->header->set_callback_leftclick([](HUDElement * self) {      \
+                static bool visible = false;                                 \
+                self->pos.y = (visible ? -13 : -8);                          \
+                self->pos.z = (visible ? (d) :  0);                          \
+                dynamic_cast<Tab *>(self)->set_opacity(visible ? 200 : 255); \
+                visible ^= 1;                                                \
+        });                                                                  \
         hud_elems.push_back(tabcito);
 
 #define PEKOMIN_SEP 0.005
@@ -318,7 +368,28 @@ void initJuego() {
 #undef PEKOMIN_SEP
 #undef PEKOMIN_TABCITO_NORMAL
 
-                };
+                });
+
+                {
+                        Tabs * tabcitos =
+                                new Tabs(
+                                        8, 4,
+                                        1,
+                                        5,
+                                        120, 0, 120, 255,
+                                        HUDElement::Highlighting::scale_wobble,
+                                        nullptr,
+                                        "prueba",
+                                        HUDElement::Visibility::visible
+                                );
+
+                        tabcitos->headers[0]->set_color(255,   0,   0); tabcitos->pages[0]->set_color(255,   0,   0);
+                        tabcitos->headers[1]->set_color(  0, 255,   0); tabcitos->pages[1]->set_color(  0, 255,   0);
+                        tabcitos->headers[2]->set_color(  0,   0, 255); tabcitos->pages[2]->set_color(  0,   0, 255);
+                        tabcitos->headers[3]->set_color(255,   0, 255); tabcitos->pages[3]->set_color(255,   0, 255);
+                        tabcitos->headers[4]->set_color(  0, 255, 255); tabcitos->pages[4]->set_color(  0, 255, 255);
+                        hud_elems.push_back(tabcitos);
+                }
 
 #if PEKOMIN_GRAFO
                 //Limitar mapa mundo
@@ -471,42 +542,49 @@ void initJuego() {
 void drawHUD(GLuint active_hud_elem) {
 //      GLuint hud_elem_n = PEKOMIN_HUD_ELEM_BASE;
 
-        for (auto it = hud_elems.begin(); it != hud_elems.end(); ++it) {
-                if ((*it)->visible) {
-                        glPushMatrix();
-                                glTranslatef((*it)->pos.x, (*it)->pos.y, (*it)->pos.z);
-                                glRotatef(((*it)->ang * 180.0)/M_PI, 0, 0, 1);
-                                if ((*it)->identify(active_hud_elem)) {
-                                        glScalef(PEKOMIN_HUD_HIGHLIGHT_SCALE, PEKOMIN_HUD_HIGHLIGHT_SCALE, PEKOMIN_HUD_HIGHLIGHT_SCALE);
-                                }
-                                (*it)->draw();
-                        glPopMatrix();
+        std::for_each(
+                hud_elems.begin(),
+                hud_elems.end(),
+                [active_hud_elem](HUDElement * it) {
+                        if (it->visible != HUDElement::Visibility::hidden) {
+                                glPushMatrix();
+                                        glTranslatef(
+                                                it->pos.x,
+                                                it->pos.y,
+                                                it->pos.z
+                                        );
+                                        glRotatef((it->ang * 180.0)/M_PI, 0, 0, 1);
+                                        it->draw(active_hud_elem);
+                                glPopMatrix();
+                        }
                 }
-        }
+        );
 
 #if 0
         // Score
         for (i = 0; i < DIGITS_SCORE; i++) {
-                glLoadName(hud_elem_n);
-                glPushMatrix();
-                        glTranslatef(0, 9.2, 0);
-                        glScalef(0.1, 0.1, 0.1);
-                        glTranslatef((((DIGITS_SCORE + 1) / 2.0) - i - 0.5) * (W_SEGMENT + 4.0 * W_SEGMENT_T), 0, 0);
-                        if (active_hud_elem == hud_elem_n) glScalef(PEKOMIN_HUD_HIGHLIGHT_SCALE, PEKOMIN_HUD_HIGHLIGHT_SCALE, PEKOMIN_HUD_HIGHLIGHT_SCALE);
-                        glCallList(segs[(std::abs(pts) / power(10, i)) % 10]);
-                glPopMatrix();
+                glPushName(hud_elem_n);
+                        glPushMatrix();
+                                glTranslatef(0, 9.2, 0);
+                                glScalef(0.1, 0.1, 0.1);
+                                glTranslatef((((DIGITS_SCORE + 1) / 2.0) - i - 0.5) * (W_SEGMENT + 4.0 * W_SEGMENT_T), 0, 0);
+                                if (active_hud_elem == hud_elem_n) glScalef(PEKOMIN_HUD_HIGHLIGHT_SCALE, PEKOMIN_HUD_HIGHLIGHT_SCALE, PEKOMIN_HUD_HIGHLIGHT_SCALE);
+                                glCallList(segs[(std::abs(pts) / power(10, i)) % 10]);
+                        glPopMatrix();
+                glPopName();
                 ++hud_elem_n;
         }
 
         // Lives
         for (i = 0; i < lives - 1; i++) {
-                glLoadName(hud_elem_n);
-                glPushMatrix();
-                        glTranslatef(-12.25 + 2.1 * i, 8.5, 0);
-                        glScalef(0.5, 0.5, 0.5);
-                        if (active_hud_elem == hud_elem_n) glScalef(PEKOMIN_HUD_HIGHLIGHT_SCALE, PEKOMIN_HUD_HIGHLIGHT_SCALE, PEKOMIN_HUD_HIGHLIGHT_SCALE);
-                        glCallList(tanque);
-                glPopMatrix();
+                glPushName(hud_elem_n);
+                        glPushMatrix();
+                                glTranslatef(-12.25 + 2.1 * i, 8.5, 0);
+                                glScalef(0.5, 0.5, 0.5);
+                                if (active_hud_elem == hud_elem_n) glScalef(PEKOMIN_HUD_HIGHLIGHT_SCALE, PEKOMIN_HUD_HIGHLIGHT_SCALE, PEKOMIN_HUD_HIGHLIGHT_SCALE);
+                                glCallList(tanque);
+                        glPopMatrix();
+                glPopName();
                 ++hud_elem_n;
         }
 
@@ -514,14 +592,15 @@ void drawHUD(GLuint active_hud_elem) {
         //glBindTexture(GL_TEXTURE_2D, tbrushmetal);
         //glEnable(GL_TEXTURE_2D);
         for (i = 0; i < balas; i++) {
-                glLoadName(hud_elem_n);
-                glPushMatrix();
-                        glTranslatef(-12.25 + 0.8 * i, 8.5, 0);
-                        glScalef(1, 2, 1);
-                        glColor4ub(255, 255, 255, 255);
-                        if (active_hud_elem == hud_elem_n) glScalef(PEKOMIN_HUD_HIGHLIGHT_SCALE, PEKOMIN_HUD_HIGHLIGHT_SCALE, PEKOMIN_HUD_HIGHLIGHT_SCALE);
-                        glCallList(bala);
-                glPopMatrix();
+                glPushName(hud_elem_n);
+                        glPushMatrix();
+                                glTranslatef(-12.25 + 0.8 * i, 8.5, 0);
+                                glScalef(1, 2, 1);
+                                glColor4ub(255, 255, 255, 255);
+                                if (active_hud_elem == hud_elem_n) glScalef(PEKOMIN_HUD_HIGHLIGHT_SCALE, PEKOMIN_HUD_HIGHLIGHT_SCALE, PEKOMIN_HUD_HIGHLIGHT_SCALE);
+                                glCallList(bala);
+                        glPopMatrix();
+                glPopName();
                 ++hud_elem_n;
         }
         //glDisable(GL_TEXTURE_2D);
@@ -909,14 +988,13 @@ void display() {
 
 
 
-                GLuint sbuf[PEKOMIN_SELECT_BUFFER_SIZE] = {0};
                 GLint hits, view[4];
 
                 glSelectBuffer(PEKOMIN_SELECT_BUFFER_SIZE, sbuf);
                 glGetIntegerv(GL_VIEWPORT, view);
                 glRenderMode(GL_SELECT);
                 glInitNames();
-                glPushName(0);
+//              glPushName(0);
 
                 glMatrixMode(GL_PROJECTION);
                 glLoadIdentity();
@@ -949,26 +1027,59 @@ void display() {
 #endif
 #endif
 
-                long int active_hud_elem = -1;
+                long int active_hud_elem       = -1;
+                GLuint   active_hud_elem_names = -1;
+                GLuint * active_hud_elem_stack = nullptr;
 
                 if (hits > 0) {
-                        GLuint active_hud_elem_depth = sbuf[1];
-                        active_hud_elem = sbuf[3];
-                        for (i = 1; static_cast<signed int>(i) < hits; ++i) {
-                                if (active_hud_elem_depth > sbuf[4*i + 1]) {
-                                        active_hud_elem_depth = sbuf[4*i + 1];
-                                        active_hud_elem       = sbuf[4*i + 3];
+                        GLuint * base = sbuf;
+                        GLuint active_hud_elem_depth;
+
+                        active_hud_elem_names =  base[0];
+                        active_hud_elem_depth =  base[1];
+                        active_hud_elem_stack = &base[3];
+
+                        active_hud_elem = base[3];
+                        for (int i = 0; i < hits; ++i, base += base[0] + 3) { // FIXME: TODO: ANTES COMENZABA EN UNO, NO EN CERO!!!! i = 1
+                                if (
+                                        base[0] > 0
+                                        && (
+                                                active_hud_elem_names == 0
+                                                || active_hud_elem_depth > base[1]
+                                        )
+                                ) {
+                                        active_hud_elem_names =  base[0];
+                                        active_hud_elem_depth =  base[1];
+                                        active_hud_elem_stack = &base[3];
+
+                                        active_hud_elem       =  base[3];
                                 }
 #ifdef DEBUG_MAIN
-                                std::cout
-                                        << "number == " << sbuf[i * 4    ]
-                                        << ", zmin == " << sbuf[i * 4 + 1]
-                                        << ", zmax == " << sbuf[i * 4 + 2]
-                                        << ", name == " << sbuf[i * 4 + 3]
+                                std::cerr
+                                        << "i      == " << i       << "\n"
+                                        << "number == " << base[0] << "\n"
+                                        << "zmin   == " << base[1] << "\n"
+                                        << "zmax   == " << base[2] << "\n"
+                                        << "name   == " << base[3]
                                         << std::endl;
 #endif
                         }
-                        std::cout << "active_hud_elem_depth == " << active_hud_elem_depth << std::endl;
+
+#ifdef DEBUG_MAIN
+                        std::cerr
+                                << "active_hud_elem_names == " << active_hud_elem_names << "\n"
+                                << "active_hud_elem_depth == " << active_hud_elem_depth
+                                << std::endl;
+
+                        if (active_hud_elem_names == 0) {
+                                std::cerr << "No active HUD element has names!" << std::cerr;
+                        }
+#endif
+
+                        active_hud_elem =
+                                active_hud_elem_names
+                                ? active_hud_elem_stack[active_hud_elem_names - 1]
+                                : -1;
                 }
 
                 glMatrixMode(GL_MODELVIEW);
@@ -980,20 +1091,27 @@ void display() {
 #endif
 #endif
 
-#define PEKOMIN_BTN_CALL_CALLBACK(button)                                                          \
-        if (btnclick_ ## button) {                                                                 \
-                for (auto it = hud_elems.begin(); it != hud_elems.end(); ++it) {                   \
-                        if ((*it)->identify(active_hud_elem)) {                                    \
-                                if ((*it)-> button ## click != NULL) (*it)-> button ## click(*it); \
-                        }                                                                          \
-                }                                                                                  \
-                                                                                                   \
-                btnclick_ ## button = false;                                                       \
+#define PEKOMIN_CALL_CALLBACK(event)                                            \
+        if (newevent_##event) {                                                 \
+                std::for_each(                                                  \
+                        hud_elems.begin(),                                      \
+                        hud_elems.end(),                                        \
+                        [active_hud_elem](HUDElement * it) {                    \
+                                HUDElement * p = it->contains(active_hud_elem); \
+                                while (p != nullptr) {                          \
+                                        if (p->callback_##event != nullptr) {   \
+                                                p->callback_##event(p);         \
+                                                break;                          \
+                                        }                                       \
+                                        p = p->parent;                          \
+                                }                                               \
+                        }                                                       \
+                );                                                              \
+                                                                                \
+                newevent_##event = false;                                       \
         }
-
-                PEKOMIN_BTN_CALL_CALLBACK(left  );
-                PEKOMIN_BTN_CALL_CALLBACK(middle);
-                PEKOMIN_BTN_CALL_CALLBACK(right );
+                PEKOMIN_EVENTS(PEKOMIN_CALL_CALLBACK)
+#undef PEKOMIN_BTN_CALL_CALLBACK
 
                 drawHUD(active_hud_elem);
         }
@@ -1031,11 +1149,21 @@ void reshape(int w, int h){
 }
 
 void skeydown(int key, int mx, int my) {
-        if      (key == GLUT_KEY_LEFT)  keystate_l = true;
+        if      (key == GLUT_KEY_LEFT ) keystate_l = true;
         else if (key == GLUT_KEY_RIGHT) keystate_r = true;
-        else if (key == GLUT_KEY_UP)    keystate_u = true;
-        else if (key == GLUT_KEY_DOWN)  keystate_d = true;
-        else if (key == GLUT_KEY_F2)    initJuego();
+        else if (key == GLUT_KEY_UP   ) keystate_u = true;
+        else if (key == GLUT_KEY_DOWN ) keystate_d = true;
+        else if (key == GLUT_KEY_F2   ) initJuego();
+
+        else if (key == GLUT_KEY_F11) {
+                if (fullscreen) glutReshapeWindow(old_ww, old_wh);
+                else {
+                        old_ww = ww;
+                        old_wh = wh;
+                        glutFullScreen();
+                }
+                fullscreen ^= 1;
+        }
 }
 
 void skeyup(int key, int mx, int my) {
@@ -1100,6 +1228,7 @@ void keydown(unsigned char key, int mx, int my) {
                 if ((cam += 1) >= N_CAMS) cam = 0;
 #ifdef DEBUG_MAIN
                 switch (cam) {
+#if 0
                         case CAM_STATIC_OVERHEAD:
                                 printf("cam is now static overhead\n");
                                 break;
@@ -1109,6 +1238,7 @@ void keydown(unsigned char key, int mx, int my) {
                         case CAM_FPS:
                                 printf("cam is now fps\n");
                                 break;
+#endif
                         case CAM_TPS:
                                 printf("cam is now tps\n");
                                 break;
@@ -1137,9 +1267,9 @@ void mouseclick(int button, int state, int x, int y) {
         mousemove(x,y);
 
         switch (button) {
-                case GLUT_LEFT_BUTTON  : btnstate_left   = (state == GLUT_DOWN); if (state == GLUT_DOWN) btnclick_left   = true; break;
-                case GLUT_MIDDLE_BUTTON: btnstate_middle = (state == GLUT_DOWN); if (state == GLUT_DOWN) btnclick_middle = true; break;
-                case GLUT_RIGHT_BUTTON : btnstate_right  = (state == GLUT_DOWN); if (state == GLUT_DOWN) btnclick_right  = true; break;
+                case GLUT_LEFT_BUTTON  : btnstate_left   = (state == GLUT_DOWN); if (state == GLUT_DOWN) newevent_leftclick   = true; break;
+                case GLUT_MIDDLE_BUTTON: btnstate_middle = (state == GLUT_DOWN); if (state == GLUT_DOWN) newevent_middleclick = true; break;
+                case GLUT_RIGHT_BUTTON : btnstate_right  = (state == GLUT_DOWN); if (state == GLUT_DOWN) newevent_rightclick  = true; break;
         }
 }
 
@@ -1209,9 +1339,14 @@ void juego(int v) {
 #endif
 #endif
 
-                for (auto it = ents.begin(); it != ents.end(); ++it) {
-                        (*it)->steer(new_time, delta);
-                }
+                std::for_each(
+                        ents.begin(),
+                        ents.end(),
+                        [](Ent * e) {
+                                e->steer(new_time, delta);
+                        }
+                );
+
                 for (auto it = ents.begin(); it != ents.end();) {
                         ent = *it;
                         if (!ent->dead) {
@@ -1238,21 +1373,41 @@ void juego(int v) {
                                 it = ents.erase(it);
                         }
                 }
-                for (auto it = ents.begin(); it != ents.end(); ++it) {
-                        (*it)->update();
-                }
-                for (auto it = ents.begin(); it != ents.end(); ++it) {
-                        ent = *it;
-                        dtSelectObject(ent);
-                        dtLoadIdentity();
-                        auto q = Quaternion(axis, ent->ang);
-                        dtRotate(q[0], q[1], q[2], q[3]);
-                        dtTranslate(ent->pos.x, ent->pos.y, ent->pos.z);
-                }
-                ents.insert(ents.end(), new_ents.begin(), new_ents.end());
+
+                std::for_each(
+                        ents.begin(),
+                        ents.end(),
+                        [](Ent * e) {
+                                e->update();
+                        }
+                );
+
+                std::for_each(
+                        ents.begin(),
+                        ents.end(),
+                        [](Ent * e) {
+                                dtSelectObject(e);
+                                dtLoadIdentity();
+                                auto q = Quaternion(axis, e->ang);
+                                dtRotate(q[0], q[1], q[2], q[3]);
+                                dtTranslate(e->pos.x, e->pos.y, e->pos.z);
+                        }
+                );
+
+                ents.insert(
+                        ents.end(),
+                        new_ents.begin(),
+                        new_ents.end()
+                );
                 new_ents.clear();
-                odors.insert(odors.end(), new_odors.begin(), new_odors.end());
+
+                odors.insert(
+                        odors.end(),
+                        new_odors.begin(),
+                        new_odors.end()
+                );
                 new_odors.clear();
+
                 for (j = 0; j < COLL_MAX_ITERS; ++j) {
 #ifdef DEBUG_MAIN
 //                      if (j > 0) std::cout << "Collision cycle iteration " << j << std::endl;
@@ -1410,6 +1565,7 @@ void juego(int v) {
         }
 
         switch (cam) {
+#if 0
                 case CAM_STATIC_OVERHEAD:
                         cam_x = 0;
                         cam_y = H_OVERHEAD;
@@ -1462,6 +1618,7 @@ void juego(int v) {
                                 cam_rotx = (-180.0*atan(cam_vy/sqrt(cam_vx*cam_vx + cam_vz*cam_vz)))/M_PI;
                         }
                         break;
+#endif
 
                 case CAM_TPS:
                         cam_x = player->pos.y - 12 * sin(player->ang);
@@ -1616,12 +1773,14 @@ void initGL() {
 int main(int argc, char **argv) {
         glutInit(&argc, argv);
         glutInitWindowSize(ww, wh);
-        glutInitDisplayMode(GLUT_RGBA      |
-                            GLUT_DOUBLE    |
-                            GLUT_ALPHA     |
-                            GLUT_DEPTH     |
-                            GLUT_LUMINANCE |
-                            GLUT_MULTISAMPLE);
+        glutInitDisplayMode(
+                GLUT_RGBA
+                | GLUT_DOUBLE
+                | GLUT_ALPHA
+                | GLUT_DEPTH
+                | GLUT_LUMINANCE
+                | GLUT_MULTISAMPLE
+        );
         glutCreateWindow("Tamagotchi");
         glutIgnoreKeyRepeat(1);
 

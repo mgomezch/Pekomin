@@ -1,4 +1,3 @@
-#include <cmath>
 #include <GL/gl.h>
 
 #include "HUDElement.hpp"
@@ -13,21 +12,28 @@
 GLuint next_select_uid = 1;
 
 HUDElement::HUDElement(
-        std::string name,
-        Triple pos,
-        double ang,
-        bool visible
+        HUDElement::Highlighting p_highlighting,
+        HUDElement *             p_parent      ,
+        std::string              p_name        ,
+        HUDElement::Visibility   p_visible     ,
+        Triple                   p_pos         ,
+        double                   p_ang
 ):
-        name(name),
-        pos(pos),
-        ang(ang),
-//      dead(false),
-        new_pos(pos),
-        new_ang(ang),
-        leftclick(leftclick),
-        middleclick(middleclick),
-        rightclick(rightclick),
-        visible(visible),
+        highlighting (p_highlighting),
+        parent       (p_parent      ),
+        name         (p_name        ),
+        visible      (p_visible     ),
+        pos          (p_pos         ),
+        ang          (p_ang         ),
+
+//      dead         (false         ),
+        new_pos      (p_pos         ),
+        new_ang      (p_ang         ),
+
+#define PEKOMIN_INITIALIZE_CALLBACK_MEMBER(event) callback_##event(nullptr),
+        PEKOMIN_EVENTS(PEKOMIN_INITIALIZE_CALLBACK_MEMBER)
+#undef PEKOMIN_INITIALIZE_CALLBACK_MEMBER
+
         select_uid(next_select_uid++)
 {}
 
@@ -38,14 +44,18 @@ void HUDElement::update() {
         this->new_ang = this->ang;
 }
 
-const Triple HUDElement::orientation() const {
-        return Triple(cos(ang), sin(ang), 0);
+#define PEKOMIN_DEFINE_CALLBACK_SETTER(event)                             \
+        HUDElement & HUDElement::set_callback_##event(HUDCallback_t cb) { \
+                callback_##event = cb;                                    \
+                return *this;                                             \
+        }
+PEKOMIN_EVENTS(PEKOMIN_DEFINE_CALLBACK_SETTER)
+#undef PEKOMIN_DEFINE_CALLBACK_SETTER
+
+HUDElement * HUDElement::is(GLuint uid) const {
+        return uid == select_uid ? const_cast<HUDElement *>(this) : nullptr;
 }
 
-void HUDElement::set_leftclick  (std::function<void(HUDElement *)> callback) { leftclick   = callback; }
-void HUDElement::set_middleclick(std::function<void(HUDElement *)> callback) { middleclick = callback; }
-void HUDElement::set_rightclick (std::function<void(HUDElement *)> callback) { rightclick  = callback; }
-
-bool HUDElement::identify(GLuint uid) {
-        return uid == select_uid;
+HUDElement * HUDElement::contains(GLuint uid) const {
+        return is(uid);
 }
