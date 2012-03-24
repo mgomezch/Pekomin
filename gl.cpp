@@ -53,13 +53,15 @@ int ss[12][7] = {
 
 int segs[12];
 
-GLubyte *tstars_img  = NULL,
-        *tdesert_img = NULL,
-        *tcielo_img  = NULL;
+GLubyte *tstars_img   = NULL,
+        *tdesert_img  = NULL,
+        *tcielo_img   = NULL,
+        *taceptar_img = NULL;
 
-GLuint   tstars  = -1,
-         tdesert = -1,
-         tcielo  = -1;
+GLuint   tstars    = -1,
+         tdesert   = -1,
+         tcielo    = -1,
+         taceptar  = -1;
 
 GLuint   tblur = -1;
 
@@ -174,6 +176,15 @@ void buildLists() {
         glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         loadPNG("png/cielo.png", &tw, &th, &ta, &tcielo_img);
         glTexImage2D(GL_TEXTURE_2D, 0, ta ? 4 : 3, tw, th, 0, ta ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, tcielo_img);
+
+        glGenTextures(1, &taceptar);
+        glBindTexture(GL_TEXTURE_2D, taceptar);
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        loadPNG("tamagotchi_icons/mantenimiento/aceptar.png", &tw, &th, &ta, &taceptar_img);
+        glTexImage2D(GL_TEXTURE_2D, 0, ta ? 4 : 3, tw, th, 0, ta ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, taceptar_img);
 
         if ((cuadrado = glGenLists(N_LISTS + 13)) == 0) {
                 fprintf(stderr, "error: glGenLists(%d) == 0\n", N_LISTS + 13);

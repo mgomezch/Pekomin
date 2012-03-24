@@ -81,9 +81,8 @@ void Image::draw(GLuint active_hud_elem) const {
                         glScalef(width, height, 1);
 
                         glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
-                        glBindTexture(GL_TEXTURE_2D, tcielo);
+                        glBindTexture(GL_TEXTURE_2D, taceptar);
                         glEnable(GL_TEXTURE_2D);
-                        glColor4ub(255, 255, 255, opacity);
                         glCallList(cuadrado_simple);
                         glDisable(GL_TEXTURE_2D);
                 glPopMatrix();

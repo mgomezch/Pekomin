@@ -32,7 +32,7 @@ Tabs::Tabs(
         GLubyte                  p_g             ,
         GLubyte                  p_b             ,
         GLubyte                  p_a             ,
-        Autohide                 p_autohide      ,
+        Hideable                 p_hideable      ,
         HUDElement::Highlighting p_highlighting  ,
         HUDElement *             p_parent        ,
         std::string              p_name          ,
@@ -53,7 +53,7 @@ Tabs::Tabs(
         header_height (p_header_height ),
         raise_callback(p_raise_callback),
         lower_callback(p_lower_callback),
-        autohide      (p_autohide      ),
+        hideable      (p_hideable      ),
         active_page   (-1              )
 {
         FilledWindow * h;
@@ -84,7 +84,7 @@ Tabs::Tabs(
                                 if (lower_callback && active_page >= 0) lower_callback(this);
 
                                 if (active_page != i) active_page = i;
-                                else if (autohide == Autohide::yes) active_page = -1;
+                                else if (hideable == Hideable::yes) active_page = -1;
 
                                 if (raise_callback && active_page >= 0) raise_callback(this);
                         }

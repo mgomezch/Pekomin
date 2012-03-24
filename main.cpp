@@ -24,15 +24,10 @@
 #endif
 
 #include "HUDElement.hpp"
-#include "Window.hpp"
-#include "FilledWindow.hpp"
-#include "Tabs.hpp"
-#include "Tab.hpp"
-#include "Label.hpp"
-#include "Image.hpp"
 
 #include "game.hpp"
 #include "gl.hpp"
+#include "hud.hpp"
 #include "parse.hpp"
 #include "Triple.hpp"
 #include "util.hpp"
@@ -51,18 +46,15 @@ using namespace std;
 
 char *game_filename;
 
-double maxup = 60.0, mindown = -60.0, maxright = 40.0, minleft = -40.0; //default values size of stage
-
 Vector axis = Vector(0, 0, 1);
 
 Ent        * ent;
 HUDElement * hud_elem;
 Odor       * odor;
 
-//std::list<std::function<void(void)>> yarr; // FIXME: no ser tan pirata
-
 #if PEKOMIN_GRAFO
 Segment *obstacle;
+double maxup = 60.0, mindown = -60.0, maxright = 40.0, minleft = -40.0; //default values size of stage
 #endif
 
 void collide(void *client_data, DtObjectRef obj1, DtObjectRef obj2, const DtCollData *coll_data) {
@@ -188,6 +180,8 @@ void initJuego() {
 
                 player = NULL;
 
+                make_hud();
+
                 {
                         char buf[BUFSIZE];
                         int pos = 0;
@@ -211,306 +205,6 @@ void initJuego() {
                         while (!feof(file)) pos += fread(&buf + pos, sizeof(char), BUFSIZE - pos, file);
                         buf[pos] = '\0';
                         parse(buf);
-                }
-
-#if 0
-                yarr.clear();
-
-                hud_elems.push_back(
-                        new FilledWindow(
-                                15, 15,
-                                20, 96, 20, 250,
-                                HUDElement::Highlighting::scale_wobble,
-                                nullptr,
-                                "ventanita",
-                                HUDElement::Visibility::visible,
-                                Triple(0, 0, -1)
-                        )
-                );
-
-                hud_elems.back()->set_callback_rightclick([](HUDElement * self) {
-                        static bool visible = true;
-                        self->pos.y = 100;
-                        visible ^= 1;
-
-                        Tab * tabcito;
-                        FilledWindow * ventanita;
-
-#define PEKOMIN_SUBVENTANAS_REGISTRO(name, move_x, move_y)      \
-        t->children.push_back(                                  \
-                new FilledWindow(                               \
-                        3, 4,                                   \
-                        255, 255, 255, 255,                     \
-                        HUDElement::Highlighting::scale_wobble, \
-                        t,                                      \
-                        name,                                   \
-                        HUDElement::Visibility::visible,        \
-                        Triple(                                 \
-                                2*(move_x),                     \
-                                4*(move_y),                     \
-                                -0.01                           \
-                        )                                       \
-                )                                               \
-        );
-
-#define PEKOMIN_TAB_REGISTRO_NORMAL(name)                                                               \
-        [](Tab * t) {                                                                                   \
-                PEKOMIN_SUBVENTANAS_REGISTRO("botón izquierda abajo  tab de registro " #name , -1, -1); \
-                PEKOMIN_SUBVENTANAS_REGISTRO("botón derecha   abajo  tab de registro " #name ,  1, -1); \
-                PEKOMIN_SUBVENTANAS_REGISTRO("botón izquierda arriba tab de registro " #name , -1,  1); \
-                PEKOMIN_SUBVENTANAS_REGISTRO("botón derecha   arriba tab de registro " #name ,  1,  1); \
-        }
-
-                        std::vector<std::function<void(Tab *)>> tabcito_funcs = {
-                                PEKOMIN_TAB_REGISTRO_NORMAL(1),
-                                PEKOMIN_TAB_REGISTRO_NORMAL(2),
-                                PEKOMIN_TAB_REGISTRO_NORMAL(3),
-                                PEKOMIN_TAB_REGISTRO_NORMAL(4),
-
-#undef PEKOMIN_TAB_REGISTRO_NORMAL
-#undef PEKOMIN_SUBVENTANAS_REGISTRO
-
-                                [](Tab * t) {
-                                        for (int i = 0; i < 6; ++i) {
-                                                t->children.push_back(
-                                                        new FilledWindow(
-                                                                3, 1,
-                                                                255, 255, 255, 255,
-                                                                HUDElement::Highlighting::scale_wobble,
-                                                                t,
-                                                                std::string("campo del tab de perfil ") + std::string(i, 'I'),
-                                                                HUDElement::Visibility::visible,
-                                                                Triple(1.5, 5 - 2*i, -0.01)
-                                                        )
-                                                );
-                                        }
-                                }
-                        };
-
-#define PEKOMIN_TABCITO_REGISTRO(n, i, f, d, br, bg, bb)               \
-        tabcito = new Tab(                                             \
-                8, 15,                                                 \
-                1, (i), (f),                                           \
-                0, 96, 0, 200,                                         \
-                HUDElement::Highlighting::none,                        \
-                nullptr,                                               \
-                "tabcito de registro " #n,                             \
-                HUDElement::Visibility::visible,                       \
-                Triple(5, 0, (d))                                      \
-        );                                                             \
-        ventanita = new FilledWindow(                                  \
-                0.8, 0.8,                                              \
-                (br), (bg), (bb), 255,                                 \
-                HUDElement::Highlighting::scale_wobble,                \
-                tabcito->header,                                       \
-                "botón del tabcito de registro " #n ,                  \
-                HUDElement::Visibility::visible,                       \
-                Triple(0, 0, -0.05)                                    \
-        );                                                             \
-        tabcito->header->children.push_back(ventanita);                \
-        tabcito_funcs[(n)](tabcito);                                   \
-        yarr.push_back([tabcito]() {                                   \
-                tabcito->pos.z = (d);                                  \
-                tabcito->set_opacity(200);                             \
-        });                                                            \
-        tabcito->set_callback_leftclick([](HUDElement * self) {        \
-                static bool visible = false;                           \
-                                                                       \
-                for (auto it = yarr.begin(); it != yarr.end(); ++it) { \
-                        (*it)();                                       \
-                }                                                      \
-                                                                       \
-                self->pos.z = 0.05;                                    \
-                dynamic_cast<Tab *>(self)->set_opacity(255);           \
-                visible ^= 1;                                          \
-        });                                                            \
-        hud_elems.push_back(tabcito);
-
-#define PEKOMIN_SEP 0.01
-                        PEKOMIN_TABCITO_REGISTRO(0, 0.0              , 0.2 - PEKOMIN_SEP, 0.1, 255,   0,   0); // Rojo
-                        PEKOMIN_TABCITO_REGISTRO(1, 0.2 + PEKOMIN_SEP, 0.4 - PEKOMIN_SEP, 0.2,   0, 255,   0); // Verde
-                        PEKOMIN_TABCITO_REGISTRO(2, 0.4 + PEKOMIN_SEP, 0.6 - PEKOMIN_SEP, 0.3,   0,   0, 255); // Azul
-                        PEKOMIN_TABCITO_REGISTRO(3, 0.6 + PEKOMIN_SEP, 0.8 - PEKOMIN_SEP, 0.4,   0, 255, 255); // Amarillo
-                        PEKOMIN_TABCITO_REGISTRO(4, 0.8 + PEKOMIN_SEP, 1.0              , 0.5, 255,   0, 255); // Magenta
-#undef PEKOMIN_SEP
-#undef PEKOMIN_TABCITO_REGISTRO
-
-                });
-
-                hud_elems.back()->set_callback_leftclick([](HUDElement * self) {
-                        static bool visible = true;
-                        self->pos.y = 100;
-                        visible ^= 1;
-
-                        Tab * tabcito;
-
-#define PEKOMIN_TABCITO_NORMAL(n, i, f, d)                                   \
-        tabcito = new Tab(                                                   \
-                20, 6,                                                       \
-                3, (i), (f),                                                 \
-                0, 96, 0, 200,                                               \
-                HUDElement::Highlighting::none,                              \
-                nullptr,                                                     \
-                "tabcito normal " n,                                         \
-                HUDElement::Visibility::visible                              \
-        );                                                                   \
-        tabcito->pos.y = -13;                                                \
-        tabcito->pos.z = (d);                                                \
-        tabcito->header->set_callback_leftclick([](HUDElement * self) {      \
-                static bool visible = false;                                 \
-                self->pos.y = (visible ? -13 : -8);                          \
-                self->pos.z = (visible ? (d) :  0);                          \
-                dynamic_cast<Tab *>(self)->set_opacity(visible ? 200 : 255); \
-                visible ^= 1;                                                \
-        });                                                                  \
-        hud_elems.push_back(tabcito);
-
-#define PEKOMIN_SEP 0.005
-                        PEKOMIN_TABCITO_NORMAL("izquierdo", 0.00              , 0.25 - PEKOMIN_SEP, 0.1);
-                        PEKOMIN_TABCITO_NORMAL("medio"    , 0.25 + PEKOMIN_SEP, 0.75 - PEKOMIN_SEP, 0.2);
-                        PEKOMIN_TABCITO_NORMAL("derecho"  , 0.75 + PEKOMIN_SEP, 1.00              , 0.3);
-#undef PEKOMIN_SEP
-#undef PEKOMIN_TABCITO_NORMAL
-
-                });
-#endif
-
-                {
-                        Image * img;
-                        Label * l  ;
-                        {
-                                hud_state = HUDState::Inicio;
-                                hud_states.push_back(new std::list<HUDElement *>());
-
-                                FilledWindow * fw = new FilledWindow(
-                                        24, 18,
-                                        20, 96, 20, 250,
-                                        HUDElement::Highlighting::scale_wobble,
-                                        nullptr,
-                                        "inicial",
-                                        HUDElement::Visibility::visible
-                                );
-
-                                l = new Label(
-                                        "Bienvenido a",
-                                        0.025, 5,
-                                        0, 0, 0, 255,
-                                        Label::Alignment::center,
-                                        HUDElement::Highlighting::scale_wobble,
-                                        fw,
-                                        "título (línea 1)",
-                                        HUDElement::Visibility::visible,
-                                        Triple(0, 3.5, -0.1)
-                                );
-                                fw->children.push_back(l);
-
-                                l = new Label(
-                                        "Tamagotchi",
-                                        0.025, 5,
-                                        0, 0, 0, 255,
-                                        Label::Alignment::center,
-                                        HUDElement::Highlighting::scale_wobble,
-                                        fw,
-                                        "título (línea 2)",
-                                        HUDElement::Visibility::visible,
-                                        Triple(0, 2, -0.1)
-                                );
-                                fw->children.push_back(l);
-
-                                img = new Image(
-                                        "tamagotchi_icons/mantenimiento/aceptar.png",
-                                        2, 2,
-                                        255,
-                                        HUDElement::Highlighting::scale_wobble,
-                                        fw,
-                                        "inicio->aceptar",
-                                        HUDElement::Visibility::visible,
-                                        Triple(0, -1, -0.1)
-                                );
-                                fw->children.push_back(img);
-
-                                fw->set_callback_leftclick ([](HUDElement * self) { hud_state = HUDState::Juego   ; });
-                                fw->set_callback_rightclick([](HUDElement * self) { hud_state = HUDState::Registro; });
-
-                                hud_states[HUDSTATE]->push_back(fw);
-                        }
-
-                        {
-                                hud_state = HUDState::Registro;
-                                hud_states.push_back(new std::list<HUDElement *>());
-
-                                Tabs * tabcitos = new Tabs(
-                                        14, 16,
-                                        1,
-                                        nullptr, nullptr,
-                                        5,
-                                        20, 96, 20, 255,
-                                        Tabs::Autohide::no,
-                                        HUDElement::Highlighting::scale_wobble,
-                                        nullptr,
-                                        "tabs de registro",
-                                        HUDElement::Visibility::visible,
-                                        Triple(9, -0.5, 0)
-                                );
-
-                                tabcitos->headers[0]->children.push_back(new FilledWindow(1, 1, 255,   0,   0, 200, HUDElement::Highlighting::scale_wobble, tabcitos->headers[0], "tab[0]->header", HUDElement::Visibility::visible));
-                                tabcitos->headers[1]->children.push_back(new FilledWindow(1, 1,   0, 255,   0, 200, HUDElement::Highlighting::scale_wobble, tabcitos->headers[0], "tab[0]->header", HUDElement::Visibility::visible));
-                                tabcitos->headers[2]->children.push_back(new FilledWindow(1, 1,   0,   0, 255, 200, HUDElement::Highlighting::scale_wobble, tabcitos->headers[0], "tab[0]->header", HUDElement::Visibility::visible));
-                                tabcitos->headers[3]->children.push_back(new FilledWindow(1, 1, 255,   0, 255, 200, HUDElement::Highlighting::scale_wobble, tabcitos->headers[0], "tab[0]->header", HUDElement::Visibility::visible));
-                                tabcitos->headers[4]->children.push_back(new FilledWindow(1, 1, 255, 255,   0, 200, HUDElement::Highlighting::scale_wobble, tabcitos->headers[0], "tab[0]->header", HUDElement::Visibility::visible));
-
-                                tabcitos->pages[0]->children.push_back(new Label("Tab 0", 0.025, 5, 0, 0, 0, 255, Label::Alignment::center, HUDElement::Highlighting::scale_wobble, tabcitos->pages[0]));
-                                tabcitos->pages[1]->children.push_back(new Label("Tab 1", 0.025, 5, 0, 0, 0, 255, Label::Alignment::center, HUDElement::Highlighting::scale_wobble, tabcitos->pages[0]));
-                                tabcitos->pages[2]->children.push_back(new Label("Tab 2", 0.025, 5, 0, 0, 0, 255, Label::Alignment::center, HUDElement::Highlighting::scale_wobble, tabcitos->pages[0]));
-                                tabcitos->pages[3]->children.push_back(new Label("Tab 3", 0.025, 5, 0, 0, 0, 255, Label::Alignment::center, HUDElement::Highlighting::scale_wobble, tabcitos->pages[0]));
-                                tabcitos->pages[4]->children.push_back(new Label("Tab 4", 0.025, 5, 0, 0, 0, 255, Label::Alignment::center, HUDElement::Highlighting::scale_wobble, tabcitos->pages[0]));
-
-                                tabcitos->active_page = 0;
-
-                                hud_states[HUDSTATE]->push_back(tabcitos);
-                        }
-
-                        {
-                                hud_state = HUDState::Juego;
-                                hud_states.push_back(new std::list<HUDElement *>());
-
-                                Tabs * tabcitos = new Tabs(
-                                        32, 6,
-                                        2,
-#define PEKOMIN_DRAWER_TABS_HEADER_CALLBACK(visibility, op)                              \
-        [](HUDElement * e) {                                                             \
-                auto ts = dynamic_cast<Tabs *>(e);                                       \
-                std::for_each(                                                           \
-                        ts->headers.begin(),                                             \
-                        ts->headers.end  (),                                             \
-                        [](FilledWindow * h) { h->visible = visibility; }                \
-                );                                                                       \
-                ts->headers[ts->active_page]->visible = HUDElement::Visibility::visible; \
-                ts->headers[ts->active_page]->pos.y op ts->height;                       \
-                ts->pages  [ts->active_page]->pos.y op ts->height;                       \
-        }
-                                        PEKOMIN_DRAWER_TABS_HEADER_CALLBACK(HUDElement::Visibility::hidden , +=),
-                                        PEKOMIN_DRAWER_TABS_HEADER_CALLBACK(HUDElement::Visibility::visible, -=),
-#undef PEKOMIN_DRAWER_TABS_CALLBACK
-                                        3,
-                                        20, 96, 20, 255,
-                                        Tabs::Autohide::yes,
-                                        HUDElement::Highlighting::scale_wobble,
-                                        nullptr,
-                                        "tabs de abajo",
-                                        HUDElement::Visibility::visible,
-                                        Triple(0, -13, 0)
-                                );
-
-                                hud_states[HUDSTATE]->push_back(tabcitos);
-                        }
-
-                        {
-                                hud_state = HUDState::Relaciones;
-                                hud_states.push_back(new std::list<HUDElement *>());
-                        }
-
-                        hud_state = HUDState::Inicio;
                 }
 
 #if PEKOMIN_GRAFO
@@ -794,6 +488,7 @@ void display() {
                         glRotatef(cam_rotx, 1, 0, 0);
                         glRotatef(cam_roty, 0, 1, 0);
                         glRotatef((level == LEVEL_SKY ? 1 : -1)*90, 1, 0, 0);
+                        glScalef(0.001, 0.001, 0.001);
                         glCallList(cielo);
                 glPopMatrix();
                 glDisable(GL_TEXTURE_2D);
@@ -809,7 +504,6 @@ void display() {
                 glLightfv(GL_LIGHT0, GL_POSITION, light_pos);
                 glEnable(GL_LIGHT0);
 
-#if 0
                 if (pass == PASS_LAST) {
                         glPushMatrix();
                                 glScalef(5, 5, 5);
@@ -820,7 +514,6 @@ void display() {
                                 glCallList(checker);
                         glPopMatrix();
                 }
-#endif
 
                 if (pass == PASS_LAST) {
                         for (auto it = ents.begin(); it != ents.end(); ++it) {

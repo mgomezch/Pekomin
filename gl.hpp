@@ -52,7 +52,7 @@ extern GLubyte *tstars_img ,
                *tdesert_img,
                *tcielo_img ;
 
-extern GLuint tstars, tdesert, tcielo;
+extern GLuint tstars, tdesert, tcielo, taceptar;
 extern GLuint tblur;
 extern int tw, th, ta;
 

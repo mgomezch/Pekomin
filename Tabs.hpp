@@ -9,7 +9,7 @@
 
 class Tabs : public virtual HUDElement {
         public:
-                enum class Autohide : unsigned int {
+                enum class Hideable : unsigned int {
                         yes,
                         no
                 };
@@ -20,7 +20,7 @@ class Tabs : public virtual HUDElement {
                 HUDCallback_t                 raise_callback;
                 HUDCallback_t                 lower_callback;
                 std::vector<FilledWindow *>   pages         ;
-                Autohide                      autohide      ;
+                Hideable                      hideable      ;
                 std::vector<FilledWindow *>   headers       ;
                 int                           active_page   ;
 
@@ -35,7 +35,7 @@ class Tabs : public virtual HUDElement {
                         GLubyte                  p_g               = 255                            ,
                         GLubyte                  p_b               = 255                            ,
                         GLubyte                  p_a               = 255                            ,
-                        Autohide                 p_autohide        = Autohide::no                   ,
+                        Hideable                 p_hideable        = Hideable::no                   ,
                         HUDElement::Highlighting p_highlighting    = HUDElement::Highlighting::none ,
                         HUDElement *             p_parent          = nullptr                        ,
                         std::string              p_name            = ""                             ,

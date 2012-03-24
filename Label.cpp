@@ -48,27 +48,16 @@ Label::Label(
 {}
 
 void Label::draw(GLuint active_hud_elem) const {
+        if (visible == HUDElement::Visibility::hidden) return;
+
         int width = glutStrokeLength(
                 GLUT_STROKE_ROMAN,
                 reinterpret_cast<const unsigned char *>(text.c_str())
-        ) / 2;
-        int height = glutStrokeHeight(GLUT_STROKE_ROMAN)/2;
-
-        if (visible == HUDElement::Visibility::hidden) return;
+        );
+        int height = glutStrokeHeight(GLUT_STROKE_ROMAN);
 
         glPushName(select_uid);
                 glPushMatrix();
-                        if (
-                                highlighting == HUDElement::Highlighting::scale_wobble
-                                && is(active_hud_elem)
-                        ) {
-                                glScalef(
-                                        1 + PEKOMIN_HUD_HIGHLIGHT_SCALE * cos(PEKOMIN_HUD_HIGHLIGHT_SPEED * new_time) / width ,
-                                        1 + PEKOMIN_HUD_HIGHLIGHT_SCALE * cos(PEKOMIN_HUD_HIGHLIGHT_SPEED * new_time) / height,
-                                        1
-                                );
-                        }
-
                         glTranslatef(
                                 pos.x,
                                 pos.y,
@@ -80,10 +69,21 @@ void Label::draw(GLuint active_hud_elem) const {
                         );
 
                         glColor4ubv(color);
-                        glLineWidth(thickness);
+
+                        glLineWidth(
+                                thickness
+                                + (
+                                        highlighting == HUDElement::Highlighting::scale_wobble && is(active_hud_elem)
+                                        ? PEKOMIN_HUD_HIGHLIGHT_SCALE * cos(PEKOMIN_HUD_HIGHLIGHT_SPEED * new_time)
+                                        : 0
+                                )
+                        );
+
                         glScalef(scale, scale, scale);
-                        glTranslatef(0, -height, 0);
-                        if (alignment == Alignment::center) glTranslatef(-width, 0, 0);
+
+                        glTranslatef(0, -height/2.0, 0);
+                        if (alignment == Alignment::center) glTranslatef(-width/2.0, 0, 0);
+
                         glutStrokeString(
                                 GLUT_STROKE_ROMAN,
                                 reinterpret_cast<const unsigned char *>(text.c_str())
