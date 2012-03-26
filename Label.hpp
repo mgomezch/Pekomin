@@ -39,7 +39,6 @@ class Label : public virtual HUDElement {
                 );
 
                 virtual void draw(GLuint active_hud_elem) const;
-                virtual void update();
 
                 virtual Label & set_color(
                         GLubyte r,

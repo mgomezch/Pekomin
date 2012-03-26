@@ -36,7 +36,7 @@ class Tab : public virtual FilledWindow {
                 virtual ~Tab();
 
                 virtual void draw(GLuint active_hud_elem) const;
-                virtual void update();
+                virtual void update(unsigned int ticks, unsigned int delta_ticks);
 
 #define PEKOMIN_DECLARE_CALLBACK_SETTER(event) Tab & set_callback_##event(HUDCallback_t cb);
                 PEKOMIN_EVENTS(PEKOMIN_DECLARE_CALLBACK_SETTER)

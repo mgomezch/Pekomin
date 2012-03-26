@@ -105,9 +105,9 @@ bool btnstate_left         = false;
 bool btnstate_middle       = false;
 bool btnstate_right        = false;
 
-bool newevent_leftclick    = false;
-bool newevent_middleclick  = false;
-bool newevent_rightclick   = false;
+#define PEKOMIN_DEFINE_NEWEVENT(event) bool newevent_##event = false;
+PEKOMIN_EVENTS(PEKOMIN_DEFINE_NEWEVENT)
+#undef PEKOMIN_DEFINE_NEWEVENT
 
 unsigned int mouse_x = 0;
 unsigned int mouse_y = 0;

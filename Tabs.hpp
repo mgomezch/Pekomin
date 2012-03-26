@@ -45,7 +45,7 @@ class Tabs : public virtual HUDElement {
                 );
 
                 virtual void draw(GLuint active_hud_elem) const;
-                virtual void update();
+                virtual void update(unsigned int ticks, unsigned int delta_ticks);
 
                 virtual HUDElement * contains(GLuint uid) const;
 };

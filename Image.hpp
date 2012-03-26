@@ -36,7 +36,6 @@ class Image : public virtual HUDElement {
                 );
 
                 virtual void draw(GLuint active_hud_elem) const;
-                virtual void update();
 
                 virtual Image & set_opacity(GLubyte p_opacity);
 };

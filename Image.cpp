@@ -1,7 +1,8 @@
 #include <algorithm>
 #include <cmath>
-#include <GL/gl.h>
 #include <GL/freeglut.h>
+#include <GL/gl.h>
+#include <iostream>
 #include <string>
 
 #include "gl.hpp"
@@ -37,6 +38,7 @@ Image::Image(
                 p_pos         ,
                 p_ang
         ),
+        path   (p_path   ),
         width  (p_width  ),
         height (p_height ),
         opacity(p_opacity)
@@ -81,15 +83,13 @@ void Image::draw(GLuint active_hud_elem) const {
                         glScalef(width, height, 1);
 
                         glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
-                        glBindTexture(GL_TEXTURE_2D, taceptar);
+                        glBindTexture(GL_TEXTURE_2D, texture);
                         glEnable(GL_TEXTURE_2D);
                         glCallList(cuadrado_simple);
                         glDisable(GL_TEXTURE_2D);
                 glPopMatrix();
         glPopName();
 }
-
-void Image::update() {}
 
 Image & Image::set_opacity(GLubyte p_opacity) {
         opacity = p_opacity;

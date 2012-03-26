@@ -92,8 +92,6 @@ void Label::draw(GLuint active_hud_elem) const {
         glPopName();
 }
 
-void Label::update() {}
-
 Label & Label::set_color(
         GLubyte r,
         GLubyte g,

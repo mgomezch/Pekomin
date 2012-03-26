@@ -7,12 +7,14 @@
 #include "gl.hpp"
 #include "hud.hpp"
 
+#include "HUDElement.hpp"
 #include "Window.hpp"
 #include "FilledWindow.hpp"
 #include "Tabs.hpp"
 #include "Tab.hpp"
 #include "Label.hpp"
 #include "Image.hpp"
+#include "RadialMenu.hpp"
 
 void make_hud() {
         Image * img;
@@ -120,17 +122,17 @@ void make_hud() {
                         32, 6,
                         2,
 #define PEKOMIN_DRAWER_TABS_HEADER_CALLBACK(visibility, op)                              \
-[](HUDElement * e) {                                                             \
-auto ts = dynamic_cast<Tabs *>(e);                                       \
-std::for_each(                                                           \
-        ts->headers.begin(),                                             \
-        ts->headers.end  (),                                             \
-        [](FilledWindow * h) { h->visible = visibility; }                \
-);                                                                       \
-ts->headers[ts->active_page]->visible = HUDElement::Visibility::visible; \
-ts->headers[ts->active_page]->pos.y op ts->height;                       \
-ts->pages  [ts->active_page]->pos.y op ts->height;                       \
-}
+        [](HUDElement * e) {                                                             \
+                auto ts = dynamic_cast<Tabs *>(e);                                       \
+                std::for_each(                                                           \
+                        ts->headers.begin(),                                             \
+                        ts->headers.end  (),                                             \
+                        [](FilledWindow * h) { h->visible = visibility; }                \
+                );                                                                       \
+                ts->headers[ts->active_page]->visible = HUDElement::Visibility::visible; \
+                ts->headers[ts->active_page]->pos.y op ts->height;                       \
+                ts->pages  [ts->active_page]->pos.y op ts->height;                       \
+        }
                         PEKOMIN_DRAWER_TABS_HEADER_CALLBACK(HUDElement::Visibility::hidden , +=),
                         PEKOMIN_DRAWER_TABS_HEADER_CALLBACK(HUDElement::Visibility::visible, -=),
 #undef PEKOMIN_DRAWER_TABS_CALLBACK
@@ -145,6 +147,96 @@ ts->pages  [ts->active_page]->pos.y op ts->height;                       \
                 );
 
                 hud_states[HUDSTATE]->push_back(tabcitos);
+
+                RadialMenu * radial;
+
+                auto make_radial_images = [&](std::string name, std::string path, HUDCallback_t leftclick) {
+                        auto image = new Image(
+                                path,
+                                2, 2,
+                                255,
+                                HUDElement::Highlighting::scale_wobble,
+                                radial,
+                                name
+                        );
+                        image->set_callback_leftclick(leftclick);
+                        radial->children.push_back(image);
+                };
+
+                radial = new RadialMenu(
+                        new Image(
+                                "tamagotchi_icons/botones/acciones.png",
+                                4, 4,
+                                255,
+                                HUDElement::Highlighting::scale_wobble,
+                                nullptr,
+                                "radial->controller"
+                        ),
+                        4,
+                        180, 360,
+                        0.0025
+                );
+
+                radial->pos = {-11, 8, 0};
+
+                make_radial_images("aprender", "tamagotchi_icons/acciones/aprender.png", nullptr);
+                make_radial_images("bañera"  , "tamagotchi_icons/acciones/bañera.png"  , nullptr);
+                make_radial_images("baño"    , "tamagotchi_icons/acciones/baño.png"    , nullptr);
+                make_radial_images("cama"    , "tamagotchi_icons/acciones/cama.png"    , nullptr);
+                make_radial_images("comer"   , "tamagotchi_icons/acciones/comer.png"   , nullptr);
+                make_radial_images("jugar"   , "tamagotchi_icons/acciones/jugar.png"   , nullptr);
+
+                hud_states[HUDSTATE]->push_back(radial);
+
+                radial = new RadialMenu(
+                        new Image(
+                                "tamagotchi_icons/botones/relacion.png",
+                                4, 4,
+                                255,
+                                HUDElement::Highlighting::scale_wobble,
+                                nullptr,
+                                "juego->controller"
+                        ),
+                        4,
+                        180, 360,
+                        0.0025
+                );
+
+                radial->pos = {0, 8, 0};
+
+                make_radial_images("abrazar"  , "tamagotchi_icons/relaciones/abrazar.png"  , nullptr);
+                make_radial_images("cantar"   , "tamagotchi_icons/relaciones/cantar.png"   , nullptr);
+                make_radial_images("conversar", "tamagotchi_icons/relaciones/conversar.png", nullptr);
+                make_radial_images("jugar"    , "tamagotchi_icons/relaciones/jugar.png"    , nullptr);
+
+                hud_states[HUDSTATE]->push_back(radial);
+
+                radial = new RadialMenu(
+                        new Image(
+                                "tamagotchi_icons/botones/juego.png",
+                                4, 4,
+                                255,
+                                HUDElement::Highlighting::scale_wobble,
+                                nullptr,
+                                "juego->controller"
+                        ),
+                        4,
+                        180, 360,
+                        0.0025
+                );
+
+                radial->pos = {11, 8, 0};
+
+                make_radial_images("camara"  , "tamagotchi_icons/juego/camara.png"  , nullptr);
+                make_radial_images("pendrive", "tamagotchi_icons/juego/pendrive.png", nullptr);
+                make_radial_images("puerta"  , "tamagotchi_icons/juego/puerta.png"  , nullptr);
+
+                radial->set_callback_key_l([](HUDElement * e) { e->pos.x -= 0.5; std::cout << e->pos.to_string() << std::endl; });
+                radial->set_callback_key_r([](HUDElement * e) { e->pos.x += 0.5; std::cout << e->pos.to_string() << std::endl; });
+                radial->set_callback_key_u([](HUDElement * e) { e->pos.y += 0.5; std::cout << e->pos.to_string() << std::endl; });
+                radial->set_callback_key_d([](HUDElement * e) { e->pos.y -= 0.5; std::cout << e->pos.to_string() << std::endl; });
+
+                hud_states[HUDSTATE]->push_back(radial);
         }
 
 

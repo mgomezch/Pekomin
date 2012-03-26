@@ -7,6 +7,7 @@
 #include <vector>
 
 #include "Ent.hpp"
+#include "events.hpp"
 #include "HUDElement.hpp"
 #include "Odor.hpp"
 #include "Player.hpp"
@@ -184,9 +185,9 @@ extern bool btnstate_left        ;
 extern bool btnstate_middle      ;
 extern bool btnstate_right       ;
 
-extern bool newevent_leftclick   ;
-extern bool newevent_middleclick ;
-extern bool newevent_rightclick  ;
+#define PEKOMIN_DECLARE_NEWEVENT(event) extern bool newevent_##event;
+PEKOMIN_EVENTS(PEKOMIN_DECLARE_NEWEVENT)
+#undef PEKOMIN_DECLARE_NEWEVENT
 
 extern unsigned int mouse_x;
 extern unsigned int mouse_y;

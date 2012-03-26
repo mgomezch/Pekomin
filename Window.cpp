@@ -52,12 +52,13 @@ void Window::draw(GLuint active_hud_elem) const {
         glPopMatrix();
 }
 
-void Window::update() {
+void Window::update(unsigned int ticks, unsigned int delta_ticks) {
+        HUDElement::update(ticks, delta_ticks);
         std::for_each(
                 children.begin(),
                 children.end(),
-                [](HUDElement * c) {
-                        c->update();
+                [ticks, delta_ticks](HUDElement * c) {
+                        c->update(ticks, delta_ticks);
                 }
         );
 }

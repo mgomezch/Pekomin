@@ -1,5 +1,7 @@
+#include <algorithm>
 #include <GL/gl.h>
 
+#include "game.hpp"
 #include "HUDElement.hpp"
 #include "Triple.hpp"
 
@@ -27,8 +29,6 @@ HUDElement::HUDElement(
         ang          (p_ang         ),
 
 //      dead         (false         ),
-        new_pos      (p_pos         ),
-        new_ang      (p_ang         ),
 
 #define PEKOMIN_INITIALIZE_CALLBACK_MEMBER(event) callback_##event(nullptr),
         PEKOMIN_EVENTS(PEKOMIN_INITIALIZE_CALLBACK_MEMBER)
@@ -39,9 +39,19 @@ HUDElement::HUDElement(
 
 HUDElement::~HUDElement() {}
 
-void HUDElement::update() {
-        this->new_pos = this->pos;
-        this->new_ang = this->ang;
+void HUDElement::update(unsigned int ticks, unsigned int delta_ticks) {
+        std::for_each(
+                update_callbacks.begin(),
+                update_callbacks.end(),
+                [this](HUDCallback_t c) { c(this); }
+        );
+
+#define PEKOMIN_RUN_KEY_CALLBACK(event)                           \
+        if (newevent_##event && callback_##event) {               \
+                callback_##event(this); newevent_##event = false; \
+        }
+        PEKOMIN_KEY_EVENTS(PEKOMIN_RUN_KEY_CALLBACK)
+#undef PEKOMIN_RUN_KEY_CALLBACK
 }
 
 #define PEKOMIN_DEFINE_CALLBACK_SETTER(event)                             \
@@ -51,6 +61,11 @@ void HUDElement::update() {
         }
 PEKOMIN_EVENTS(PEKOMIN_DEFINE_CALLBACK_SETTER)
 #undef PEKOMIN_DEFINE_CALLBACK_SETTER
+
+        HUDElement & HUDElement::add_update_callback(HUDCallback_t cb) {
+                update_callbacks.push_back(cb);
+                return *this;
+        }
 
 HUDElement * HUDElement::is(GLuint uid) const {
         return uid == select_uid ? const_cast<HUDElement *>(this) : nullptr;

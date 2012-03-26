@@ -130,9 +130,10 @@ void Tab::draw(GLuint active_hud_elem) const {
         glPopName();
 }
 
-void Tab::update() {
-        header->update();
-        FilledWindow::update();
+void Tab::update(unsigned int ticks, unsigned int delta_ticks) {
+        HUDElement::update(ticks, delta_ticks);
+        header->update(ticks, delta_ticks);
+        FilledWindow::update(ticks, delta_ticks);
 }
 
 Tab::~Tab() {

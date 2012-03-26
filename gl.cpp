@@ -77,25 +77,28 @@ int loadPNG(const char * name, int * outWidth, int * outHeight, int * outHasAlph
         FILE *fp;
 
         if (outWidth == NULL || outHeight == NULL || outHasAlpha == NULL) return -1;
-        if ((fp = fopen(name, "rb")) == NULL) return -1;
+        if ((fp = fopen(name, "rb")) == NULL) {
+                perror(("loadPNG: " + std::string(name) + ": fopen").c_str());
+                exit(EX_IOERR);
+        }
 
         png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
         if (png_ptr == NULL) {
                 fclose(fp);
-                return -1;
+                return -3;
         }
 
         info_ptr = png_create_info_struct(png_ptr);
         if (info_ptr == NULL) {
                 fclose(fp);
                 png_destroy_read_struct(&png_ptr, png_infopp_NULL, png_infopp_NULL);
-                return -1;
+                return -4;
         }
 
         if (setjmp(png_jmpbuf(png_ptr))) {
                 png_destroy_read_struct(&png_ptr, &info_ptr, png_infopp_NULL);
                 fclose(fp);
-                return -1;
+                return -5;
         }
 
         png_init_io(png_ptr, fp);
@@ -115,7 +118,7 @@ int loadPNG(const char * name, int * outWidth, int * outHeight, int * outHasAlph
                 default:
                         png_destroy_read_struct(&png_ptr, &info_ptr, NULL);
                         fclose(fp);
-                        return false;
+                        return -5;
         }
 
         unsigned int row_bytes = png_get_rowbytes(png_ptr, info_ptr);

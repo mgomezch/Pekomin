@@ -32,7 +32,8 @@
 #include "Triple.hpp"
 #include "util.hpp"
 
-#define DEBUG_MAIN
+#define DEBUG_MAIN 1
+#define PEKOMIN_DEBUG_PICKING 0
 
 #define NO_LIGHTING
 
@@ -63,7 +64,7 @@ void collide(void *client_data, DtObjectRef obj1, DtObjectRef obj2, const DtColl
              e2 = reinterpret_cast<Ent *>(obj2);
         auto n = coll_data->normal;
 
-#ifdef DEBUG_MAIN
+#if DEBUG_MAIN
         std::cout << "Colisión entre " << e1->name << " y " << e2->name << std::endl;
         std::cout << "Punto 1: (" << coll_data->point1[0] << ", " << coll_data->point1[1] << ", " << coll_data->point1[2] << ")" << std::endl;
         std::cout << "Punto 2: (" << coll_data->point2[0] << ", " << coll_data->point2[1] << ", " << coll_data->point2[2] << ")" << std::endl;
@@ -488,7 +489,6 @@ void display() {
                         glRotatef(cam_rotx, 1, 0, 0);
                         glRotatef(cam_roty, 0, 1, 0);
                         glRotatef((level == LEVEL_SKY ? 1 : -1)*90, 1, 0, 0);
-                        glScalef(0.001, 0.001, 0.001);
                         glCallList(cielo);
                 glPopMatrix();
                 glDisable(GL_TEXTURE_2D);
@@ -836,10 +836,8 @@ void display() {
 
                 hits = glRenderMode(GL_RENDER);
 
-#ifdef DEBUG_MAIN
-#if 0
+#if PEKOMIN_DEBUG_PICKING
                 if (hits > 0) std::cerr << "HUD hits == " << hits << "; mouse at (" << mouse_x << ", " << mouse_y << ")"<< std::endl;
-#endif
 #endif
 
                 long int active_hud_elem       = -1;
@@ -869,7 +867,7 @@ void display() {
 
                                         active_hud_elem       =  base[3];
                                 }
-#ifdef DEBUG_MAIN
+#if PEKOMIN_DEBUG_PICKING
                                 std::cerr
                                         << "i      == " << i       << "\n"
                                         << "number == " << base[0] << "\n"
@@ -880,7 +878,7 @@ void display() {
 #endif
                         }
 
-#ifdef DEBUG_MAIN
+#if PEKOMIN_DEBUG_PICKING
                         std::cerr
                                 << "active_hud_elem_names == " << active_hud_elem_names << "\n"
                                 << "active_hud_elem_depth == " << active_hud_elem_depth
@@ -900,10 +898,8 @@ void display() {
                 glMatrixMode(GL_MODELVIEW);
                 glLoadIdentity();
 
-#ifdef DEBUG_MAIN
-#if 0
+#if PEKOMIN_DEBUG_PICKING
                 if (active_hud_elem != -1) std::cerr << "active element is " << active_hud_elem << std::endl;
-#endif
 #endif
 
 #define PEKOMIN_CALL_CALLBACK(event)                                            \
@@ -964,10 +960,10 @@ void reshape(int w, int h){
 }
 
 void skeydown(int key, int mx, int my) {
-        if      (key == GLUT_KEY_LEFT ) keystate_l = true;
-        else if (key == GLUT_KEY_RIGHT) keystate_r = true;
-        else if (key == GLUT_KEY_UP   ) keystate_u = true;
-        else if (key == GLUT_KEY_DOWN ) keystate_d = true;
+        if      (key == GLUT_KEY_LEFT ) keystate_l = newevent_key_l = true;
+        else if (key == GLUT_KEY_RIGHT) keystate_r = newevent_key_r = true;
+        else if (key == GLUT_KEY_UP   ) keystate_u = newevent_key_u = true;
+        else if (key == GLUT_KEY_DOWN ) keystate_d = newevent_key_d = true;
         else if (key == GLUT_KEY_F2   ) initJuego();
 
         else if (key == GLUT_KEY_F11) {
@@ -1035,13 +1031,13 @@ void keydown(unsigned char key, int mx, int my) {
 
         else if (key == key_pause) {
                 frozen ^= 1;
-#ifdef DEBUG_MAIN
+#if DEBUG_MAIN
                 std::cout << "toggling pause" << std::endl;
 #endif
         }
         else if (key == key_cam_switch) {
                 if ((cam += 1) >= N_CAMS) cam = 0;
-#ifdef DEBUG_MAIN
+#if DEBUG_MAIN
                 switch (cam) {
 #if 0
                         case CAM_STATIC_OVERHEAD:
@@ -1148,7 +1144,7 @@ void juego(int v) {
                 player->ang  = mapToRange((prz  * M_PI) / 180.0);
                 player->vrot = (pvrz * M_PI) / 180.0;
 
-#ifdef DEBUG_MAIN
+#if DEBUG_MAIN
 #if 0
                 for (auto it = ents.begin(); it != ents.end(); ++it) std::cout << "'" << (*it)->name << "' "; std::cout << std::endl;
 #endif
@@ -1190,6 +1186,14 @@ void juego(int v) {
                 }
 
                 std::for_each(
+                        hud_states[HUDSTATE]->begin(),
+                        hud_states[HUDSTATE]->end(),
+                        [](HUDElement * e) {
+                                e->update(new_time, delta);
+                        }
+                );
+
+                std::for_each(
                         ents.begin(),
                         ents.end(),
                         [](Ent * e) {
@@ -1224,7 +1228,7 @@ void juego(int v) {
                 new_odors.clear();
 
                 for (j = 0; j < COLL_MAX_ITERS; ++j) {
-#ifdef DEBUG_MAIN
+#if DEBUG_MAIN
 //                      if (j > 0) std::cout << "Collision cycle iteration " << j << std::endl;
 #endif
                         int colls = dtTest();

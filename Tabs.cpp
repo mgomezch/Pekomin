@@ -140,9 +140,10 @@ void Tabs::draw(GLuint active_hud_elem) const {
         glPopMatrix();
 }
 
-void Tabs::update() {
-        std::for_each(headers.begin(), headers.end(), [](FilledWindow * w) { w->update(); });
-        std::for_each(pages  .begin(), pages  .end(), [](FilledWindow * w) { w->update(); });
+void Tabs::update(unsigned int ticks, unsigned int delta_ticks) {
+        HUDElement::update(ticks, delta_ticks);
+        std::for_each(headers.begin(), headers.end(), [ticks, delta_ticks](FilledWindow * w) { w->update(ticks, delta_ticks); });
+        std::for_each(pages  .begin(), pages  .end(), [ticks, delta_ticks](FilledWindow * w) { w->update(ticks, delta_ticks); });
 }
 
 HUDElement * Tabs::contains(GLuint uid) const {

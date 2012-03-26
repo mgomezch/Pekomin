@@ -3,6 +3,7 @@
 
 #include <functional>
 #include <GL/gl.h>
+#include <list>
 #include <string>
 
 #include "events.hpp"
@@ -38,6 +39,8 @@ class HUDElement {
                 PEKOMIN_EVENTS(PEKOMIN_DECLARE_CALLBACK_MEMBER)
 #undef PEKOMIN_DECLARE_CALLBACK_MEMBER
 
+                std::list<HUDCallback_t> update_callbacks;
+
                 GLuint select_uid;
 
                 HUDElement(
@@ -52,11 +55,13 @@ class HUDElement {
                 virtual ~HUDElement() = 0;
 
                 virtual void draw(GLuint active_hud_elem) const = 0;
-                virtual void update() = 0;
+                virtual void update(unsigned int ticks, unsigned int delta_ticks);
 
 #define PEKOMIN_DECLARE_CALLBACK_SETTER(event) HUDElement & set_callback_##event(HUDCallback_t cb);
                 PEKOMIN_EVENTS(PEKOMIN_DECLARE_CALLBACK_SETTER)
 #undef PEKOMIN_DECLARE_CALLBACK_SETTER
+
+                HUDElement & add_update_callback(HUDCallback_t cb);
 
                 virtual HUDElement * is(GLuint uid) const;
 
